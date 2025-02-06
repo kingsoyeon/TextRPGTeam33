@@ -44,5 +44,23 @@ namespace TextRPGTeam33
             DungeonClearCount = 0;
 
         }
+
+        // 상태 보기 화면
+        public void DisplayStatus() 
+        {
+            Console.WriteLine($"Lv. {Level.ToString("00")}");       // 레벨 2자리수까지 표현
+            Console.WriteLine($"{Name} ( {Job} )");
+            
+            // 아이템 착용 여부에 따라 스탯 상승/하락에 따른 스탯 반영
+            // 공격력
+            string plusStat = PlusAttack == 0 ? $"공격력 : {Attack}" : $"공격력 : {Attack + PlusAttack} (+{PlusAttack})";
+            Console.WriteLine(plusStat);
+            // 방어력
+            plusStat = PlusDefense == 0 ? $"방어력 : {Defense}" : $"방어력 : {Defense + PlusDefense} (+{Defense})";
+            Console.WriteLine(plusStat);
+
+            Console.WriteLine($"체력 : {Hp} / {MaxHP}");
+            Console.WriteLine($"Gold : {Gold}");
+        }
     }
 }
