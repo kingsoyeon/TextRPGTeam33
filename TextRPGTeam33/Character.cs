@@ -63,5 +63,28 @@ namespace TextRPGTeam33
             Console.WriteLine($"Gold : {Gold}");
         }
 
+        public void EquipItem(Item item)
+        {
+            if (item.IsEquip)
+            {
+                UnEquipItem(item);
+            }
+            else
+            {
+                item.IsEquip = true;
+
+                if (item.Type == ItemType.Weapon)    // 아이템 타입이 무기일 경우
+                { PlusAttack += item.Value; }
+                else if (item.Type == ItemType.Amor)     // 갑옷일 경우
+                { PlusDefense += item.Value; }
+                else {  }    // 포션일 경우
+            }
+        }
+
+        public void UnEquipItem(Item item)
+        {
+
+        }
+
     }
 }
