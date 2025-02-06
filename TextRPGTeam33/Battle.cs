@@ -8,6 +8,8 @@ namespace TextRPGTeam33
 {
     public class Battle
     {
+        public bool isEnd { get; set; }
+
         public void BattleStart()
         {
             // 전투를 시작하면 1~4마리의 몬스터가 랜덤하게 등장합니다.
@@ -47,6 +49,9 @@ namespace TextRPGTeam33
                     else
                         Console.WriteLine("잘못된 입력입니다");
                 }
+
+                if (isEnd)
+                    return;
             }
         }
 
@@ -87,6 +92,9 @@ namespace TextRPGTeam33
                 }
             }
 
+            if (isEnd)
+                return;
+
             EnemyPhase();
         }
 
@@ -106,9 +114,6 @@ namespace TextRPGTeam33
             Console.WriteLine("Lv.3 공허충");
             Console.WriteLine("HP 10 -> Dead\n");
 
-            if (false) // 모든 적이 죽었다면
-                BattleResult(true);
-
             Console.WriteLine("0. 다음\n");
 
             Console.Write(">> ");
@@ -121,6 +126,9 @@ namespace TextRPGTeam33
                 else
                     Console.WriteLine("잘못된 입력입니다");
             }
+
+            if (true) // 모든 적이 죽었다면
+                BattleResult(true);
         }
 
         private void EnemyPhase()
@@ -143,9 +151,6 @@ namespace TextRPGTeam33
                 Console.WriteLine("Lv.1 Chad");
                 Console.WriteLine("HP 100 -> 94\n");
 
-                if (false) // 플레이어가 죽었다면
-                    BattleResult(false);
-
                 Console.WriteLine("0. 다음\n");
 
                 Console.Write(">> ");
@@ -159,12 +164,20 @@ namespace TextRPGTeam33
                         Console.WriteLine("잘못된 입력입니다");
                 }
 
+                if (false) // 플레이어가 죽었다면
+                {
+                    BattleResult(false);
+                    break;
+                }
+
                 i--;
             }
         }
 
         private void BattleResult(bool isWin)
         {
+            isEnd = true;
+
             if (isWin)
             {
                 Console.Clear();
