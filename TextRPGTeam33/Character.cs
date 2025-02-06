@@ -21,7 +21,7 @@ namespace TextRPGTeam33
         public int Defense { get; }
         public int PlusDefense { get; set; }
 
-        public int Hp { get; }
+        public int Hp { get; set; }
         public int MaxHP { get; }
         public int Gold { get; set; }
 
@@ -77,7 +77,15 @@ namespace TextRPGTeam33
                 { PlusAttack += item.Value; }
                 else if (item.Type == ItemType.Amor)     // 갑옷일 경우
                 { PlusDefense += item.Value; }
-                else {  }    // 포션일 경우
+                else  // 포션일 경우
+                { 
+                    Hp += item.Value; 
+
+                    if (Hp > MaxHP)     // Hp가 MaxHP를 초과하지 않도록 제한
+                    {
+                        Hp = MaxHP;
+                    }
+                }   
             }
         }
 
