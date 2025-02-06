@@ -17,11 +17,11 @@ namespace TextRPGTeam33
 
             Console.Clear();
 
-            Console.WriteLine("Battle!!\n\n");
+            Console.WriteLine("Battle!!\n");
             // 나중에 foreach로 출력
             Console.WriteLine("Lv.2 미니언  HP 15");
             Console.WriteLine("Lv.5 대포미니언 HP 25");
-            Console.WriteLine("Lv.3 공허충 HP 10\n\n\n");
+            Console.WriteLine("Lv.3 공허충 HP 10\n");
 
             Console.WriteLine("[내정보]");
             Console.WriteLine("Lv.1  Chad (전사)");
@@ -50,11 +50,11 @@ namespace TextRPGTeam33
 
             Console.Clear();
 
-            Console.WriteLine("Battle!!\n\n");
+            Console.WriteLine("Battle!!\n");
             // 나중에 foreach로 출력
             Console.WriteLine($"{i++} Lv.2 미니언  HP 15");
             Console.WriteLine($"{i++} Lv.5 대포미니언 HP 25");
-            Console.WriteLine($"{i} Lv.3 공허충 HP 10\n\n\n");
+            Console.WriteLine($"{i} Lv.3 공허충 HP 10\n");
 
             Console.WriteLine("[내정보]");
             Console.WriteLine("Lv.1  Chad (전사)");
@@ -68,20 +68,53 @@ namespace TextRPGTeam33
             {
                 int input = int.Parse(Console.ReadLine());
                 if (input == 0)
-                    return;
+                    break;
                 else if (input < 0 || input > i)
                     Console.WriteLine("잘못된 입력입니다");
                 else
                 {
-                    // 전투 진행
+                    AttackProcess();
                     break;
                 }
             }
         }
 
+        private void AttackProcess()
+        {
+            // 해당 몬스터 공격
+            // 몬스터의 체력에서 공격력 만큼 깍기
+            // 공격력은 10%의 오차를 가지게 됩니다.
+            // 오차가 소수점이라면 올림 처리합니다.
+
+            // 몬스터가 죽었다면 체력 대신 Dead 으로 표시됩니다.
+            // 몬스터가 죽었다면 해당 몬스터에 텍스트는 전부 어두운 색으로 표시합니다.
+
+
+        }
+
         public void EnemyPhase()
         {
+            Console.Clear();
 
+            Console.WriteLine("Battle!!\n");
+            Console.WriteLine("Char 의 공격!");
+            Console.WriteLine("Lv.3 공허충 을(를) 맞췄습니다. [데미지 : 10]\n");
+
+            Console.WriteLine("Lv.3 공허충");
+            Console.WriteLine("HP 10 -> Dead\n");
+
+            Console.WriteLine("0. 다음\n");
+
+            Console.Write(">> ");
+
+            while (true)
+            {
+                int input = int.Parse(Console.ReadLine());
+                if (input == 0)
+                    break;
+                else
+                    Console.WriteLine("잘못된 입력입니다");
+            }
         }
 
         public void BattleResult()
