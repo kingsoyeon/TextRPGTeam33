@@ -46,7 +46,7 @@ namespace TextRPGTeam33
         }
 
         // 상태 보기 화면
-        public void DisplayStatus() 
+        public void StatusDisplay() 
         {
             Console.WriteLine($"Lv. {Level.ToString("00")}");       // 레벨 2자리수까지 표현
             Console.WriteLine($"{Name} ( {Job} )");
@@ -62,5 +62,6 @@ namespace TextRPGTeam33
             Console.WriteLine($"체력 : {Hp} / {MaxHP}");
             Console.WriteLine($"Gold : {Gold}");
         }
+
     }
 }
