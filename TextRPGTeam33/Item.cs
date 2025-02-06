@@ -12,7 +12,7 @@ namespace TextRPGTeam33
         Amor,
         Potion
     }
-    internal class Item
+    public class Item
     {
         public string Name { get; } // 아이템 이름
         public ItemType Type { get; } // 아이템 타입
@@ -64,7 +64,11 @@ namespace TextRPGTeam33
                 new Item("회복 포션", ItemType.Potion, 30, "스파르타의 전사들이 사용했다는 전설의 포션입니다.", 1000)
             };
         }
-
+        public string GetPriceString()
+        {
+            string str = IsPurchase ? "구매완료" : $"{Cost}";
+            return str;
+        }
     }
 
 }
