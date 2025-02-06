@@ -12,7 +12,7 @@ namespace TextRPGTeam33
         Amor,
         Potion
     }
-    internal class Item
+    public class Item
     {
         public string Name { get; } // 아이템 이름
         public ItemType Type { get; } // 아이템 타입
@@ -32,24 +32,6 @@ namespace TextRPGTeam33
             IsPurchase = false;
             IsEquip = false;
         }
-
-        public string ItemDisplay() // 아이템 표시
-        {
-            string equipMark = IsEquip ? "[E]" : "";
-            return $"{equipMark}{Name} | {GetTypeString()} | {Descrip}";
-        }
-
-        public string GetTypeString() // 아이템 정보 가져오기
-        {
-            return Type switch
-            {
-                ItemType.Weapon => $"공격력 +{Value}",
-                ItemType.Amor => $"방어력 +{Value}",
-                ItemType.Potion => $"회복량 +{Value}",
-                _ => $"정의되지 않은 아이템 타입: {Type}"  // default case
-            };
-        }
-
 
         public static List<Item> itemList()
         {
