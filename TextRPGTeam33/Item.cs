@@ -50,7 +50,8 @@ namespace TextRPGTeam33
             };
         }
 
-        public static List<Item> CreateDefaultItems() // 아이템 리스트 <= GameManager
+
+        public static List<Item> itemList()
         {
             return new List<Item>
             {
