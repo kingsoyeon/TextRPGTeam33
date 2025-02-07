@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace TextRPGTeam33
 {
-    public enum ItemType
+    public enum ItemType // 아이템 타입
     {
         Weapon,
         Amor,
@@ -21,10 +21,10 @@ namespace TextRPGTeam33
         public int Cost {  get; } // 가격
         public int ItemRate { get; set; } // 아이템 확율
         public int Count { get; set; } // 아이템 개수
-        public bool IsPurchase { get; set; } //구매여부
+        public bool IsPurchase { get; set; } //보유 상태
         public bool IsEquip { get; set; } // 장착 여부
 
-        public Item(string name, ItemType type, int value, int itemRate, string descrip, int cost, int count)
+        public Item(string name, ItemType type, int value, int itemRate, string descrip, int cost, int count) // 아이템 리스트 초기화
         {
             Name = name;
             Type = type;
@@ -37,9 +37,9 @@ namespace TextRPGTeam33
             IsEquip = false;
         }
 
-        public static List<Item> itemList()
+        public static List<Item> itemList() //아이템 리스트
         {
-            return new List<Item>
+            return new List<Item> // 이름, 타입, 값(공격력, 방어력, 회복력), 확률, 설명, 가격, 수(포션전용)
             {
                 new Item("수련자의 갑옷", ItemType.Amor, 4, 100,"수련에 도움을 주는 갑옷입니다.", 1000, 1),
                 new Item("무쇠갑옷", ItemType.Amor, 9, 100, "무쇠로 만들어져 튼튼한 갑옷입니다.", 2000, 1),

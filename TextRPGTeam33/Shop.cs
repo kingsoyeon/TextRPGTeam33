@@ -22,62 +22,59 @@ namespace TextRPGTeam33
             this.itemList = Item.itemList();
         }
 
-        public void DisplayShop()
+        public void DisplayShop() // 상점 출력
         {
             bool isShopOpen = true;
-            while (isShopOpen)
+            while (isShopOpen) // isShopOpen = false가 될시 종료
             {
                 Console.Clear();
                 Console.WriteLine("상점");
                 Console.WriteLine("필요한 아이템을 얻을 수 있는 상점입니다.");
 
                 Console.WriteLine("\n[보유 골드]");
-                Console.WriteLine($"{player.Gold}G");
+                Console.WriteLine($"{player.Gold} G");
 
                 Console.WriteLine("\n[아이템 목록]");
 
-               for (int i = 0; i < itemList.Count; i++)
+               for (int i = 0; i < itemList.Count; i++) // itemList에서 아이템 내용 출력
                 {
                     string price;
                     if (itemList[i].IsPurchase)
                     {
-                        price = "구매 완료";
+                        price = "보유중";
                     }
                     else
                     {
-                        int actualPrice = (int)(itemList[i].Cost);
+                        int actualPrice = (int)(itemList[i].Cost); // 보유중이 아닐때 아이템 가격 출력
                         price = $"{actualPrice} G";
                     }
 
-                    string stat;
-                    if (itemList[i].Type == ItemType.Amor) { stat = $"방어력 +{itemList[i].Value}"; }
-                    else if (itemList[i].Type == ItemType.Weapon) {  stat = $"공격력 +{itemList[i].Value}"; }
-                    else {  stat = $"회복량 +{itemList[i].Value}"; }
+                    string stat; // 아이템 stat(값)에 방어력, 공격력, 회복력 글자 추가
+                    if (itemList[i].Type == ItemType.Amor) { stat = $"방어력 +{itemList[i].Value}"; } // ItemType이 Amor일 경우 "방어력"
+                    else if (itemList[i].Type == ItemType.Weapon) {  stat = $"공격력 +{itemList[i].Value}"; }// ItemType이 Weapon일 경우 "공격력"
+                    else {  stat = $"회복량 +{itemList[i].Value}"; } // // 그외(ItemType이 Potion) 일 경우 "회복력"
 
-                    Console.WriteLine($"- {itemList[i].Name,-8} | {stat,-6} | {itemList[i].Descrip,-30} | {price}");
+                    Console.WriteLine($"- {itemList[i].Name,-8} | {stat,-6} | {itemList[i].Descrip,-30} | {price}"); // - {이름} | 값(공격력, 방어력, 회복력) | 아이템 설명 | 가격/보유여부
                 }
 
                 Console.WriteLine("\n1. 아이템 구매");
                 Console.WriteLine("2. 아이템 판매");
                 Console.WriteLine("0. 나가기\n");
 
-                Console.Write("원하시는 행동을 입력해주세요.\n");
+                Console.Write("원하시는 행동을 입력해주세요.\n>>");
                 string input = Console.ReadLine();
 
                 if( input == "1")
                 {
-                    // 구매
-                    BuyScreen();
+                    BuyScreen(); // 구매
                 }
                 else if( input == "2")
                 {
-                    // 판매
-                    Console.Clear();
-                    SellScreen();
+                    SellScreen(); //판매
                 }
                 else if (input == "0")
                 {
-                    isShopOpen = false;
+                    isShopOpen = false; // 나가기
                 }
                 else
                 {
@@ -91,7 +88,7 @@ namespace TextRPGTeam33
             
         }
 
-        private void BuyScreen()
+        private void BuyScreen() // 구매창 출력
         {
             Console.Clear();
             Console.WriteLine("상점 - 아이템 구매");
@@ -101,16 +98,16 @@ namespace TextRPGTeam33
 
             Console.WriteLine("\n[아이템 목록]");
 
-            for (int i = 0; i < itemList.Count; i++)
+            for (int i = 0; i < itemList.Count; i++) // itemList에서 아이템 내용 출력
             {
                 string price;
-                if (itemList[i].IsPurchase)
+                if (itemList[i].IsPurchase) // 만약 보유중 이라면...
                 {
-                    price = "구매 완료";
+                    price = "보유중";
                 }
                 else
                 {
-                    int actualPrice = (int)(itemList[i].Cost);
+                    int actualPrice = (int)(itemList[i].Cost); // 보유중이 아닐때 아이템 가격 출력
                     price = $"{actualPrice} G";
                 }
 
@@ -119,39 +116,39 @@ namespace TextRPGTeam33
                 else if (itemList[i].Type == ItemType.Weapon) { stat = $"공격력 +{itemList[i].Value}"; }
                 else { stat = $"회복량 +{itemList[i].Value}"; }
 
-                Console.WriteLine($"- {i + 1} {itemList[i].Name,-8} | {stat,-6} | {itemList[i].Descrip,-30} | {price}");
+                Console.WriteLine($"- {i + 1} {itemList[i].Name,-8} | {stat,-6} | {itemList[i].Descrip,-30} | {price}"); // - index 이름 | 값(공격력, 방어력, 회복력) | 아이템 설명 | 가격/보유여부
             }
 
             Console.WriteLine("\n0. 나가기");
-            Console.Write("\n구매할 아이템 번호를 입력해주세요. \n");
+            Console.Write("\n구매할 아이템 번호를 입력해주세요.\n>>");
 
             string input = Console.ReadLine();
             if (input == "0") return;
 
-            if (int.TryParse(input, out int index) && index > 0 && index <= itemList.Count)
+            if (int.TryParse(input, out int index) && index > 0 && index <= itemList.Count) //input값을 정수(int)로 변환 시켜 index에 넣는다.
             {
                 var item = itemList[index - 1];
                 int price = item.Cost;
 
-                if (item.Type != ItemType.Potion && item.IsPurchase)
+                if (item.Type != ItemType.Potion && item.IsPurchase) // ItemType이 Potion이 아니고, 보유중이 라면... => 포션은 여러번 구매 가능
                 {
-                    Console.WriteLine("이미 구매한 아이템입니다.");
+                    Console.WriteLine("이미 보유한 아이템입니다.");
                     Thread.Sleep(1000);
                 }
-                else if (item.Type == ItemType.Potion)
+                else if (item.Type == ItemType.Potion) // ItemType이 Potion 이라면...
                 {
                     Console.Write("\n구매할 수량을 입력해주세요: ");
-                    if (int.TryParse(Console.ReadLine(), out int quantity) && quantity > 0)
+                    if (int.TryParse(Console.ReadLine(), out int quantity) && quantity > 0) // 입력값을 정수로 변환 시켜 quantity에 넣는다.
                     {
-                        int totalPrice = price * quantity;
+                        int totalPrice = price * quantity; // 가격 = 포션 가격 x 입력값
                         if (player.Gold >= totalPrice)
                         {
-                            player.Gold -= totalPrice;
+                            player.Gold -= totalPrice; // 플레이어가 보유한 Gold 만큼 가격 차감
 
-                            List<Item> newItems = new List<Item>();
-                            var newItem = new Item(item.Name, item.Type, item.Value, item.ItemRate, item.Descrip, item.Cost, quantity);
-                            newItems.Add(newItem);
-                            inventory.AddItem(newItems);
+                            List<Item> newItems = new List<Item>(); //아이템 리스트 초기화
+                            var newItem = new Item(item.Name, item.Type, item.Value, item.ItemRate, item.Descrip, item.Cost, quantity); // 초기화된 리스트에 작성
+                            newItems.Add(newItem); // newItem에 아이템 리스트 추가
+                            inventory.AddItem(newItems); // newItem을 인벤토리에 추가
 
                             Console.WriteLine($"{quantity}개 구매를 완료했습니다.");
                             Thread.Sleep(1000);
@@ -173,10 +170,10 @@ namespace TextRPGTeam33
                     player.Gold -= price;
                     item.IsPurchase = true;
 
-                    List<Item> newItems = new List<Item>();
-                    var newItem = new Item(item.Name, item.Type, item.Value, item.ItemRate, item.Descrip, item.Cost, item.Count);
-                    newItems.Add(newItem);
-                    inventory.AddItem(newItems);
+                    List<Item> newItems = new List<Item>(); //아이템 리스트 초기화
+                    var newItem = new Item(item.Name, item.Type, item.Value, item.ItemRate, item.Descrip, item.Cost, item.Count); // 초기화된 리스트에 작성
+                    newItems.Add(newItem); // newItem에 아이템 리스트 추가
+                    inventory.AddItem(newItems); // newItem을 인벤토리에 추가
 
                     Console.WriteLine($"{item.Name}를 구매를 완료했습니다.");
                     Thread.Sleep(1000);
@@ -195,15 +192,15 @@ namespace TextRPGTeam33
                 Console.Clear();
             }
         }
-        private void SellScreen()
+        private void SellScreen() // 판매창 출력
         {
             Console.Clear();
             Console.WriteLine("상점 - 아이템 판매");
             Console.WriteLine($"\n[보유 골드]\n{player.Gold} G\n");
 
-            var inventoryItems = inventory.GetItems();
+            var inventoryItems = inventory.GetItems(); //인벤토리 아이템 정보를 inventoryItems에 입력
 
-            if (inventoryItems.Count < 1)
+            if (inventoryItems.Count < 1) //인벤토리가 비어있다면...
             {
                 Console.WriteLine("판매할 아이템이 없습니다.");
                 Thread.Sleep(1000);
@@ -212,12 +209,12 @@ namespace TextRPGTeam33
 
             Console.WriteLine("[아이템 목록]");
 
-            for (int i = 0; i < inventoryItems.Count; i++)
+            for (int i = 0; i < inventoryItems.Count; i++) //인벤토리 아이템 내용 출력
             {
-                var item = inventoryItems[i];
+                var item = inventoryItems[i]; // 
 
                 string Price;
-                int actualPrice = (int)(inventoryItems[i].Cost * 0.85);  // item 사용
+                int actualPrice = (int)(inventoryItems[i].Cost * 0.85);  // 판매가격은 제품가격의 85%의 가격으로 판매
                 Price = $"{actualPrice} G";
 
                 string stat;
@@ -225,10 +222,10 @@ namespace TextRPGTeam33
                 else if (item.Type == ItemType.Weapon) { stat = $"공격력 +{item.Value}"; }
                 else { stat = $"회복량 +{item.Value}"; }
 
-                string equippedMark = item.IsEquip ? "[E] " : "";
-                string countDisplay = item.Type == ItemType.Potion ? $"[보유 : {item.Count}개]" : "";
+                string equippedMark = item.IsEquip ? "[E] " : ""; // 장착중이면  [E] 출력
+                string countDisplay = $"[보유 : {item.Count}개]"; // 여러개 보유중이면 보유 개수 출력
 
-                Console.WriteLine($"- {i + 1} {equippedMark}{item.Name,-8} | {stat,-6} | {item.Descrip,-30} | {Price} {countDisplay}");
+                Console.WriteLine($"- {i + 1} {equippedMark}{item.Name,-8} | {stat,-6} | {item.Descrip,-30} | {Price} {countDisplay}"); // - index 이름 | 값(공격력, 방어력, 회복력) | 아이템 설명 | 가격/보유여부 [보유 개수]
             }
 
             Console.WriteLine("\n0. 나가기");
@@ -237,74 +234,57 @@ namespace TextRPGTeam33
             string input = Console.ReadLine();
             if (input == "0") return;
 
-            if (int.TryParse(input, out int index) && index > 0 && index <= inventoryItems.Count)
+            if (int.TryParse(input, out int index) && index > 0 && index <= inventoryItems.Count) //input값을 정수(int)로 변환 시켜 index에 넣는다.
             {
-                var item = inventoryItems[index - 1];
-
-                if (item.IsEquip)
                 {
-                    player.UnEquipItem(item);
-                }
+                    var item = inventoryItems[index - 1];
 
-                if (item.Type == ItemType.Potion)  // 포션 판매
-                {
+                    if (item.IsEquip)
+                    {
+                        player.UnEquipItem(item); // 장착중 일경우 장착 해제
+                    }
+
+
                     Console.Write($"\n현재 보유 중인 {item.Name}의 개수: {item.Count}개");
                     Console.Write("\n판매할 수량을 입력해주세요: ");
-                    string quantityInput = Console.ReadLine();
 
-                    if (!int.TryParse(quantityInput, out int quantity))
+                    if (!int.TryParse(Console.ReadLine(), out int quantity)) // 입력값이 잘못됬다면... / 입력값을 정수로 변환시켜 index에 넣는다.
                     {
                         Console.WriteLine("잘못된 수량입니다.");
                         Thread.Sleep(1000);
                         return;
                     }
 
-                    if (quantity <= 0)
+                    if (quantity <= 0) //입력값이 0이하 이라면... => DisplayShop()으로 이동
                     {
                         Console.WriteLine("1개 이상 입력해주세요.");
                         Thread.Sleep(1000);
                         return;
                     }
 
-                    if (quantity > item.Count)
+                    if (quantity > item.Count) // 입력값이 보유 포션수 보다 만다면...
                     {
                         Console.WriteLine($"{item.Name}의 개수가 부족합니다.");
                         Thread.Sleep(1000);
                         return;
                     }
 
-                    int sellPrice = (int)(item.Cost * 0.85 * quantity);
+                    int sellPrice = (int)(item.Cost * 0.85 * quantity); // 판매 가격은 아이템 가격의 85%.
                     player.Gold += sellPrice;
 
-                    if (quantity == item.Count)
+                    if (quantity == item.Count) // 입력 값 = 아이템 수 이라면...
                     {
-                        inventory.RemoveItem(item);
+                        inventory.RemoveItem(item);  // 이부분 오류 발생 가능성 있음 // 아이템 제거 
                     }
                     else
                     {
-                        item.Count -= quantity;
+                        item.Count -= quantity; // 아이템 수에서 입력값 만큼 제거. ex) 보유수 10, 입력값 5 => 보유수 5
                     }
 
                     Console.WriteLine($"{item.Name} {quantity}개가 판매되었습니다.");
                     Thread.Sleep(1000);
                     return;
                 }
-                else
-                {
-                    int sellPrice = (int)(item.Cost * 0.85);
-
-                    player.Gold += sellPrice;
-                    inventory.RemoveItem(item); // 이부분 오류 발생 가능성 있음
-
-                    var shopItem = itemList.Find(x => x.Name == item.Name);
-                    if (shopItem != null && item.Type != ItemType.Potion)
-                    {
-                        shopItem.IsPurchase = false;
-                    }
-                }
-
-                Console.WriteLine($"{item.Name}이 판매 되었습니다.");
-                Thread.Sleep(1000);
             }
             else
             {
