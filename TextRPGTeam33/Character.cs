@@ -91,7 +91,10 @@ namespace TextRPGTeam33
 
         public void UnEquipItem(Item item)
         {
+            item.IsEquip = false;
 
+            if (item.Type == ItemType.Weapon) { PlusAttack -= item.Value; } 
+            else if ( item.Type == ItemType.Amor)   { PlusDefense -= item.Value; }
         }
 
     }
