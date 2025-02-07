@@ -88,6 +88,21 @@ namespace TextRPGTeam33
             if (input == "1")
             {
                 // 인벤토리 보이기
+                Console.WriteLine("인벤토리");
+                Console.WriteLine("보유 중인 아이템을 관리할 수 있습니다.");
+                Console.WriteLine("");
+                Console.WriteLine("[아이템 목록]");
+                Console.WriteLine("");
+                Inventory.InventoryDisplay();
+                Console.WriteLine("");
+                Console.WriteLine("1. 장착 관리");
+                Console.WriteLine("0. 나가기");
+
+                if (input == "0") { // 스타트 화면 호출
+                }
+                else { // 장착관리 화면 }
+                
+
             }
 
             if (input == "0")
