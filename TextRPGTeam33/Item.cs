@@ -12,56 +12,40 @@ namespace TextRPGTeam33
         Amor,
         Potion
     }
-    internal class Item
+    public class Item
     {
         public string Name { get; } // 아이템 이름
         public ItemType Type { get; } // 아이템 타입
         public int Value { get; } // 값
         public string Descrip {  get; } // 설명
         public int Cost {  get; } // 가격
+        public int ItemRate { get; } // 아이템확율
         public bool IsPurchase { get; set; } //구매여부
         public bool IsEquip { get; set; } // 장착 여부
 
-        public Item(string name, ItemType type, int value, string descrip, int cost)
+        public Item(string name, ItemType type, int value, int itemRate, string descrip, int cost)
         {
             Name = name;
             Type = type;
             Value = value;
+            ItemRate = itemRate;
             Descrip = descrip;
             Cost = cost;
             IsPurchase = false;
             IsEquip = false;
         }
 
-        public string ItemDisplay() // 아이템 표시
-        {
-            string equipMark = IsEquip ? "[E]" : "";
-            return $"{equipMark}{Name} | {GetTypeString()} | {Descrip}";
-        }
-
-        public string GetTypeString() // 아이템 정보 가져오기
-        {
-            return Type switch
-            {
-                ItemType.Weapon => $"공격력 +{Value}",
-                ItemType.Amor => $"방어력 +{Value}",
-                ItemType.Potion => $"회복량 +{Value}",
-                _ => $"정의되지 않은 아이템 타입: {Type}"  // default case
-            };
-        }
-
-
         public static List<Item> itemList()
         {
             return new List<Item>
             {
-                new Item("수련자의 갑옷", ItemType.Amor, 4, "수련에 도움을 주는 갑옷입니다.", 1000),
-                new Item("무쇠갑옷", ItemType.Amor, 9, "무쇠로 만들어져 튼튼한 갑옷입니다.", 2000),
-                new Item("스파르타의 갑옷", ItemType.Amor, 15, "스파르타의 전사들이 사용했다는 전설의 갑옷입니다.", 3500),
-                new Item("낡은 검", ItemType.Weapon, 5, "쉽게 볼 수 있는 낡은 검 입니다.", 600),
-                new Item("청동 도끼", ItemType.Weapon, 10, "어디선가 사용됐던거 같은 도끼입니다.", 1500),
-                new Item("스파르타의 창", ItemType.Weapon, 20, "스파르타의 전사들이 사용했다는 전설의 창입니다.", 2500),
-                new Item("회복 포션", ItemType.Potion, 30, "스파르타의 전사들이 사용했다는 전설의 포션입니다.", 1000)
+                new Item("수련자의 갑옷", ItemType.Amor, 4, 100,"수련에 도움을 주는 갑옷입니다.", 1000),
+                new Item("무쇠갑옷", ItemType.Amor, 9, 100, "무쇠로 만들어져 튼튼한 갑옷입니다.", 2000),
+                new Item("스파르타의 갑옷", ItemType.Amor, 15, 100, "스파르타의 전사들이 사용했다는 전설의 갑옷입니다.", 3500),
+                new Item("낡은 검", ItemType.Weapon, 5, 100, "쉽게 볼 수 있는 낡은 검 입니다.", 600),
+                new Item("청동 도끼", ItemType.Weapon, 10, 100, "어디선가 사용됐던거 같은 도끼입니다.", 1500),
+                new Item("스파르타의 창", ItemType.Weapon, 20, 100, "스파르타의 전사들이 사용했다는 전설의 창입니다.", 2500),
+                new Item("회복 포션", ItemType.Potion, 30, 100, "스파르타의 전사들이 사용했다는 전설의 포션입니다.", 1000)
             };
         }
 
