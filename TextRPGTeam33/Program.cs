@@ -1,4 +1,5 @@
 using System;
+using System.ComponentModel;
 using System.Threading;
 using TextRPGTeam33;
 
@@ -12,7 +13,7 @@ class Program
         {
             Console.Clear();
 
-            /*Console.ForegroundColor = ConsoleColor.Blue;
+            Console.ForegroundColor = ConsoleColor.Blue;
             Console.WriteLine("    	            ___");
             Console.WriteLine("	   	  ▲▼▲  ▼");
             Console.Write("	        ◆");
@@ -75,7 +76,126 @@ class Program
             Console.ForegroundColor = ConsoleColor.Gray;
             Console.WriteLine("     ●●●●");
             Console.ForegroundColor = ConsoleColor.Cyan;
-            대포미니언*/
+
+
+            Console.ForegroundColor = ConsoleColor.DarkMagenta;
+            Console.WriteLine("             ◆◆");
+            Console.Write("           ◆");
+            Console.ForegroundColor = ConsoleColor.DarkYellow;
+            Console.Write("◆");
+            Console.ForegroundColor = ConsoleColor.DarkMagenta;
+            Console.WriteLine("◆");
+            Console.Write("         ◆");
+            Console.ForegroundColor = ConsoleColor.DarkYellow;
+            Console.Write("◆");
+            Console.ForegroundColor = ConsoleColor.DarkMagenta;
+            Console.Write("◆");
+            Console.ForegroundColor = ConsoleColor.DarkYellow;
+            Console.Write("◆");
+            Console.ForegroundColor = ConsoleColor.DarkMagenta;
+            Console.Write("◆");
+            Console.ForegroundColor = ConsoleColor.Magenta;
+            Console.WriteLine("    ▲");
+            Console.Write("    ▲▲");
+            Console.ForegroundColor = ConsoleColor.DarkMagenta;
+            Console.Write("    ◆◆");
+            Console.ForegroundColor = ConsoleColor.Magenta;
+            Console.Write(" ▲▲");
+            Console.ForegroundColor = ConsoleColor.DarkMagenta;
+            Console.Write("))))))");
+            Console.ForegroundColor = ConsoleColor.Magenta;
+            Console.WriteLine(" ▲" );
+            Console.Write("   ▲▼▼▲");
+            Console.ForegroundColor = ConsoleColor.DarkMagenta;
+            Console.Write("↖//◆");
+            Console.ForegroundColor = ConsoleColor.Magenta;
+            Console.Write(" ▲▼▼▲");
+            Console.ForegroundColor = ConsoleColor.DarkMagenta;
+            Console.Write("))))↘/");
+            Console.ForegroundColor = ConsoleColor.Magenta;
+            Console.WriteLine("▼▼");
+            Console.Write("   ▼▼");
+            Console.ForegroundColor = ConsoleColor.DarkMagenta;
+            Console.Write("   -");
+            Console.ForegroundColor = ConsoleColor.Magenta;
+            Console.WriteLine("    ▼▼   ▼▼   ▼▼");   
+            Console.WriteLine("    ▼        ▼     ▼    ▼");
+
+
+            Console.ForegroundColor = ConsoleColor.Gray;
+            Console.Write("    ▲");
+            Console.Write("   ▲");
+            Console.ForegroundColor = ConsoleColor.White;
+            Console.WriteLine("             ◆◆◆");
+            Console.ForegroundColor = ConsoleColor.DarkGray;
+            Console.Write("※");
+            Console.ForegroundColor = ConsoleColor.Gray;
+            Console.Write("  ▼▼▼");
+            Console.ForegroundColor = ConsoleColor.DarkGray;
+            Console.Write("↖ ");
+            Console.ForegroundColor = ConsoleColor.Gray;
+            Console.Write("▼▼");
+            Console.ForegroundColor = ConsoleColor.DarkRed;
+            Console.WriteLine("           ◆");
+            Console.ForegroundColor = ConsoleColor.DarkGray;
+            Console.Write(" ※");
+            Console.ForegroundColor = ConsoleColor.Gray;
+            Console.Write(" ◆◆◆");
+            Console.ForegroundColor = ConsoleColor.DarkGray;
+            Console.Write(" ↖");
+            Console.ForegroundColor = ConsoleColor.DarkRed;
+            Console.Write("           ◆◆◆");
+            Console.ForegroundColor = ConsoleColor.Gray;
+            Console.WriteLine("    ◆");
+            Console.ForegroundColor = ConsoleColor.DarkGray;
+            Console.Write("  ※");
+            Console.ForegroundColor = ConsoleColor.Gray;
+            Console.Write(" ◆◆");
+            Console.ForegroundColor = ConsoleColor.DarkGray;
+            Console.Write(" ↖↖");
+            Console.ForegroundColor = ConsoleColor.Yellow;
+            Console.Write("      ▲");
+            Console.ForegroundColor = ConsoleColor.DarkRed;
+            Console.Write(" ◆");
+            Console.ForegroundColor = ConsoleColor.Yellow;
+            Console.Write("↘ ↙");
+            Console.ForegroundColor = ConsoleColor.DarkRed;
+            Console.Write(" ◆");
+            Console.ForegroundColor = ConsoleColor.Yellow;
+            Console.Write(" ▲");
+            Console.ForegroundColor = ConsoleColor.Gray;
+            Console.WriteLine("◆◆◆");
+            Console.ForegroundColor = ConsoleColor.DarkGray;
+            Console.Write("   ※");
+            Console.ForegroundColor = ConsoleColor.Gray;
+            Console.Write(" ▼");
+            Console.ForegroundColor = ConsoleColor.DarkGray;
+            Console.Write("   ↖↖");
+            Console.ForegroundColor = ConsoleColor.Yellow;
+            Console.Write("   ▲▲");
+            Console.ForegroundColor = ConsoleColor.DarkRed;
+            Console.Write("  ◆◆◆");
+            Console.ForegroundColor = ConsoleColor.Yellow;
+            Console.Write("  ▲▲");
+            Console.ForegroundColor = ConsoleColor.Gray;
+            Console.WriteLine("◆◆◆◆");
+            Console.ForegroundColor = ConsoleColor.DarkGray;
+            Console.Write("          ↖");
+            Console.ForegroundColor = ConsoleColor.White;
+            Console.Write(" @");
+            Console.ForegroundColor = ConsoleColor.DarkRed;
+            Console.Write("//");
+            Console.ForegroundColor = ConsoleColor.DarkRed;
+            Console.Write("   ◆◆◆◆");
+            Console.ForegroundColor = ConsoleColor.Gray;
+            Console.WriteLine("   ◆◆◆");
+            Console.ForegroundColor = ConsoleColor.DarkGray;
+            Console.Write("            ↖↖");
+            Console.ForegroundColor = ConsoleColor.DarkRed;
+            Console.Write("    ◆◆◆◆◆");
+            Console.ForegroundColor = ConsoleColor.Gray;
+            Console.WriteLine("   ◆");
+            Console.ForegroundColor = ConsoleColor.Cyan;
             Console.WriteLine("■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■");
             Console.Write("■ ");
             Console.ForegroundColor = ConsoleColor.White;
@@ -216,5 +336,3 @@ class Program
         Shop shop = new Shop(player, null);
         shop.DisplayShop();
     }
-
-}
