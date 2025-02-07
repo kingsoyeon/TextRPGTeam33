@@ -9,16 +9,16 @@ namespace TextRPGTeam33
     public class Character
     {
         // 프로퍼티 생성
-        public int Level { get; }
+        public int Level { get; set; }
         public String Name { get; set; }
         public string Job { get; }
 
         
-        public int Attack { get; }
+        public int Attack { get; set;  }
         public int PlusAttack { get; set; }
 
 
-        public int Defense { get; }
+        public int Defense { get; set; }
         public int PlusDefense { get; set; }
 
         public int Hp { get; set; }
