@@ -58,6 +58,11 @@ namespace TextRPGTeam33
         // 상태 보기 화면
         public void StatusDisplay() 
         {
+            Console.WriteLine("상태보기");
+            Console.WriteLine("캐릭터의 정보가 표시됩니다."); 
+            Console.WriteLine("");
+
+            // 캐릭터 스탯
             Console.WriteLine($"Lv. {Level.ToString("00")}");       // 레벨 2자리수까지 표현
             Console.WriteLine($"{Name} ( {Job} )");
             
@@ -71,6 +76,23 @@ namespace TextRPGTeam33
 
             Console.WriteLine($"체력 : {Hp} / {MaxHP}");
             Console.WriteLine($"Gold : {Gold}");
+
+            Console.WriteLine("1. 인벤토리");
+            Console.WriteLine("0. 나가기");
+            Console.WriteLine("");
+            Console.WriteLine("원하시는 행동을 입력해주세요.");
+            Console.Write(">>");
+
+            string input = Console.ReadLine();
+            if (input == "1")
+            {
+                // 인벤토리 보이기
+            }
+
+            if (input == "0")
+            {
+                // 스타트 화면 호출
+            }
         }
 
         public void EquipItem(Item item)
