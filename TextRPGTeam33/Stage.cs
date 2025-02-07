@@ -3,16 +3,12 @@
     public class Stage
     {
         private Character player;
-        private Inventory inventory;
-        List<Monster> monsterList;
-        List<Item> itemList;
+        private List<Monster> monsterList;
+        private List<Item> itemList;
 
-        public int stageFloor { get; set; } = 1;
-
-        public Stage(Character player, Inventory inventory)
+        public Stage(Character player)
         {
             this.player = player;
-            this.inventory = inventory;
 
             //몬스터 리스트
             monsterList = new List<Monster>
@@ -25,9 +21,9 @@
             //스테이지 클리어 아이템 보상리스트
             itemList = new List<Item>
             {
-                new Item("수련자의 갑옷", ItemType.Amor, 4, 3, "수련에 도움을 주는 갑옷입니다.", 1000),
-                new Item("낡은 검", ItemType.Weapon, 5, 3, "쉽게 볼 수 있는 낡은 검 입니다.", 600),
-                new Item("회복 포션", ItemType.Potion, 30, 10, "스파르타의 전사들이 사용했다는 전설의 포션입니다.", 1000)
+                new Item("수련자의 갑옷", ItemType.Amor, 4, 3, "수련에 도움을 주는 갑옷입니다.", 1000, 1),
+                new Item("낡은 검", ItemType.Weapon, 5, 3, "쉽게 볼 수 있는 낡은 검 입니다.", 600, 1),
+                new Item("회복 포션", ItemType.Potion, 30, 10, "스파르타의 전사들이 사용했다는 전설의 포션입니다.", 1000, 1)
             };
         }
 
@@ -39,11 +35,11 @@
             int monsterCnt = 3;
             int monsterId = 0;
 
-            monsterCnt += rand.Next(0, stageFloor); //몬스터 수 랜덤
+            monsterCnt += rand.Next(0, player.DungeonClearCount + 1); //몬스터 수 랜덤
             if (monsterCnt > 5) monsterCnt = 5; //몬스터 수 최대 5마리
 
             //5층마다 보스 몬스터 추가
-            if (stageFloor % 5 == 0)
+            if ((player.DungeonClearCount + 1) % 5 == 0)
             {
                 monsterCnt -= 1;
                 createMonster.Add(new Monster("바론", 10, 30, 10));
@@ -81,15 +77,15 @@
                     if (rand.Next(0, 100) < rewardRate)
                     {
                         rewardItems.Add(item);
-                        rewardItems.Add(new Item(item.Name, item.Type, item.Value, item.ItemRate, item.Descrip, item.Cost));
+                        rewardItems.Add(new Item(item.Name, item.Type, item.Value, item.ItemRate, item.Descrip, item.Cost, 1));
                     }
                 }
             }
 
             //보상 지급
             player.Gold += gold;
-            inventory.AddItem(rewardItems);
-            stageFloor += 1;
+            player.Inventory.AddItem(rewardItems);
+            player.DungeonClearCount += 1;
         }
     }
 }
