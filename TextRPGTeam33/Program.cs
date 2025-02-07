@@ -1,5 +1,6 @@
 using System;
 using System.ComponentModel;
+using System.Numerics;
 using System.Threading;
 using TextRPGTeam33;
 
@@ -296,7 +297,7 @@ class Program
             Console.ForegroundColor = ConsoleColor.Yellow;
             Console.WriteLine("  ■");
             Console.Write("■     ");
-            Console.ForegroundColor = ConsoleColor.Green;
+            Console.ForegroundColor = ConsoleColor.DarkGreen;
             Console.Write("▶ 1. 상태보기");
             Console.ForegroundColor = ConsoleColor.Yellow;
             Console.WriteLine("                     ■");
@@ -313,6 +314,11 @@ class Program
             Console.Write("■     ");
             Console.ForegroundColor = ConsoleColor.DarkRed;
             Console.Write("▶ 4. 배틀");
+            Console.ForegroundColor = ConsoleColor.Yellow;
+            Console.WriteLine("                         ■");
+            Console.Write("■     ");
+            Console.ForegroundColor = ConsoleColor.Green;
+            Console.Write("▶ 5. 포션");
             Console.ForegroundColor = ConsoleColor.Yellow;
             Console.WriteLine("                         ■");
             Console.Write("■     ");
@@ -350,6 +356,11 @@ class Program
                 Program.Voidling();
                 Thread.Sleep(3000);
                 StartBattle(player);
+
+            }
+            else if (choice == "5")
+            {
+                DrinkPotion(player);
             }
             else if (choice == "0")
             {
@@ -375,7 +386,11 @@ class Program
         Battle battle = new(player);
         battle.BattleStart();
     }
-
+    static void DrinkPotion(Character player)
+    {
+        Potion potion = new Potion(player, player.Inventory);
+        potion.DisplayPotion();
+    }
     static void OpenInventory(Character player)
     {
         Inventory Inventory = player.Inventory;
