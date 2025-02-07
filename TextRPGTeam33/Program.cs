@@ -4,7 +4,7 @@ using TextRPGTeam33;
 
 class Program
 {
-    static void Main(string[] args)
+    static void Main()
     {
         Console.Clear();
         bool isValidInput = false;
@@ -41,7 +41,7 @@ class Program
             if (startChoice == "1")
             {
                 StartGame();
-                isValidInput = true;
+                isValidInput = true; 
             }
             else if (startChoice == "0")
             {
@@ -50,14 +50,14 @@ class Program
                 Thread.Sleep(1000);
                 Environment.Exit(0);
 
-            }
-            else
-            {
-                Console.Clear();
-                Console.WriteLine("잘못된 입력입니다.");
-                Thread.Sleep(1000);
-            }
-
+                }
+                else
+                {
+                    Console.Clear();
+                    Console.WriteLine("잘못된 입력입니다.");
+                    Thread.Sleep(1000); 
+                }
+            
 
         }
     }
@@ -118,7 +118,7 @@ class Program
             else
             {
                 Console.WriteLine("잘못된 입력입니다.");
-                Thread.Sleep(1000);
+                Thread.Sleep(1000); 
             }
         }
     }
@@ -139,4 +139,6 @@ class Program
         Shop shop = new Shop(player, null);
         shop.DisplayShop();
     }
+
 }
+
