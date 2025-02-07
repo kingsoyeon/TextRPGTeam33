@@ -26,5 +26,13 @@ namespace TextRPGTeam33
             
             return Items;
         }
+
+        public void InventoryDisplay()
+        {
+            for(int i = 0; i < Items.Count; i++)
+        {
+            //
+        }
+        }
     }
 }
