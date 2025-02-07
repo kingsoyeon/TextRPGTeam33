@@ -91,7 +91,7 @@ namespace TextRPGTeam33
             {
                 // 인벤토리 보이기
                
-                Inventory.InventoryScreen();
+                Inventory.InventoryScreen(this);
                 
             }
             else if (input == "0") 
