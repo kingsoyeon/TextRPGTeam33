@@ -132,21 +132,6 @@ namespace TextRPGTeam33
             else if ( item.Type == ItemType.Amor)   { PlusDefense -= item.Value; }  // 갑옷일 경우 방어력 감소
         }
 
-        // 포션 사용
-        public void UsePotion(Item item)
-        {
-            Hp += item.Value;
-
-            Console.WriteLine($"{item.Name}을(를) 사용했습니다.");
-            if (Hp > MaxHP)     // Hp가 MaxHP를 초과하지 않도록 제한
-            {
-                Hp = MaxHP;
-            }
-
-            Inventory.RemoveItem(item);
-
-            Console.WriteLine($"현재 체력: {Hp}/{MaxHP}");
-
-        }
+        
     }
 }
