@@ -12,6 +12,7 @@ namespace TextRPGTeam33
         List<Monster> monsters;
         Character player;
         int startHp;
+        int startMp;
 
         public bool isEnd { get; set; }
 
@@ -22,11 +23,12 @@ namespace TextRPGTeam33
 
         public void BattleStart()
         {
-            stage = new Stage(player, player.Inventory);
+            stage = new Stage(player);
             // 전투를 시작하면 1~4마리의 몬스터가 랜덤하게 등장합니다.
             // 표시되는 순서는 랜덤입니다.
             monsters = stage.CreateMonster();
             startHp = player.Hp;
+            //startMp = player.Mp;
 
             // 중복해서 나타날 수 있습니다.
 
@@ -37,7 +39,17 @@ namespace TextRPGTeam33
                 Console.WriteLine("Battle!!\n");
                 foreach (Monster m in monsters)
                 {
-                    Console.WriteLine($"Lv.{m.level} {m.name} HP {m.hp}");
+                    if (m.hp <= 0)
+                    {
+                        Console.ForegroundColor = ConsoleColor.DarkGray;
+                        Console.WriteLine($"Lv.{m.level} {m.name} Dead");
+                    }
+                    else
+                    {
+                        Console.WriteLine($"Lv.{m.level} {m.name} HP {m.hp}");
+                    }
+
+                    Console.ResetColor();
                 }
                 Console.WriteLine();
 
@@ -45,16 +57,22 @@ namespace TextRPGTeam33
                 Console.WriteLine($"Lv.{player.Level} {player.Name} ({player.Job})");
                 Console.WriteLine($"HP {player.Hp}/{player.MaxHP}\n");
 
-                Console.WriteLine("0. 공격\n");
+                Console.WriteLine("1. 공격\n");
+                Console.WriteLine("2. 스킬\n");
 
                 Console.WriteLine("원하시는 행동을 입력해주세요");
                 Console.Write(">> ");
                 while (true)
                 {
                     string input = Console.ReadLine();
-                    if (input == "0")
+                    if (input == "1")
                     {
                         PlayerPhase();
+                        break;
+                    }
+                    else if (input == "2")
+                    {
+                        UseSkill();
                         break;
                     }
                     else
@@ -129,6 +147,11 @@ namespace TextRPGTeam33
             EnemyPhase();
         }
 
+        private void UseSkill()
+        {
+
+        }
+
         private void Attack(int i)
         {
             // 해당 몬스터 공격
@@ -139,15 +162,30 @@ namespace TextRPGTeam33
             int range = (int)MathF.Ceiling((float)player.Attack * 0.1f);
             int playerAtk = rand.Next(player.Attack - range, player.Attack + range);
 
+            int probability = rand.Next(0,100);
+            int monsterHp = monsters[i].hp;
+
             Console.Clear();
 
             Console.WriteLine("Battle!!\n");
             Console.WriteLine($"{player.Name} 의 공격!");
-            Console.WriteLine($"Lv.{monsters[i].level} {monsters[i].name} 을(를) 맞췄습니다. [데미지 : {playerAtk}]\n");
+            if (probability < 15)
+            {
+                playerAtk = (int)MathF.Ceiling((float)playerAtk * 1.6f);
+                Console.WriteLine($"Lv.{monsters[i].level} {monsters[i].name} 을(를) 맞췄습니다. [데미지 : {playerAtk}] - 치명타 공격!!\n");
+            }
+            else if (probability < 25)
+            {
+                playerAtk = 0;
+                Console.WriteLine($"Lv.{monsters[i].level} {monsters[i].name} 을(를) 공격했지만 아무일도 일어나지 않았습니다.\n");
+            }
+            else
+            {
+                Console.WriteLine($"Lv.{monsters[i].level} {monsters[i].name} 을(를) 맞췄습니다. [데미지 : {playerAtk}]\n");
+            }
 
-            int monsterHp = monsters[i].hp;
-            Console.WriteLine($"Lv.{monsters[i].level} {monsters[i].name}");
             monsters[i].hp -= playerAtk;
+            Console.WriteLine($"Lv.{monsters[i].level} {monsters[i].name}");
             if (monsters[i].hp > 0)
                 Console.WriteLine($"HP {monsterHp} -> {monsters[i].hp}\n");
             else
@@ -189,6 +227,9 @@ namespace TextRPGTeam33
             {
                 if (m.hp <= 0)
                     continue;
+
+                Random rand = new Random();
+                bool isDodge = rand.Next(0, 101) < 10;
 
                 Console.Clear();
 
