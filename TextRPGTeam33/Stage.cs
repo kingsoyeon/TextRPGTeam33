@@ -1,4 +1,6 @@
-﻿namespace TextRPGTeam33
+﻿using System.Security.Cryptography.X509Certificates;
+
+namespace TextRPGTeam33
 {
     public class Stage
     {
@@ -55,12 +57,17 @@
         }
 
         //전투 종료 후 보상 지급
-        public void StageClear(List<Monster> monsterList)
+        public void StageClear(List<Monster> monsterList, int startHp)
         {
+
             Random rand = new Random();
-            int exp = 0;
-            int gold = 0;
+            int itemIdx;
+            int curExp = player.Exp;
+            int rewardExp = 0;
+            int curLevel = player.Level;
+            int rewardGold = 0;
             int rewardRate = 0;
+            bool isLevelUp = false;
             List<Item> rewardItems = new List<Item>();
 
             //경험치는 몬스터 레벨 * 5만큼 획득
@@ -68,23 +75,69 @@
             //보상 아이템 획득 확률은 (아이템별 확률 + (몬스터의 레벨 / 5))
             foreach (Monster monster in monsterList)
             {
-                exp += (monster.level * 5);
-                gold += (int)((monster.level * 50) * (1 + (rand.NextDouble() * 0.2 - 0.1)));
+                rewardExp += (monster.level * 5);
+                rewardGold += (int)((monster.level * 50) * (1 + (rand.NextDouble() * 0.2 - 0.1)) / 10) * 10;
 
                 foreach (Item item in itemList)
                 {
                     rewardRate = item.ItemRate + monster.level / 5;
                     if (rand.Next(0, 100) < rewardRate)
                     {
-                        rewardItems.Add(item);
-                        rewardItems.Add(new Item(item.Name, item.Type, item.Value, item.ItemRate, item.Descrip, item.Cost, 1));
+                        //동일한 아이템을 획득한 경우 Count++
+                        itemIdx = rewardItems.FindIndex(n => n.Name == item.Name);
+
+                        if (itemIdx < 0)
+                        {
+                            rewardItems.Add(new Item(item.Name, item.Type, item.Value, item.ItemRate, item.Descrip, item.Cost, 1));
+                            rewardItems[rewardItems.Count - 1].IsPurchase = true;
+                        }
+                        else
+                        {
+                            rewardItems[itemIdx].Count++;
+                        }
                     }
                 }
             }
 
             //보상 지급
-            player.Gold += gold;
+            player.Gold += rewardGold;
+            player.Exp += rewardExp;
+
+            do
+            {
+                if (player.Exp >= player.LevelUpExp)
+                {
+                    rewardExp = player.Exp - player.LevelUpExp;
+                    player.LevelUpExp *= 2;
+                    player.Exp = rewardExp;
+                    player.Level++;
+                    isLevelUp = true;
+                }
+                else break;
+            }
+            while (true);
+
+            //보상 정보 출력
+            Console.WriteLine("[캐릭터 정보]");
+
+            if (isLevelUp) Console.WriteLine($"Lv.{curLevel} {player.Name} -> Lv.{player.Level} {player.Name}");
+            else Console.WriteLine($"Lv.{player.Level} {player.Name}");
+
+            Console.WriteLine($"HP.{startHp} -> {player.Hp}");
+
+            Console.WriteLine($"exp {curExp} -> {player.Exp}\n");
+
+            Console.WriteLine("[획득 아이템]");
+
+            Console.WriteLine($"{rewardGold} G");
+
+            foreach (Item item in rewardItems)
+            {
+                Console.WriteLine($"{item.Name} - {item.Count}");
+            }
+
             player.Inventory.AddItem(rewardItems);
+
             player.DungeonClearCount += 1;
         }
     }
