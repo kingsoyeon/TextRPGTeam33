@@ -8,12 +8,25 @@ namespace TextRPGTeam33
 {
     public class Battle
     {
+        Stage stage;
+        List<Monster> monsters;
+        Character player;
+        int startHp;
+
         public bool isEnd { get; set; }
+
+        public Battle(Character player)
+        {
+            this.player = player;
+        }
 
         public void BattleStart()
         {
+            stage = new Stage();
             // 전투를 시작하면 1~4마리의 몬스터가 랜덤하게 등장합니다.
             // 표시되는 순서는 랜덤입니다.
+            monsters = stage.CreateMonster();
+            startHp = player.Hp;
 
             // 중복해서 나타날 수 있습니다.
 
@@ -22,14 +35,15 @@ namespace TextRPGTeam33
                 Console.Clear();
 
                 Console.WriteLine("Battle!!\n");
-                // 나중에 foreach로 출력
-                Console.WriteLine("Lv.2 미니언  HP 15");
-                Console.WriteLine("Lv.5 대포미니언 HP 25");
-                Console.WriteLine("Lv.3 공허충 HP 10\n");
+                foreach (Monster m in monsters)
+                {
+                    Console.WriteLine($"Lv.{m.level} {m.name} HP {m.hp}");
+                }
+                Console.WriteLine();
 
                 Console.WriteLine("[내정보]");
-                Console.WriteLine("Lv.1  Chad (전사)");
-                Console.WriteLine("HP 100/100\n");
+                Console.WriteLine($"Lv.{player.Level} {player.Name} ({player.Job})");
+                Console.WriteLine($"HP {player.Hp}/{player.MaxHP}\n");
 
                 Console.WriteLine("0. 나가기");
                 Console.WriteLine("1. 공격\n");
@@ -65,14 +79,17 @@ namespace TextRPGTeam33
             Console.Clear();
 
             Console.WriteLine("Battle!!\n");
-            // 나중에 foreach로 출력
-            Console.WriteLine($"{i++} Lv.2 미니언  HP 15");
-            Console.WriteLine($"{i++} Lv.5 대포미니언 HP 25");
-            Console.WriteLine($"{i} Lv.3 공허충 HP 10\n");
+            foreach (Monster m in monsters)
+            {
+                if (m.hp <= 0) Console.ForegroundColor = ConsoleColor.DarkGray;
+                Console.WriteLine($"{i} Lv.{m.level} {m.name} HP {m.hp}");
+                i++;
+            }
+            Console.WriteLine();
 
             Console.WriteLine("[내정보]");
-            Console.WriteLine("Lv.1  Chad (전사)");
-            Console.WriteLine("HP 100/100\n");
+            Console.WriteLine($"Lv.{player.Level} {player.Name} ({player.Job})");
+            Console.WriteLine($"HP {player.Hp}/{player.MaxHP}\n");
 
             Console.WriteLine("0. 취소\n");
 
@@ -83,7 +100,7 @@ namespace TextRPGTeam33
                 int input = int.Parse(Console.ReadLine());
                 if (input == 0)
                     break;
-                else if (input < 0 || input > i)
+                else if (input < 0 || input > i || monsters[input - 1].hp <= 0)
                     Console.WriteLine("잘못된 입력입니다");
                 else
                 {
@@ -98,7 +115,7 @@ namespace TextRPGTeam33
             EnemyPhase();
         }
 
-        private void Attack(int monsterIndex)
+        private void Attack(int i)
         {
             // 해당 몬스터 공격
             // 몬스터의 체력에서 공격력 만큼 깍기
@@ -108,11 +125,16 @@ namespace TextRPGTeam33
             Console.Clear();
 
             Console.WriteLine("Battle!!\n");
-            Console.WriteLine("Chad 의 공격!");
-            Console.WriteLine("Lv.3 공허충 을(를) 맞췄습니다. [데미지 : 10]\n");
+            Console.WriteLine($"{player.Name} 의 공격!");
+            Console.WriteLine($"Lv.{monsters[i].level} {monsters[i].name} 을(를) 맞췄습니다. [데미지 : {player.Attack}]\n");
 
-            Console.WriteLine("Lv.3 공허충");
-            Console.WriteLine("HP 10 -> Dead\n");
+            int monsterHp = monsters[i].hp;
+            Console.WriteLine($"Lv.{monsters[i].level} {monsters[i].name}");
+            //monsters[i].hp -= player.Attack;
+            if (monsters[i].hp > 0)
+                Console.WriteLine($"HP {monsterHp} -> {monsters[i].hp}\n");
+            else
+                Console.WriteLine($"HP {monsterHp} -> Dead\n");
 
             Console.WriteLine("0. 다음\n");
 
@@ -127,7 +149,12 @@ namespace TextRPGTeam33
                     Console.WriteLine("잘못된 입력입니다");
             }
 
-            if (true) // 모든 적이 죽었다면
+            int flag = 0;
+            foreach (Monster m in monsters)
+            {
+                if (m.hp > 0) flag = 1;
+            }
+            if (flag == 0) // 모든 적이 죽었다면
                 BattleResult(true);
         }
 
@@ -138,18 +165,20 @@ namespace TextRPGTeam33
             // 다음을 누르면 그 다음 몬스터의 공격이 계속 됩니다.
             // 몬스터의 차례가 끝나면 플레이어의 차례로 돌아옵니다.
 
-            int i = 3;
-
-            while (i != 0) // 몬스터들이 공격을 끝낼때까지 반복
+            foreach (Monster m in monsters)
             {
+                if (m.hp <= 0)
+                    continue;
+
                 Console.Clear();
 
                 Console.WriteLine("Battle!!\n");
-                Console.WriteLine("Lv.2 미니언 의 공격!");
-                Console.WriteLine("Chad 을(를) 맞췄습니다. [데미지 : 6]\n");
+                Console.WriteLine($"Lv.{m.level} {m.name} 의 공격!");
+                Console.WriteLine($"{player.Name} 을(를) 맞췄습니다. [데미지 : {m.atk}]\n");
 
-                Console.WriteLine("Lv.1 Chad");
-                Console.WriteLine("HP 100 -> 94\n");
+                int playerHp = player.Hp;
+                Console.WriteLine($"Lv.{player.Level} {player.Name}");
+                Console.WriteLine($"HP {playerHp} -> {player.Hp}\n");
 
                 Console.WriteLine("0. 다음\n");
 
@@ -164,13 +193,11 @@ namespace TextRPGTeam33
                         Console.WriteLine("잘못된 입력입니다");
                 }
 
-                if (false) // 플레이어가 죽었다면
+                if (player.Hp <= 0) // 플레이어가 죽었다면
                 {
                     BattleResult(false);
                     break;
                 }
-
-                i--;
             }
         }
 
@@ -184,10 +211,10 @@ namespace TextRPGTeam33
 
                 Console.WriteLine("Battle!! - Result\n");
                 Console.WriteLine("Victory\n");
-                Console.WriteLine("던전에서 몬스터 3마리를 잡았습니다.\n");
-
-                Console.WriteLine("Lv.1 Chad");
-                Console.WriteLine("HP 100 -> 74\n");
+                Console.WriteLine($"던전에서 몬스터 {monsters.Count}마리를 잡았습니다.\n");
+                
+                Console.WriteLine($"Lv.{player.Level} {player.Name}");
+                Console.WriteLine($"HP {startHp} -> {player.Hp}\n");
 
                 Console.WriteLine("0. 다음\n");
 
@@ -209,8 +236,8 @@ namespace TextRPGTeam33
                 Console.WriteLine("Battle!! - Result\n");
                 Console.WriteLine("You Lose\n");
 
-                Console.WriteLine("Lv.1 Chad");
-                Console.WriteLine("HP 100 -> 0\n");
+                Console.WriteLine($"Lv.{player.Level} {player.Name}");
+                Console.WriteLine($"HP {startHp} -> Dead\n");
 
                 Console.WriteLine("0. 다음\n");
 
