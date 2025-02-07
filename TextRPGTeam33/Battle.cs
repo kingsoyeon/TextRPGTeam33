@@ -22,7 +22,7 @@ namespace TextRPGTeam33
 
         public void BattleStart()
         {
-            stage = new Stage();
+            stage = new Stage(player, player.Inventory);
             // 전투를 시작하면 1~4마리의 몬스터가 랜덤하게 등장합니다.
             // 표시되는 순서는 랜덤입니다.
             monsters = stage.CreateMonster();
@@ -45,8 +45,7 @@ namespace TextRPGTeam33
                 Console.WriteLine($"Lv.{player.Level} {player.Name} ({player.Job})");
                 Console.WriteLine($"HP {player.Hp}/{player.MaxHP}\n");
 
-                Console.WriteLine("0. 나가기");
-                Console.WriteLine("1. 공격\n");
+                Console.WriteLine("0. 공격\n");
 
                 Console.WriteLine("원하시는 행동을 입력해주세요");
                 Console.Write(">> ");
@@ -54,8 +53,6 @@ namespace TextRPGTeam33
                 {
                     string input = Console.ReadLine();
                     if (input == "0")
-                        return;
-                    else if (input == "1")
                     {
                         PlayerPhase();
                         break;
@@ -91,7 +88,7 @@ namespace TextRPGTeam33
                     Console.WriteLine($"{i} Lv.{m.level} {m.name} HP {m.hp}");
                 }
 
-                Console.ForegroundColor = ConsoleColor.White;
+                Console.ResetColor();
                 i++;
             }
             Console.WriteLine();
@@ -138,16 +135,19 @@ namespace TextRPGTeam33
             // 몬스터의 체력에서 공격력 만큼 깍기
             // 공격력은 10%의 오차를 가지게 됩니다.
             // 오차가 소수점이라면 올림 처리합니다.
+            Random rand = new Random();
+            int range = (int)MathF.Ceiling((float)player.Attack * 0.1f);
+            int playerAtk = rand.Next(player.Attack - range, player.Attack + range);
 
             Console.Clear();
 
             Console.WriteLine("Battle!!\n");
             Console.WriteLine($"{player.Name} 의 공격!");
-            Console.WriteLine($"Lv.{monsters[i].level} {monsters[i].name} 을(를) 맞췄습니다. [데미지 : {player.Attack}]\n");
+            Console.WriteLine($"Lv.{monsters[i].level} {monsters[i].name} 을(를) 맞췄습니다. [데미지 : {playerAtk}]\n");
 
             int monsterHp = monsters[i].hp;
             Console.WriteLine($"Lv.{monsters[i].level} {monsters[i].name}");
-            monsters[i].hp -= player.Attack; // 임시 공격
+            monsters[i].hp -= playerAtk;
             if (monsters[i].hp > 0)
                 Console.WriteLine($"HP {monsterHp} -> {monsters[i].hp}\n");
             else
@@ -198,7 +198,7 @@ namespace TextRPGTeam33
 
                 int playerHp = player.Hp;
                 Console.WriteLine($"Lv.{player.Level} {player.Name}");
-                player.Hp -= m.atk; // 임시 공격
+                player.Hp -= m.atk;
                 if (player.Hp < 0) player.Hp = 0;
                 Console.WriteLine($"HP {playerHp} -> {player.Hp}\n");
 
@@ -246,7 +246,12 @@ namespace TextRPGTeam33
                 {
                     string input = Console.ReadLine();
                     if (input == "0")
+                    {
+                        stage.StageClear(monsters);
+                        Console.WriteLine("보상이 지급됩니다");
+                        Thread.Sleep(1000);
                         break;
+                    }
                     else
                         Console.WriteLine("잘못된 입력입니다");
                 }
