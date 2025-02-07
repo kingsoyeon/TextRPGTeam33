@@ -36,17 +36,21 @@ namespace TextRPGTeam33
             return Items;
         }
 
-        public void InventoryScreen()
+        public void InventoryScreen(Character player)
         {
-            Console.WriteLine("아이템목록"); // 문구 수정 예정
+            Console.Clear();
+            Console.WriteLine("인벤토리");
+            Console.WriteLine("보유 중인 아이템을 관리할 수 있습니다.");
+            Console.WriteLine("");
+            Console.WriteLine("[아이템 목록]");
 
 
             for (int i = 0; i < Items.Count; i++)
             {
                 string itemInfo = InventoryDisplay(Items[i]);
-                Console.WriteLine("-{itemInfo}");
+                Console.WriteLine($"-{itemInfo}");
             }
-
+            Console.WriteLine("");
             Console.WriteLine("");
             Console.WriteLine("1. 장착관리");
             Console.WriteLine("0. 나가기");
@@ -55,16 +59,19 @@ namespace TextRPGTeam33
             Console.Write(">>");
 
             string input = Console.ReadLine();
+
             if (input == "0") { return; }
+
             else if (input == "1")
             {
+                Console.Clear();
                 Console.WriteLine("인벤토리-장착 관리");
                 Console.WriteLine("보유 중인 아이템을 관리할 수 있습니다.");
 
                 for (int i = 0; i < Items.Count; i++)
                 {
                     string itemInfo = InventoryDisplay(Items[i]);
-                    Console.WriteLine("-[i+1]{itemInfo}");
+                    Console.WriteLine($"-[{i+1}]{itemInfo}");
                 }
 
                 Console.WriteLine("");
@@ -72,9 +79,21 @@ namespace TextRPGTeam33
                 Console.WriteLine("원하시는 행동을 입력해주세요.");
                 Console.Write(">> ");
 
-                if (input == "1") { } // 장착관리화면
-                else { return; }
+                input = Console.ReadLine();
 
+                if (input == "0")
+                {
+                    return;
+                } 
+                // 장착할 아이템 선택
+                else if ((int.TryParse(input, out int selected) && selected >=1 && int.Parse(input) <= Items.Count))
+                {
+                    // 장착한다
+                    Item selectedItem = Items[selected -1];
+                    player.EquipItem(selectedItem);
+                }
+                else { Console.WriteLine("잘못된 입력"); }
+              
             }
             else { Console.WriteLine("잘못된 입력입니다."); }
         }
