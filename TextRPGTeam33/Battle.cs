@@ -234,7 +234,7 @@ namespace TextRPGTeam33
                 Console.WriteLine("Battle!! - Result\n");
                 Console.WriteLine("Victory\n");
                 Console.WriteLine($"던전에서 몬스터 {monsters.Count}마리를 잡았습니다.\n");
-                
+
                 Console.WriteLine($"Lv.{player.Level} {player.Name}");
                 Console.WriteLine($"HP {startHp} -> {player.Hp}\n");
 
