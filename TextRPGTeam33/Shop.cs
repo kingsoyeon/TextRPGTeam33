@@ -73,6 +73,7 @@ namespace TextRPGTeam33
                 {
                     // 판매
                     Console.Clear();
+                    SellScreen();
                 }
                 else if (input == "0")
                 {
@@ -162,5 +163,76 @@ namespace TextRPGTeam33
                 Console.Clear();
             }
         }
+        private void SellScreen()
+        {
+            Console.Clear();
+            Console.WriteLine("상점 - 아이템 판매");
+            Console.WriteLine($"\n[보유 골드]\n{player.Gold} G\n");
+
+            var inventoryItems = inventory.GetItems();
+
+            if (inventoryItems.Count <= 1)
+            {
+                Console.WriteLine("판매할 아이템이 없습니다."); 
+                Thread.Sleep(1000);
+                return;
+            }
+
+            Console.WriteLine("[아이템 목록]");
+            for (int i = 0; i < inventoryItems.Count; i++)
+            { 
+                var item = inventoryItems[i];
+
+                string Price;
+                int actualPrice = (int)(itemList[i].Cost * 0.85);
+                Price = $"{actualPrice} G";
+
+                string stat = (itemList[i].Type == ItemType.Amor) ? $"방어력 +{itemList[i].Value}" : $"공격력 +{itemList[i].Value}";
+
+                string equippedMark = item.IsEquip ? "[E] " : "";
+
+                Console.WriteLine($"- {i + 1} {equippedMark}{item.Name,-8} | {stat,-6} | {item.Descrip,-30} | {Price}");
+            }
+
+            Console.WriteLine("\n0. 나가기");
+            Console.Write("판매할 아이템 번호를 입력해 주세요.\n");
+
+            string input = Console.ReadLine();
+            if (input == "0") return;
+
+            if (int.TryParse(input, out int index) && index > 0 && index <= inventoryItems.Count)
+            {
+                var item = inventoryItems[index-1];
+
+                if (item.IsEquip)
+                {
+                    player.UnEquipItem(item);
+                }
+
+                int sellPrice = (int)(item.Cost * 0.85);
+
+                player.Gold += sellPrice;
+                inventory.RemoveItem(item); // 이부분 오류 발생 가능성 있음
+
+                var shopItem = itemList.Find(x => x.Name == item.Name);
+                //if (itemList != null)
+                //{
+                //    itemList.IsPurchase = false; 
+                //} // 필요시 itemList 변환 필요 => 다른 코드 충돌 방지를 위해 추후 작업
+
+                Console.WriteLine("판매가 완료되었습니다.");
+                Thread.Sleep(1000);
+            }
+            else
+            {
+                Console.Clear();
+
+                Console.WriteLine("잘못된 입력입니다.");
+                Thread.Sleep(1000);
+                Console.Clear();
+            }
+        }
+
     }
+    
 }
