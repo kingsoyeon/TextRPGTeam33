@@ -25,6 +25,7 @@ namespace TextRPGTeam33
         public int MaxHP { get; }
         public int Gold { get; set; }
 
+        public Inventory Inventory { get; }
         public int DungeonClearCount { get; set; }
 
 
@@ -42,6 +43,8 @@ namespace TextRPGTeam33
             Hp = maxHp;
             MaxHP = maxHp;
             DungeonClearCount = 0;
+
+            Inventory = new Inventory();
 
         }
 
@@ -99,6 +102,8 @@ namespace TextRPGTeam33
             {
                 Hp = MaxHP;
             }
+
+            Inventory.RemoveItem(item);
 
             Console.WriteLine($"현재 체력: {Hp}/{MaxHP}");
 
