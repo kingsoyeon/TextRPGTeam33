@@ -12,12 +12,19 @@ namespace TextRPGTeam33
 
         public void AddItem(Item item)
         {
+            if (item == null) return;
             Items.Add(item);
         }
 
         public void RemoveItem(Item item)
         {
             Items.Remove(item);
+        }
+
+        public List<Item> GetItems()
+        {
+            
+            return Items;
         }
     }
 }
