@@ -339,7 +339,7 @@ class Program
                 Console.WriteLine("");
                 Program.Voidling();
                 Thread.Sleep(3000);
-                StartBattle();
+                StartBattle(player);
             }
             else if (choice == "0")
             {
@@ -359,9 +359,9 @@ class Program
         Character Character = new Character(1, "Chad", "전사", 10, 5, 100, 50);
         Character.StatusDisplay();
     }
-    static void StartBattle()
+    static void StartBattle(Character player)
     {
-        Battle battle = new Battle();
+        Battle battle = new(player);
         battle.BattleStart();
     }
 
