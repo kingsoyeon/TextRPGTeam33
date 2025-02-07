@@ -178,7 +178,7 @@ namespace TextRPGTeam33
                     newItems.Add(newItem);
                     inventory.AddItem(newItems);
 
-                    Console.WriteLine($"{item.Name}를 {item.Count}개 구매를 완료했습니다.");
+                    Console.WriteLine($"{item.Name}를 구매를 완료했습니다.");
                     Thread.Sleep(1000);
                 }
                 else
