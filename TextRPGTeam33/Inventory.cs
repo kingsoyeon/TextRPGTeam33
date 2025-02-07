@@ -19,5 +19,10 @@ namespace TextRPGTeam33
         {
             Items.Remove(item);
         }
+
+        public List<Item> GetItems()
+        {
+            return Items;
+        }
     }
 }
