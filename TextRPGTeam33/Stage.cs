@@ -3,16 +3,12 @@
     public class Stage
     {
         private Character player;
-        private Inventory inventory;
-        List<Monster> monsterList;
-        List<Item> itemList;
+        private List<Monster> monsterList;
+        private List<Item> itemList;
 
-        public int stageFloor { get; set; } = 1;
-
-        public Stage(Character player, Inventory inventory)
+        public Stage(Character player)
         {
             this.player = player;
-            this.inventory = inventory;
 
             //몬스터 리스트
             monsterList = new List<Monster>
@@ -39,11 +35,11 @@
             int monsterCnt = 3;
             int monsterId = 0;
 
-            monsterCnt += rand.Next(0, stageFloor); //몬스터 수 랜덤
+            monsterCnt += rand.Next(0, player.DungeonClearCount + 1); //몬스터 수 랜덤
             if (monsterCnt > 5) monsterCnt = 5; //몬스터 수 최대 5마리
 
             //5층마다 보스 몬스터 추가
-            if (stageFloor % 5 == 0)
+            if ((player.DungeonClearCount + 1) % 5 == 0)
             {
                 monsterCnt -= 1;
                 createMonster.Add(new Monster("바론", 10, 30, 10));
@@ -88,8 +84,8 @@
 
             //보상 지급
             player.Gold += gold;
-            inventory.AddItem(rewardItems);
-            stageFloor += 1;
+            player.Inventory.AddItem(rewardItems);
+            player.DungeonClearCount += 1;
         }
     }
 }
