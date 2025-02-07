@@ -54,7 +54,7 @@ namespace TextRPGTeam33
                     else if (itemList[i].Type == ItemType.Weapon) {  stat = $"공격력 +{itemList[i].Value}"; }
                     else {  stat = $"회복량 +{itemList[i].Value}"; }
 
-                    Console.WriteLine($"- {i + 1} {itemList[i].Name,-8} | {stat,-6} | {itemList[i].Descrip,-30} | {price}");
+                    Console.WriteLine($"- {itemList[i].Name,-8} | {stat,-6} | {itemList[i].Descrip,-30} | {price}");
                 }
 
                 Console.WriteLine("\n1. 아이템 구매");
@@ -133,20 +133,52 @@ namespace TextRPGTeam33
                 var item = itemList[index - 1];
                 int price = item.Cost;
 
-                if (item.IsPurchase)
+                if (item.Type != ItemType.Potion && item.IsPurchase)
                 {
                     Console.WriteLine("이미 구매한 아이템입니다.");
                     Thread.Sleep(1000);
+                }
+                else if (item.Type == ItemType.Potion)
+                {
+                    Console.Write("\n구매할 수량을 입력해주세요: ");
+                    if (int.TryParse(Console.ReadLine(), out int quantity) && quantity > 0)
+                    {
+                        int totalPrice = price * quantity;
+                        if (player.Gold >= totalPrice)
+                        {
+                            player.Gold -= totalPrice;
+
+                            List<Item> newItems = new List<Item>();
+                            var newItem = new Item(item.Name, item.Type, item.Value, item.ItemRate, item.Descrip, item.Cost, quantity);
+                            newItems.Add(newItem);
+                            inventory.AddItem(newItems);
+
+                            Console.WriteLine($"{quantity}개 구매를 완료했습니다.");
+                            Thread.Sleep(1000);
+                        }
+                        else
+                        {
+                            Console.WriteLine("Gold가 부족합니다.");
+                            Thread.Sleep(1000);
+                        }
+                    }
+                    else
+                    {
+                        Console.WriteLine("잘못된 수량입니다.");
+                        Thread.Sleep(1000);
+                    }
                 }
                 else if (player.Gold >= price)
                 {
                     player.Gold -= price;
                     item.IsPurchase = true;
 
+                    List<Item> newItems = new List<Item>();
                     var newItem = new Item(item.Name, item.Type, item.Value, item.ItemRate, item.Descrip, item.Cost, item.Count);
-                    inventory.AddItem(newItem); // 아이템을 인벤토리로 옮기는 코드
+                    newItems.Add(newItem);
+                    inventory.AddItem(newItems);
 
-                    Console.WriteLine("구매를 완료했습니다.");
+                    Console.WriteLine($"{item.Name}를 {item.Count}개 구매를 완료했습니다.");
                     Thread.Sleep(1000);
                 }
                 else
@@ -215,12 +247,12 @@ namespace TextRPGTeam33
                 inventory.RemoveItem(item); // 이부분 오류 발생 가능성 있음
 
                 var shopItem = itemList.Find(x => x.Name == item.Name);
-                //if (itemList != null)
-                //{
-                //    itemList.IsPurchase = false; 
-                //} // 필요시 itemList 변환 필요 => 다른 코드 충돌 방지를 위해 추후 작업
+                if (itemList != null)
+                {
+                    item.IsPurchase = false; 
+                }
 
-                Console.WriteLine("판매가 완료되었습니다.");
+                Console.WriteLine($"{item.Name}이 판매 되었습니다.");
                 Thread.Sleep(1000);
             }
             else
