@@ -111,7 +111,7 @@ namespace TextRPGTeam33
                     player.LevelUpExp *= 2;
                     player.Exp = rewardExp;
                     player.Level++;
-                    player.Attack += 0.5;
+                    player.Attack += 1;
                     player.Defense += 1;
                     isLevelUp = true;
                 }
