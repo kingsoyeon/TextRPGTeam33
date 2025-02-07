@@ -10,9 +10,72 @@ class Program
         bool isValidInput = false;
         while (!isValidInput)
         {
-
             Console.Clear();
+
+            /*Console.ForegroundColor = ConsoleColor.Blue;
+            Console.WriteLine("    	            ___");
+            Console.WriteLine("	   	  ▲▼▲  ▼");
+            Console.Write("	        ◆");
+            Console.ForegroundColor = ConsoleColor.Yellow;
+            Console.Write("↘ ↙ ");
+            Console.ForegroundColor = ConsoleColor.Blue;
+            Console.WriteLine("◆");
+            Console.ForegroundColor = ConsoleColor.Gray;
+            Console.Write("	 ●●●");
+            Console.ForegroundColor = ConsoleColor.Blue;
+            Console.Write("  ＠");
+            Console.ForegroundColor = ConsoleColor.Gray;
+            Console.Write("/");
+            Console.ForegroundColor = ConsoleColor.Blue;
+            Console.Write("◆");
+            Console.ForegroundColor = ConsoleColor.Gray;
+            Console.Write("/");
+            Console.ForegroundColor = ConsoleColor.Blue;
+            Console.Write("@ ");
+            Console.ForegroundColor = ConsoleColor.Blue;
+            Console.WriteLine("▲");
+            Console.ForegroundColor = ConsoleColor.Gray;
+            Console.Write("    ■■■■");
             Console.ForegroundColor = ConsoleColor.Cyan;
+            Console.Write("〓〓〓");
+            Console.ForegroundColor = ConsoleColor.Gray;
+            Console.Write(" ●●●●");
+            Console.ForegroundColor = ConsoleColor.Cyan;
+            Console.WriteLine(" ||");
+            Console.ForegroundColor = ConsoleColor.Gray;
+            Console.Write("  ■");
+            Console.ForegroundColor = ConsoleColor.DarkGray;
+            Console.Write("■■■■■■");
+            Console.ForegroundColor = ConsoleColor.Gray;
+            Console.Write("■");
+            Console.ForegroundColor = ConsoleColor.Gray;
+            Console.Write("   ●  ◆◆  ●"); 
+            Console.ForegroundColor = ConsoleColor.Cyan;
+            Console.Write(" ||");
+            Console.ForegroundColor = ConsoleColor.Gray;
+            Console.WriteLine("  ==))");
+            Console.ForegroundColor = ConsoleColor.Gray;
+            Console.Write("  ■");
+            Console.ForegroundColor = ConsoleColor.DarkGray;
+            Console.Write("■■■■■■");
+            Console.ForegroundColor = ConsoleColor.Gray;
+            Console.Write("■");
+            Console.ForegroundColor = ConsoleColor.Cyan;
+            Console.Write("〓/");
+            Console.ForegroundColor = ConsoleColor.Gray;
+            Console.Write("●  ◆◆  ●");
+            Console.ForegroundColor = ConsoleColor.Cyan;
+            Console.Write(" ||");
+            Console.ForegroundColor = ConsoleColor.Gray;
+            Console.WriteLine("  ==))");
+            Console.ForegroundColor = ConsoleColor.Gray;
+            Console.Write("    ■■■■");
+            Console.ForegroundColor = ConsoleColor.Cyan;
+            Console.Write(" /");
+            Console.ForegroundColor = ConsoleColor.Gray;
+            Console.WriteLine("     ●●●●");
+            Console.ForegroundColor = ConsoleColor.Cyan;
+            대포미니언*/
             Console.WriteLine("■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■");
             Console.Write("■ ");
             Console.ForegroundColor = ConsoleColor.White;
@@ -29,13 +92,9 @@ class Program
             Console.Write("0. 도망친다.");
             Console.ForegroundColor = ConsoleColor.Cyan;
             Console.WriteLine("             ■");
-            Console.Write("■     ");
-            Console.ForegroundColor = ConsoleColor.White;
-            Console.Write("원하시는 행동을 입력해주세요!");
-            Console.ForegroundColor = ConsoleColor.Cyan;
-            Console.WriteLine("     ■");
             Console.WriteLine("■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■");
-            Console.ForegroundColor = ConsoleColor.White;
+            Console.ResetColor();
+            Console.Write("원하시는 행동을 입력해주세요:");
             string startChoice = Console.ReadLine() ?? "0";
 
             if (startChoice == "1")
@@ -49,7 +108,6 @@ class Program
                 Console.WriteLine("도망에 성공하셨습니다...（￣v￣）↗　");
                 Thread.Sleep(1000);
                 Environment.Exit(0);
-
                 }
                 else
                 {
@@ -70,34 +128,47 @@ class Program
         while (inDungeon)
         {
             Console.Clear();
+            Console.ForegroundColor = ConsoleColor.Yellow;
             Console.WriteLine("■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■");
             Console.Write("■ ");
+            Console.ForegroundColor = ConsoleColor.White;
             Console.Write("던전에서 할 수 있는 일을 선택하세요.");
+            Console.ForegroundColor = ConsoleColor.Yellow;
             Console.WriteLine("  ■");
             Console.Write("■     ");
+            Console.ForegroundColor = ConsoleColor.Green;
             Console.Write("▶ 1. 상태보기");
+            Console.ForegroundColor = ConsoleColor.Yellow;
             Console.WriteLine("                     ■");
             Console.Write("■     ");
+            Console.ForegroundColor = ConsoleColor.DarkBlue;
             Console.Write("▶ 2. 인벤토리");
+            Console.ForegroundColor = ConsoleColor.Yellow;
             Console.WriteLine("                     ■");
             Console.Write("■     ");
+            Console.ForegroundColor = ConsoleColor.DarkYellow;
             Console.Write("▶ 3. 상점");
+            Console.ForegroundColor = ConsoleColor.Yellow;
             Console.WriteLine("                         ■");
             Console.Write("■     ");
+            Console.ForegroundColor = ConsoleColor.DarkRed;
             Console.Write("▶ 4. 배틀");
+            Console.ForegroundColor = ConsoleColor.Yellow;
             Console.WriteLine("                         ■");
             Console.Write("■     ");
+            Console.ForegroundColor = ConsoleColor.DarkGray;
             Console.Write("▶ 0. 나가기");
+            Console.ForegroundColor = ConsoleColor.Yellow;
             Console.WriteLine("                       ■");
-            Console.Write("■     ");
-            Console.Write("원하시는 행동을 입력해주세요! ");
-            Console.WriteLine("    ■");
             Console.WriteLine("■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■");
+            Console.ResetColor();
+            //Console.BackgroundColor = ConsoleColor.Yellow; // 배경색 변경
+            Console.Write("원하시는 행동을 입력해주세요: ");
             string choice = Console.ReadLine() ?? "0";
 
             if (choice == "1")
             {
-                player.DisplayStatus();
+                player.StatusDisplay();
             }
             else if (choice == "2")
             {
@@ -120,9 +191,15 @@ class Program
                 Console.WriteLine("잘못된 입력입니다.");
                 Thread.Sleep(1000); 
             }
+
         }
     }
 
+    static void OpenStatus()
+    {
+        Character Character = new Character(1, "Chad", "전사", 10, 5, 100, 50);
+        Character.StatusDisplay();
+    }
     static void StartBattle()
     {
         Battle battle = new Battle();
@@ -141,4 +218,3 @@ class Program
     }
 
 }
-
