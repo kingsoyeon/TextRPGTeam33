@@ -18,7 +18,11 @@ namespace TextRPGTeam33
                 Items.Add(item);
             }
         }
-
+        public void AddItem(Item item)
+        {
+            if (item == null) return;
+            Items.Add(item);
+        }
 
         public void RemoveItem(Item item)
         {
