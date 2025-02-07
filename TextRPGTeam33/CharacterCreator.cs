@@ -45,54 +45,54 @@ namespace TextRPGTeam33
                 int def = 0;
                 int maxHp = 0;
                 int maxMp = 0;
-                int gold = 0;   
+                int gold = 1500;   
 
                 
                 switch (selectJob)
                 {
                         case "1":
                         job = "전사";
-                        atk = 0;
-                        def = 0;
-                        maxHp = 0;
-                        maxMp = 0;
-                        gold = 0;
+                        atk = 10;
+                        def = 5;
+                        maxHp = 100;
+                        maxMp = 30;
+                        
                         break;
 
                         case "2":
                         job = "기사";
-                        atk = 0;
-                        def = 0;
-                        maxHp = 0;
-                        maxMp = 0;
-                        gold = 0;
+                        atk = 8;
+                        def = 7;
+                        maxHp = 110;
+                        maxMp = 30;
+                        
                         break;
 
                         case "3":
                         job = "마법사";
-                        atk = 0;
-                        def = 0;
-                        maxHp = 0;
-                        maxMp = 0;
-                        gold = 0;
+                        atk = 6;
+                        def = 4;
+                        maxHp = 70;
+                        maxMp = 70;
+                        
                         break;
 
                         case "4":
                         job = "궁수";
-                        atk = 0;
-                        def = 0;
-                        maxHp = 0;
-                        maxMp = 0;
-                        gold = 0;
+                        atk = 6;
+                        def = 5;
+                        maxHp = 80;
+                        maxMp = 60;
+                       
                         break;
 
                         case "5":
                         job = "도적";
-                        atk = 0;
-                        def = 0;
-                        maxHp = 0;
-                        maxMp = 0;
-                        gold = 0;
+                        atk = 11;
+                        def = 6;
+                        maxHp = 80;
+                        maxMp = 40;
+                        
                         break;
 
                     default:
