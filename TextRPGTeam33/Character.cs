@@ -21,10 +21,11 @@ namespace TextRPGTeam33
         public int Defense { get; }
         public int PlusDefense { get; set; }
 
-        public int Hp { get; }
+        public int Hp { get; set; }
         public int MaxHP { get; }
         public int Gold { get; set; }
 
+        public Inventory Inventory { get; }
         public int DungeonClearCount { get; set; }
 
 
@@ -32,7 +33,7 @@ namespace TextRPGTeam33
         public Character(int level, string name, string job, int atk, int def, int maxHp, int gold)
         {
             Name = name;
-            Job = "전사";
+            Job = job;
             Level = level;
             Attack = atk;
             PlusAttack = 0;
@@ -43,10 +44,12 @@ namespace TextRPGTeam33
             MaxHP = maxHp;
             DungeonClearCount = 0;
 
+            Inventory = new Inventory();
+
         }
 
         // 상태 보기 화면
-        public void DisplayStatus() 
+        public void StatusDisplay() 
         {
             Console.WriteLine($"Lv. {Level.ToString("00")}");       // 레벨 2자리수까지 표현
             Console.WriteLine($"{Name} ( {Job} )");
@@ -61,6 +64,49 @@ namespace TextRPGTeam33
 
             Console.WriteLine($"체력 : {Hp} / {MaxHP}");
             Console.WriteLine($"Gold : {Gold}");
+        }
+
+        public void EquipItem(Item item)
+        {
+            if (item.IsEquip)
+            {
+                UnEquipItem(item);
+            }
+            else
+            {
+                item.IsEquip = true;
+
+                if (item.Type == ItemType.Weapon)    // 아이템 타입이 무기일 경우
+                { PlusAttack += item.Value; }
+                else      // 갑옷일 경우
+                { PlusDefense += item.Value; }
+                
+            }
+        }
+
+        public void UnEquipItem(Item item)
+        {
+            item.IsEquip = false;
+
+            if (item.Type == ItemType.Weapon) { PlusAttack -= item.Value; }     // 무기일 경우 공격력 감소
+            else if ( item.Type == ItemType.Amor)   { PlusDefense -= item.Value; }  // 갑옷일 경우 방어력 감소
+        }
+
+        // 포션 사용
+        public void UsePotion(Item item)
+        {
+            Hp += item.Value;
+
+            Console.WriteLine($"{item.Name}을(를) 사용했습니다.");
+            if (Hp > MaxHP)     // Hp가 MaxHP를 초과하지 않도록 제한
+            {
+                Hp = MaxHP;
+            }
+
+            Inventory.RemoveItem(item);
+
+            Console.WriteLine($"현재 체력: {Hp}/{MaxHP}");
+
         }
     }
 }
