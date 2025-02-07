@@ -2,17 +2,32 @@
 {
     public class Stage
     {
+        private Character player;
+        private Inventory inventory;
         List<Monster> monsterList;
+        List<Item> itemList;
 
-        public int stageFloor { get; set; } = 5;
+        public int stageFloor { get; set; } = 1;
 
-        public Stage()
+        public Stage(Character player, Inventory inventory)
         {
+            this.player = player;
+            this.inventory = inventory;
+
+            //몬스터 리스트
             monsterList = new List<Monster>
             {
                 new Monster("미니언", 2, 15, 5),
                 new Monster("공허충", 3, 10, 9),
                 new Monster("대포미니언", 5, 25, 8)
+            };
+
+            //스테이지 클리어 아이템 보상리스트
+            itemList = new List<Item>
+            {
+                new Item("수련자의 갑옷", ItemType.Amor, 4, 3, "수련에 도움을 주는 갑옷입니다.", 1000),
+                new Item("낡은 검", ItemType.Weapon, 5, 3, "쉽게 볼 수 있는 낡은 검 입니다.", 600),
+                new Item("회복 포션", ItemType.Potion, 30, 10, "스파르타의 전사들이 사용했다는 전설의 포션입니다.", 1000)
             };
         }
 
@@ -37,35 +52,44 @@
             for (int i = 0; i < monsterCnt; i++)
             {
                 monsterId = rand.Next(0, 3);   //몬스터 종류 랜덤
-                createMonster.Add(monsterList[monsterId]);
+                createMonster.Add(new Monster(monsterList[monsterId].name, monsterList[monsterId].level, monsterList[monsterId].hp, monsterList[monsterId].atk));
             }
 
             return createMonster;
         }
 
         //전투 종료 후 보상 지급
-        public List<object> StageClear(List<Monster> monsterList)
+        public void StageClear(List<Monster> monsterList)
         {
-            List<object> reward = new List<object>();
-
             Random rand = new Random();
             int exp = 0;
             int gold = 0;
-            List<Item> items = new List<Item>();
+            int rewardRate = 0;
+            List<Item> rewardItems = new List<Item>();
 
             //경험치는 몬스터 레벨 * 5만큼 획득
             //골드는 몬스터 레벨 * 50의 90 ~ 110% 만큼 획득
+            //보상 아이템 획득 확률은 (아이템별 확률 + (몬스터의 레벨 / 5))
             foreach (Monster monster in monsterList)
             {
                 exp += (monster.level * 5);
-                gold += (int)  ( (monster.level * 50) * ( 1 + (rand.NextDouble() * 0.2 - 0.1 ) ) );
+                gold += (int)((monster.level * 50) * (1 + (rand.NextDouble() * 0.2 - 0.1)));
+
+                foreach (Item item in itemList)
+                {
+                    rewardRate = item.ItemRate + monster.level / 5;
+                    if (rand.Next(0, 100) < rewardRate)
+                    {
+                        rewardItems.Add(item);
+                        rewardItems.Add(new Item(item.Name, item.Type, item.Value, item.ItemRate, item.Descrip, item.Cost));
+                    }
+                }
             }
 
-            reward.Add(exp);
-            reward.Add(gold);
-            reward.Add(items);
-
-            return reward;
+            //보상 지급
+            player.Gold += gold;
+            inventory.AddItem(rewardItems);
+            stageFloor += 1;
         }
     }
 }
