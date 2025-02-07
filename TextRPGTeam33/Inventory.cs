@@ -84,14 +84,28 @@ namespace TextRPGTeam33
                 if (input == "0")
                 {
                     return;
-                } 
-                // 장착할 아이템 선택
-                else if ((int.TryParse(input, out int selected) && selected >=1 && int.Parse(input) <= Items.Count))
-                {
-                    // 장착한다
-                    Item selectedItem = Items[selected -1];
-                    player.EquipItem(selectedItem);
                 }
+                // 장착할 아이템 선택
+                else if ((int.TryParse(input, out int selected) && selected >= 1 && int.Parse(input) <= Items.Count))
+                {
+                    Item selectedItem = Items[selected - 1];
+
+                    // 장착한 아이템 장착해제
+                    if (selectedItem.IsEquip)
+                    {
+                        player.UnEquipItem(selectedItem);
+                        selectedItem.IsEquip = false;
+                        Console.WriteLine("선택한 아이템을 장착 해제했습니다.");
+                    }
+                    else
+                    {
+                        // 장착하지 않은 아이템 장착
+                        player.EquipItem(selectedItem);
+                        selectedItem.IsEquip = true;
+                        Console.WriteLine("선택한 아이템을 장착했습니다.");
+                    }
+                }
+
                 else { Console.WriteLine("잘못된 입력"); }
               
             }
