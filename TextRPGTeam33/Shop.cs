@@ -73,10 +73,6 @@ namespace TextRPGTeam33
                 {
                     // 판매
                     Console.Clear();
-                    Console.WriteLine("판매는 준비중 입니다.");
-                    Console.Write("아무 버튼을 눌러주세요.\n");
-                    Console.ReadLine(); // 사용자 입력 대기
-                    //SellScreen();
                 }
                 else if (input == "0")
                 {
@@ -146,8 +142,8 @@ namespace TextRPGTeam33
                     player.Gold -= price;
                     item.IsPurchase = true;
 
-                    var newItem = new Item(item.Name, item.Type, item.Value, item.Descrip, item.Cost);
-                    //inventory.AddItem(newItem); // 아이템을 인벤토리로 옮기는 코드 => inventory.cs에 AddItem(Item item) 함수 필요
+                    var newItem = new Item(item.Name, item.Type, item.Value, item.ItemRate, item.Descrip, item.Cost);
+                    inventory.AddItem(newItem); // 아이템을 인벤토리로 옮기는 코드
 
                     Console.WriteLine("구매를 완료했습니다.");
                     Thread.Sleep(1000);
@@ -167,5 +163,4 @@ namespace TextRPGTeam33
             }
         }
     }
-    //private void SellScreen()
 }
