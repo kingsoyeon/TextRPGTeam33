@@ -88,7 +88,7 @@ namespace TextRPGTeam33
                     Console.WriteLine($"{i} Lv.{m.level} {m.name} HP {m.hp}");
                 }
 
-                Console.ForegroundColor = ConsoleColor.White;
+                Console.ResetColor();
                 i++;
             }
             Console.WriteLine();
