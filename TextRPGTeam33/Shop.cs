@@ -117,7 +117,7 @@ namespace TextRPGTeam33
                 string stat;
                 if (itemList[i].Type == ItemType.Amor) { stat = $"방어력 +{itemList[i].Value}"; }
                 else if (itemList[i].Type == ItemType.Weapon) { stat = $"공격력 +{itemList[i].Value}"; }
-                else { stat = $"회력량 +{itemList[i].Value}"; }
+                else { stat = $"회복량 +{itemList[i].Value}"; }
 
                 Console.WriteLine($"- {i + 1} {itemList[i].Name,-8} | {stat,-6} | {itemList[i].Descrip,-30} | {price}");
             }
