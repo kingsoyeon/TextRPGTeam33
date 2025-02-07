@@ -75,17 +75,9 @@ namespace TextRPGTeam33
 
                 if (item.Type == ItemType.Weapon)    // 아이템 타입이 무기일 경우
                 { PlusAttack += item.Value; }
-                else if (item.Type == ItemType.Amor)     // 갑옷일 경우
+                else      // 갑옷일 경우
                 { PlusDefense += item.Value; }
-                else  // 포션일 경우
-                { 
-                    Hp += item.Value; 
-
-                    if (Hp > MaxHP)     // Hp가 MaxHP를 초과하지 않도록 제한
-                    {
-                        Hp = MaxHP;
-                    }
-                }   
+                
             }
         }
 
@@ -93,9 +85,23 @@ namespace TextRPGTeam33
         {
             item.IsEquip = false;
 
-            if (item.Type == ItemType.Weapon) { PlusAttack -= item.Value; } 
-            else if ( item.Type == ItemType.Amor)   { PlusDefense -= item.Value; }
+            if (item.Type == ItemType.Weapon) { PlusAttack -= item.Value; }     // 무기일 경우 공격력 감소
+            else if ( item.Type == ItemType.Amor)   { PlusDefense -= item.Value; }  // 갑옷일 경우 방어력 감소
         }
 
+        // 포션 사용
+        public void UsePotion(Item item)
+        {
+            Hp += item.Value;
+
+            Console.WriteLine($"{item.Name}을(를) 사용했습니다.");
+            if (Hp > MaxHP)     // Hp가 MaxHP를 초과하지 않도록 제한
+            {
+                Hp = MaxHP;
+            }
+
+            Console.WriteLine($"현재 체력: {Hp}/{MaxHP}");
+
+        }
     }
 }
