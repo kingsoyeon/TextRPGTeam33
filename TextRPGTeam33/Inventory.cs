@@ -10,11 +10,15 @@ namespace TextRPGTeam33
     {
         private List<Item> Items = new List<Item>();
 
-        public void AddItem(Item item)
+        public void AddItem(List<Item> itemList)
         {
-            if (item == null) return;
-            Items.Add(item);
+            if (itemList == null) return;
+            foreach (Item item in itemList)
+            {
+                Items.Add(item);
+            }
         }
+
 
         public void RemoveItem(Item item)
         {
