@@ -58,6 +58,7 @@ namespace TextRPGTeam33
         // 상태 보기 화면
         public void StatusDisplay() 
         {
+            Console.Clear();
             Console.WriteLine("상태보기");
             Console.WriteLine("캐릭터의 정보가 표시됩니다."); 
             Console.WriteLine("");
