@@ -48,11 +48,7 @@ namespace TextRPGTeam33
                 }
                 Console.WriteLine($"현재 체력: {character.Hp}/{character.MaxHP}\n");
 
-                for (int i = 0; i < potions.Count; i++)
-                {
-                    Console.WriteLine($"{i + 1}. {potions[i].Name} 사용");
-                }
-
+                Console.WriteLine("1. 포션 선택");
                 Console.WriteLine("0. 나가기");
 
                 Console.Write("\n원하는 행동을 입력해주세요.\n>>");
@@ -63,6 +59,7 @@ namespace TextRPGTeam33
                 {
                     if (potions.Count > 0)
                     {
+                        Console.Clear();
                         SelectPotion();
                     }
                     else
@@ -82,7 +79,6 @@ namespace TextRPGTeam33
         {
             while (true)
             {
-                Console.Clear();
                 Console.WriteLine("[포션 선택]");
 
                 // 포션의 종류와 개수를 보여줌

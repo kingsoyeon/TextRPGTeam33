@@ -23,6 +23,9 @@ namespace TextRPGTeam33
 
         public int Hp { get; set; }
         public int MaxHP { get; }
+
+        public int Mp { get; set; }
+        public int MaxMp { get; }
         public int Gold { get; set; }
 
         public int Exp { get; set; }
@@ -34,7 +37,7 @@ namespace TextRPGTeam33
 
 
         
-        public Character(int level, string name, string job, int atk, int def, int maxHp, int gold)
+        public Character(int level, string name, string job, int atk, int def, int maxHp, int maxMp, int gold)
         {
             Name = name;
             Job = job;
@@ -46,6 +49,9 @@ namespace TextRPGTeam33
             Gold = gold;
             Hp = maxHp;
             MaxHP = maxHp;
+            Mp = maxMp;
+            maxHp = maxMp;
+
             DungeonClearCount = 0;
 
             Exp = 0;
@@ -72,10 +78,12 @@ namespace TextRPGTeam33
             string plusStat = PlusAttack == 0 ? $"공격력 : {Attack}" : $"공격력 : {Attack + PlusAttack} (+{PlusAttack})";
             Console.WriteLine(plusStat);
             // 방어력
-            plusStat = PlusDefense == 0 ? $"방어력 : {Defense}" : $"방어력 : {Defense + PlusDefense} (+{Defense})";
+            plusStat = PlusDefense == 0 ? $"방어력 : {Defense}" : $"방어력 : {Defense + PlusDefense} (+{PlusDefense})";
             Console.WriteLine(plusStat);
 
             Console.WriteLine($"체력 : {Hp} / {MaxHP}");
+            Console.WriteLine($"마나 : {Mp} / {MaxMp}");
+
             Console.WriteLine($"Gold : {Gold}");
 
             Console.WriteLine("1. 인벤토리");
