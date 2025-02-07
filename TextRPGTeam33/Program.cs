@@ -332,7 +332,7 @@ class Program
             }
             else if (choice == "2")
             {
-                OpenInventory();
+                OpenInventory(player);
             }
             else if (choice == "3")
             {
@@ -376,15 +376,18 @@ class Program
         battle.BattleStart();
     }
 
-    static void OpenInventory()
+    static void OpenInventory(Character player)
     {
-
+        Inventory Inventory = new();
+        Inventory.InventoryScreen(player);
     }
 
     static void insideShop(Character player)
     {
-        Shop shop = new Shop(player, null);
+        Inventory inventory = player.Inventory;
+        Shop shop = new(player, inventory);
         shop.DisplayShop();
     }
 }
+
 
