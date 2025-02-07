@@ -8,13 +8,17 @@ namespace TextRPGTeam33
 {
     public class Potion
     {
-        private Item item;
+        private List<Item> potions;
         private Character character;
 
         public Potion(Character player) 
         {
-            item = player.Inventory.GetItems().Find(x => x.Type == ItemType.Potion);
             this.character = player;
+        RefreshPotions();
+        }
+        private void RefreshPotions()
+        {
+            potions = character.Inventory.GetItems().Where(x => x.Type == ItemType.Potion && x.Count > 0).ToList();
         }
         public void DisplayPotion()
         {
@@ -22,13 +26,21 @@ namespace TextRPGTeam33
             {
                 Console.Clear();
                 Console.WriteLine("회복");
-                if (item == null)
+
+                RefreshPotions();  // 포션 목록 새로고침
+
+                if (potions.Count == 0)
                 {
-                    Console.WriteLine("포션이 없습니다.\n");
+                    Console.WriteLine("사용 가능한 포션이 없습니다.\n");
                 }
                 else
                 {
-                    Console.WriteLine($"포션을 사용하면 체력을 {item.Value} 회복 할 수 있습니다. (남은 포션 : {item.Count})\n");
+                    Console.WriteLine("[보유 포션 목록]");
+                    for (int i = 0; i < potions.Count; i++)
+                    {
+                        Console.WriteLine($"{i + 1}. {potions[i].Name} | 회복량: +{potions[i].Value} | 남은 수량: {potions[i].Count}개");
+                    }
+                    Console.WriteLine();
                 }
 
                 Console.WriteLine("1. 사용하기");
@@ -39,7 +51,15 @@ namespace TextRPGTeam33
                 if (input == "0") return;
                 else if (input == "1")
                 {
-                    UsePotion();
+                    if (potions.Count > 0)
+                    {
+                        SelectPotion();
+                    }
+                    else
+                    {
+                        Console.WriteLine("사용할 수 있는 포션이 없습니다!");
+                        Thread.Sleep(1000);
+                    }
                 }
                 else
                 {
@@ -47,14 +67,42 @@ namespace TextRPGTeam33
                     Thread.Sleep(1000);
                 }
             }
+        }
+        private void SelectPotion()
+        {
+            if (potions.Count == 1)
+            {
+                UsePotion(potions[0]);
+                return;
+            }
 
+            Console.WriteLine("\n사용할 포션을 선택해주세요. (0: 취소)");
+            Console.Write(">>");
+
+            if (int.TryParse(Console.ReadLine(), out int index) && index > 0 && index <= potions.Count)
+            {
+                UsePotion(potions[index - 1]);
+            }
+            else if (index != 0)
+            {
+                Console.WriteLine("잘못된 입력입니다.");
+                Thread.Sleep(1000);
+            }
         }
 
-        public void UsePotion()
+        private void UsePotion(Item potion)
         {
-            if (item.Count > 0)
+            if (potion.Count > 0)
             {
-                character.UsePotion(item);
+                if (character.Hp == character.MaxHP)
+                {
+                    Console.WriteLine("이미 체력이 최대입니다!");
+                    Thread.Sleep(1000);
+                    return;
+                }
+
+                character.UsePotion(potion);
+                Thread.Sleep(1000);
             }
             else
             {
@@ -62,5 +110,6 @@ namespace TextRPGTeam33
                 Thread.Sleep(1000);
             }
         }
+
     }
 }
