@@ -22,7 +22,7 @@ namespace TextRPGTeam33
 
         public void BattleStart()
         {
-            stage = new Stage();
+            stage = new Stage(player, player.Inventory);
             // 전투를 시작하면 1~4마리의 몬스터가 랜덤하게 등장합니다.
             // 표시되는 순서는 랜덤입니다.
             monsters = stage.CreateMonster();
@@ -45,8 +45,7 @@ namespace TextRPGTeam33
                 Console.WriteLine($"Lv.{player.Level} {player.Name} ({player.Job})");
                 Console.WriteLine($"HP {player.Hp}/{player.MaxHP}\n");
 
-                Console.WriteLine("0. 나가기");
-                Console.WriteLine("1. 공격\n");
+                Console.WriteLine("0. 공격\n");
 
                 Console.WriteLine("원하시는 행동을 입력해주세요");
                 Console.Write(">> ");
@@ -54,8 +53,6 @@ namespace TextRPGTeam33
                 {
                     string input = Console.ReadLine();
                     if (input == "0")
-                        return;
-                    else if (input == "1")
                     {
                         PlayerPhase();
                         break;
@@ -249,7 +246,12 @@ namespace TextRPGTeam33
                 {
                     string input = Console.ReadLine();
                     if (input == "0")
+                    {
+                        stage.StageClear(monsters);
+                        Console.WriteLine("보상이 지급됩니다");
+                        Thread.Sleep(1000);
                         break;
+                    }
                     else
                         Console.WriteLine("잘못된 입력입니다");
                 }
