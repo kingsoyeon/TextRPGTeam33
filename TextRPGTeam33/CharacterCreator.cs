@@ -19,7 +19,7 @@ namespace TextRPGTeam33
             
             // 이름 입력
             string name = Console.ReadLine();
-            {
+            
                 if (name == null) {  }
 
                 Console.WriteLine($"이름 : {name}");
@@ -102,7 +102,7 @@ namespace TextRPGTeam33
 
                 return new Character(level, name, job, atk, def, maxHp, maxMp, gold);
 
-            }
+            
             
         }
     }
