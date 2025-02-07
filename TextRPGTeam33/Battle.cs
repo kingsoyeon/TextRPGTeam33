@@ -138,16 +138,19 @@ namespace TextRPGTeam33
             // 몬스터의 체력에서 공격력 만큼 깍기
             // 공격력은 10%의 오차를 가지게 됩니다.
             // 오차가 소수점이라면 올림 처리합니다.
+            Random rand = new Random();
+            int range = (int)MathF.Ceiling((float)player.Attack * 0.1f);
+            int playerAtk = rand.Next(player.Attack - range, player.Attack + range);
 
             Console.Clear();
 
             Console.WriteLine("Battle!!\n");
             Console.WriteLine($"{player.Name} 의 공격!");
-            Console.WriteLine($"Lv.{monsters[i].level} {monsters[i].name} 을(를) 맞췄습니다. [데미지 : {player.Attack}]\n");
+            Console.WriteLine($"Lv.{monsters[i].level} {monsters[i].name} 을(를) 맞췄습니다. [데미지 : {playerAtk}]\n");
 
             int monsterHp = monsters[i].hp;
             Console.WriteLine($"Lv.{monsters[i].level} {monsters[i].name}");
-            monsters[i].hp -= player.Attack; // 임시 공격
+            monsters[i].hp -= playerAtk;
             if (monsters[i].hp > 0)
                 Console.WriteLine($"HP {monsterHp} -> {monsters[i].hp}\n");
             else
@@ -198,7 +201,7 @@ namespace TextRPGTeam33
 
                 int playerHp = player.Hp;
                 Console.WriteLine($"Lv.{player.Level} {player.Name}");
-                player.Hp -= m.atk; // 임시 공격
+                player.Hp -= m.atk;
                 if (player.Hp < 0) player.Hp = 0;
                 Console.WriteLine($"HP {playerHp} -> {player.Hp}\n");
 
