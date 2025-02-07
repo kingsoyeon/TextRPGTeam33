@@ -72,7 +72,7 @@ namespace TextRPGTeam33
             string plusStat = PlusAttack == 0 ? $"공격력 : {Attack}" : $"공격력 : {Attack + PlusAttack} (+{PlusAttack})";
             Console.WriteLine(plusStat);
             // 방어력
-            plusStat = PlusDefense == 0 ? $"방어력 : {Defense}" : $"방어력 : {Defense + PlusDefense} (+{Defense})";
+            plusStat = PlusDefense == 0 ? $"방어력 : {Defense}" : $"방어력 : {Defense + PlusDefense} (+{PlusDefense})";
             Console.WriteLine(plusStat);
 
             Console.WriteLine($"체력 : {Hp} / {MaxHP}");
