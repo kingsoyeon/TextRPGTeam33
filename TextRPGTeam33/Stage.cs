@@ -89,7 +89,7 @@ namespace TextRPGTeam33
                         if (itemIdx < 0)
                         {
                             rewardItems.Add(new Item(item.Name, item.Type, item.Value, item.ItemRate, item.Descrip, item.Cost, 1));
-                            rewardItems[itemIdx].IsPurchase = true;
+                            rewardItems[rewardItems.Count - 1].IsPurchase = true;
                         }
                         else
                         {
@@ -117,6 +117,7 @@ namespace TextRPGTeam33
             }
             while (true);
 
+            //보상 정보 출력
             Console.WriteLine("[캐릭터 정보]");
 
             if (isLevelUp) Console.WriteLine($"Lv.{curLevel} {player.Name} -> Lv.{player.Level} {player.Name}");
@@ -135,7 +136,7 @@ namespace TextRPGTeam33
                 Console.WriteLine($"{item.Name} - {item.Count}");
             }
 
-            //player.Inventory.AddItem(rewardItems);
+            player.Inventory.AddItem(rewardItems);
 
             player.DungeonClearCount += 1;
         }
