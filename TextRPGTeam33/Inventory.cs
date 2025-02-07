@@ -12,6 +12,7 @@ namespace TextRPGTeam33
 
         public void AddItem(Item item)
         {
+            if (item == null) return;
             Items.Add(item);
         }
 
@@ -22,6 +23,7 @@ namespace TextRPGTeam33
 
         public List<Item> GetItems()
         {
+            
             return Items;
         }
     }
