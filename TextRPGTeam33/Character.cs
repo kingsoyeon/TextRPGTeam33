@@ -56,17 +56,17 @@ namespace TextRPGTeam33
         }
 
         // 상태 보기 화면
-        public void StatusDisplay() 
+        public void StatusDisplay()
         {
             Console.Clear();
             Console.WriteLine("상태보기");
-            Console.WriteLine("캐릭터의 정보가 표시됩니다."); 
+            Console.WriteLine("캐릭터의 정보가 표시됩니다.");
             Console.WriteLine("");
 
             // 캐릭터 스탯
             Console.WriteLine($"Lv. {Level.ToString("00")}");       // 레벨 2자리수까지 표현
             Console.WriteLine($"{Name} ( {Job} )");
-            
+
             // 아이템 착용 여부에 따라 스탯 상승/하락에 따른 스탯 반영
             // 공격력
             string plusStat = PlusAttack == 0 ? $"공격력 : {Attack}" : $"공격력 : {Attack + PlusAttack} (+{PlusAttack})";
@@ -85,15 +85,25 @@ namespace TextRPGTeam33
             Console.Write(">>");
 
             string input = Console.ReadLine();
+
+            //인벤토리
             if (input == "1")
             {
                 // 인벤토리 보이기
+               
+                Inventory.InventoryScreen(this);
+                
             }
-
-            if (input == "0")
+            else if (input == "0") 
             {
-                // 스타트 화면 호출
+                return;
+
             }
+            else {
+                Console.WriteLine("잘못된 입력입니다. 다시 입력해주세요.");
+                Console.ReadKey();
+                    }
+
         }
 
         public void EquipItem(Item item)
