@@ -47,7 +47,8 @@ namespace TextRPGTeam33
                 new Item("낡은 검", ItemType.Weapon, 5, 100, "쉽게 볼 수 있는 낡은 검 입니다.", 600, 1),
                 new Item("청동 도끼", ItemType.Weapon, 10, 100, "어디선가 사용됐던거 같은 도끼입니다.", 1500, 1),
                 new Item("스파르타의 창", ItemType.Weapon, 20, 100, "스파르타의 전사들이 사용했다는 전설의 창입니다.", 2500, 1),
-                new Item("회복 포션", ItemType.Potion, 30, 100, "스파르타의 전사들이 사용했다는 전설의 포션입니다.", 1000, 3)
+                new Item("회복 포션", ItemType.Potion, 30, 100, "스파르타의 전사들이 사용했다는 전설의 포션입니다.", 500, 1),
+                new Item("고급 회복 포션", ItemType.Potion, 50, 100, "스파르타의 전사들도 사용 못해봤다는 전설의 포션입니다.", 1000, 1)
             };
         }
 
