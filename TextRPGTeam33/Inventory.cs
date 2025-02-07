@@ -9,5 +9,15 @@ namespace TextRPGTeam33
     public class Inventory
     {
         private List<Item> Items = new List<Item>();
+
+        public void AddItem(Item item)
+        {
+            Items.Add(item);
+        }
+
+        public void RemoveItem(Item item)
+        {
+            Items.Remove(item);
+        }
     }
 }
