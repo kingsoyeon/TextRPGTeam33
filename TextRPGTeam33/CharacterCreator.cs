@@ -44,6 +44,7 @@ namespace TextRPGTeam33
                 int atk = 0;
                 int def = 0;
                 int maxHp = 0;
+                int maxMp = 0;
                 int gold = 0;   
 
                 
@@ -54,6 +55,7 @@ namespace TextRPGTeam33
                         atk = 0;
                         def = 0;
                         maxHp = 0;
+                        maxMp = 0;
                         gold = 0;
                         break;
 
@@ -62,6 +64,7 @@ namespace TextRPGTeam33
                         atk = 0;
                         def = 0;
                         maxHp = 0;
+                        maxMp = 0;
                         gold = 0;
                         break;
 
@@ -70,6 +73,7 @@ namespace TextRPGTeam33
                         atk = 0;
                         def = 0;
                         maxHp = 0;
+                        maxMp = 0;
                         gold = 0;
                         break;
 
@@ -78,6 +82,7 @@ namespace TextRPGTeam33
                         atk = 0;
                         def = 0;
                         maxHp = 0;
+                        maxMp = 0;
                         gold = 0;
                         break;
 
@@ -86,6 +91,7 @@ namespace TextRPGTeam33
                         atk = 0;
                         def = 0;
                         maxHp = 0;
+                        maxMp = 0;
                         gold = 0;
                         break;
 
@@ -94,7 +100,7 @@ namespace TextRPGTeam33
                         return null;
                 }
 
-                return new Character(level, name, job, atk, def, maxHp, gold);
+                return new Character(level, name, job, atk, def, maxHp, maxMp, gold);
 
             }
             
