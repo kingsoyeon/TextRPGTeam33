@@ -143,7 +143,7 @@ namespace TextRPGTeam33
                     player.Gold -= price;
                     item.IsPurchase = true;
 
-                    var newItem = new Item(item.Name, item.Type, item.Value, item.ItemRate, item.Descrip, item.Cost);
+                    var newItem = new Item(item.Name, item.Type, item.Value, item.ItemRate, item.Descrip, item.Cost, item.Count);
                     inventory.AddItem(newItem); // 아이템을 인벤토리로 옮기는 코드
 
                     Console.WriteLine("구매를 완료했습니다.");
