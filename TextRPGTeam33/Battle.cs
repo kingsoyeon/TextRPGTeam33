@@ -355,7 +355,7 @@ namespace TextRPGTeam33
                     string input = Console.ReadLine();
                     if (input == "0")
                     {
-                        stage.StageClear(monsters);
+                        //stage.StageClear(monsters);
                         Console.WriteLine("보상이 지급됩니다");
                         Thread.Sleep(1000);
                         break;

@@ -61,6 +61,10 @@ namespace TextRPGTeam33
 
         }
 
+        public Character()
+        {
+        }
+
         // 상태 보기 화면
         public void StatusDisplay()
         {
