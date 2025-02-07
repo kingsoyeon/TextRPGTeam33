@@ -378,7 +378,7 @@ class Program
 
     static void OpenInventory(Character player)
     {
-        Inventory Inventory = new();
+        Inventory Inventory = player.Inventory;
         Inventory.InventoryScreen(player);
     }
 
@@ -389,5 +389,6 @@ class Program
         shop.DisplayShop();
     }
 }
+
 
 
