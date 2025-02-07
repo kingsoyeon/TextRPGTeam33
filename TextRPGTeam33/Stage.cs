@@ -110,7 +110,9 @@ namespace TextRPGTeam33
                     rewardExp = player.Exp - player.LevelUpExp;
                     player.LevelUpExp *= 2;
                     player.Exp = rewardExp;
-                    //player.Level++;
+                    player.Level++;
+                    player.Attack += 0.5;
+                    player.Defense += 1;
                     isLevelUp = true;
                 }
                 else break;
