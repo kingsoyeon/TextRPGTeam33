@@ -32,7 +32,7 @@ namespace TextRPGTeam33
         public Character(int level, string name, string job, int atk, int def, int maxHp, int gold)
         {
             Name = name;
-            Job = "전사";
+            Job = job;
             Level = level;
             Attack = atk;
             PlusAttack = 0;
