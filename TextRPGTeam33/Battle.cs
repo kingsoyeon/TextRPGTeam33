@@ -76,8 +76,13 @@ namespace TextRPGTeam33
                     }
                     else if (input == "2")
                     {
-                        ChooseSkill();
-                        break;
+                        if (player.Mp >= 10)
+                        {
+                            //ChooseSkill();
+                            break;
+                        }
+                        else
+                            Console.WriteLine("MP가 부족합니다");
                     }
                     else
                         Console.WriteLine("잘못된 입력입니다");
@@ -215,6 +220,7 @@ namespace TextRPGTeam33
                 BattleResult(true);
         }
 
+        /*
         private void ChooseSkill()
         {
             Console.Clear();
@@ -273,6 +279,7 @@ namespace TextRPGTeam33
 
             EnemyPhase();
         }
+        */
 
         private void EnemyPhase()
         {
@@ -322,30 +329,38 @@ namespace TextRPGTeam33
             }
         }
 
+        /*
         private void UseSkill(int skill)
         {
-            if (player.Mp <= 0) return;
-
             int i = 0;
             int j = 0;
             int playerAtk = 0;
 
+            int cnt = 0;
+            foreach (Monster m in monsters)
+            {
+                if (m.hp > 0) cnt++;
+            }
             while (true)
             {
-                if (monsters.Count <= 1)
-                {
-                    i = 0;
-                    i = 0;
-                    break;
-                }
-                i = rand.Next(0,monsters.Count);
-                j = rand.Next(0,monsters.Count);
+                i = rand.Next(0, monsters.Count);
+                j = rand.Next(0, monsters.Count);
                 if (monsters[i].hp > 0 && i != j && monsters[j].hp > 0)
                     break;
+                else if (monsters[i].hp > 0 && cnt < 2)
+                {
+                    j = i;
+                    break;
+                }
+                else if (monsters[j].hp > 0 && cnt < 2)
+                {
+                    i = j;
+                    break;
+                }
             }
 
             if (skill == 1) playerAtk = player.Attack * 2;
-            else if (skill == 2) playerAtk = (int)MathF.Round(player.Attack * 1.5f);
+            else if (skill == 2) playerAtk = (int)MathF.Ceiling(player.Attack * 1.5f);
             int monsterHp = monsters[i].hp;
 
             Console.Clear();
@@ -420,6 +435,7 @@ namespace TextRPGTeam33
             if (flag == 0) // 모든 적이 죽었다면
                 BattleResult(true);
         }
+        */
 
         private void BattleResult(bool isWin)
         {
@@ -449,7 +465,7 @@ namespace TextRPGTeam33
                     string input = Console.ReadLine();
                     if (input == "0")
                     {
-                        stage.StageClear(monsters);
+                        stage.StageClear(monsters, startHp);
                         Console.WriteLine("보상이 지급됩니다");
                         Thread.Sleep(1000);
                         break;
