@@ -52,10 +52,10 @@ namespace TextRPGTeam33
                 Console.Write(">> ");
                 while (true)
                 {
-                    int input = int.Parse(Console.ReadLine());
-                    if (input == 0)
+                    string input = Console.ReadLine();
+                    if (input == "0")
                         return;
-                    else if (input == 1)
+                    else if (input == "1")
                     {
                         PlayerPhase();
                         break;
@@ -81,8 +81,17 @@ namespace TextRPGTeam33
             Console.WriteLine("Battle!!\n");
             foreach (Monster m in monsters)
             {
-                if (m.hp <= 0) Console.ForegroundColor = ConsoleColor.DarkGray;
-                Console.WriteLine($"{i} Lv.{m.level} {m.name} HP {m.hp}");
+                if (m.hp <= 0)
+                {
+                    Console.ForegroundColor = ConsoleColor.DarkGray;
+                    Console.WriteLine($"{i} Lv.{m.level} {m.name} Dead");
+                }
+                else
+                {
+                    Console.WriteLine($"{i} Lv.{m.level} {m.name} HP {m.hp}");
+                }
+
+                Console.ForegroundColor = ConsoleColor.White;
                 i++;
             }
             Console.WriteLine();
@@ -97,15 +106,23 @@ namespace TextRPGTeam33
             Console.Write(">> ");
             while (true)
             {
-                int input = int.Parse(Console.ReadLine());
-                if (input == 0)
-                    break;
-                else if (input < 0 || input > i || monsters[input - 1].hp <= 0)
-                    Console.WriteLine("잘못된 입력입니다");
-                else
+                string input = Console.ReadLine();
+                try
                 {
-                    Attack(input - 1);
-                    break;
+                    int index = int.Parse(input) - 1;
+                    if (input == "0")
+                        return;
+                    else if (index >= 0 && index < monsters.Count && monsters[index].hp > 0)
+                    {
+                        Attack(index);
+                        break;
+                    }
+                    else
+                        Console.WriteLine("잘못된 입력입니다");
+                }
+                catch
+                {
+                    Console.WriteLine("잘못된 입력입니다");
                 }
             }
 
@@ -130,11 +147,14 @@ namespace TextRPGTeam33
 
             int monsterHp = monsters[i].hp;
             Console.WriteLine($"Lv.{monsters[i].level} {monsters[i].name}");
-            //monsters[i].hp -= player.Attack;
+            monsters[i].hp -= player.Attack; // 임시 공격
             if (monsters[i].hp > 0)
                 Console.WriteLine($"HP {monsterHp} -> {monsters[i].hp}\n");
             else
+            {
+                monsters[i].hp = 0;
                 Console.WriteLine($"HP {monsterHp} -> Dead\n");
+            }
 
             Console.WriteLine("0. 다음\n");
 
@@ -142,8 +162,8 @@ namespace TextRPGTeam33
 
             while (true)
             {
-                int input = int.Parse(Console.ReadLine());
-                if (input == 0)
+                string input = Console.ReadLine();
+                if (input == "0")
                     break;
                 else
                     Console.WriteLine("잘못된 입력입니다");
@@ -178,6 +198,8 @@ namespace TextRPGTeam33
 
                 int playerHp = player.Hp;
                 Console.WriteLine($"Lv.{player.Level} {player.Name}");
+                player.Hp -= m.atk; // 임시 공격
+                if (player.Hp < 0) player.Hp = 0;
                 Console.WriteLine($"HP {playerHp} -> {player.Hp}\n");
 
                 Console.WriteLine("0. 다음\n");
@@ -186,8 +208,8 @@ namespace TextRPGTeam33
 
                 while (true)
                 {
-                    int input = int.Parse(Console.ReadLine());
-                    if (input == 0)
+                    string input = Console.ReadLine();
+                    if (input == "0")
                         break;
                     else
                         Console.WriteLine("잘못된 입력입니다");
@@ -222,8 +244,8 @@ namespace TextRPGTeam33
 
                 while (true)
                 {
-                    int input = int.Parse(Console.ReadLine());
-                    if (input == 0)
+                    string input = Console.ReadLine();
+                    if (input == "0")
                         break;
                     else
                         Console.WriteLine("잘못된 입력입니다");
@@ -245,8 +267,8 @@ namespace TextRPGTeam33
 
                 while (true)
                 {
-                    int input = int.Parse(Console.ReadLine());
-                    if (input == 0)
+                    string input = Console.ReadLine();
+                    if (input == "0")
                         break;
                     else
                         Console.WriteLine("잘못된 입력입니다");
