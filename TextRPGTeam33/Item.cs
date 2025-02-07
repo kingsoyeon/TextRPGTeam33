@@ -19,7 +19,7 @@ namespace TextRPGTeam33
         public int Value { get; } // 값
         public string Descrip {  get; } // 설명
         public int Cost {  get; } // 가격
-        public int ItemRate { get; } // 아이템 확율
+        public int ItemRate { get; set; } // 아이템 확율
         public int Count { get; set; } // 아이템 개수
         public bool IsPurchase { get; set; } //구매여부
         public bool IsEquip { get; set; } // 장착 여부
