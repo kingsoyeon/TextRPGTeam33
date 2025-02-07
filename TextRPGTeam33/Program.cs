@@ -7,55 +7,68 @@ class Program
 {
     static void Main()
     {
+        CharacterCreator characterCreator = new CharacterCreator();
+        Character player = characterCreator.Charactercreator();
+
         Console.Clear();
         bool isValidInput = false;
         while (!isValidInput)
         {
             Console.Clear();
-
-            Console.ForegroundColor = ConsoleColor.Cyan;
-            Console.WriteLine("■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■");
-            Console.Write("■ ");
-            Console.ForegroundColor = ConsoleColor.White;
-            Console.Write("스파르타 던전에 오신 것을 환영합니다.");
-            Console.ForegroundColor = ConsoleColor.Cyan;
-            Console.WriteLine(" ■");
-            Console.Write("■          ");
-            Console.ForegroundColor = ConsoleColor.Gray;
-            Console.Write("1. 던전에 입장한다.");
-            Console.ForegroundColor = ConsoleColor.Cyan;
-            Console.WriteLine("          ■");
-            Console.Write("■              ");
-            Console.ForegroundColor = ConsoleColor.Red;
-            Console.Write("0. 도망친다.");
-            Console.ForegroundColor = ConsoleColor.Cyan;
-            Console.WriteLine("             ■");
-            Console.WriteLine("■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■");
-            Console.ResetColor();
-            Console.Write("원하시는 행동을 입력해주세요:");
-            string startChoice = Console.ReadLine() ?? "0";
-
-
-            if (startChoice == "1")
+            if (player != null)
             {
-                StartGame();
-                isValidInput = true;
-            }
-            else if (startChoice == "0")
-            {
-                Console.Clear();
-                Console.WriteLine("도망에 성공하셨습니다...（￣v￣）↗　");
-                Thread.Sleep(1000);
-                Environment.Exit(0);
+                Console.ForegroundColor = ConsoleColor.Cyan;
+                Console.WriteLine("■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■");
+                Console.Write("■ ");
+                Console.ForegroundColor = ConsoleColor.White;
+                Console.Write("스파르타 던전에 오신 것을 환영합니다.");
+                Console.ForegroundColor = ConsoleColor.Cyan;
+                Console.WriteLine(" ■");
+                Console.Write("■          ");
+                Console.ForegroundColor = ConsoleColor.Gray;
+                Console.Write("1. 던전에 입장한다.");
+                Console.ForegroundColor = ConsoleColor.Cyan;
+                Console.WriteLine("          ■");
+                Console.Write("■              ");
+                Console.ForegroundColor = ConsoleColor.Red;
+                Console.Write("0. 도망친다.");
+                Console.ForegroundColor = ConsoleColor.Cyan;
+                Console.WriteLine("             ■");
+                Console.WriteLine("■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■");
+                Console.ResetColor();
+                Console.Write("원하시는 행동을 입력해주세요:");
+                string startChoice = Console.ReadLine() ?? "0";
+                
+                if (startChoice == "1")
+                {
+                    StartGame(player);
+                    isValidInput = true;
+                }
+                else if (startChoice == "0")
+                {
+                    Console.Clear();
+                    Console.WriteLine("도망에 성공하셨습니다...（￣v￣）↗　");
+                    Thread.Sleep(1000);
+                    Environment.Exit(0);
+                }
+                else
+                {
+                    Console.Clear();
+                    Console.WriteLine("잘못된 입력입니다.");
+                    Thread.Sleep(1000);
+                }
             }
             else
             {
-                Console.Clear();
-                Console.WriteLine("잘못된 입력입니다.");
-                Thread.Sleep(1000);
+                Console.WriteLine("캐릭터 생성에 실패했습니다. 다시 시도해주세요.");
+                Thread.Sleep(2000);
+                Main();  // 다시 캐릭터 생성
             }
 
-        }
+               
+
+            }
+        
     }
     public static void CannonMinion()
     {
@@ -268,9 +281,8 @@ class Program
         Console.WriteLine("   ◆");
         Console.ResetColor();
     }
-    static void StartGame()
+    static void StartGame(Character player)
     {
-        Character player = new Character(1, "Chad", "전사", 10, 5, 100, 50);
 
         bool inDungeon = true;
         while (inDungeon)
@@ -330,7 +342,6 @@ class Program
             {
 
                 Console.Clear();
-                Console.ForegroundColor = ConsoleColor.Red;
                 Program.minion();
                 Console.WriteLine("");
                 Console.WriteLine("");
@@ -356,7 +367,7 @@ class Program
 
     static void OpenStatus()
     {
-        Character Character = new Character(1, "Chad", "전사", 10, 5, 100, 50);
+        Character Character = new();
         Character.StatusDisplay();
     }
     static void StartBattle(Character player)
@@ -376,3 +387,4 @@ class Program
         shop.DisplayShop();
     }
 }
+
