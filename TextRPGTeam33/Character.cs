@@ -25,6 +25,10 @@ namespace TextRPGTeam33
         public int MaxHP { get; }
         public int Gold { get; set; }
 
+        public int Exp { get; set; }
+        
+        public int LevelUpExp { get; set; }
+
         public Inventory Inventory { get; }
         public int DungeonClearCount { get; set; }
 
@@ -44,6 +48,9 @@ namespace TextRPGTeam33
             MaxHP = maxHp;
             DungeonClearCount = 0;
 
+            Exp = 0;
+            LevelUpExp = 10;
+            
             Inventory = new Inventory();
 
         }
