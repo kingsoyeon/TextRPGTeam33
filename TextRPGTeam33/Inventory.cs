@@ -127,7 +127,7 @@ namespace TextRPGTeam33
                
             }
             else {
-                str += $"{item.Name} | 방어력 +{item.Value} | {item.Descrip}";
+                str += $"{item.Name} | 체력 +{item.Value} | {item.Descrip}";
                 
             }
 
