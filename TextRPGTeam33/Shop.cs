@@ -228,8 +228,8 @@ namespace TextRPGTeam33
                 Console.WriteLine($"- {i + 1} {equippedMark}{item.Name,-8} | {stat,-6} | {item.Descrip,-30} | {Price} {countDisplay}"); // - index 이름 | 값(공격력, 방어력, 회복력) | 아이템 설명 | 가격/보유여부 [보유 개수]
             }
 
-            Console.WriteLine("\n0. 나가기");
-            Console.Write("판매할 아이템 번호를 입력해 주세요.\n");
+            Console.WriteLine("\n0. 나가기\n");
+            Console.Write("판매할 아이템 번호를 입력해 주세요.\n>>");
 
             string input = Console.ReadLine();
             if (input == "0") return;
