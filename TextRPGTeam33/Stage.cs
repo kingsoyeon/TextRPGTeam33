@@ -34,10 +34,11 @@ namespace TextRPGTeam33
         {
             List<Monster> createMonster = new List<Monster>();
             Random rand = new Random();
+            int stageLevel = player.DungeonClearCount + 1;
             int monsterCnt = 3;
             int monsterId = 0;
 
-            monsterCnt += rand.Next(0, player.DungeonClearCount + 1); //몬스터 수 랜덤
+            monsterCnt += rand.Next(0, stageLevel); //몬스터 수 랜덤
             if (monsterCnt > 5) monsterCnt = 5; //몬스터 수 최대 5마리
 
             //5층마다 보스 몬스터 추가
@@ -49,7 +50,18 @@ namespace TextRPGTeam33
 
             for (int i = 0; i < monsterCnt; i++)
             {
-                monsterId = rand.Next(0, 3);   //몬스터 종류 랜덤
+
+                double monsterSpawnRate = Math.Min(1.0, stageLevel / 20.0); //스테이지 레벨에 따라 몬스터 등장확률 변경
+                if (rand.NextDouble() < monsterSpawnRate)
+                {
+                    monsterId = 2;
+                }
+                else
+                {
+                    if (rand.NextDouble() < 0.5) monsterId = 0;
+                    else monsterId = 1;
+                }
+
                 createMonster.Add(new Monster(monsterList[monsterId].name, monsterList[monsterId].level, monsterList[monsterId].hp, monsterList[monsterId].atk));
             }
 
@@ -111,6 +123,8 @@ namespace TextRPGTeam33
                     player.LevelUpExp *= 2;
                     player.Exp = rewardExp;
                     player.Level++;
+                    player.Attack += 1;
+                    player.Defense += 1;
                     isLevelUp = true;
                 }
                 else break;

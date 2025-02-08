@@ -9,16 +9,16 @@ namespace TextRPGTeam33
     public class Character
     {
         // 프로퍼티 생성
-        public int Level { get; }
+        public int Level { get; set; }
         public String Name { get; set; }
         public string Job { get; }
 
         
-        public int Attack { get; }
+        public int Attack { get; set;  }
         public int PlusAttack { get; set; }
 
 
-        public int Defense { get; }
+        public int Defense { get; set; }
         public int PlusDefense { get; set; }
 
         public int Hp { get; set; }
@@ -50,7 +50,7 @@ namespace TextRPGTeam33
             Hp = maxHp;
             MaxHP = maxHp;
             Mp = maxMp;
-            maxHp = maxMp;
+            MaxMp = maxMp;
 
             DungeonClearCount = 0;
 
@@ -59,6 +59,10 @@ namespace TextRPGTeam33
             
             Inventory = new Inventory();
 
+        }
+
+        public Character()
+        {
         }
 
         // 상태 보기 화면
@@ -116,13 +120,13 @@ namespace TextRPGTeam33
 
         public void EquipItem(Item item)
         {
-            if (item.IsEquip)
+            if (item.IsEquip) // 아이템을 장착하고 있으면 해제
             {
                 UnEquipItem(item);
             }
-            else
+            else // 
             {
-                item.IsEquip = true;
+                item.IsEquip = true; 
 
                 if (item.Type == ItemType.Weapon)    // 아이템 타입이 무기일 경우
                 { PlusAttack += item.Value; }
