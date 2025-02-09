@@ -12,6 +12,7 @@ namespace TextRPGTeam33
         Stage stage;
         List<Monster> monsters;
         Character player;
+        List<Skill> skills;
         Random rand;
         int startHp;
         int startMp;
@@ -20,21 +21,52 @@ namespace TextRPGTeam33
 
         public Battle(Character player)
         {
-            rand = new Random();
+            // 전투를 시작하면 1~4마리의 몬스터가 랜덤하게 등장합니다.
+            // 표시되는 순서는 랜덤입니다.
+            // 중복해서 나타날 수 있습니다.
+            stage = new Stage(player);
+            monsters = stage.CreateMonster();
             this.player = player;
+            skills = new List<Skill>();
+            rand = new Random();
+            startHp = player.Hp;
+            startMp = player.Mp;
+
+            switch(player.Job)
+            {
+                case "탈영병":
+                    break;
+                case "개 조련사":
+                    skills.Add(new Skill("두번 공격", "개와 함께 공격합니다", 10, 10));
+                    skills.Add(new Skill("아이템 물어오기", "아이템을 물어오게 시킵니다", 5, 0));
+                    break;
+                case "폭발물 산업기사":
+                    skills.Add(new Skill("범위 공격", "본인을 포함한 모두에게 데미지를 입힙니다", 30, 10));
+                    break;
+                case "소방관":
+                    skills.Add(new Skill("하이드로펌프", "랜덤한 대상 2명을 공격합니다", 20, 10));
+                    break;
+                case "이성언 튜터":
+                    skills.Add(new Skill("파괴광선", "파괴광선을 발사합니다", 10, 10));
+                    skills.Add(new Skill("볼트태클", "볼트태클을 구사합니다", 20, 20));
+                    break;
+                case "파피루스":
+                    break;
+                case "대머리백수":
+                    break;
+                case "닌자":
+                    skills.Add(new Skill("수리검", "수리검을 던집니다", 5, 10));
+                    skills.Add(new Skill("나선환", "나선환을 이용해 공격합니다", 10, 15));
+                    break;
+                case "의사":
+                    skills.Add(new Skill("즉시회복", "즉시 회복합니다", 10, 10));
+                    skills.Add(new Skill("광전사모드", "광전사가 되어 공격합니다", 10, 10));
+                    break;
+            }
         }
 
         public void BattleStart()
         {
-            stage = new Stage(player);
-            // 전투를 시작하면 1~4마리의 몬스터가 랜덤하게 등장합니다.
-            // 표시되는 순서는 랜덤입니다.
-            monsters = stage.CreateMonster();
-            startHp = player.Hp;
-            startMp = player.Mp;
-
-            // 중복해서 나타날 수 있습니다.
-
             while (true)
             {
                 Console.Clear();
@@ -67,97 +99,117 @@ namespace TextRPGTeam33
 
                 Console.WriteLine("원하시는 행동을 입력해주세요");
                 Console.Write(">> ");
-                while (true)
+                try
                 {
-                    string input = Console.ReadLine();
-                    if (input == "1")
+                    int input = int.Parse(Console.ReadLine());
+                    if (input == 0)
+                        break;
+                    else if (input == 1)
                     {
-                        PlayerPhase();
+                        int sel = PlayerPhase();
+                        if (sel == 0)
+                            continue;
+                        else
+                            Attack(sel - 1);
+                    }
+                    else if (input == 2)
+                    {
+                        int sel = ChooseSkill();
+                        if (sel == 0)
+                            continue;
+                        else
+                            UseSkill(sel - 1);
+                    }
+                    else
+                    {
+                        Console.Clear();
+                        Console.WriteLine("잘못된 입력입니다");
+                        Thread.Sleep(1000);
+                        continue;
+                    }
+
+                    if (isEnd)
+                    {
+                        BattleResult();
                         break;
                     }
-                    else if (input == "2")
-                    {
-                        if (player.Mp >= 10)
-                        {
-                            ChooseSkill();
-                            break;
-                        }
-                        else
-                            Console.WriteLine("MP가 부족합니다");
-                    }
-                    else if (input == "0")
-                        return;
-                    else
-                        Console.WriteLine("잘못된 입력입니다");
-                }
 
-                if (isEnd)
-                    return;
+                    EnemyPhase();
+
+                    if (isEnd)
+                    {
+                        BattleResult();
+                        break;
+                    }
+                }
+                catch
+                {
+                    Console.Clear();
+                    Console.WriteLine("잘못된 입력입니다");
+                    Thread.Sleep(1000);
+                }
             }
         }
 
-        private void PlayerPhase()
+        private int PlayerPhase()
         {
             // 몬스터가 죽었다면 체력 대신 Dead 으로 표시됩니다.
             // 몬스터가 죽었다면 해당 몬스터에 텍스트는 전부 어두운 색으로 표시합니다.
 
-            int i = 1;
-
-            Console.Clear();
-
-            Console.WriteLine("Battle!!\n");
-            foreach (Monster m in monsters)
-            {
-                if (m.hp <= 0)
-                {
-                    Console.ForegroundColor = ConsoleColor.DarkGray;
-                    Console.WriteLine($"{i} Lv.{m.level} {m.name} Dead");
-                }
-                else
-                {
-                    Console.WriteLine($"{i} Lv.{m.level} {m.name} HP {m.hp}");
-                }
-
-                Console.ResetColor();
-                i++;
-            }
-            Console.WriteLine();
-
-            Console.WriteLine("[내정보]");
-            Console.WriteLine($"Lv.{player.Level} {player.Name} ({player.Job})");
-            Console.WriteLine($"HP {player.Hp}/{player.MaxHP}");
-            Console.WriteLine($"MP {player.Mp}/{player.MaxMp}\n");
-
-            Console.WriteLine("0. 취소\n");
-
-            Console.WriteLine("원하시는 행동을 입력해주세요");
-            Console.Write(">> ");
             while (true)
             {
-                string input = Console.ReadLine();
-                try
+                int i = 1;
+
+                Console.Clear();
+
+                Console.WriteLine("Battle!!\n");
+                foreach (Monster m in monsters)
                 {
-                    int index = int.Parse(input) - 1;
-                    if (input == "0")
-                        return;
-                    else if (index >= 0 && index < monsters.Count && monsters[index].hp > 0)
+                    if (m.hp <= 0)
                     {
-                        Attack(index);
-                        break;
+                        Console.ForegroundColor = ConsoleColor.DarkGray;
+                        Console.WriteLine($"{i++} Lv.{m.level} {m.name} Dead");
                     }
                     else
+                    {
+                        Console.WriteLine($"{i++} Lv.{m.level} {m.name} HP {m.hp}");
+                    }
+
+                    Console.ResetColor();
+                }
+                Console.WriteLine();
+
+                Console.WriteLine("[내정보]");
+                Console.WriteLine($"Lv.{player.Level} {player.Name} ({player.Job})");
+                Console.WriteLine($"HP {player.Hp}/{player.MaxHP}");
+                Console.WriteLine($"MP {player.Mp}/{player.MaxMp}\n");
+
+                Console.WriteLine("0. 취소\n");
+
+                Console.WriteLine("원하시는 행동을 입력해주세요");
+                Console.Write(">> ");
+
+                try
+                {
+                    int input = int.Parse(Console.ReadLine());
+                    if (input == 0)
+                        return 0;
+                    else if (input > 0 && input <= monsters.Count && monsters[input - 1].hp > 0)
+                        return input;
+                    else
+                    {
+                        Console.Clear();
                         Console.WriteLine("잘못된 입력입니다");
+                        Thread.Sleep(1000);
+                    }
                 }
                 catch
                 {
+                    Console.Clear();
                     Console.WriteLine("잘못된 입력입니다");
+                    Thread.Sleep(1000);
                 }
             }
-
-            if (isEnd)
-                return;
-
-            EnemyPhase();
         }
 
         private void Attack(int i)
@@ -166,52 +218,52 @@ namespace TextRPGTeam33
             // 몬스터의 체력에서 공격력 만큼 깍기
             // 공격력은 10%의 오차를 가지게 됩니다.
             // 오차가 소수점이라면 올림 처리합니다.
+
             int range = (int)MathF.Ceiling((float)player.Attack * 0.1f);
             int playerAtk = rand.Next(player.Attack - range, player.Attack + range);
 
             int probability = rand.Next(0, 100);
-            int monsterHp = monsters[i].hp;
-
-            Console.Clear();
-
-            Console.WriteLine("Battle!!\n");
-            Console.WriteLine($"{player.Name} 의 공격!");
             if (probability < 15)
-            {
                 playerAtk = (int)MathF.Ceiling((float)playerAtk * 1.6f);
-                Console.WriteLine($"Lv.{monsters[i].level} {monsters[i].name} 을(를) 맞췄습니다. [데미지 : {playerAtk}] - 치명타 공격!!\n");
-            }
             else if (probability < 25)
-            {
                 playerAtk = 0;
-                Console.WriteLine($"Lv.{monsters[i].level} {monsters[i].name} 을(를) 공격했지만 아무일도 일어나지 않았습니다.\n");
-            }
-            else
-            {
-                Console.WriteLine($"Lv.{monsters[i].level} {monsters[i].name} 을(를) 맞췄습니다. [데미지 : {playerAtk}]\n");
-            }
 
+            int monsterHp = monsters[i].hp;
             monsters[i].hp -= playerAtk;
-            Console.WriteLine($"Lv.{monsters[i].level} {monsters[i].name}");
-            if (monsters[i].hp > 0)
-                Console.WriteLine($"HP {monsterHp} -> {monsters[i].hp}\n");
-            else
-            {
-                monsters[i].hp = 0;
-                Console.WriteLine($"HP {monsterHp} -> Dead\n");
-            }
-
-            Console.WriteLine("0. 다음\n");
-
-            Console.Write(">> ");
+            if (monsters[i].hp < 0) monsters[i].hp = 0;
 
             while (true)
             {
+                Console.Clear();
+
+                Console.WriteLine("Battle!!\n");
+                Console.WriteLine($"{player.Name} 의 공격!");
+                if (probability < 15)
+                    Console.WriteLine($"Lv.{monsters[i].level} {monsters[i].name} 을(를) 맞췄습니다. [데미지 : {playerAtk}] - 치명타 공격!!\n");
+                else if (probability < 25)
+                    Console.WriteLine($"Lv.{monsters[i].level} {monsters[i].name} 을(를) 공격했지만 아무일도 일어나지 않았습니다.\n");
+                else
+                    Console.WriteLine($"Lv.{monsters[i].level} {monsters[i].name} 을(를) 맞췄습니다. [데미지 : {playerAtk}]\n");
+
+                Console.WriteLine($"Lv.{monsters[i].level} {monsters[i].name}");
+                if (monsters[i].hp > 0)
+                    Console.WriteLine($"HP {monsterHp} -> {monsters[i].hp}\n");
+                else
+                    Console.WriteLine($"HP {monsterHp} -> Dead\n");
+
+                Console.WriteLine("0. 다음\n");
+
+                Console.Write(">> ");
+
                 string input = Console.ReadLine();
                 if (input == "0")
                     break;
                 else
+                {
+                    Console.Clear();
                     Console.WriteLine("잘못된 입력입니다");
+                    Thread.Sleep(1000);
+                }
             }
 
             int flag = 0;
@@ -220,7 +272,7 @@ namespace TextRPGTeam33
                 if (m.hp > 0) flag = 1;
             }
             if (flag == 0) // 모든 적이 죽었다면
-                BattleResult(true);
+                isEnd = true;
         }
 
         private void EnemyPhase()
@@ -235,213 +287,162 @@ namespace TextRPGTeam33
                 if (m.hp <= 0)
                     continue;
 
-                Random rand = new Random();
-                bool isDodge = rand.Next(0, 101) < 10;
+                int playerHp = player.Hp;
+                player.Hp -= m.atk;
+                if (player.Hp < 0) player.Hp = 0;
 
+                while (true)
+                {
+                    Console.Clear();
+
+                    Console.WriteLine("Battle!!\n");
+                    Console.WriteLine($"Lv.{m.level} {m.name} 의 공격!");
+                    Console.WriteLine($"{player.Name} 을(를) 맞췄습니다. [데미지 : {m.atk}]\n");
+
+                    Console.WriteLine($"Lv.{player.Level} {player.Name}");
+                    Console.WriteLine($"HP {playerHp} -> {player.Hp}\n");
+
+                    Console.WriteLine("0. 다음\n");
+
+                    Console.Write(">> ");
+
+                    string input = Console.ReadLine();
+                    if (input == "0")
+                        break;
+                    else
+                    {
+                        Console.Clear();
+                        Console.WriteLine("잘못된 입력입니다");
+                        Thread.Sleep(1000);
+                    }
+                }
+
+                if (player.Hp <= 0) // 플레이어가 죽었다면
+                {
+                    isEnd = true;
+                    break;
+                }
+            }
+        }
+
+        private int ChooseSkill()
+        {
+            while (true)
+            {
                 Console.Clear();
 
                 Console.WriteLine("Battle!!\n");
-                Console.WriteLine($"Lv.{m.level} {m.name} 의 공격!");
-                Console.WriteLine($"{player.Name} 을(를) 맞췄습니다. [데미지 : {m.atk}]\n");
+                foreach (Monster m in monsters)
+                {
+                    if (m.hp <= 0)
+                    {
+                        Console.ForegroundColor = ConsoleColor.DarkGray;
+                        Console.WriteLine($"Lv.{m.level} {m.name} Dead");
+                    }
+                    else
+                    {
+                        Console.WriteLine($"Lv.{m.level} {m.name} HP {m.hp}");
+                    }
 
-                int playerHp = player.Hp;
-                Console.WriteLine($"Lv.{player.Level} {player.Name}");
-                player.Hp -= m.atk;
-                if (player.Hp < 0) player.Hp = 0;
-                Console.WriteLine($"HP {playerHp} -> {player.Hp}\n");
+                    Console.ResetColor();
+                }
+                Console.WriteLine();
+
+                Console.WriteLine("[내정보]");
+                Console.WriteLine($"Lv.{player.Level} {player.Name} ({player.Job})");
+                Console.WriteLine($"HP {player.Hp}/{player.MaxHP}");
+                Console.WriteLine($"MP {player.Mp}/{player.MaxMp}\n");
+
+                int i = 1;
+                foreach (Skill s in skills)
+                {
+                    Console.WriteLine($"{i++}. {s.name} - MP {s.mp}");
+                    Console.WriteLine($"   {s.desc}");
+                }
+                Console.WriteLine("0. 취소\n");
+
+                Console.WriteLine("원하시는 행동을 입력해주세요");
+                Console.Write(">> ");
+
+                try
+                {
+                    int input = int.Parse(Console.ReadLine());
+                    if (input >= 0 && input <= i - 1)
+                        return input;
+                    else
+                    {
+                        Console.Clear();
+                        Console.WriteLine("잘못된 입력입니다");
+                        Thread.Sleep(1000);
+                    }
+                }
+                catch
+                {
+                    Console.Clear();
+                    Console.WriteLine("잘못된 입력입니다");
+                    Thread.Sleep(1000);
+                }
+            }
+        }
+
+        private void UseSkill(int i)
+        {
+            switch (skills[i].name) // 스킬 종류에 따라 효과 적용 (제작 중)
+            {
+                case "두번 공격":
+                    break;
+                case "범위 공격":
+                    break;
+                case "하이드로펌프":
+                    break;
+                case "파괴광선":
+                    break;
+                case "볼트태클":
+                    break;
+            }
+
+            // 기본 스킬 메커니즘 예시
+            int index = rand.Next(0, monsters.Count);
+            while (true)
+            {
+                if (monsters[index].hp == 0)
+                    index = rand.Next(0, monsters.Count);
+                else
+                    break;
+            }
+            int monsterHp = monsters[index].hp;
+
+            monsters[index].hp -= skills[i].atk;
+            if (monsters[index].hp < 0) monsters[index].hp = 0;
+            if (player.Mp >= skills[i].mp) player.Mp -= skills[i].mp;
+
+            while (true)
+            {
+                Console.Clear();
+
+                Console.WriteLine("Battle!!\n");
+                Console.WriteLine($"{player.Name} 의 {skills[i].name}!");
+                Console.WriteLine($"Lv.{monsters[index].level} {monsters[index].name} 을(를) 맞췄습니다. [데미지 : {skills[i].atk}]\n");
+
+                Console.WriteLine($"Lv.{monsters[index].level} {monsters[index].name}");
+                if (monsters[index].hp > 0)
+                    Console.WriteLine($"HP {monsterHp} -> {monsters[index].hp}\n");
+                else
+                    Console.WriteLine($"HP {monsterHp} -> Dead\n");
 
                 Console.WriteLine("0. 다음\n");
 
                 Console.Write(">> ");
 
-                while (true)
-                {
-                    string input = Console.ReadLine();
-                    if (input == "0")
-                        break;
-                    else
-                        Console.WriteLine("잘못된 입력입니다");
-                }
-
-                if (player.Hp <= 0) // 플레이어가 죽었다면
-                {
-                    BattleResult(false);
-                    break;
-                }
-            }
-        }
-
-        private void ChooseSkill()
-        {
-            Console.Clear();
-
-            Console.WriteLine("Battle!!\n");
-            foreach (Monster m in monsters)
-            {
-                if (m.hp <= 0)
-                {
-                    Console.ForegroundColor = ConsoleColor.DarkGray;
-                    Console.WriteLine($"Lv.{m.level} {m.name} Dead");
-                }
-                else
-                {
-                    Console.WriteLine($"Lv.{m.level} {m.name} HP {m.hp}");
-                }
-
-                Console.ResetColor();
-            }
-            Console.WriteLine();
-
-            Console.WriteLine("[내정보]");
-            Console.WriteLine($"Lv.{player.Level} {player.Name} ({player.Job})");
-            Console.WriteLine($"HP {player.Hp}/{player.MaxHP}");
-            Console.WriteLine($"MP {player.Mp}/{player.MaxMp}\n");
-
-            Console.WriteLine("1. 알파 스트라이크 - MP 10");
-            Console.WriteLine("   공격력 * 2 로 하나의 적을 공격합니다.");
-            Console.WriteLine("2. 더블 스트라이크 - MP 15");
-            Console.WriteLine("   공격력 * 1.5 로 2명의 적을 랜덤으로 공격합니다.");
-            Console.WriteLine("0. 취소\n");
-
-            Console.WriteLine("원하시는 행동을 입력해주세요");
-            Console.Write(">> ");
-            while (true)
-            {
-                string input = Console.ReadLine();
-                if (input == "1")
-                {
-                    UseSkill(1);
-                    break;
-                }
-                else if (input == "2")
-                {
-                    UseSkill(2);
-                    break;
-                }
-                else if (input == "0")
-                    return;
-                else
-                    Console.WriteLine("잘못된 입력입니다");
-            }
-
-            if (isEnd)
-                return;
-
-            EnemyPhase();
-        }
-
-        private void UseSkill(int skill)
-        {
-            int i = 0;
-            int j = 0;
-            int playerAtk = 0;
-
-            int cnt = 0;
-            foreach (Monster m in monsters)
-            {
-                if (m.hp > 0) cnt++;
-            }
-            while (true)
-            {
-                i = rand.Next(0, monsters.Count);
-                j = rand.Next(0, monsters.Count);
-                if (monsters[i].hp > 0 && i != j && monsters[j].hp > 0)
-                    break;
-                else if (monsters[i].hp > 0 && cnt < 2)
-                {
-                    j = i;
-                    break;
-                }
-                else if (monsters[j].hp > 0 && cnt < 2)
-                {
-                    i = j;
-                    break;
-                }
-            }
-
-            if (skill == 1) playerAtk = player.Attack * 2;
-            else if (skill == 2) playerAtk = (int)MathF.Ceiling(player.Attack * 1.5f);
-            int monsterHp = monsters[i].hp;
-
-            Console.Clear();
-
-            Console.WriteLine("Battle!!\n");
-            Console.WriteLine($"{player.Name} 의 스킬!");
-            if (skill == 1)
-            {
-                Console.WriteLine("알파 스트라이크");
-                Console.WriteLine($"Lv.{monsters[i].level} {monsters[i].name} 을(를) 맞췄습니다. [데미지 : {playerAtk}]\n");
-                monsters[i].hp -= playerAtk;
-
-                Console.WriteLine($"Lv.{monsters[i].level} {monsters[i].name}");
-                if (monsters[i].hp > 0)
-                    Console.WriteLine($"HP {monsterHp} -> {monsters[i].hp}\n");
-                else
-                {
-                    monsters[i].hp = 0;
-                    Console.WriteLine($"HP {monsterHp} -> Dead\n");
-                }
-
-                player.Mp -= 10;
-            }
-            else if (skill == 2)
-            {
-                Console.WriteLine("더블 스트라이크");
-                if (i == j)
-                {
-                    Console.WriteLine($"Lv.{monsters[i].level} {monsters[i].name} 을(를) 맞췄습니다. [데미지 : {playerAtk}]");
-                    monsters[i].hp -= playerAtk;
-
-                    Console.WriteLine($"Lv.{monsters[i].level} {monsters[i].name}");
-                    if (monsters[i].hp > 0)
-                        Console.WriteLine($"HP {monsterHp} -> {monsters[i].hp}\n");
-                    else
-                    {
-                        monsters[i].hp = 0;
-                        Console.WriteLine($"HP {monsterHp} -> Dead\n");
-                    }
-                }
-                else
-                {
-                    Console.WriteLine($"Lv.{monsters[i].level} {monsters[i].name} 을(를) 맞췄습니다. [데미지 : {playerAtk}]");
-                    Console.WriteLine($"Lv.{monsters[j].level} {monsters[j].name} 을(를) 맞췄습니다. [데미지 : {playerAtk}]\n");
-                    monsters[i].hp -= playerAtk;
-                    monsters[j].hp -= playerAtk;
-
-                    Console.WriteLine($"Lv.{monsters[i].level} {monsters[i].name}");
-                    if (monsters[i].hp > 0)
-                        Console.WriteLine($"HP {monsterHp} -> {monsters[i].hp}\n");
-                    else
-                    {
-                        monsters[i].hp = 0;
-                        Console.WriteLine($"HP {monsterHp} -> Dead\n");
-                    }
-
-                    Console.WriteLine($"Lv.{monsters[j].level} {monsters[j].name}");
-                    if (monsters[j].hp > 0)
-                        Console.WriteLine($"HP {monsterHp} -> {monsters[j].hp}\n");
-                    else
-                    {
-                        monsters[j].hp = 0;
-                        Console.WriteLine($"HP {monsterHp} -> Dead\n");
-                    }
-                }
-
-                player.Mp -= 15;
-            }
-            if (player.Mp < 0) player.Mp = 0;
-
-            Console.WriteLine("0. 다음\n");
-
-            Console.Write(">> ");
-
-            while (true)
-            {
                 string input = Console.ReadLine();
                 if (input == "0")
                     break;
                 else
+                {
+                    Console.Clear();
                     Console.WriteLine("잘못된 입력입니다");
+                    Thread.Sleep(1000);
+                }
             }
 
             int flag = 0;
@@ -450,67 +451,72 @@ namespace TextRPGTeam33
                 if (m.hp > 0) flag = 1;
             }
             if (flag == 0) // 모든 적이 죽었다면
-                BattleResult(true);
+                isEnd = true;
         }
 
-        private void BattleResult(bool isWin)
+        private void BattleResult()
         {
-            isEnd = true;
-
-            if (isWin)
+            if (player.Hp > 0)
             {
-                Console.WriteLine("MP를 10만큼 회복합니다");
                 player.Mp += 10;
-
+                if (player.Mp > player.MaxMp)
+                    player.Mp = player.MaxMp;
                 Console.Clear();
-
-                Console.WriteLine("Battle!! - Result\n");
-                Console.WriteLine("Victory\n");
-                Console.WriteLine($"던전에서 몬스터 {monsters.Count}마리를 잡았습니다.\n");
-
-                Console.WriteLine($"Lv.{player.Level} {player.Name}");
-                Console.WriteLine($"HP {startHp} -> {player.Hp}\n");
-                Console.WriteLine($"MP {startMp} -> {player.Mp}\n");
-
-                Console.WriteLine("0. 다음\n");
-
-                Console.Write(">> ");
+                Console.WriteLine("MP를 10만큼 회복합니다");
+                Thread.Sleep(1000);
 
                 while (true)
                 {
+                    Console.Clear();
+
+                    Console.WriteLine("Battle!! - Result\n");
+                    Console.WriteLine("Victory\n");
+                    Console.WriteLine($"던전에서 몬스터 {monsters.Count}마리를 잡았습니다.\n");
+
+                    Console.WriteLine("0. 다음\n");
+
+                    Console.Write(">> ");
+
                     string input = Console.ReadLine();
                     if (input == "0")
                     {
+                        Console.Clear();
                         stage.StageClear(monsters, startHp);
-                        Console.WriteLine("보상이 지급됩니다");
-                        Thread.Sleep(1000);
                         break;
                     }
                     else
+                    {
+                        Console.Clear();
                         Console.WriteLine("잘못된 입력입니다");
+                        Thread.Sleep(1000);
+                    }
                 }
             }
             else
             {
-                Console.Clear();
-
-                Console.WriteLine("Battle!! - Result\n");
-                Console.WriteLine("You Lose\n");
-
-                Console.WriteLine($"Lv.{player.Level} {player.Name}");
-                Console.WriteLine($"HP {startHp} -> Dead\n");
-
-                Console.WriteLine("0. 다음\n");
-
-                Console.Write(">> ");
-
                 while (true)
                 {
+                    Console.Clear();
+
+                    Console.WriteLine("Battle!! - Result\n");
+                    Console.WriteLine("You Lose\n");
+
+                    Console.WriteLine($"Lv.{player.Level} {player.Name}");
+                    Console.WriteLine($"HP {startHp} -> Dead\n");
+
+                    Console.WriteLine("0. 다음\n");
+
+                    Console.Write(">> ");
+
                     string input = Console.ReadLine();
                     if (input == "0")
                         break;
                     else
+                    {
+                        Console.Clear();
                         Console.WriteLine("잘못된 입력입니다");
+                        Thread.Sleep(1000);
+                    }
                 }
             }
         }
