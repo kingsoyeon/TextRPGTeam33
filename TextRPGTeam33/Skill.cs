@@ -7,14 +7,6 @@ using System.Threading.Tasks;
 
 namespace TextRPGTeam33
 {
-    public enum SkillType
-    {
-        ATTACK_TWICE,
-        RANGE_ATTACK,
-        HYDRO_PUMP,
-        FIRE_RAY
-    }
-
     public class Skill
     {
         public string name;
