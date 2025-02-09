@@ -223,8 +223,12 @@ namespace TextRPGTeam33
                 else { stat = $"회복량 +{item.Value}"; }
 
                 string equippedMark = item.IsEquip ? "[E] " : ""; // 장착중이면  [E] 출력
-                string countDisplay = $"[보유 : {item.Count}개]"; // 여러개 보유중이면 보유 개수 출력
+                string countDisplay = "";
 
+                if (item.Type == ItemType.Potion || ((item.Type == ItemType.Weapon || item.Type == ItemType.Amor) && item.Count > 1))  // 포션이거나 장비의 개수가 2개 이상일 때만 보유 개수 표시
+                {
+                    countDisplay = $"[보유 : {item.Count}개]"; // 여러개 보유중이면 보유 개수 출력
+                }
                 Console.WriteLine($"- {i + 1} {equippedMark}{item.Name,-8} | {stat,-6} | {item.Descrip,-30} | {Price} {countDisplay}"); // - index 이름 | 값(공격력, 방어력, 회복력) | 아이템 설명 | 가격/보유여부 [보유 개수]
             }
 
