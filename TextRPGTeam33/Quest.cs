@@ -204,10 +204,11 @@ namespace TextRPGTeam33
                 Console.WriteLine("1. 보상 받기");
                 Console.WriteLine("0. 돌아 가기");
             }
-            else // 퀘스트 수락 전
+            else // 오류날시 (코드 작동 안됨)
             {
-                Console.WriteLine("1. 수락");
-                Console.WriteLine("2. 거절");
+                Console.WriteLine("\"오류발생\" 1. 수락");
+
+                Console.WriteLine("\"오류발생\" 2. 거절");
             }
             Console.Write("\n원하시는 행동을 입력해주세요.\n>>");
         }
@@ -231,12 +232,14 @@ namespace TextRPGTeam33
                 {
                     for (int i = 0; i < currentQuest.RewardItem.Count; i++) // 포션의 경우 Count만큼 추가
                     {
-                        player.Inventory.AddItem(currentQuest.RewardItem);
+                        Item newPotion = Item.CreateNewItem(currentQuest.RewardItem); // Item.cs에서 CreateNewItem()에 아이템 복제(새로운 ID 발급)
+                        player.Inventory.AddItem(newPotion);
                     }
                 }
                 else // 무기나 방어구는 한 번만 추가
                 {
-                    player.Inventory.AddItem(currentQuest.RewardItem); 
+                    Item newEquipment = Item.CreateNewItem(currentQuest.RewardItem); // Item.cs에서 CreateNewItem()에 아이템 복제(새로운 ID 발급)
+                    player.Inventory.AddItem(newEquipment);
                 }
 
                 currentQuest.CurrentCount = 0;  // 진행도 초기화 추가

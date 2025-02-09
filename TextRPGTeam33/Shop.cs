@@ -146,7 +146,7 @@ namespace TextRPGTeam33
                             player.Gold -= totalPrice; // 플레이어가 보유한 Gold 만큼 가격 차감
 
                             List<Item> newItems = new List<Item>(); //아이템 리스트 초기화
-                            var newItem = new Item(item.Name, item.Type, item.Value, item.ItemRate, item.Descrip, item.Cost, quantity); // 초기화된 리스트에 작성
+                            var newItem = Item.CreateNewItem(item); // 새로운 아이템 생성
                             newItems.Add(newItem); // newItem에 아이템 리스트 추가
                             inventory.AddItem(newItems); // newItem을 인벤토리에 추가
 
@@ -171,7 +171,7 @@ namespace TextRPGTeam33
                     item.IsPurchase = true;
 
                     List<Item> newItems = new List<Item>(); //아이템 리스트 초기화
-                    var newItem = new Item(item.Name, item.Type, item.Value, item.ItemRate, item.Descrip, item.Cost, item.Count); // 초기화된 리스트에 작성
+                    var newItem = Item.CreateNewItem(item); // 새로운 아이템 생성
                     newItems.Add(newItem); // newItem에 아이템 리스트 추가
                     inventory.AddItem(newItems); // newItem을 인벤토리에 추가
 
@@ -223,8 +223,12 @@ namespace TextRPGTeam33
                 else { stat = $"회복량 +{item.Value}"; }
 
                 string equippedMark = item.IsEquip ? "[E] " : ""; // 장착중이면  [E] 출력
-                string countDisplay = $"[보유 : {item.Count}개]"; // 여러개 보유중이면 보유 개수 출력
+                string countDisplay = "";
 
+                if (item.Type == ItemType.Potion || ((item.Type == ItemType.Weapon || item.Type == ItemType.Amor) && item.Count > 1))  // 포션이거나 장비의 개수가 2개 이상일 때만 보유 개수 표시
+                {
+                    countDisplay = $"[보유 : {item.Count}개]"; // 여러개 보유중이면 보유 개수 출력
+                }
                 Console.WriteLine($"- {i + 1} {equippedMark}{item.Name,-8} | {stat,-6} | {item.Descrip,-30} | {Price} {countDisplay}"); // - index 이름 | 값(공격력, 방어력, 회복력) | 아이템 설명 | 가격/보유여부 [보유 개수]
             }
 
@@ -238,12 +242,6 @@ namespace TextRPGTeam33
             {
                 {
                     var item = inventoryItems[index - 1];
-
-                    if (item.IsEquip)
-                    {
-                        player.UnEquipItem(item); // 장착중 일경우 장착 해제
-                    }
-
 
                     Console.Write($"\n현재 보유 중인 {item.Name}의 개수: {item.Count}개");
                     Console.Write("\n판매할 수량을 입력해주세요: ");
@@ -267,6 +265,11 @@ namespace TextRPGTeam33
                         Console.WriteLine($"{item.Name}의 개수가 부족합니다.");
                         Thread.Sleep(1000);
                         return;
+                    }
+
+                    if (item.IsEquip)
+                    {
+                        player.UnEquipItem(item); // 장착중 일경우 장착 해제
                     }
 
                     int sellPrice = (int)(item.Cost * 0.85 * quantity); // 판매 가격은 아이템 가격의 85%.

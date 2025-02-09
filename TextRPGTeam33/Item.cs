@@ -14,6 +14,7 @@ namespace TextRPGTeam33
     }
     public class Item
     {
+        public Guid Id { get; } // 아이템 고유 ID
         public string Name { get; } // 아이템 이름
         public ItemType Type { get; } // 아이템 타입
         public int Value { get; } // 값
@@ -26,6 +27,7 @@ namespace TextRPGTeam33
 
         public Item(string name, ItemType type, int value, int itemRate, string descrip, int cost, int count) // 아이템 리스트 초기화
         {
+            Id = Guid.NewGuid(); // 새로운 고유 ID 생성
             Name = name;
             Type = type;
             Value = value;
@@ -35,6 +37,19 @@ namespace TextRPGTeam33
             Count = count;
             IsPurchase = false;
             IsEquip = false;
+        }
+
+        public static Item CreateNewItem(Item original) // 아이템에게 고유 ID 발급
+        {
+            return new Item(
+                original.Name,
+                original.Type,
+                original.Value,
+                original.ItemRate,
+                original.Descrip,
+                original.Cost,
+                original.Count
+            );
         }
 
         public static List<Item> itemList() //아이템 리스트
