@@ -110,47 +110,47 @@ namespace TextRPGTeam33
                     // 히든 직업
 
                     // 바위 속성
-                    case "6":
-                        job = "파피루스";
-                        atk = 11;
-                        def = 6;
-                        maxHp = 80;
-                        maxMp = 40;
+                    //case "6":
+                    //    job = "파피루스";
+                    //    atk = 11;
+                    //    def = 6;
+                    //    maxhp = 80;
+                    //    maxmp = 40;
 
-                        break;
+                    //    break;
 
-                    // 스킬 없음
+                    //    스킬 없음
                     // 불 속성
-                    case "7":
-                        job = "대머리백수";
-                        atk = 11;
-                        def = 6;
-                        maxHp = 80;
-                        maxMp = 40;
+                    //case "7":
+                    //    job = "대머리백수";
+                    //    atk = 11;
+                    //    def = 6;
+                    //    maxhp = 80;
+                    //    maxmp = 40;
 
-                        break;
+                    //    break;
 
-                    // 수리검, 나선환
-                    // 번개 속성
-                    case "8":
-                        job = "닌자";
-                        atk = 11;
-                        def = 6;
-                        maxHp = 80;
-                        maxMp = 40;
+                    //    수리검, 나선환
+                    //    번개 속성
+                    //case "8":
+                    //    job = "닌자";
+                    //    atk = 11;
+                    //    def = 6;
+                    //    maxhp = 80;
+                    //    maxmp = 40;
 
-                        break;
+                    //    break;
 
-                    // 즉힐, 광전사모드
-                    // 풀 속성
-                    case "9":
-                        job = "의사";
-                        atk = 11;
-                        def = 6;
-                        maxHp = 80;
-                        maxMp = 40;
+                    //    즉힐, 광전사모드
+                    //    풀 속성
+                    //case "9":
+                    //    job = "의사";
+                    //    atk = 11;
+                    //    def = 6;
+                    //    maxhp = 80;
+                    //    maxmp = 40;
 
-                        break;
+                    //    break;
 
                     default:
                         Console.WriteLine("잘못된 번호입니다. 다시 입력하세요.");
