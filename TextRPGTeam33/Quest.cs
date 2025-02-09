@@ -204,10 +204,11 @@ namespace TextRPGTeam33
                 Console.WriteLine("1. 보상 받기");
                 Console.WriteLine("0. 돌아 가기");
             }
-            else // 퀘스트 수락 전
+            else // 오류날시 (코드 작동 안됨)
             {
-                Console.WriteLine("1. 수락");
-                Console.WriteLine("2. 거절");
+                Console.WriteLine("\"오류발생\" 1. 수락");
+
+                Console.WriteLine("\"오류발생\" 2. 거절");
             }
             Console.Write("\n원하시는 행동을 입력해주세요.\n>>");
         }
