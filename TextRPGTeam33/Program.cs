@@ -39,7 +39,7 @@ class Program
                 Console.ResetColor();
                 Console.Write("원하시는 행동을 입력해주세요:");
                 string startChoice = Console.ReadLine() ?? "0";
-                
+
                 if (startChoice == "1")
                 {
                     StartGame(player);
@@ -59,16 +59,9 @@ class Program
                     Thread.Sleep(1000);
                 }
             }
-            else
-            {
-                Console.WriteLine("캐릭터 생성에 실패했습니다. 다시 시도해주세요.");
-                Thread.Sleep(2000);
-                Main();  // 다시 캐릭터 생성
-            }
 
-               
 
-            }
+        }
         
     }
     public static void CannonMinion()
