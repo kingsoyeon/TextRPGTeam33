@@ -146,7 +146,7 @@ namespace TextRPGTeam33
                             player.Gold -= totalPrice; // 플레이어가 보유한 Gold 만큼 가격 차감
 
                             List<Item> newItems = new List<Item>(); //아이템 리스트 초기화
-                            var newItem = new Item(item.Name, item.Type, item.Value, item.ItemRate, item.Descrip, item.Cost, quantity); // 초기화된 리스트에 작성
+                            var newItem = Item.CreateNewItem(item); // 새로운 아이템 생성
                             newItems.Add(newItem); // newItem에 아이템 리스트 추가
                             inventory.AddItem(newItems); // newItem을 인벤토리에 추가
 
@@ -171,7 +171,7 @@ namespace TextRPGTeam33
                     item.IsPurchase = true;
 
                     List<Item> newItems = new List<Item>(); //아이템 리스트 초기화
-                    var newItem = new Item(item.Name, item.Type, item.Value, item.ItemRate, item.Descrip, item.Cost, item.Count); // 초기화된 리스트에 작성
+                    var newItem = Item.CreateNewItem(item); // 새로운 아이템 생성
                     newItems.Add(newItem); // newItem에 아이템 리스트 추가
                     inventory.AddItem(newItems); // newItem을 인벤토리에 추가
 
