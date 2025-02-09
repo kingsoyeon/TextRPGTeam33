@@ -239,12 +239,6 @@ namespace TextRPGTeam33
                 {
                     var item = inventoryItems[index - 1];
 
-                    if (item.IsEquip)
-                    {
-                        player.UnEquipItem(item); // 장착중 일경우 장착 해제
-                    }
-
-
                     Console.Write($"\n현재 보유 중인 {item.Name}의 개수: {item.Count}개");
                     Console.Write("\n판매할 수량을 입력해주세요: ");
 
@@ -267,6 +261,11 @@ namespace TextRPGTeam33
                         Console.WriteLine($"{item.Name}의 개수가 부족합니다.");
                         Thread.Sleep(1000);
                         return;
+                    }
+
+                    if (item.IsEquip)
+                    {
+                        player.UnEquipItem(item); // 장착중 일경우 장착 해제
                     }
 
                     int sellPrice = (int)(item.Cost * 0.85 * quantity); // 판매 가격은 아이템 가격의 85%.
