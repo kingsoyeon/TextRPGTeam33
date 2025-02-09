@@ -83,6 +83,7 @@ namespace TextRPGTeam33
 
                 input = Console.ReadLine();
 
+
                 if (input == "0")
                 {
                     return;
@@ -90,7 +91,7 @@ namespace TextRPGTeam33
                 // 장착할 아이템 선택
                 else if ((int.TryParse(input, out int selected) && selected >= 1 && int.Parse(input) <= Items.Count))
                 {
-                    Item selectedItem = Items[selected - 1];
+                    Item selectedItem = PotionExcepted[selected - 1];
 
                     // 장착한 아이템 장착해제
                     if (selectedItem.IsEquip)
@@ -98,6 +99,8 @@ namespace TextRPGTeam33
                         player.UnEquipItem(selectedItem);
                         selectedItem.IsEquip = false;
                         Console.WriteLine("선택한 아이템을 장착 해제했습니다.");
+                        Thread.Sleep(1000);
+                        
                     }
                     else
                     {
@@ -105,6 +108,8 @@ namespace TextRPGTeam33
                         player.EquipItem(selectedItem);
                         selectedItem.IsEquip = true;
                         Console.WriteLine("선택한 아이템을 장착했습니다.");
+                        Thread.Sleep(1000);
+                        
                     }
                 }
 
