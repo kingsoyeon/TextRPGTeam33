@@ -11,7 +11,7 @@ namespace TextRPGTeam33
         // 프로퍼티 생성
         public int Level { get; set; }
         public String Name { get; set; }
-        public string Job { get; }
+        public string Job { get; set; }
 
         
         public int Attack { get; set;  }
