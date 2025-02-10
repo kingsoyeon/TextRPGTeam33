@@ -1,11 +1,12 @@
 using System;
-using System.ComponentModel;
-using System.Numerics;
 using System.Threading;
 using TextRPGTeam33;
 
-class Program
+partial class Program
 {
+    static int adventureCount = 0;  // 탐험 횟수를 추적하는 변수
+    static int days = 0;  // 날짜를 추적하는 변수
+
     static void Main()
     {
         CharacterCreator characterCreator = new CharacterCreator();
@@ -20,21 +21,21 @@ class Program
             {
                 Console.ForegroundColor = ConsoleColor.Cyan;
                 Console.WriteLine("■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■");
-                Console.Write("■ ");
+                Console.Write("■         ");
                 Console.ForegroundColor = ConsoleColor.White;
-                Console.Write("스파르타 던전에 오신 것을 환영합니다.");
+                Console.Write("오늘도 하루가 시작되었다.");
                 Console.ForegroundColor = ConsoleColor.Cyan;
-                Console.WriteLine(" ■");
+                Console.WriteLine("     ■");
                 Console.Write("■          ");
                 Console.ForegroundColor = ConsoleColor.Gray;
-                Console.Write("1. 던전에 입장한다.");
+                Console.Write("1. 부산역을 나선다.");
                 Console.ForegroundColor = ConsoleColor.Cyan;
                 Console.WriteLine("          ■");
-                Console.Write("■              ");
+                Console.Write("■          ");
                 Console.ForegroundColor = ConsoleColor.Red;
-                Console.Write("0. 도망친다.");
+                Console.Write("0. 오늘은 쉴까?");
                 Console.ForegroundColor = ConsoleColor.Cyan;
-                Console.WriteLine("             ■");
+                Console.WriteLine("              ■");
                 Console.WriteLine("■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■");
                 Console.ResetColor();
                 Console.Write("원하시는 행동을 입력해주세요:");
@@ -48,8 +49,10 @@ class Program
                 else if (startChoice == "0")
                 {
                     Console.Clear();
-                    Console.WriteLine("도망에 성공하셨습니다...（￣v￣）↗　");
-                    Thread.Sleep(1000);
+                    Console.WriteLine("당신은 잠을 자다 좀비에게 습격당해 목숨을 잃었습니다.");
+                    Thread.Sleep(2000);
+                    Console.Clear();
+                    End(player);
                     Environment.Exit(0);
                 }
                 else
@@ -59,261 +62,46 @@ class Program
                     Thread.Sleep(1000);
                 }
             }
-
-
         }
-        
-    }
-    public static void CannonMinion()
-    {
-
-        Console.ForegroundColor = ConsoleColor.Yellow;
-        Console.Write("    Lv.5");
-        Console.ForegroundColor = ConsoleColor.Blue;
-        Console.Write(" 대포미니언");
-        Console.ForegroundColor = ConsoleColor.Red;
-        Console.WriteLine(" HP 25   ");
-
-        Console.ForegroundColor = ConsoleColor.Blue;
-        Console.WriteLine("    	            ___");
-        Console.WriteLine("	   	  ▲▼▲  ▼");
-        Console.Write("	        ◆");
-        Console.ForegroundColor = ConsoleColor.Yellow;
-        Console.Write("↘ ↙ ");
-        Console.ForegroundColor = ConsoleColor.Blue;
-        Console.WriteLine("◆");
-        Console.ForegroundColor = ConsoleColor.Gray;
-        Console.Write("	 ●●●");
-        Console.ForegroundColor = ConsoleColor.Blue;
-        Console.Write("  ＠");
-        Console.ForegroundColor = ConsoleColor.Gray;
-        Console.Write("/");
-        Console.ForegroundColor = ConsoleColor.Blue;
-        Console.Write("◆");
-        Console.ForegroundColor = ConsoleColor.Gray;
-        Console.Write("/");
-        Console.ForegroundColor = ConsoleColor.Blue;
-        Console.Write("@ ");
-        Console.ForegroundColor = ConsoleColor.Blue;
-        Console.WriteLine("▲");
-        Console.ForegroundColor = ConsoleColor.Gray;
-        Console.Write("    ■■■■");
-        Console.ForegroundColor = ConsoleColor.Cyan;
-        Console.Write("〓〓〓");
-        Console.ForegroundColor = ConsoleColor.Gray;
-        Console.Write(" ●●●●");
-        Console.ForegroundColor = ConsoleColor.Cyan;
-        Console.WriteLine(" ||");
-        Console.ForegroundColor = ConsoleColor.Gray;
-        Console.Write("  ■");
-        Console.ForegroundColor = ConsoleColor.DarkGray;
-        Console.Write("■■■■■■");
-        Console.ForegroundColor = ConsoleColor.Gray;
-        Console.Write("■");
-        Console.ForegroundColor = ConsoleColor.Gray;
-        Console.Write("   ●  ◆◆  ●");
-        Console.ForegroundColor = ConsoleColor.Cyan;
-        Console.Write(" ||");
-        Console.ForegroundColor = ConsoleColor.Gray;
-        Console.WriteLine("  ==))");
-        Console.ForegroundColor = ConsoleColor.Gray;
-        Console.Write("  ■");
-        Console.ForegroundColor = ConsoleColor.DarkGray;
-        Console.Write("■■■■■■");
-        Console.ForegroundColor = ConsoleColor.Gray;
-        Console.Write("■");
-        Console.ForegroundColor = ConsoleColor.Cyan;
-        Console.Write("〓/");
-        Console.ForegroundColor = ConsoleColor.Gray;
-        Console.Write("●  ◆◆  ●");
-        Console.ForegroundColor = ConsoleColor.Cyan;
-        Console.Write(" ||");
-        Console.ForegroundColor = ConsoleColor.Gray;
-        Console.WriteLine("  ==))");
-        Console.ForegroundColor = ConsoleColor.Gray;
-        Console.Write("    ■■■■");
-        Console.ForegroundColor = ConsoleColor.Cyan;
-        Console.Write(" /");
-        Console.ForegroundColor = ConsoleColor.Gray;
-        Console.WriteLine("     ●●●●");
-        Console.ResetColor();
     }
 
-    public static void Voidling()
-    {
-        Console.ForegroundColor = ConsoleColor.Yellow;
-        Console.Write("    Lv.3");
-        Console.ForegroundColor = ConsoleColor.DarkMagenta;
-        Console.Write(" 공허충");
-        Console.ForegroundColor = ConsoleColor.Red;
-        Console.WriteLine(" HP 10   ");
-
-        Console.ForegroundColor = ConsoleColor.DarkMagenta;
-        Console.WriteLine("             ◆◆");
-        Console.Write("           ◆");
-        Console.ForegroundColor = ConsoleColor.DarkYellow;
-        Console.Write("◆");
-        Console.ForegroundColor = ConsoleColor.DarkMagenta;
-        Console.WriteLine("◆");
-        Console.Write("         ◆");
-        Console.ForegroundColor = ConsoleColor.DarkYellow;
-        Console.Write("◆");
-        Console.ForegroundColor = ConsoleColor.DarkMagenta;
-        Console.Write("◆");
-        Console.ForegroundColor = ConsoleColor.DarkYellow;
-        Console.Write("◆");
-        Console.ForegroundColor = ConsoleColor.DarkMagenta;
-        Console.Write("◆");
-        Console.ForegroundColor = ConsoleColor.Magenta;
-        Console.WriteLine("    ▲");
-        Console.Write("    ▲▲");
-        Console.ForegroundColor = ConsoleColor.DarkMagenta;
-        Console.Write("    ◆◆");
-        Console.ForegroundColor = ConsoleColor.Magenta;
-        Console.Write(" ▲▲");
-        Console.ForegroundColor = ConsoleColor.DarkMagenta;
-        Console.Write("))))))");
-        Console.ForegroundColor = ConsoleColor.Magenta;
-        Console.WriteLine(" ▲");
-        Console.Write("   ▲▼▼▲");
-        Console.ForegroundColor = ConsoleColor.DarkMagenta;
-        Console.Write("↖//◆");
-        Console.ForegroundColor = ConsoleColor.Magenta;
-        Console.Write(" ▲▼▼▲");
-        Console.ForegroundColor = ConsoleColor.DarkMagenta;
-        Console.Write("))))↘/");
-        Console.ForegroundColor = ConsoleColor.Magenta;
-        Console.WriteLine("▼▼");
-        Console.Write("   ▼▼");
-        Console.ForegroundColor = ConsoleColor.DarkMagenta;
-        Console.Write("   -");
-        Console.ForegroundColor = ConsoleColor.Magenta;
-        Console.WriteLine("    ▼▼   ▼▼   ▼▼");
-        Console.WriteLine("    ▼        ▼     ▼    ▼");
-        Console.ResetColor();
-    }
-    public static void minion()
-    {
-        Console.ForegroundColor = ConsoleColor.Yellow;
-        Console.Write("   Lv.2 ");
-        Console.ForegroundColor = ConsoleColor.DarkRed;
-        Console.Write(" 미니언 ");
-        Console.ForegroundColor = ConsoleColor.Red;
-        Console.WriteLine("HP 15");
-        Console.ForegroundColor = ConsoleColor.Gray;
-        Console.Write("    ▲");
-        Console.Write("   ▲");
-        Console.ForegroundColor = ConsoleColor.White;
-        Console.WriteLine("             ◆◆◆");
-        Console.ForegroundColor = ConsoleColor.DarkGray;
-        Console.Write("※");
-        Console.ForegroundColor = ConsoleColor.Gray;
-        Console.Write("  ▼▼▼");
-        Console.ForegroundColor = ConsoleColor.DarkGray;
-        Console.Write("↖ ");
-        Console.ForegroundColor = ConsoleColor.Gray;
-        Console.Write("▼▼");
-        Console.ForegroundColor = ConsoleColor.DarkRed;
-        Console.WriteLine("           ◆");
-        Console.ForegroundColor = ConsoleColor.DarkGray;
-        Console.Write(" ※");
-        Console.ForegroundColor = ConsoleColor.Gray;
-        Console.Write(" ◆◆◆");
-        Console.ForegroundColor = ConsoleColor.DarkGray;
-        Console.Write(" ↖");
-        Console.ForegroundColor = ConsoleColor.DarkRed;
-        Console.Write("           ◆◆◆");
-        Console.ForegroundColor = ConsoleColor.Gray;
-        Console.WriteLine("    ◆");
-        Console.ForegroundColor = ConsoleColor.DarkGray;
-        Console.Write("  ※");
-        Console.ForegroundColor = ConsoleColor.Gray;
-        Console.Write(" ◆◆");
-        Console.ForegroundColor = ConsoleColor.DarkGray;
-        Console.Write(" ↖↖");
-        Console.ForegroundColor = ConsoleColor.Yellow;
-        Console.Write("      ▲");
-        Console.ForegroundColor = ConsoleColor.DarkRed;
-        Console.Write(" ◆");
-        Console.ForegroundColor = ConsoleColor.Yellow;
-        Console.Write("↘ ↙");
-        Console.ForegroundColor = ConsoleColor.DarkRed;
-        Console.Write(" ◆");
-        Console.ForegroundColor = ConsoleColor.Yellow;
-        Console.Write(" ▲");
-        Console.ForegroundColor = ConsoleColor.Gray;
-        Console.WriteLine("◆◆◆");
-        Console.ForegroundColor = ConsoleColor.DarkGray;
-        Console.Write("   ※");
-        Console.ForegroundColor = ConsoleColor.Gray;
-        Console.Write(" ▼");
-        Console.ForegroundColor = ConsoleColor.DarkGray;
-        Console.Write("   ↖↖");
-        Console.ForegroundColor = ConsoleColor.Yellow;
-        Console.Write("   ▲▲");
-        Console.ForegroundColor = ConsoleColor.DarkRed;
-        Console.Write("  ◆◆◆");
-        Console.ForegroundColor = ConsoleColor.Yellow;
-        Console.Write("  ▲▲");
-        Console.ForegroundColor = ConsoleColor.Gray;
-        Console.WriteLine("◆◆◆◆");
-        Console.ForegroundColor = ConsoleColor.DarkGray;
-        Console.Write("          ↖");
-        Console.ForegroundColor = ConsoleColor.White;
-        Console.Write(" @");
-        Console.ForegroundColor = ConsoleColor.DarkRed;
-        Console.Write("//");
-        Console.ForegroundColor = ConsoleColor.DarkRed;
-        Console.Write("   ◆◆◆◆");
-        Console.ForegroundColor = ConsoleColor.Gray;
-        Console.WriteLine("   ◆◆◆");
-        Console.ForegroundColor = ConsoleColor.DarkGray;
-        Console.Write("            ↖↖");
-        Console.ForegroundColor = ConsoleColor.DarkRed;
-        Console.Write("    ◆◆◆◆◆");
-        Console.ForegroundColor = ConsoleColor.Gray;
-        Console.WriteLine("   ◆");
-        Console.ResetColor();
-    }
     static void StartGame(Character player)
     {
-
         bool inDungeon = true;
         while (inDungeon)
         {
             Console.Clear();
+            Console.ForegroundColor = ConsoleColor.White;
+            Console.WriteLine($"살아남은 날짜:{days}");
+            Console.WriteLine($"탐험횟수:0{adventureCount}/02");
             Console.ForegroundColor = ConsoleColor.Yellow;
             Console.WriteLine("■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■");
-            Console.Write("■ ");
-            Console.ForegroundColor = ConsoleColor.White;
-            Console.Write("던전에서 할 수 있는 일을 선택하세요.");
             Console.ForegroundColor = ConsoleColor.Yellow;
-            Console.WriteLine("  ■");
+            Console.Write("■         ");
+            Console.ForegroundColor = ConsoleColor.White;
+            Console.Write("오늘 할 일을 선택하세요.");
+            Console.ForegroundColor = ConsoleColor.Yellow;
+            Console.WriteLine("      ■");
             Console.Write("■     ");
-            Console.ForegroundColor = ConsoleColor.DarkGreen;
+            Console.ForegroundColor = ConsoleColor.Green;
             Console.Write("▶ 1. 상태보기");
             Console.ForegroundColor = ConsoleColor.Yellow;
             Console.WriteLine("                     ■");
             Console.Write("■     ");
-            Console.ForegroundColor = ConsoleColor.DarkBlue;
-            Console.Write("▶ 2. 인벤토리");
-            Console.ForegroundColor = ConsoleColor.Yellow;
-            Console.WriteLine("                     ■");
-            Console.Write("■     ");
             Console.ForegroundColor = ConsoleColor.DarkYellow;
-            Console.Write("▶ 3. 상점");
+            Console.Write("▶ 2. 탐험");
             Console.ForegroundColor = ConsoleColor.Yellow;
             Console.WriteLine("                         ■");
             Console.Write("■     ");
             Console.ForegroundColor = ConsoleColor.DarkRed;
-            Console.Write("▶ 4. 배틀");
+            Console.Write("▶ 3. 휴식");
             Console.ForegroundColor = ConsoleColor.Yellow;
             Console.WriteLine("                         ■");
             Console.Write("■     ");
-            Console.ForegroundColor = ConsoleColor.Green;
-            Console.Write("▶ 5. 포션");
+            Console.ForegroundColor = ConsoleColor.Red;
+            Console.Write("▶ 4. 포션 사용");
             Console.ForegroundColor = ConsoleColor.Yellow;
-            Console.WriteLine("                         ■");
+            Console.WriteLine("                    ■");
             Console.Write("■     ");
             Console.ForegroundColor = ConsoleColor.DarkGray;
             Console.Write("▶ 0. 나가기");
@@ -321,7 +109,7 @@ class Program
             Console.WriteLine("                       ■");
             Console.WriteLine("■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■");
             Console.ResetColor();
-            //Console.BackgroundColor = ConsoleColor.Yellow; // 배경색 변경
+
             Console.Write("원하시는 행동을 입력해주세요: ");
             string choice = Console.ReadLine() ?? "0";
 
@@ -331,28 +119,13 @@ class Program
             }
             else if (choice == "2")
             {
-                OpenInventory(player);
+                Explore(player);  // 탐험을 시작합니다
             }
             else if (choice == "3")
             {
-                insideShop(player);
+                rest(player);
             }
             else if (choice == "4")
-            {
-
-                Console.Clear();
-                Program.minion();
-                Console.WriteLine("");
-                Console.WriteLine("");
-                Program.CannonMinion();
-                Console.WriteLine("");
-                Console.WriteLine("");
-                Program.Voidling();
-                Thread.Sleep(3000);
-                StartBattle(player);
-
-            }
-            else if (choice == "5")
             {
                 DrinkPotion(player);
             }
@@ -365,8 +138,85 @@ class Program
                 Console.WriteLine("잘못된 입력입니다.");
                 Thread.Sleep(1000);
             }
-
+            if (adventureCount >= 2)
+            {
+                adventureCount = 0;  // 탐험 횟수 초기화
+                days++;  // 날짜 증가
+                Console.ForegroundColor = ConsoleColor.Green;
+                Console.WriteLine($"하루가 지나갔습니다! 현재 날짜: {days}일");
+                Console.ResetColor();
+                Thread.Sleep(3000);
+            }
         }
+    }
+
+    static void Explore(Character player)
+    {
+        Random random = new Random();
+        int randomChoice = random.Next(0, 3);
+        // 탐험이 시작되면 탐험 횟수 증가
+        Console.Clear();
+        Console.WriteLine($"탐험 {adventureCount}회 진행 중...");
+
+
+
+
+        Thread.Sleep(1000);
+        switch (randomChoice)
+        {
+            case 0:
+                insideShop(player);  // 상점 이벤트
+                break;
+            case 1:
+                StartBattle(player);  // 전투 이벤트
+                break;
+            case 2:
+                Event(player);  // 다른 이벤트
+                break;
+            default:
+                Console.WriteLine("알 수 없는 이벤트가 발생했습니다.");
+                break;
+        }
+    }
+
+    static void Event(Character player)
+
+    {
+        Console.WriteLine("이벤트 발생!");
+        Thread.Sleep(2000);
+        // 여러가지 이벤트 추가
+        adventureCount++;
+    }
+    static void rest(Character player)
+    {
+        Console.Clear();
+        Console.WriteLine("휴식을 취하시면 탐험 횟수가 늘어납니다.");
+        Console.WriteLine("휴식을 취하시겠습니까?");
+        Console.WriteLine("1. 휴식을 취한다.");
+        Console.WriteLine("0. 나간다.");
+        string restChioce = Console.ReadLine() ?? "0";
+        if (restChioce == "1")
+        {
+            Console.Clear();
+            player.Hp = player.MaxHP;
+            player.Mp = player.MaxMp;
+            Console.WriteLine("휴식을 취합니다.");
+            Console.WriteLine("체력과 마나가 모두 회복됩니다.");
+            Thread.Sleep(1000);
+            adventureCount++;
+        }
+        else if (restChioce == "0")
+        {
+            Console.WriteLine("휴식을 취하지 않고 돌아갑니다.");
+            Thread.Sleep(1000);
+            return;
+        }
+        else
+        {
+            Console.WriteLine("잘못된 입력입니다.");
+            Thread.Sleep(1000);
+        }
+        adventureCount++;
     }
 
     static void OpenStatus()
@@ -374,20 +224,27 @@ class Program
         Character Character = new();
         Character.StatusDisplay();
     }
+
     static void StartBattle(Character player)
     {
         Battle battle = new(player);
         battle.BattleStart();
+        if (player.Hp <= 0)
+        {
+            Console.Clear();
+            Console.WriteLine("당신은 몬스터와 싸우다 체력이 다했습니다.");
+            Thread.Sleep(2000);
+            Console.Clear();
+            End(player);
+            Environment.Exit(0);
+        }
+        adventureCount++;
     }
+
     static void DrinkPotion(Character player)
     {
         Potion potion = new Potion(player, player.Inventory);
         potion.DisplayPotion();
-    }
-    static void OpenInventory(Character player)
-    {
-        Inventory Inventory = player.Inventory;
-        Inventory.InventoryScreen(player);
     }
 
     static void insideShop(Character player)
@@ -395,8 +252,44 @@ class Program
         Inventory inventory = player.Inventory;
         Shop shop = new(player, inventory);
         shop.DisplayShop();
+        adventureCount++;
+    }
+    static void End(Character player)
+    {
+        Console.BackgroundColor = ConsoleColor.Red;
+        Console.ForegroundColor = ConsoleColor.White;
+        Console.Write("                                                                                                                        ");
+        Console.Write("                                                                                                                        ");
+        Console.Write("                                                                                                                        ");
+        Console.Write("                                                                                                                        ");
+        Console.Write("                                                                                                                        ");
+        Console.Write("                                                                                                                        ");
+        Console.Write("                                                                                                                        ");
+        Console.Write("                                                                                                                        ");
+        Console.Write("                                                                                                                        ");
+        Console.Write("                                                                                                                        ");
+        Console.Write("                                                                                                                        ");
+        Console.Write("                                                                                                                        ");
+        Console.WriteLine("                                                당신은 사망하셨습니다.                                                  ");
+        Console.Write($"                                                살아남은 날짜:{days}                                                         ");
+        Console.Write("                                                                                                                        ");
+        Console.Write("                                                                                                                        ");
+        Console.Write("                                                                                                                        ");
+        Console.Write("                                                                                                                        ");
+        Console.Write("                                                                                                                        ");
+        Console.Write("                                                                                                                        ");
+        Console.Write("                                                                                                                        ");
+        Console.Write("                                                                                                                        ");
+        Console.Write("                                                                                                                        ");
+        Console.Write("                                                                                                                        ");
+        Console.Write("                                                                                                                        "); 
+        Console.Write("                                                                                                                        ");
+        Console.Write("                                                                                                                        ");
+        Console.Write("                                                                                                                        ");
+        Console.Write("                                                                                                                        ");
+        Console.WriteLine("                                                                                                                        ");
+        Thread.Sleep(3000);
+        Console.ResetColor();
+        Console.Clear();
     }
 }
-
-
-

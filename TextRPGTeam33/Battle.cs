@@ -300,9 +300,6 @@ namespace TextRPGTeam33
                 player.Mp += 10;
                 if (player.Mp > player.MaxMp)
                     player.Mp = player.MaxMp;
-                Console.Clear();
-                Console.WriteLine("MP를 10만큼 회복합니다");
-                Thread.Sleep(1000);
 
                 while (true)
                 {
@@ -312,6 +309,8 @@ namespace TextRPGTeam33
                     Console.WriteLine("Victory\n");
                     Console.WriteLine($"던전에서 몬스터 {monsters.Count}마리를 잡았습니다.\n");
 
+                    Console.WriteLine("MP를 10만큼 회복합니다\n");
+
                     Console.WriteLine("0. 다음\n");
 
                     Console.Write(">> ");
@@ -320,7 +319,7 @@ namespace TextRPGTeam33
                     if (input == "0")
                     {
                         Console.Clear();
-                        stage.StageClear(monsters, startHp);
+                        stage.StageClear(monsters, startHp, skillManager.skillCount);
                         break;
                     }
                     else
