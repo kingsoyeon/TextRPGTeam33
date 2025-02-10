@@ -14,7 +14,7 @@ partial class Program
 
     static void Main()
     {
-        Process.Start("cmd.exe", "/c mode con cols=150 lines=50");
+        Process.Start("cmd.exe", "/c mode con cols=150 lines=20");
         GameSave gameSave = new GameSave();
         Character player = gameSave.DisplaySave();
 
@@ -111,7 +111,7 @@ partial class Program
             Console.Write("■     ");
             Console.Write("▶ 5. 일기를 쓴다.");
             Console.ForegroundColor = ConsoleColor.Yellow;
-            Console.WriteLine("                   ■");
+            Console.WriteLine("                 ■");
             Console.Write("■     ");
             Console.ForegroundColor = ConsoleColor.DarkGray;
             Console.Write("▶ 0. 나가기");
