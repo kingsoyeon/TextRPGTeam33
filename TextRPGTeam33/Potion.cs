@@ -8,7 +8,8 @@ namespace TextRPGTeam33
 {
     public class Potion
     {
-        private List<Item> potions;
+        private List<Item> hpPotions;
+        private List<Item> mpPotions;
         private Character character;
         private Inventory inventory;
 
@@ -20,9 +21,12 @@ namespace TextRPGTeam33
         }
         private void RefreshPotions() // 포션 목록 새로고침
         {
-            potions = inventory.GetItems()
+            hpPotions = inventory.GetItems()
             .Where(x => x.Type == ItemType.Potion && x.Count > 0)
             .ToList();
+            mpPotions = inventory.GetItems()
+                .Where(x => x.Type == ItemType.MPPotion && x.Count > 0)
+                .ToList();
         }
         public int DisplayPotion() // 표션정보 출력
         {
@@ -31,22 +35,35 @@ namespace TextRPGTeam33
                 Console.Clear();
                 Console.WriteLine("회복");
 
-                RefreshPotions();  
+                RefreshPotions();
 
-                if (potions.Count == 0) // 포션이 없을 경우
+                if (hpPotions.Count == 0 && mpPotions.Count == 0) // 포션이 없을 경우
                 {
                     Console.WriteLine("사용 가능한 포션이 없습니다.\n");
                 }
                 else
                 {
-                    Console.WriteLine("[보유 포션 목록]");
-                    for (int i = 0; i < potions.Count; i++) // 포션 수에 따라 1,2... 작성 // 포션이 1개일경우 1만 출력
+                    if (hpPotions.Count > 0)
                     {
-                        Console.WriteLine($"{i + 1}. {potions[i].Name} | 회복량: +{potions[i].Value} | 남은 수량: {potions[i].Count}개");
+                        Console.WriteLine("\n[HP 포션 목록]");
+                        for (int i = 0; i < hpPotions.Count; i++)
+                        {
+                            Console.WriteLine($"{i + 1}. {hpPotions[i].Name} | HP 회복량: +{hpPotions[i].Value} | 남은 수량: {hpPotions[i].Count}개");
+                        }
+                    }
+                    if (mpPotions.Count > 0)
+                    {
+                        Console.WriteLine("\n[MP 포션 목록]");
+                        for (int i = 0; i < mpPotions.Count; i++)
+                        {
+                            Console.WriteLine($"{hpPotions.Count + i + 1}. {mpPotions[i].Name} | MP 회복량: +{mpPotions[i].Value} | 남은 수량: {mpPotions[i].Count}개");
+                        }
                     }
                     Console.WriteLine();
                 }
-                Console.WriteLine($"현재 체력: {character.Hp}/{character.MaxHP}\n");
+
+                Console.WriteLine($"현재 체력: {character.Hp}/{character.MaxHP}");
+                Console.WriteLine($"현재 마나: {character.Mp}/{character.MaxMp}\n");
 
                 Console.WriteLine("1. 포션 선택");
                 Console.WriteLine("0. 나가기");
@@ -57,7 +74,7 @@ namespace TextRPGTeam33
                 if (input == "0") return 0; // 나가기
                 else if (input == "1") // 1. 포션 선택
                 {
-                    if (potions.Count > 0)
+                    if (hpPotions.Count > 0 || mpPotions.Count > 0)
                     {
                         Console.Clear();
                         SelectPotion(); //포션 선택
@@ -81,22 +98,49 @@ namespace TextRPGTeam33
             {
                 Console.WriteLine("[포션 선택]");
 
-                for (int i = 0; i < potions.Count; i++) // 포션의 종류와 개수를 출력
+                if (hpPotions.Count > 0)
                 {
-                    Console.WriteLine($"{i + 1}. {potions[i].Name} | 회복량: +{potions[i].Value} | 남은 수량: {potions[i].Count}개");
+                    Console.WriteLine("\n[HP 포션]");
+                    for (int i = 0; i < hpPotions.Count; i++)
+                    {
+                        Console.WriteLine($"{i + 1}. {hpPotions[i].Name} | HP 회복량: +{hpPotions[i].Value} | 남은 수량: {hpPotions[i].Count}개");
+                    }
                 }
-                Console.WriteLine("0. 취소");
+
+                if (mpPotions.Count > 0)
+                {
+                    Console.WriteLine("\n[MP 포션]");
+                    for (int i = 0; i < mpPotions.Count; i++)
+                    {
+                        Console.WriteLine($"{hpPotions.Count + i + 1}. {mpPotions[i].Name} | MP 회복량: +{mpPotions[i].Value} | 남은 수량: {mpPotions[i].Count}개");
+                    }
+                }
+
+                Console.WriteLine("\n0. 취소");
 
                 Console.Write("\n사용할 포션을 선택해주세요.\n>>");
 
-                if (int.TryParse(Console.ReadLine(), out int index) && index > 0 && index <= potions.Count) // TryParse: 입력받은 값을 정수로 변환후 index에 대입 
+                if (int.TryParse(Console.ReadLine(), out int index))
                 {
-                    UsePotion(potions[index - 1]);
-                    break;  // 포션 사용후 종료
-                }
-                else if (index == 0)
-                {
-                    return;  //  0. 취소 클릭시 이전 화면으로 나가기
+                    if (index > 0 && index <= hpPotions.Count)
+                    {
+                        UsePotion(hpPotions[index - 1], true);
+                        break;
+                    }
+                    else if (index > hpPotions.Count && index <= hpPotions.Count + mpPotions.Count)
+                    {
+                        UsePotion(mpPotions[index - hpPotions.Count - 1], false);
+                        break;
+                    }
+                    else if (index == 0)
+                    {
+                        return;
+                    }
+                    else
+                    {
+                        Console.WriteLine("잘못된 입력입니다.");
+                        Thread.Sleep(1000);
+                    }
                 }
                 else
                 {
@@ -106,35 +150,66 @@ namespace TextRPGTeam33
             }
         }
 
-        private void UsePotion(Item potion) // 포션 사용 코드
-        {         
-            if (character.Hp < character.MaxHP) // MaxHP에 도달하지 않았을 때만 포션 사용 가능
+        private void UsePotion(Item potion, bool isHPPotion) // 포션 사용 코드
+        {
+            if (isHPPotion) // HP 포션
             {
-                if (potion.Count > 0)
+                if (character.Hp < character.MaxHP) // MaxHP에 도달하지 않았을 때만 포션 사용 가능
                 {
-                    character.Hp += potion.Value; // 체력 회복
-
-                    if (character.Hp > character.MaxHP) 
+                    if (potion.Count > 0)
                     {
-                        character.Hp = character.MaxHP; // 회복후 회복량이 MaxHP보다 많을 경우 HP를 MaxHP로 설정
-                    }
- 
-                    potion.Count--; // 포션 개수 1개 감소
+                        character.Hp += potion.Value; // 체력 회복
 
-                    Console.WriteLine($"{potion.Name}을(를) 사용했습니다.");
-                    Console.WriteLine($"{potion.Value}HP가 회복 되었습니다.");
-                    Thread.Sleep(1000);
+                        if (character.Hp > character.MaxHP)
+                        {
+                            character.Hp = character.MaxHP; // 회복후 회복량이 MaxHP보다 많을 경우 HP를 MaxHP로 설정
+                        }
+
+                        potion.Count--; // 포션 개수 1개 감소
+
+                        Console.WriteLine($"{potion.Name}을(를) 사용했습니다.");
+                        Console.WriteLine($"HP가 {potion.Value} 회복 되었습니다.");
+                        Thread.Sleep(1000);
+                    }
+                    else
+                    {
+                        Console.WriteLine("포션이 부족합니다!");
+                        Thread.Sleep(1000);
+                    }
                 }
                 else
                 {
-                    Console.WriteLine("포션이 부족합니다!");
+                    Console.WriteLine("이미 체력이 최대입니다!");
                     Thread.Sleep(1000);
                 }
             }
-            else
+            else //MP 포션
             {
-                Console.WriteLine("이미 체력이 최대입니다!");
-                Thread.Sleep(1000);
+                if (character.Mp < character.MaxMp)
+                {
+                    if (potion.Count > 0)
+                    {
+                        character.Mp += potion.Value;
+                        if (character.Mp > character.MaxMp)
+                        {
+                            character.Mp = character.MaxMp;
+                        }
+                        potion.Count--;
+                        Console.WriteLine($"{potion.Name}을(를) 사용했습니다.");
+                        Console.WriteLine($"MP가 {potion.Value} 회복되었습니다.");
+                        Thread.Sleep(1000);
+                    }
+                    else
+                    {
+                        Console.WriteLine("포션이 부족합니다!");
+                        Thread.Sleep(1000);
+                    }
+                }
+                else
+                {
+                    Console.WriteLine("이미 마나가 최대입니다!");
+                    Thread.Sleep(1000);
+                }
             }
         }
     }
