@@ -11,20 +11,58 @@ namespace TextRPGTeam33
     {
         public Character Charactercreator()
         {
-            // 캐릭터 생성 처음 화면
+            string name = "";
+            do
+            {
+                // 캐릭터 생성 처음 화면
+                Console.Clear();
+                Console.WriteLine("캐릭터 생성");
+                Console.WriteLine("원하시는 이름을 입력해주세요.");
+                Console.Write(">> ");
+
+                // 이름 입력
+                name = Console.ReadLine();
+
+                //if (name == null) 
+
+                while (true)
+                {
+                    Console.Clear();
+                    Console.WriteLine("캐릭터 생성");
+                    Console.WriteLine("원하시는 이름을 입력해주세요.");
+                    Console.Write(">> ");
+
+                    Console.WriteLine($"이름 : {name}으로 진행하시겠습니까?");
+                    Console.WriteLine("");
+                    Console.WriteLine($"1. 진행하기");
+                    Console.WriteLine($"0. 다시 입력하기");
+
+                    string input = Console.ReadLine();
+                    if (input == "1")
+                    {
+                        Console.Clear();
+                        Console.WriteLine($"이름: {name}");
+                        break;
+
+                    }
+                    else if (input == "0")
+                    {
+                        Console.Clear();
+                        name = "";
+                        break;
+                    }
+                    else
+                    {
+                        Console.WriteLine("잘못된 입력입니다");
+                        Console.ReadKey();
+                    }
+                }
+            } while (name=="");
+
+
+            Thread.Sleep(1500);
+
             Console.Clear();
-            Console.WriteLine("캐릭터 생성");
-            Console.WriteLine("원하시는 이름을 설정해주세요.");
-            Console.Write(">> ");
-            
-            // 이름 입력
-            string name = Console.ReadLine();
-            
-                if (name == null) {  }
-
-                Console.WriteLine($"이름 : {name}");
-
-                Console.WriteLine("");
 
                 // 직업별 스탯 설정
                 int level = 1;
