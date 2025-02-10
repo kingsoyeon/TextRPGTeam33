@@ -190,10 +190,33 @@ partial class Program
     static void rest(Character player)
     {
         Console.Clear();
-        Console.WriteLine("휴식을 취합니다.");
-        Console.WriteLine("체력과 마나가 모두 회복됩니다.");
-        Thread.Sleep(1000);
-        adventureCount++;
+        Console.WriteLine("휴식을 취하시면 탐험 횟수가 늘어납니다.");
+        Console.WriteLine("휴식을 취하시겠습니까?");
+        Console.WriteLine("1. 휴식을 취한다.");
+        Console.WriteLine("0. 나간다.");
+        string restChioce = Console.ReadLine() ?? "0";
+        if (restChioce == "1")
+        {
+            Console.Clear();
+            player.Hp = player.MaxHP;
+            player.Mp = player.MaxMp;
+            Console.WriteLine("휴식을 취합니다.");
+            Console.WriteLine("체력과 마나가 모두 회복됩니다.");
+            Thread.Sleep(1000);
+            adventureCount++;
+        }
+        else if (restChioce == "0")
+        {
+            Console.WriteLine("휴식을 취하지 않고 돌아갑니다.");
+            Thread.Sleep(1000);
+            return;
+        }
+        else
+        {
+            Console.WriteLine("잘못된 입력입니다.");
+            Thread.Sleep(1000);
+        }
+
     }
 
     static void OpenStatus()
