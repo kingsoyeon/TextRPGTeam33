@@ -138,6 +138,15 @@ partial class Program
                 Console.WriteLine("잘못된 입력입니다.");
                 Thread.Sleep(1000);
             }
+            if (adventureCount >= 2)
+            {
+                adventureCount = 0;  // 탐험 횟수 초기화
+                days++;  // 날짜 증가
+                Console.ForegroundColor = ConsoleColor.Green;
+                Console.WriteLine($"하루가 지나갔습니다! 현재 날짜: {days}일");
+                Console.ResetColor();
+                Thread.Sleep(3000);
+            }
         }
     }
 
@@ -146,22 +155,12 @@ partial class Program
         Random random = new Random();
         int randomChoice = random.Next(0, 3);
         // 탐험이 시작되면 탐험 횟수 증가
-        adventureCount++;
-
         Console.Clear();
         Console.WriteLine($"탐험 {adventureCount}회 진행 중...");
 
-        // 탐험을 두 번 할 때마다 날짜가 1일 증가하고 탐험 횟수 초기화
-        if (adventureCount >= 2)
-        {
-            adventureCount = 0;  // 탐험 횟수 초기화
-            days++;  // 날짜 증가
-            Console.ForegroundColor = ConsoleColor.Green;
-            Console.WriteLine($"하루가 지나갔습니다! 현재 날짜: {days}일");
-            Console.ResetColor();
-        }
 
-        // 여기에 탐험 내용 추가 (예: 몬스터와 싸우기, 아이템 찾기 등)
+
+
         Thread.Sleep(1000);
         switch (randomChoice)
         {
@@ -186,6 +185,7 @@ partial class Program
         Console.WriteLine("이벤트 발생!");
         Thread.Sleep(2000);
         // 여러가지 이벤트 추가
+        adventureCount++;
     }
     static void rest(Character player)
     {
@@ -216,7 +216,7 @@ partial class Program
             Console.WriteLine("잘못된 입력입니다.");
             Thread.Sleep(1000);
         }
-
+        adventureCount++;
     }
 
     static void OpenStatus()
@@ -238,6 +238,7 @@ partial class Program
             End(player);
             Environment.Exit(0);
         }
+        adventureCount++;
     }
 
     static void DrinkPotion(Character player)
@@ -251,6 +252,7 @@ partial class Program
         Inventory inventory = player.Inventory;
         Shop shop = new(player, inventory);
         shop.DisplayShop();
+        adventureCount++;
     }
     static void End(Character player)
     {
