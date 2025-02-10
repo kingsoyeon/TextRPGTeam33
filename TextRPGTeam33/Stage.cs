@@ -28,7 +28,7 @@ namespace TextRPGTeam33
                 new Monster("네크로맨서 좀비", 10, 55, 15, false)
             };
 
-            //스테이지 클리어 아이템 보상리스트
+            //일반 몬스터 아이템 보상 리스트
             monsterItemList = new List<Item>
             {
                 new Item("가죽 자켓", ItemType.Amor, 4, 5, "기본적인 보호를 제공하는 가죽 자켓입니다.", 1000, 1),
@@ -37,15 +37,12 @@ namespace TextRPGTeam33
                 new Item("구급상자", ItemType.Potion, 30, 7, "기본적인 응급처치가 가능한 구급상자입니다.", 500, 1),
                 new Item("맛있는 샤와르마", ItemType.Potion, 40, 6, "뉴욕의 작은 가게에서 파는 중동식 샤워르마입니다. 힘든 전투 후에 먹으면 최고!", 1000, 1)
             };
-            //스테이지 클리어 아이템 보상리스트
+            //보스 몬스터 아이템 보상 리스트
             bossItemList = new List<Item>
             {
-                //방어구
                 new Item("군용 방탄복", ItemType.Amor, 15, 2, "군대에서 사용하던 고급 방탄복입니다. 매우 튼튼합니다.", 3500, 1),
                 new Item("후드 점퍼", ItemType.Amor, 17, 1, "파란색 후드티입니다. 입으면 슬리퍼가 신고 싶어집니다.", 4000, 1),
-                // 무기
                 new Item("묠니르", ItemType.Weapon, 17, 1, "망치에 새겨진 작은 글씨를 보니 누군가 '누군가 이걸 들 자격이 있다'라고 적어놨습니다.", 3000, 1),
-                // 회복
                 new Item("버터스카치 파이", ItemType.Potion, 55, 3, "달콤한 향이 나는 수제 파이입니다. 지하세계의 추억이 담겨있습니다.", 2000, 1),
             };
         }
@@ -55,13 +52,14 @@ namespace TextRPGTeam33
         {
             List<Monster> createMonster = new List<Monster>();
             Random rand = new Random();
-            int stageLevel = player.DungeonClearCount + 1;
-            int monsterCnt = 3;
+            int stageLevel = player.DungeonClearCount + 1;  //현재 스테이지 레벨
+            int monsterCnt = 3; //기본 몬스터 수
             int monsterId = 0;
             int minMonsterLv = 0;
 
-            monsterCnt += rand.Next(0, stageLevel); //몬스터 수 랜덤
-            if (monsterCnt > 5) monsterCnt = 5; //몬스터 수 최대 5마리
+            //스테이지 레벨에 따라 몬스터 수 랜덤 증가
+            monsterCnt += rand.Next(0, stageLevel);
+            if (monsterCnt > 5) monsterCnt = 5; //최대 5마리
 
             //10층마다 보스 몬스터 추가
             if ((player.DungeonClearCount + 1) % 5 == 0)
@@ -70,14 +68,18 @@ namespace TextRPGTeam33
                 new Monster("샌즈", 10, 60, 15, true);
             }
 
+            //스테이지 레벨에 따라 몬스터 등장확률 변경
+            double monsterSpawnRate = 0;
+
+            if (stageLevel >= 20) monsterSpawnRate = Math.Min(1.0, stageLevel / 30.0);
+            else if (stageLevel >= 10) monsterSpawnRate = Math.Min(1.0, stageLevel / 50.0);
+
             for (int i = 0; i < monsterCnt; i++)
             {
-
-                double monsterSpawnRate = Math.Min(1.0, stageLevel / 20.0); //스테이지 레벨에 따라 몬스터 등장확률 변경
                 if (rand.NextDouble() < monsterSpawnRate)
                 {
-                    minMonsterLv = Math.Min(stageLevel / 2, 9); // 최소 등장 레벨 제한 (최대 레벨 9까지)
-                    monsterId = rand.Next(minMonsterLv, 10); // 강한 몬스터 등장 (레벨 5~9)
+                    minMonsterLv = Math.Min(stageLevel / 3, 6); //강한 몬스터는 6층부터 등장
+                    monsterId = rand.Next(minMonsterLv, 10);
                 }
                 else
                 {
@@ -87,7 +89,6 @@ namespace TextRPGTeam33
 
                 createMonster.Add(new Monster(monsterList[monsterId].name, monsterList[monsterId].level, monsterList[monsterId].hp, monsterList[monsterId].atk, monsterList[monsterId].isBoss));
             }
-
             return createMonster;
         }
 
@@ -114,6 +115,7 @@ namespace TextRPGTeam33
                 rewardExp += (monster.level * 5);
                 rewardGold += (int)((monster.level * 50) * (1 + (rand.NextDouble() * 0.2 - 0.1 + (skillrewardRate / 100))) / 10) * 10;
 
+                //보스, 일반 몬스터 보상 구분
                 if (monster.isBoss) itemList = bossItemList;
                 else itemList = monsterItemList;
 
