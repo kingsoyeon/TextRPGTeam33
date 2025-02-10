@@ -29,8 +29,10 @@ namespace TextRPGTeam33
             {
                 Console.Clear();
                 Console.WriteLine("상점 주인");
+                Console.BackgroundColor = ConsoleColor.White;
+                Console.ForegroundColor = ConsoleColor.Black;
                 Console.WriteLine("필요한 물건이 있나?");
-                
+                Console.ResetColor();
                 Console.ForegroundColor = ConsoleColor.DarkYellow;
                 Console.WriteLine("\n[보유 골드]");
                 Console.WriteLine($"{player.Gold} G");
@@ -50,21 +52,43 @@ namespace TextRPGTeam33
                     }
                     else
                     {
+                        Console.ForegroundColor = ConsoleColor.Yellow;
                         int actualPrice = (int)(itemList[i].Cost); // 보유중이 아닐때 아이템 가격 출력
                         price = $"{actualPrice} G";
+                        Console.ResetColor();
                     }
 
                     string stat; // 아이템 stat(값)에 방어력, 공격력, 회복력 글자 추가
-                    if (itemList[i].Type == ItemType.Amor) { stat = $"방어력 +{itemList[i].Value}"; } // ItemType이 Amor일 경우 "방어력"
-                    else if (itemList[i].Type == ItemType.Weapon) {  stat = $"공격력 +{itemList[i].Value}"; }// ItemType이 Weapon일 경우 "공격력"
-                    else {  stat = $"회복량 +{itemList[i].Value}"; } // // 그외(ItemType이 Potion) 일 경우 "회복력"
+
+                    if (itemList[i].Type == ItemType.Amor) {
+                        Console.ForegroundColor = ConsoleColor.Blue;
+                        Console.Write("●");
+                        Console.ResetColor();
+                        stat = $"방어력+{itemList[i].Value}"; } // ItemType이 Amor일 경우 "방어력"
+
+                    else if (itemList[i].Type == ItemType.Weapon) {
+                        Console.ForegroundColor = ConsoleColor.Red;
+                        Console.Write("●");
+                        Console.ResetColor();
+                        stat = $"공격력 +{itemList[i].Value}"; }// ItemType이 Weapon일 경우 "공격력"
+                    else {
+                        Console.ForegroundColor = ConsoleColor.Green;
+                        Console.Write("●");
+                        Console.ResetColor();
+                        stat = $"회복량 +{itemList[i].Value}"; } // // 그외(ItemType이 Potion) 일 경우 "회복력"
 
                     Console.WriteLine($"- {itemList[i].Name,-8} | {stat,-6} | {itemList[i].Descrip,-30} | {price}"); // - {이름} | 값(공격력, 방어력, 회복력) | 아이템 설명 | 가격/보유여부
                 }
-
+                Console.ForegroundColor = ConsoleColor.Yellow;
+                Console.WriteLine("________________________________________________________________________________________________________________________");
+                Console.ResetColor();
+                Console.ForegroundColor = ConsoleColor.White;
                 Console.WriteLine("\n1. 아이템 구매");
+                Console.ForegroundColor = ConsoleColor.DarkYellow;
                 Console.WriteLine("2. 아이템 판매");
+                Console.ForegroundColor = ConsoleColor.Gray;
                 Console.WriteLine("0. 나가기\n");
+                Console.ResetColor();
 
                 Console.Write("원하시는 행동을 입력해주세요.\n>>");
                 string input = Console.ReadLine();
@@ -96,36 +120,71 @@ namespace TextRPGTeam33
         private void BuyScreen() // 구매창 출력
         {
             Console.Clear();
+            Console.WriteLine("상점 주인");
+            Console.BackgroundColor = ConsoleColor.White;
+            Console.ForegroundColor = ConsoleColor.Black;
+            Console.WriteLine("젊은이 보는눈이 있구만!");
+            Console.ResetColor();
 
-            Console.WriteLine("상점 - 아이템 구매");
-            Console.WriteLine("필요한 아이템을 얻을 수 있는 상점입니다.");
             Console.WriteLine("\n[보유 골드]");
+            Console.ForegroundColor = ConsoleColor.DarkYellow;
             Console.WriteLine($"{player.Gold} G");
+            Console.ResetColor();
 
-            Console.WriteLine("\n[아이템 목록]");
+            Console.ForegroundColor = ConsoleColor.Yellow;
+            Console.WriteLine("\n====================================================<<아이템 목록>>=====================================================");
+            Console.ResetColor();
 
             for (int i = 0; i < itemList.Count; i++) // itemList에서 아이템 내용 출력
             {
                 string price;
                 if (itemList[i].IsPurchase) // 만약 보유중 이라면...
                 {
+                    Console.ForegroundColor = ConsoleColor.DarkGray;
                     price = "보유중";
+                    Console.ResetColor();
                 }
                 else
                 {
+                    Console.ForegroundColor = ConsoleColor.Yellow;
                     int actualPrice = (int)(itemList[i].Cost); // 보유중이 아닐때 아이템 가격 출력
                     price = $"{actualPrice} G";
+                    Console.ResetColor();
                 }
 
                 string stat;
-                if (itemList[i].Type == ItemType.Amor) { stat = $"방어력 +{itemList[i].Value}"; }
-                else if (itemList[i].Type == ItemType.Weapon) { stat = $"공격력 +{itemList[i].Value}"; }
-                else { stat = $"회복량 +{itemList[i].Value}"; }
+                if (itemList[i].Type == ItemType.Amor)
+                {
+                    Console.ForegroundColor = ConsoleColor.Blue;
+                    Console.Write("●");
+                    Console.ResetColor();
+                    stat = $"방어력+{itemList[i].Value}";
+                } // ItemType이 Amor일 경우 "방어력"
+
+                else if (itemList[i].Type == ItemType.Weapon)
+                {
+                    Console.ForegroundColor = ConsoleColor.Red;
+                    Console.Write("●");
+                    Console.ResetColor();
+                    stat = $"공격력 +{itemList[i].Value}";
+                }// ItemType이 Weapon일 경우 "공격력"
+                else
+                {
+                    Console.ForegroundColor = ConsoleColor.Green;
+                    Console.Write("●");
+                    Console.ResetColor();
+                    stat = $"회복량 +{itemList[i].Value}";
+                } // // 그외(ItemType이 Potion) 일 경우 "회복력"
 
                 Console.WriteLine($"- {i + 1} {itemList[i].Name,-8} | {stat,-6} | {itemList[i].Descrip,-30} | {price}"); // - index 이름 | 값(공격력, 방어력, 회복력) | 아이템 설명 | 가격/보유여부
             }
-
+            Console.ForegroundColor = ConsoleColor.Yellow;
+            Console.WriteLine("________________________________________________________________________________________________________________________");
+            Console.ResetColor();
+            Console.ForegroundColor = ConsoleColor.Gray;
             Console.WriteLine("\n0. 나가기");
+            Console.ResetColor();
+             
             Console.Write("\n구매할 아이템 번호를 입력해주세요.\n>>");
 
             string input = Console.ReadLine();
@@ -138,8 +197,10 @@ namespace TextRPGTeam33
 
                 if (item.Type != ItemType.Potion && item.IsPurchase) // ItemType이 Potion이 아니고, 보유중이 라면... => 포션은 여러번 구매 가능
                 {
+                    Console.ForegroundColor = ConsoleColor.Gray;
                     Console.WriteLine("이미 보유한 아이템입니다.");
                     Thread.Sleep(1000);
+                    Console.ResetColor();
                 }
                 else if (item.Type == ItemType.Potion) // ItemType이 Potion 이라면...
                 {
@@ -166,8 +227,10 @@ namespace TextRPGTeam33
                     }
                     else
                     {
+                        Console.ForegroundColor = ConsoleColor.Red;
                         Console.WriteLine("잘못된 수량입니다.");
                         Thread.Sleep(1000);
+                        Console.ResetColor();
                     }
                 }
                 else if (player.Gold >= price)
@@ -198,19 +261,26 @@ namespace TextRPGTeam33
         private void SellScreen() // 판매창 출력
         {
             Console.Clear();
-            Console.WriteLine("상점 - 아이템 판매");
-            Console.WriteLine($"\n[보유 골드]\n{player.Gold} G\n");
+            Console.WriteLine("상점 주인");
+            Console.BackgroundColor = ConsoleColor.White;
+            Console.ForegroundColor = ConsoleColor.Black;
+            Console.WriteLine("젊은이 무얼 팔려는 게인가.");
+            Console.ResetColor();
 
             var inventoryItems = inventory.GetItems(); //인벤토리 아이템 정보를 inventoryItems에 입력
 
             if (inventoryItems.Count < 1) //인벤토리가 비어있다면...
             {
+                Console.ForegroundColor = ConsoleColor.Gray;
                 Console.WriteLine("판매할 아이템이 없습니다.");
+                Console.ResetColor();
                 Thread.Sleep(1000);
                 return;
             }
 
-            Console.WriteLine("[아이템 목록]");
+            Console.ForegroundColor = ConsoleColor.Yellow;
+            Console.WriteLine("\n====================================================<<아이템 목록>>=====================================================");
+            Console.ResetColor();
 
             for (int i = 0; i < inventoryItems.Count; i++) //인벤토리 아이템 내용 출력
             {
@@ -221,11 +291,31 @@ namespace TextRPGTeam33
                 Price = $"{actualPrice} G";
 
                 string stat;
-                if (item.Type == ItemType.Amor) { stat = $"방어력 +{item.Value}"; }
-                else if (item.Type == ItemType.Weapon) { stat = $"공격력 +{item.Value}"; }
-                else { stat = $"회복량 +{item.Value}"; }
+                if (itemList[i].Type == ItemType.Amor)
+                {
+                    Console.ForegroundColor = ConsoleColor.Blue;
+                    Console.Write("●");
+                    Console.ResetColor();
+                    stat = $"방어력+{itemList[i].Value}";
+                } // ItemType이 Amor일 경우 "방어력"
 
+                else if (itemList[i].Type == ItemType.Weapon)
+                {
+                    Console.ForegroundColor = ConsoleColor.Red;
+                    Console.Write("●");
+                    Console.ResetColor();
+                    stat = $"공격력 +{itemList[i].Value}";
+                }// ItemType이 Weapon일 경우 "공격력"
+                else
+                {
+                    Console.ForegroundColor = ConsoleColor.Green;
+                    Console.Write("●");
+                    Console.ResetColor();
+                    stat = $"회복량 +{itemList[i].Value}";
+                } // // 그외(ItemType이 Potion) 일 경우 "회복력"
+                Console.ForegroundColor = ConsoleColor.Cyan;
                 string equippedMark = item.IsEquip ? "[E] " : ""; // 장착중이면  [E] 출력
+                Console.ResetColor();
                 string countDisplay = "";
 
                 if (item.Type == ItemType.Potion || ((item.Type == ItemType.Weapon || item.Type == ItemType.Amor) && item.Count > 1))  // 포션이거나 장비의 개수가 2개 이상일 때만 보유 개수 표시
@@ -234,8 +324,12 @@ namespace TextRPGTeam33
                 }
                 Console.WriteLine($"- {i + 1} {equippedMark}{item.Name,-8} | {stat,-6} | {item.Descrip,-30} | {Price} {countDisplay}"); // - index 이름 | 값(공격력, 방어력, 회복력) | 아이템 설명 | 가격/보유여부 [보유 개수]
             }
-
+            Console.ForegroundColor = ConsoleColor.Yellow;
+            Console.WriteLine("________________________________________________________________________________________________________________________");
+            Console.ResetColor();
+            Console.ForegroundColor = ConsoleColor.Gray;
             Console.WriteLine("\n0. 나가기\n");
+            Console.ResetColor();
             Console.Write("판매할 아이템 번호를 입력해 주세요.\n>>");
 
             string input = Console.ReadLine();
