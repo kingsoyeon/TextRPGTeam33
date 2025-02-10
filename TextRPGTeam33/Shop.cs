@@ -37,11 +37,11 @@ namespace TextRPGTeam33
                 Console.WriteLine("\n[보유 골드]");
                 Console.WriteLine($"{player.Gold} G");
                 Console.ResetColor();
-
+                Console.WriteLine("");
                 Console.ForegroundColor = ConsoleColor.Yellow;
                 Console.WriteLine("\n========================================================<<상점>>========================================================");
                 Console.ResetColor();
-
+                Console.WriteLine("");
 
                 for (int i = 0; i < itemList.Count; i++) // itemList에서 아이템 내용 출력
                 {
@@ -80,8 +80,10 @@ namespace TextRPGTeam33
                     Console.WriteLine($"- {itemList[i].Name,-8} | {stat,-6} | {itemList[i].Descrip,-30} | {price}"); // - {이름} | 값(공격력, 방어력, 회복력) | 아이템 설명 | 가격/보유여부
                 }
                 Console.ForegroundColor = ConsoleColor.Yellow;
+                Console.WriteLine("");
                 Console.WriteLine("________________________________________________________________________________________________________________________");
                 Console.ResetColor();
+                Console.WriteLine("");
                 Console.ForegroundColor = ConsoleColor.White;
                 Console.WriteLine("\n1. 아이템 구매");
                 Console.ForegroundColor = ConsoleColor.DarkYellow;
@@ -108,7 +110,9 @@ namespace TextRPGTeam33
                 else
                 {
                     Console.Clear();
+                    Console.ForegroundColor = ConsoleColor.Gray;
                     Console.WriteLine("잘못된 입력입니다.");
+                    Console.ResetColor();
                     Thread.Sleep(1000);
                     Console.Clear();
                 }
@@ -130,11 +134,11 @@ namespace TextRPGTeam33
             Console.ForegroundColor = ConsoleColor.DarkYellow;
             Console.WriteLine($"{player.Gold} G");
             Console.ResetColor();
-
+            Console.WriteLine("");
             Console.ForegroundColor = ConsoleColor.Yellow;
             Console.WriteLine("\n====================================================<<아이템 목록>>=====================================================");
             Console.ResetColor();
-
+            Console.WriteLine("");
             for (int i = 0; i < itemList.Count; i++) // itemList에서 아이템 내용 출력
             {
                 string price;
@@ -178,9 +182,11 @@ namespace TextRPGTeam33
 
                 Console.WriteLine($"- {i + 1} {itemList[i].Name,-8} | {stat,-6} | {itemList[i].Descrip,-30} | {price}"); // - index 이름 | 값(공격력, 방어력, 회복력) | 아이템 설명 | 가격/보유여부
             }
+            Console.WriteLine("");
             Console.ForegroundColor = ConsoleColor.Yellow;
             Console.WriteLine("________________________________________________________________________________________________________________________");
             Console.ResetColor();
+            Console.WriteLine("");
             Console.ForegroundColor = ConsoleColor.Gray;
             Console.WriteLine("\n0. 나가기");
             Console.ResetColor();
@@ -227,10 +233,12 @@ namespace TextRPGTeam33
                     }
                     else
                     {
-                        Console.ForegroundColor = ConsoleColor.Red;
+                        Console.Clear();
+                        Console.ForegroundColor = ConsoleColor.Gray;
                         Console.WriteLine("잘못된 수량입니다.");
-                        Thread.Sleep(1000);
                         Console.ResetColor();
+                        Thread.Sleep(1000);
+                        Console.Clear();
                     }
                 }
                 else if (player.Gold >= price)
@@ -253,7 +261,9 @@ namespace TextRPGTeam33
             else
             {
                 Console.Clear();
+                Console.ForegroundColor = ConsoleColor.Gray;
                 Console.WriteLine("잘못된 입력입니다.");
+                Console.ResetColor();
                 Thread.Sleep(1000);
                 Console.Clear();
             }
@@ -271,17 +281,19 @@ namespace TextRPGTeam33
 
             if (inventoryItems.Count < 1) //인벤토리가 비어있다면...
             {
+                Console.Clear();
                 Console.ForegroundColor = ConsoleColor.Gray;
-                Console.WriteLine("판매할 아이템이 없습니다.");
+                Console.WriteLine("판매할 아이템이 업습니다.");
                 Console.ResetColor();
                 Thread.Sleep(1000);
+                Console.Clear();
                 return;
             }
-
+            Console.WriteLine("");
             Console.ForegroundColor = ConsoleColor.Yellow;
             Console.WriteLine("\n====================================================<<아이템 목록>>=====================================================");
             Console.ResetColor();
-
+            Console.WriteLine("");
             for (int i = 0; i < inventoryItems.Count; i++) //인벤토리 아이템 내용 출력
             {
                 var item = inventoryItems[i]; // 
@@ -324,9 +336,11 @@ namespace TextRPGTeam33
                 }
                 Console.WriteLine($"- {i + 1} {equippedMark}{item.Name,-8} | {stat,-6} | {item.Descrip,-30} | {Price} {countDisplay}"); // - index 이름 | 값(공격력, 방어력, 회복력) | 아이템 설명 | 가격/보유여부 [보유 개수]
             }
+            Console.WriteLine("");
             Console.ForegroundColor = ConsoleColor.Yellow;
             Console.WriteLine("________________________________________________________________________________________________________________________");
             Console.ResetColor();
+            Console.WriteLine("");
             Console.ForegroundColor = ConsoleColor.Gray;
             Console.WriteLine("\n0. 나가기\n");
             Console.ResetColor();
@@ -345,8 +359,12 @@ namespace TextRPGTeam33
 
                     if (!int.TryParse(Console.ReadLine(), out int quantity)) // 입력값이 잘못됬다면... / 입력값을 정수로 변환시켜 index에 넣는다.
                     {
+                        Console.Clear();
+                        Console.ForegroundColor = ConsoleColor.Gray;
                         Console.WriteLine("잘못된 수량입니다.");
+                        Console.ResetColor();
                         Thread.Sleep(1000);
+                        Console.Clear();
                         return;
                     }
 
@@ -389,8 +407,9 @@ namespace TextRPGTeam33
             else
             {
                 Console.Clear();
-
+                Console.ForegroundColor = ConsoleColor.Gray;
                 Console.WriteLine("잘못된 입력입니다.");
+                Console.ResetColor();
                 Thread.Sleep(1000);
                 Console.Clear();
             }
