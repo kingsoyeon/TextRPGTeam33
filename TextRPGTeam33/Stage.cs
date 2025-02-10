@@ -6,7 +6,8 @@ namespace TextRPGTeam33
     {
         private Character player;
         private List<Monster> monsterList;
-        private List<Item> itemList;
+        private List<Item> monsterItemList;
+        private List<Item> bossItemList;
 
         public Stage(Character player)
         {
@@ -15,35 +16,36 @@ namespace TextRPGTeam33
             //몬스터 리스트
             monsterList = new List<Monster>
             {
-                new Monster("기본 좀비", 1, 10, 5),
-                new Monster("썩은 좀비", 2, 14, 6),
-                new Monster("광폭 좀비", 3, 18, 8),
-                new Monster("기어 다니는 좀비", 4, 22, 7),
-                new Monster("돌연변이 좀비", 5, 28, 9),
-                new Monster("스프린터 좀비", 6, 24, 10),
-                new Monster("덩치 좀비", 7, 40, 12),
-                new Monster("폭발성 좀비", 8, 32, 13),
-                new Monster("맹독 좀비", 9, 35, 14),
-                new Monster("네크로맨서 좀비", 10, 55, 15)
+                new Monster("기본 좀비", 1, 10, 5, false),
+                new Monster("썩은 좀비", 2, 14, 6, false),
+                new Monster("광폭 좀비", 3, 18, 8, false),
+                new Monster("기어 다니는 좀비", 4, 22, 7, false),
+                new Monster("돌연변이 좀비", 5, 28, 9, false),
+                new Monster("스프린터 좀비", 6, 24, 10, false),
+                new Monster("덩치 좀비", 7, 40, 12, false),
+                new Monster("폭발성 좀비", 8, 32, 13, false),
+                new Monster("맹독 좀비", 9, 35, 14, false),
+                new Monster("네크로맨서 좀비", 10, 55, 15, false)
             };
 
             //스테이지 클리어 아이템 보상리스트
-            itemList = new List<Item>
+            monsterItemList = new List<Item>
             {
-                //방어구
                 new Item("가죽 자켓", ItemType.Amor, 4, 5, "기본적인 보호를 제공하는 가죽 자켓입니다.", 1000, 1),
                 new Item("방탄 조끼", ItemType.Amor, 9, 3, "경찰용 방탄 조끼입니다. 총알을 어느정도 막아줄 것 같습니다.", 2000, 1),
+                new Item("야구 방망이", ItemType.Weapon, 5, 5, "임시방편으로 사용하기 좋은 무기입니다.", 600, 1),
+                new Item("구급상자", ItemType.Potion, 30, 7, "기본적인 응급처치가 가능한 구급상자입니다.", 500, 1),
+                new Item("맛있는 샤와르마", ItemType.Potion, 40, 6, "뉴욕의 작은 가게에서 파는 중동식 샤워르마입니다. 힘든 전투 후에 먹으면 최고!", 1000, 1)
+            };
+            //스테이지 클리어 아이템 보상리스트
+            bossItemList = new List<Item>
+            {
+                //방어구
                 new Item("군용 방탄복", ItemType.Amor, 15, 2, "군대에서 사용하던 고급 방탄복입니다. 매우 튼튼합니다.", 3500, 1),
                 new Item("후드 점퍼", ItemType.Amor, 17, 1, "파란색 후드티입니다. 입으면 슬리퍼가 신고 싶어집니다.", 4000, 1),
                 // 무기
-                new Item("야구 방망이", ItemType.Weapon, 5, 5, "임시방편으로 사용하기 좋은 무기입니다.", 600, 1),
-                new Item("소방 도끼", ItemType.Weapon, 10, 4, "소방서에서 가져온 도끼입니다. 좀비와 문 모두에게 효과적입니다.", 1500, 1),
                 new Item("묠니르", ItemType.Weapon, 17, 1, "망치에 새겨진 작은 글씨를 보니 누군가 '누군가 이걸 들 자격이 있다'라고 적어놨습니다.", 3000, 1),
                 // 회복
-                new Item("구급상자", ItemType.Potion, 30, 7, "기본적인 응급처치가 가능한 구급상자입니다.", 500, 1),
-                new Item("맛있는 샤와르마", ItemType.Potion, 40, 6, "뉴욕의 작은 가게에서 파는 중동식 샤워르마입니다. 힘든 전투 후에 먹으면 최고!", 1000, 1),
-                new Item("군용 의료키트", ItemType.Potion, 50, 5, "군용 의료키트입니다. 중상 치료도 가능합니다.", 1000, 1),
-                new Item("특제 스테이크", ItemType.Potion, 45, 4, "음식에 고양이 털이 들어갔네요. 하지만 맛은 여전히 최고!", 1500, 1),
                 new Item("버터스카치 파이", ItemType.Potion, 55, 3, "달콤한 향이 나는 수제 파이입니다. 지하세계의 추억이 담겨있습니다.", 2000, 1),
             };
         }
@@ -65,7 +67,7 @@ namespace TextRPGTeam33
             if ((player.DungeonClearCount + 1) % 5 == 0)
             {
                 monsterCnt -= 1;
-                new Monster("샌즈", 10, 60, 15);
+                new Monster("샌즈", 10, 60, 15, true);
             }
 
             for (int i = 0; i < monsterCnt; i++)
@@ -83,7 +85,7 @@ namespace TextRPGTeam33
                     monsterId = rand.Next(0, Math.Min(stageLevel / 3 + 1, 5));
                 }
 
-                createMonster.Add(new Monster(monsterList[monsterId].name, monsterList[monsterId].level, monsterList[monsterId].hp, monsterList[monsterId].atk));
+                createMonster.Add(new Monster(monsterList[monsterId].name, monsterList[monsterId].level, monsterList[monsterId].hp, monsterList[monsterId].atk, monsterList[monsterId].isBoss));
             }
 
             return createMonster;
@@ -101,6 +103,7 @@ namespace TextRPGTeam33
             int rewardRate = 0;
             int skillrewardRate = skillCnt * 10;
             bool isLevelUp = false;
+            List<Item> itemList;
             List<Item> rewardItems = new List<Item>();
 
             //경험치 = 몬스터 레벨 * 5
@@ -110,6 +113,9 @@ namespace TextRPGTeam33
             {
                 rewardExp += (monster.level * 5);
                 rewardGold += (int)((monster.level * 50) * (1 + (rand.NextDouble() * 0.2 - 0.1 + (skillrewardRate / 100))) / 10) * 10;
+
+                if (monster.isBoss) itemList = bossItemList;
+                else itemList = monsterItemList;
 
                 foreach (Item item in itemList)
                 {
