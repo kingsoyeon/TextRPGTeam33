@@ -38,6 +38,8 @@ namespace TextRPGTeam33
 
         public bool isLevelUp { get; set; }
 
+        public int speed {  get; set; }
+
 
         
         public Character(int level, string name, string job, int atk, int def, int maxHp, int maxMp, int gold)
