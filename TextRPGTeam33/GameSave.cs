@@ -9,12 +9,15 @@ namespace TextRPGTeam33
 {
     public class GameSave
     {
-        private readonly string saveFile1 = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments), "TextRPGTeam33", "gamesave1.json");
-        private readonly string saveFile2 = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments), "TextRPGTeam33", "gamesave2.json");
-        private readonly string saveFile3 = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments), "TextRPGTeam33", "gamesave3.json");
+        private readonly string saveDirectory;
+        private readonly string saveFile1;
+        private readonly string saveFile2;
+        private readonly string saveFile3;
+        private string currentSaveFile;  // 현재 사용 중인 세이브 파일
 
         private readonly CharacterCreator characterCreator;
-        private string currentSaveFile;  // 현재 사용 중인 세이브 파일
+        private static GameSave gameSave;
+
 
         public class GameData  // 캐릭터와 days를 함께 저장하기 위한 클래스
         {
@@ -26,6 +29,23 @@ namespace TextRPGTeam33
 
         public GameSave()
         {
+            // 애플리케이션 데이터 폴더에 저장
+            saveDirectory = Path.Combine(
+                Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData),
+                "TextRPGTeam33"
+            );
+
+            // 디렉토리가 없으면 생성
+            if (!Directory.Exists(saveDirectory))
+            {
+                Directory.CreateDirectory(saveDirectory);
+            }
+
+            // 세이브 파일 경로 설정
+            saveFile1 = Path.Combine(saveDirectory, "gamesave1.json");
+            saveFile2 = Path.Combine(saveDirectory, "gamesave2.json");
+            saveFile3 = Path.Combine(saveDirectory, "gamesave3.json");
+
             characterCreator = new CharacterCreator();
         }
 
@@ -70,6 +90,7 @@ namespace TextRPGTeam33
                     // 빈 슬롯 선택시 바로 캐릭터 생성으로
                     if (!File.Exists(selectedFile))
                     {
+                        currentSaveFile = selectedFile;  // 새 캐릭터 생성 시에도 선택한 슬롯 저장
                         var newPlayer = characterCreator.Charactercreator();
                         if (newPlayer != null)
                         {
@@ -124,17 +145,20 @@ namespace TextRPGTeam33
 
                 if (action == "1")
                 {
+                    currentSaveFile = filePath; // 여기서 currentSaveFile을 명시적으로 설정
+
                     if (File.Exists(filePath))
                     {
                         Character loadedCharacter = Load(filePath);
-                        currentSaveFile = filePath;  // 여기서 currentSaveFile을 명시적으로 설정
                         return loadedCharacter;
                     }
                     else
                     {
                         var newPlayer = characterCreator.Charactercreator();
-                        currentSaveFile = filePath;  // 새 캐릭터 생성 시 슬롯 설정
-                        Save(newPlayer, filePath);
+                        if (newPlayer != null)
+                        {
+                            Save(newPlayer, filePath);
+                        }
                         return newPlayer;
                     }
                 }
@@ -172,19 +196,22 @@ namespace TextRPGTeam33
                     AdventureCount = Program.adventureCount
                 };
 
-                string jsonString = JsonSerializer.Serialize(saveData, new JsonSerializerOptions
+                var options = new JsonSerializerOptions
                 {
                     WriteIndented = true,
                     ReferenceHandler = System.Text.Json.Serialization.ReferenceHandler.IgnoreCycles,
                     DefaultIgnoreCondition = System.Text.Json.Serialization.JsonIgnoreCondition.WhenWritingNull
-                });
+                };
+
+                string jsonString = JsonSerializer.Serialize(saveData, options);
 
                 File.WriteAllText(filePath, jsonString);
 
                 currentSaveFile = filePath;
                 Console.WriteLine($"저장 경로: {filePath}");
                 Console.WriteLine($"파일 크기: {new FileInfo(filePath).Length} 바이트");
-                Thread.Sleep(1000);
+                Console.WriteLine($"게임이 {Path.GetFileName(filePath)}에 저장되었습니다.");
+                Thread.Sleep(5000);
             }
             catch (Exception ex)
             {
@@ -275,15 +302,6 @@ namespace TextRPGTeam33
         }
         public string GetCurrentSaveFile()
         {
-            // 현재 실행 디렉토리를 기본 경로로 사용
-            string defaultSavePath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "gamesave1.json");
-
-            // currentSaveFile이 null이나 빈 문자열이면 기본 경로 사용
-            if (string.IsNullOrWhiteSpace(currentSaveFile))
-            {
-                currentSaveFile = defaultSavePath;
-            }
-
             return currentSaveFile;
         }
     }
