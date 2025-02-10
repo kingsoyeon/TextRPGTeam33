@@ -1,16 +1,20 @@
+
+using System.Runtime.InteropServices;
 using System;
 using System.Numerics;
 using System.Threading;
+using System.Diagnostics;
 using TextRPGTeam33;
 
 partial class Program
 {
-    static int adventureCount = 0;  // 탐험 횟수를 추적하는 변수
+    
+    public static int adventureCount = 0;  // 탐험 횟수를 추적하는 변수
      public static int days = 0;  // 날짜를 추적하는 변수
 
     static void Main()
     {
-
+        Process.Start("cmd.exe", "/c mode con cols=150 lines=50");
         GameSave gameSave = new GameSave();
         Character player = gameSave.DisplaySave();
 
@@ -105,7 +109,7 @@ partial class Program
             Console.ForegroundColor = ConsoleColor.Yellow;
             Console.WriteLine("                    ■");
             Console.Write("■     ");
-            Console.Write("▶ 5. 저장 한다.");
+            Console.Write("▶ 5. 일기를 쓴다.");
             Console.ForegroundColor = ConsoleColor.Yellow;
             Console.WriteLine("                   ■");
             Console.Write("■     ");
@@ -163,13 +167,10 @@ partial class Program
     static void Explore(Character player)
     {
         Random random = new Random();
-        int randomChoice = random.Next(0, 3);
+        int randomChoice = random.Next(0, 5);
         // 탐험이 시작되면 탐험 횟수 증가
         Console.Clear();
-        Console.WriteLine($"탐험 {adventureCount}회 진행 중...");
-
-
-
+        Console.WriteLine($"탐험 {adventureCount + 1}회 진행 중...");
 
         Thread.Sleep(1000);
         switch (randomChoice)
@@ -183,6 +184,13 @@ partial class Program
             case 2:
                 Event(player);  // 다른 이벤트
                 break;
+            case 3:
+                StartBattle(player);  // 전투 이벤트
+                break;
+            case 4:
+                StartBattle(player);  // 전투 이벤트
+                break;
+
             default:
                 Console.WriteLine("알 수 없는 이벤트가 발생했습니다.");
                 break;
@@ -202,6 +210,9 @@ partial class Program
     {
         GameSave gameSave = new GameSave();
         gameSave.Save(player, gameSave.GetCurrentSaveFile());
+        Console.Clear();
+        Console.WriteLine("당신은 일기를 작성하셨습니다.");
+        Thread.Sleep(2000);
     }
 
     
