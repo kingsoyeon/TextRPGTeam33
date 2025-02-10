@@ -1,44 +1,52 @@
+
+using System.Runtime.InteropServices;
 using System;
 using System.Numerics;
-using System.Threading;
 using TextRPGTeam33;
+
 
 partial class Program
 {
-    static int adventureCount = 0;  // 탐험 횟수를 추적하는 변수
+    static GameSave gameSave;
+    public static int adventureCount = 0;  // 탐험 횟수를 추적하는 변수
      public static int days = 0;  // 날짜를 추적하는 변수
 
     static void Main()
     {
-
-        GameSave gameSave = new GameSave();
+        gameSave = new GameSave();
         Character player = gameSave.DisplaySave();
 
         Console.Clear();
         bool isValidInput = false;
         while (!isValidInput)
-        {
+        { 
             Console.Clear();
             if (player != null)
             {
+
                 Console.ForegroundColor = ConsoleColor.Cyan;
-                Console.WriteLine("■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■");
-                Console.Write("■         ");
+                Console.WriteLine();
+                Console.WriteLine(" ㅁ-ㅁ-ㅁ-ㅁ-ㅁ-ㅁ-ㅁ-ㅁ-ㅁ-ㅁ-ㅁ-ㅁ-ㅁ-ㅁ");
+                Console.Write("ㅁ\t");
                 Console.ForegroundColor = ConsoleColor.White;
                 Console.Write("오늘도 하루가 시작되었다.");
                 Console.ForegroundColor = ConsoleColor.Cyan;
-                Console.WriteLine("     ■");
-                Console.Write("■          ");
+                Console.WriteLine("\t ㅁ");
+                Console.Write("ㅁ\t");
                 Console.ForegroundColor = ConsoleColor.Gray;
                 Console.Write("1. 부산역을 나선다.");
                 Console.ForegroundColor = ConsoleColor.Cyan;
-                Console.WriteLine("          ■");
-                Console.Write("■          ");
+                Console.WriteLine("\t\t ㅁ");
+                Console.Write("ㅁ\t");
                 Console.ForegroundColor = ConsoleColor.Red;
                 Console.Write("0. 오늘은 쉴까?");
                 Console.ForegroundColor = ConsoleColor.Cyan;
-                Console.WriteLine("              ■");
-                Console.WriteLine("■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■");
+                Console.WriteLine("\t\t\t ㅁ");
+                // ■와 빈 문자열을 번갈아 출력
+                Console.WriteLine(" ㅁ-ㅁ-ㅁ-ㅁ-ㅁ-ㅁ-ㅁ-ㅁ-ㅁ-ㅁ-ㅁ-ㅁ-ㅁ-ㅁ");
+
+
+                Console.WriteLine();
                 Console.ResetColor();
                 Console.Write("원하시는 행동을 입력해주세요:");
                 string startChoice = Console.ReadLine() ?? "0";
@@ -72,48 +80,57 @@ partial class Program
         bool inDungeon = true;
         while (inDungeon)
         {
+
             Console.Clear();
             Console.ForegroundColor = ConsoleColor.White;
-            Console.WriteLine($"살아남은 날짜:{days}");
-            Console.WriteLine($"탐험횟수:0{adventureCount}/02");
+            Console.WriteLine($"→살아남은 날짜:{days}");
+            Console.WriteLine($"→탐험횟수:0{adventureCount}/02");
             Console.ForegroundColor = ConsoleColor.Yellow;
-            Console.WriteLine("■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■");
+            Console.WriteLine("====================<<행동>>=====================");
             Console.ForegroundColor = ConsoleColor.Yellow;
-            Console.Write("■         ");
+            Console.WriteLine("|\t\t\t\t\t\t|");
+            Console.Write("|\t");
             Console.ForegroundColor = ConsoleColor.White;
             Console.Write("오늘 할 일을 선택하세요.");
             Console.ForegroundColor = ConsoleColor.Yellow;
-            Console.WriteLine("      ■");
-            Console.Write("■     ");
+            Console.WriteLine("\t\t|");
+            Console.WriteLine("|\t\t\t\t\t\t|");
+            Console.Write("|\t");
             Console.ForegroundColor = ConsoleColor.Green;
             Console.Write("▶ 1. 상태보기");
             Console.ForegroundColor = ConsoleColor.Yellow;
-            Console.WriteLine("                     ■");
-            Console.Write("■     ");
+            Console.WriteLine("\t\t\t\t|");
+            Console.WriteLine("|\t\t\t\t\t\t|");
+            Console.Write("|\t");
             Console.ForegroundColor = ConsoleColor.DarkYellow;
             Console.Write("▶ 2. 탐험");
             Console.ForegroundColor = ConsoleColor.Yellow;
-            Console.WriteLine("                         ■");
-            Console.Write("■     ");
+            Console.WriteLine("\t\t\t\t|");
+            Console.WriteLine("|\t\t\t\t\t\t|");
+            Console.Write("|\t");
             Console.ForegroundColor = ConsoleColor.DarkRed;
             Console.Write("▶ 3. 휴식");
             Console.ForegroundColor = ConsoleColor.Yellow;
-            Console.WriteLine("                         ■");
-            Console.Write("■     ");
+            Console.WriteLine("\t\t\t\t|");
+            Console.WriteLine("|\t\t\t\t\t\t|");
+            Console.Write("|\t");
             Console.ForegroundColor = ConsoleColor.Red;
             Console.Write("▶ 4. 포션 사용");
             Console.ForegroundColor = ConsoleColor.Yellow;
-            Console.WriteLine("                    ■");
-            Console.Write("■     ");
-            Console.Write("▶ 5. 저장 한다.");
+            Console.WriteLine("\t\t\t\t|");
+            Console.WriteLine("|\t\t\t\t\t\t|");
+            Console.Write("|\t");
+            Console.Write("▶ 5. 일기를 쓴다.");
             Console.ForegroundColor = ConsoleColor.Yellow;
-            Console.WriteLine("                   ■");
-            Console.Write("■     ");
+            Console.WriteLine("\t\t\t|");
+            Console.WriteLine("|\t\t\t\t\t\t|");
+            Console.Write("|\t");
             Console.ForegroundColor = ConsoleColor.DarkGray;
             Console.Write("▶ 0. 나가기");
             Console.ForegroundColor = ConsoleColor.Yellow;
-            Console.WriteLine("                       ■");
-            Console.WriteLine("■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■");
+            Console.WriteLine("\t\t\t\t|");
+            Console.WriteLine("|\t\t\t\t\t\t|");
+            Console.WriteLine("_________________________________________________");
             Console.ResetColor();
 
             Console.Write("원하시는 행동을 입력해주세요: ");
@@ -155,7 +172,9 @@ partial class Program
                 Console.ForegroundColor = ConsoleColor.Green;
                 Console.WriteLine($"하루가 지나갔습니다! 현재 날짜: {days}일");
                 Console.ResetColor();
-                Thread.Sleep(3000);
+                string currentSaveFile = gameSave.GetCurrentSaveFile();
+                gameSave.Save(player, currentSaveFile);
+                Thread.Sleep(2000);
             }
         }
     }
@@ -163,13 +182,10 @@ partial class Program
     static void Explore(Character player)
     {
         Random random = new Random();
-        int randomChoice = random.Next(0, 3);
+        int randomChoice = random.Next(0, 5);
         // 탐험이 시작되면 탐험 횟수 증가
         Console.Clear();
-        Console.WriteLine($"탐험 {adventureCount}회 진행 중...");
-
-
-
+        Console.WriteLine($"탐험 {adventureCount + 1}회 진행 중...");
 
         Thread.Sleep(1000);
         switch (randomChoice)
@@ -183,6 +199,13 @@ partial class Program
             case 2:
                 Event(player);  // 다른 이벤트
                 break;
+            case 3:
+                StartBattle(player);  // 전투 이벤트
+                break;
+            case 4:
+                StartBattle(player);  // 전투 이벤트
+                break;
+
             default:
                 Console.WriteLine("알 수 없는 이벤트가 발생했습니다.");
                 break;
@@ -194,14 +217,24 @@ partial class Program
     {
         Console.WriteLine("이벤트 발생!");
         Thread.Sleep(2000);
-        // 여러가지 이벤트 추가
+        OpenQuest(player);
         adventureCount++;
     }
+
     static void Save(Character player)
 
     {
-        GameSave gameSave = new GameSave();
-        gameSave.Save(player, gameSave.GetCurrentSaveFile());
+        string currentSaveFile = gameSave.GetCurrentSaveFile();
+        gameSave.Save(player, currentSaveFile);
+        Console.Clear();
+        Console.WriteLine("당신은 일기를 작성하셨습니다.");
+        Thread.Sleep(500);
+        Console.Write(".");
+        Thread.Sleep(500);
+        Console.Write(".");
+        Thread.Sleep(500);
+        Console.WriteLine(".");
+        Thread.Sleep(500);
     }
 
     
@@ -259,6 +292,11 @@ partial class Program
         adventureCount++;
     }
 
+    static void OpenQuest(Character player) {
+        Quest questSystem = Quest.Instance;
+        questSystem.DisplayQuests(player);
+
+    }
     static void DrinkPotion(Character player)
     {
         Potion potion = new Potion(player, player.Inventory);
@@ -274,6 +312,7 @@ partial class Program
     }
     static void End(Character player)
     {
+
         Console.BackgroundColor = ConsoleColor.Red;
         Console.ForegroundColor = ConsoleColor.White;
         Console.Write("                                                                                                                        ");

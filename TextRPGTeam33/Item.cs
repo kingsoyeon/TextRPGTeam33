@@ -14,12 +14,12 @@ namespace TextRPGTeam33
     }
     public class Item
     {
-        public Guid Id { get; } // 아이템 고유 ID
-        public string Name { get; } // 아이템 이름
-        public ItemType Type { get; } // 아이템 타입
-        public int Value { get; } // 값
-        public string Descrip {  get; } // 설명
-        public int Cost {  get; } // 가격
+        public Guid Id { get; set; } = Guid.NewGuid(); // 아이템 고유 ID
+        public string Name { get; set; } // 아이템 이름
+        public ItemType Type { get; set; } // 아이템 타입
+        public int Value { get; set; } // 값
+        public string Descrip {  get; set; } // 설명
+        public int Cost {  get; set; } // 가격
         public int ItemRate { get; set; } // 아이템 확율
         public int Count { get; set; } // 아이템 개수
         public bool IsPurchase { get; set; } //보유 상태
