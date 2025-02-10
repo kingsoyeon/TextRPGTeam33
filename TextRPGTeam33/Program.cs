@@ -107,7 +107,7 @@ partial class Program
             Console.Write("■     ");
             Console.Write("▶ 5. 저장 한다.");
             Console.ForegroundColor = ConsoleColor.Yellow;
-            Console.WriteLine("                    ■");
+            Console.WriteLine("                   ■");
             Console.Write("■     ");
             Console.ForegroundColor = ConsoleColor.DarkGray;
             Console.Write("▶ 0. 나가기");
