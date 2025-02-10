@@ -320,7 +320,8 @@ namespace TextRPGTeam33
                     if (input == "0")
                     {
                         Console.Clear();
-                        stage.StageClear(monsters, startHp);
+                        //stage.StageClear(monsters, startHp);
+                        stage.StageClear(monsters, startHp, skillManager.skillCount);
                         break;
                     }
                     else

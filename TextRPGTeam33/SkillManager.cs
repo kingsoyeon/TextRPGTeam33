@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Numerics;
+using System.Runtime.Intrinsics.X86;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -13,6 +14,7 @@ namespace TextRPGTeam33
         List<Skill> skills;
         List<Monster> monsters;
         Random rand;
+        public int skillCount;
 
         public SkillManager(Character player, List<Monster> monsters)
         {
@@ -24,32 +26,33 @@ namespace TextRPGTeam33
             switch (player.Job)
             {
                 case "탈영병":
+                    skills.Add(new Skill(SkillType.GUN_FIRE, "총 사격", "사격을 통해 공격합니다", 5, 5));
                     break;
                 case "개 조련사":
-                    skills.Add(new Skill("두번 공격", "개와 함께 공격합니다", 10, 10));
-                    skills.Add(new Skill("아이템 물어오기", "아이템을 물어오게 시킵니다", 5, 0));
+                    skills.Add(new Skill(SkillType.ATTACK_TWICE, "두번 공격", "개와 함께 공격합니다", 10, 10));
+                    skills.Add(new Skill(SkillType.BRING_ITEM, "아이템 물어오기", "아이템을 물어오게 시킵니다", 5, 0));
                     break;
                 case "폭발물 산업기사":
-                    skills.Add(new Skill("범위 공격", "본인을 포함한 모두에게 데미지를 입힙니다", 30, 10));
+                    skills.Add(new Skill(SkillType.RANGE_ATTACK, "범위 공격", "본인을 포함한 모두에게 데미지를 입힙니다", 30, 10));
                     break;
                 case "소방관":
-                    skills.Add(new Skill("하이드로펌프", "랜덤한 대상 2명을 공격합니다", 20, 10));
+                    skills.Add(new Skill(SkillType.HYDRO_PUMP, "하이드로펌프", "랜덤한 대상 2명을 공격합니다", 20, 10));
                     break;
                 case "이성언 튜터":
-                    skills.Add(new Skill("파괴광선", "파괴광선을 발사합니다", 10, 10));
-                    skills.Add(new Skill("볼트태클", "볼트태클을 구사합니다", 20, 20));
+                    skills.Add(new Skill(SkillType.FIRE_RAY, "파괴광선", "파괴광선을 발사합니다", 10, 10));
+                    skills.Add(new Skill(SkillType.BOLT_TACKLE, "볼트태클", "볼트태클을 구사합니다", 20, 20));
                     break;
                 case "파피루스":
                     break;
                 case "대머리백수":
                     break;
                 case "닌자":
-                    skills.Add(new Skill("수리검", "수리검을 던집니다", 5, 10));
-                    skills.Add(new Skill("나선환", "나선환을 이용해 공격합니다", 10, 15));
+                    skills.Add(new Skill(SkillType.ATTACK_TWICE, "수리검", "수리검을 던집니다", 5, 10));
+                    skills.Add(new Skill(SkillType.ATTACK_TWICE, "나선환", "나선환을 이용해 공격합니다", 10, 15));
                     break;
                 case "의사":
-                    skills.Add(new Skill("즉시회복", "즉시 회복합니다", 10, 10));
-                    skills.Add(new Skill("광전사모드", "광전사가 되어 공격합니다", 10, 10));
+                    skills.Add(new Skill(SkillType.ATTACK_TWICE, "즉시회복", "즉시 회복합니다", 10, 10));
+                    skills.Add(new Skill(SkillType.ATTACK_TWICE, "광전사모드", "광전사가 되어 공격합니다", 10, 10));
                     break;
             }
         }
@@ -116,33 +119,85 @@ namespace TextRPGTeam33
 
         public bool UseSkill(int i)
         {
-            switch (skills[i].name) // 스킬 종류에 따라 효과 적용 (제작 중)
-            {
-                case "두번 공격":
-                    break;
-                case "범위 공격":
-                    break;
-                case "하이드로펌프":
-                    break;
-                case "파괴광선":
-                    break;
-                case "볼트태클":
-                    break;
-            }
+            int index = 0;
+            int index2 = 0;
+            int monsterHp = 0;
+            int monster2Hp = 0;
+            int cnt = 0;
+            List<Monster> target;
+            target = new List<Monster>();
 
-            // 기본 스킬 메커니즘 예시
-            int index = rand.Next(0, monsters.Count);
-            while (true)
+            switch (skills[i].type) // 스킬 종류에 따라 효과 적용 (제작 중)
             {
-                if (monsters[index].hp == 0)
+                case SkillType.GUN_FIRE:
+                case SkillType.ATTACK_TWICE:
+                case SkillType.FIRE_RAY:
+                case SkillType.BOLT_TACKLE:
                     index = rand.Next(0, monsters.Count);
-                else
+                    while (true)
+                    {
+                        if (monsters[index].hp == 0)
+                            index = rand.Next(0, monsters.Count);
+                        else
+                            break;
+                    }
+                    monsterHp = monsters[index].hp;
+
+                    monsters[index].hp -= skills[i].atk;
+                    if (monsters[index].hp < 0) monsters[index].hp = 0;
+                    break;
+                case SkillType.BRING_ITEM:
+                    skillCount++;
+                    break;
+                case SkillType.RANGE_ATTACK:
+                    foreach (Monster m in monsters)
+                    {
+                        if (m.hp <= 0)
+                            continue;
+
+                        target.Add(m);
+                        m.hp -= skills[i].atk;
+                        if (m.hp < 0) m.hp = 0;
+                    }
+                    break;
+                case SkillType.HYDRO_PUMP:
+                    cnt = 0;
+                    foreach (Monster m in monsters)
+                    {
+                        if (m.hp > 0)
+                            cnt++;
+                    }
+
+                    index = rand.Next(0, monsters.Count);
+                    while (true)
+                    {
+                        if (monsters[index].hp == 0)
+                            index = rand.Next(0, monsters.Count);
+                        else
+                            break;
+                    }
+                    monsterHp = monsters[index].hp;
+
+                    monsters[index].hp -= skills[i].atk;
+                    if (monsters[index].hp < 0) monsters[index].hp = 0;
+
+                    if (cnt > 1)
+                    {
+                        index2 = rand.Next(0, monsters.Count);
+                        while (true)
+                        {
+                            if (monsters[index2].hp == 0 || index == index2)
+                                index2 = rand.Next(0, monsters.Count);
+                            else
+                                break;
+                        }
+                        monster2Hp = monsters[index2].hp;
+
+                        monsters[index2].hp -= skills[i].atk;
+                        if (monsters[index2].hp < 0) monsters[index2].hp = 0;
+                    }
                     break;
             }
-            int monsterHp = monsters[index].hp;
-
-            monsters[index].hp -= skills[i].atk;
-            if (monsters[index].hp < 0) monsters[index].hp = 0;
             if (player.Mp >= skills[i].mp) player.Mp -= skills[i].mp;
 
             while (true)
@@ -150,14 +205,60 @@ namespace TextRPGTeam33
                 Console.Clear();
 
                 Console.WriteLine("Battle!!\n");
-                Console.WriteLine($"{player.Name} 의 {skills[i].name}!");
-                Console.WriteLine($"Lv.{monsters[index].level} {monsters[index].name} 을(를) 맞췄습니다. [데미지 : {skills[i].atk}]\n");
+                Console.WriteLine($"{player.Name} 의 {skills[i].name}!\n");
+                switch (skills[i].type)
+                {
+                    case SkillType.GUN_FIRE:
+                    case SkillType.ATTACK_TWICE:
+                    case SkillType.FIRE_RAY:
+                    case SkillType.BOLT_TACKLE:
+                        Console.WriteLine($"Lv.{monsters[index].level} {monsters[index].name} 을(를) 맞췄습니다. [데미지 : {skills[i].atk}]\n");
 
-                Console.WriteLine($"Lv.{monsters[index].level} {monsters[index].name}");
-                if (monsters[index].hp > 0)
-                    Console.WriteLine($"HP {monsterHp} -> {monsters[index].hp}\n");
-                else
-                    Console.WriteLine($"HP {monsterHp} -> Dead\n");
+                        Console.WriteLine($"Lv.{monsters[index].level} {monsters[index].name}");
+                        if (monsters[index].hp > 0)
+                            Console.WriteLine($"HP {monsterHp} -> {monsters[index].hp}\n");
+                        else
+                            Console.WriteLine($"HP {monsterHp} -> Dead\n");
+                        break;
+                    case SkillType.BRING_ITEM:
+                        Console.WriteLine("아이템을 물어왔습니다\n");
+
+                        Console.WriteLine("골드 획득량이 10% 증가합니다");
+                        Console.WriteLine("아이템 획득 확률이 10% 증가합니다\n");
+                        break;
+                    case SkillType.RANGE_ATTACK:
+                        foreach (Monster m in target)
+                        {
+                            Console.WriteLine($"Lv.{monsters[index].level} {monsters[index].name} 을(를) 맞췄습니다. [데미지 : {skills[i].atk}]\n");
+
+                            Console.WriteLine($"Lv.{monsters[index].level} {monsters[index].name}");
+                            if (monsters[index].hp > 0)
+                                Console.WriteLine($"HP {monsterHp} -> {monsters[index].hp}\n");
+                            else
+                                Console.WriteLine($"HP {monsterHp} -> Dead\n");
+                        }
+                        break;
+                    case SkillType.HYDRO_PUMP:
+                        Console.WriteLine($"Lv.{monsters[index].level} {monsters[index].name} 을(를) 맞췄습니다. [데미지 : {skills[i].atk}]\n");
+
+                        Console.WriteLine($"Lv.{monsters[index].level} {monsters[index].name}");
+                        if (monsters[index].hp > 0)
+                            Console.WriteLine($"HP {monsterHp} -> {monsters[index].hp}\n");
+                        else
+                            Console.WriteLine($"HP {monsterHp} -> Dead\n");
+
+                        if (cnt > 1)
+                        {
+                            Console.WriteLine($"Lv.{monsters[index2].level} {monsters[index2].name} 을(를) 맞췄습니다. [데미지 : {skills[i].atk}]\n");
+
+                            Console.WriteLine($"Lv.{monsters[index2].level} {monsters[index2].name}");
+                            if (monsters[index].hp > 0)
+                                Console.WriteLine($"HP {monster2Hp} -> {monsters[index2].hp}\n");
+                            else
+                                Console.WriteLine($"HP {monster2Hp} -> Dead\n");
+                        }
+                        break;
+                }
 
                 Console.WriteLine("0. 다음\n");
 
