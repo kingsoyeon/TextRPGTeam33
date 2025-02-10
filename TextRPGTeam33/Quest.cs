@@ -68,7 +68,79 @@ namespace TextRPGTeam33
                     400)
             };
         }
+        public void DisplayQuestList(Character player)
+        {
+            while (true)
+            {
+                Console.Clear();
+                Console.WriteLine("====================");
+                Console.WriteLine("     퀘스트 목록     ");
+                Console.WriteLine("====================\n");
 
+                // 진행 중인 퀘스트 표시
+                Console.WriteLine("[진행 중인 퀘스트]");
+                bool hasActiveQuests = false;
+                for (int i = 0; i < quests.Count; i++)
+                {
+                    if (quests[i].IsAccepted && !quests[i].IsCompleted)
+                    {
+                        hasActiveQuests = true;
+                        Console.ForegroundColor = ConsoleColor.Yellow;
+                        Console.WriteLine($"{i + 1}. {quests[i].Name} ({quests[i].CurrentCount}/{quests[i].TargetCount})");
+                        Console.ResetColor();
+                    }
+                }
+                if (!hasActiveQuests)
+                {
+                    Console.WriteLine("진행 중인 퀘스트가 없습니다.");
+                }
+
+                // 완료된 퀘스트 표시
+                Console.WriteLine("\n[완료된 퀘스트]");
+                bool hasCompletedQuests = false;
+                for (int i = 0; i < quests.Count; i++)
+                {
+                    if (quests[i].IsAccepted && quests[i].IsCompleted)
+                    {
+                        hasCompletedQuests = true;
+                        Console.ForegroundColor = ConsoleColor.Green;
+                        Console.WriteLine($"{i + 1}. {quests[i].Name} (보상 수령 가능!)");
+                        Console.ResetColor();
+                    }
+                }
+                if (!hasCompletedQuests)
+                {
+                    Console.WriteLine("완료된 퀘스트가 없습니다.");
+                }
+
+                Console.WriteLine("\n1. 보상 수령하기");
+                Console.WriteLine("0. 나가기");
+
+                Console.Write("\n선택: ");
+                string input = Console.ReadLine();
+
+                if (input == "0")
+                    break;
+                else if (input == "1" && hasCompletedQuests)
+                {
+                    Console.Write("\n퀘스트 번호를 입력하세요: ");
+                    if (int.TryParse(Console.ReadLine(), out int questNum) && questNum > 0 && questNum <= quests.Count)
+                    {
+                        if (quests[questNum - 1].IsCompleted)
+                        {
+                            CompleteQuest(player);
+                            Console.WriteLine("\n아무 키나 누르세요...");
+                            Console.ReadKey();
+                        }
+                        else
+                        {
+                            Console.WriteLine("해당 퀘스트는 아직 완료되지 않았습니다.");
+                            Thread.Sleep(1000);
+                        }
+                    }
+                }
+            }
+        }
         public void DisplayQuests(Character player) // 퀘스트 출력
         {
             while (true)
