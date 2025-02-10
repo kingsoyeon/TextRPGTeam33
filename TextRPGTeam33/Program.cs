@@ -45,9 +45,7 @@ partial class Program
                 // ■와 빈 문자열을 번갈아 출력
                 Console.WriteLine(" ㅁ-ㅁ-ㅁ-ㅁ-ㅁ-ㅁ-ㅁ-ㅁ-ㅁ-ㅁ-ㅁ-ㅁ-ㅁ-ㅁ");
 
-                // Console.WriteLine("ㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁ");
 
-                // 출력 후 줄 바꿈
                 Console.WriteLine();
                 Console.ResetColor();
                 Console.Write("원하시는 행동을 입력해주세요:");
@@ -88,43 +86,51 @@ partial class Program
             Console.WriteLine($"살아남은 날짜:{days}");
             Console.WriteLine($"탐험횟수:0{adventureCount}/02");
             Console.ForegroundColor = ConsoleColor.Yellow;
-            Console.WriteLine("■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■");
+            Console.WriteLine("====================<<행동>>=====================");
             Console.ForegroundColor = ConsoleColor.Yellow;
-            Console.Write("■         ");
+            Console.WriteLine("|\t\t\t\t\t\t|");
+            Console.Write("|\t");
             Console.ForegroundColor = ConsoleColor.White;
             Console.Write("오늘 할 일을 선택하세요.");
             Console.ForegroundColor = ConsoleColor.Yellow;
-            Console.WriteLine("      ■");
-            Console.Write("■     ");
+            Console.WriteLine("\t\t|");
+            Console.WriteLine("|\t\t\t\t\t\t|");
+            Console.Write("|\t");
             Console.ForegroundColor = ConsoleColor.Green;
             Console.Write("▶ 1. 상태보기");
             Console.ForegroundColor = ConsoleColor.Yellow;
-            Console.WriteLine("                     ■");
-            Console.Write("■     ");
+            Console.WriteLine("\t\t\t\t|");
+            Console.WriteLine("|\t\t\t\t\t\t|");
+            Console.Write("|\t");
             Console.ForegroundColor = ConsoleColor.DarkYellow;
             Console.Write("▶ 2. 탐험");
             Console.ForegroundColor = ConsoleColor.Yellow;
-            Console.WriteLine("                         ■");
-            Console.Write("■     ");
+            Console.WriteLine("\t\t\t\t|");
+            Console.WriteLine("|\t\t\t\t\t\t|");
+            Console.Write("|\t");
             Console.ForegroundColor = ConsoleColor.DarkRed;
             Console.Write("▶ 3. 휴식");
             Console.ForegroundColor = ConsoleColor.Yellow;
-            Console.WriteLine("                         ■");
-            Console.Write("■     ");
+            Console.WriteLine("\t\t\t\t|");
+            Console.WriteLine("|\t\t\t\t\t\t|");
+            Console.Write("|\t");
             Console.ForegroundColor = ConsoleColor.Red;
             Console.Write("▶ 4. 포션 사용");
             Console.ForegroundColor = ConsoleColor.Yellow;
-            Console.WriteLine("                    ■");
-            Console.Write("■     ");
+            Console.WriteLine("\t\t\t\t|");
+            Console.WriteLine("|\t\t\t\t\t\t|");
+            Console.Write("|\t");
             Console.Write("▶ 5. 일기를 쓴다.");
             Console.ForegroundColor = ConsoleColor.Yellow;
-            Console.WriteLine("                 ■");
-            Console.Write("■     ");
+            Console.WriteLine("\t\t\t|");
+            Console.WriteLine("|\t\t\t\t\t\t|");
+            Console.Write("|\t");
             Console.ForegroundColor = ConsoleColor.DarkGray;
             Console.Write("▶ 0. 나가기");
             Console.ForegroundColor = ConsoleColor.Yellow;
-            Console.WriteLine("                       ■");
-            Console.WriteLine("■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■");
+            Console.WriteLine("\t\t\t\t|");
+            Console.WriteLine("|\t\t\t\t\t\t|");
+            Console.WriteLine("_________________________________________________");
             Console.ResetColor();
 
             Console.Write("원하시는 행동을 입력해주세요: ");
@@ -166,7 +172,9 @@ partial class Program
                 Console.ForegroundColor = ConsoleColor.Green;
                 Console.WriteLine($"하루가 지나갔습니다! 현재 날짜: {days}일");
                 Console.ResetColor();
-                Thread.Sleep(3000);
+                string currentSaveFile = gameSave.GetCurrentSaveFile();
+                gameSave.Save(player, currentSaveFile);
+                Thread.Sleep(2000);
             }
         }
     }
