@@ -29,27 +29,54 @@ namespace TextRPGTeam33
             while (true)
             {
                 Console.Clear();
-                Console.WriteLine("회복");
+                Console.WriteLine("TIP:회복 아이템을 사용하여 체력과 스테미나를 회복할수 있습니다.");
 
                 RefreshPotions();  
 
                 if (potions.Count == 0) // 포션이 없을 경우
                 {
+                    
                     Console.WriteLine("사용 가능한 포션이 없습니다.\n");
+                    Console.ResetColor();
                 }
                 else
                 {
-                    Console.WriteLine("[보유 포션 목록]");
+                    Console.WriteLine("");
+                    Console.ForegroundColor = ConsoleColor.Green;
+                    Console.Write("================================================OOO((");
+                    Console.ResetColor();
+                    Console.Write("보유중인 포션");
+                    Console.ForegroundColor = ConsoleColor.Green;
+                    Console.WriteLine("))OOO=================================================");
+                    Console.WriteLine("");
+                    Console.ResetColor();
                     for (int i = 0; i < potions.Count; i++) // 포션 수에 따라 1,2... 작성 // 포션이 1개일경우 1만 출력
                     {
+                        Console.ForegroundColor = ConsoleColor.Green;
+                        Console.Write("●");
+                        Console.ResetColor();
                         Console.WriteLine($"{i + 1}. {potions[i].Name} | 회복량: +{potions[i].Value} | 남은 수량: {potions[i].Count}개");
                     }
                     Console.WriteLine();
-                }
-                Console.WriteLine($"현재 체력: {character.Hp}/{character.MaxHP}\n");
 
+                }
+                Console.Write($"현재 체력:");
+                Console.ForegroundColor = ConsoleColor.Gray;
+                Console.Write($"{character.Hp}/");
+                Console.ForegroundColor = ConsoleColor.Red;
+                Console.Write($"{ character.MaxHP}\n");
+                Console.ResetColor();
+                Console.ForegroundColor = ConsoleColor.Green;
+                Console.WriteLine("");
+                Console.WriteLine("________________________________________________________________________________________________________________________");
+                Console.WriteLine("");
+                Console.ResetColor();
+                Console.ForegroundColor = ConsoleColor.White;
                 Console.WriteLine("1. 포션 선택");
+                Console.ForegroundColor = ConsoleColor.Gray;
                 Console.WriteLine("0. 나가기");
+                Console.ResetColor();
+
 
                 Console.Write("\n원하는 행동을 입력해주세요.\n>>");
                 string input = Console.ReadLine();
@@ -64,14 +91,20 @@ namespace TextRPGTeam33
                     }
                     else
                     {
+                        Console.ForegroundColor = ConsoleColor.Cyan;
                         Console.WriteLine("사용할 수 있는 포션이 없습니다!");
+                        Console.ResetColor();
                         Thread.Sleep(1000);
                     }
                 }
                 else
                 {
+                    Console.Clear();
+                    Console.ForegroundColor = ConsoleColor.Gray;
                     Console.WriteLine("잘못된 입력입니다.");
+                    Console.ResetColor();
                     Thread.Sleep(1000);
+                    Console.Clear();
                 }
             }
         }
@@ -79,12 +112,28 @@ namespace TextRPGTeam33
         {
             while (true)
             {
-                Console.WriteLine("[포션 선택]");
+                Console.WriteLine("");
+                Console.ForegroundColor = ConsoleColor.Green;
+                Console.Write("================================================OOO((");
+                Console.ResetColor();
+                Console.Write("보유중인 포션");
+                Console.ForegroundColor = ConsoleColor.Green;
+                Console.WriteLine("))OOO=================================================");
+                Console.WriteLine("");
+                Console.ResetColor();
 
                 for (int i = 0; i < potions.Count; i++) // 포션의 종류와 개수를 출력
                 {
+                    Console.ForegroundColor = ConsoleColor.Green;
+                    Console.Write("●");
+                    Console.ResetColor();
                     Console.WriteLine($"{i + 1}. {potions[i].Name} | 회복량: +{potions[i].Value} | 남은 수량: {potions[i].Count}개");
                 }
+                Console.ForegroundColor = ConsoleColor.Green;
+                Console.WriteLine("");
+                Console.WriteLine("________________________________________________________________________________________________________________________");
+                Console.WriteLine("");
+                Console.ResetColor();
                 Console.WriteLine("0. 취소");
 
                 Console.Write("\n사용할 포션을 선택해주세요.\n>>");
@@ -100,8 +149,12 @@ namespace TextRPGTeam33
                 }
                 else
                 {
+                    Console.Clear();
+                    Console.ForegroundColor = ConsoleColor.Gray;
                     Console.WriteLine("잘못된 입력입니다.");
+                    Console.ResetColor();
                     Thread.Sleep(1000);
+                    Console.Clear();
                 }
             }
         }
