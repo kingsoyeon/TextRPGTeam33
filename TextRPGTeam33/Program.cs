@@ -288,11 +288,15 @@ partial class Program
         Character Character = new();
         Character.StatusDisplay();
     }
+    static void Potions(Character player) {
+        Potion potion = new(player, player.Inventory);
+        potion.DisplayPotion();
 
-    static void StartBattle(Character player)
-    {
-        Battle battle = new(player);
-        battle.BattleStart();
+    }
+        static void StartBattle(Character player)
+    {   
+        Battle battle = new Battle(player, Inventory.potion);
+        battle.BattleStart(); 
         if (player.Hp <= 0)
         {
             Console.Clear();
