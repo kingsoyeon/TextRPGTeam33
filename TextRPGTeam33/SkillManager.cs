@@ -233,7 +233,7 @@ namespace TextRPGTeam33
                         Console.WriteLine($"Lv.{player.Level} {player.Name} 을(를) 맞췄습니다. [데미지 : {skills[i].atk}]\n");
 
                         Console.WriteLine($"Lv.{player.Level} {player.Name}");
-                        if (monsters[index].hp > 0)
+                        if (player.Hp > 0)
                             Console.WriteLine($"HP {playerHp} -> {player.Hp}\n");
                         else
                             Console.WriteLine($"HP {playerHp} -> Dead\n");
