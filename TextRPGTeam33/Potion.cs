@@ -57,7 +57,7 @@ namespace TextRPGTeam33
                     
                     if (hpPotions.Count > 0)
                     {
-                        Console.WriteLine("\n[HP 포션 목록]");
+                        Console.WriteLine("[HP 포션 목록]");
                         for (int i = 0; i < hpPotions.Count; i++)
                         {
                             Console.WriteLine($"{i + 1}. {hpPotions[i].Name} | HP 회복량: +{hpPotions[i].Value} | 남은 수량: {hpPotions[i].Count}개");
@@ -71,18 +71,20 @@ namespace TextRPGTeam33
                             Console.WriteLine($"{hpPotions.Count + i + 1}. {mpPotions[i].Name} | MP 회복량: +{mpPotions[i].Value} | 남은 수량: {mpPotions[i].Count}개");
                         }
                     }
+                    Console.Write($"\n현재 체력:");
+                    Console.ForegroundColor = ConsoleColor.Gray;
+                    Console.Write($"{character.Hp}/");
+                    Console.ForegroundColor = ConsoleColor.Red;
+                    Console.Write($"{character.MaxHP}\n");
+                    Console.ResetColor();
 
-
-                Console.WriteLine($"\n현재 체력: {character.Hp}/{character.MaxHP}");
-                Console.WriteLine($"현재 마나: {character.Mp}/{character.MaxMp}\n")
-
+                    Console.Write($"현재 마나:");
+                    Console.ForegroundColor = ConsoleColor.Gray;
+                    Console.Write($"{character.Mp}/");
+                    Console.ForegroundColor = ConsoleColor.Blue;
+                    Console.Write($"{character.MaxMp}\n");
+                    Console.ResetColor();
                 }
-                Console.Write($"현재 체력:");
-                Console.ForegroundColor = ConsoleColor.Gray;
-                Console.Write($"{character.Hp}/");
-                Console.ForegroundColor = ConsoleColor.Red;
-                Console.Write($"{ character.MaxHP}\n");
-                Console.ResetColor();
                 Console.ForegroundColor = ConsoleColor.Green;
                 Console.WriteLine("");
                 Console.WriteLine("________________________________________________________________________________________________________________________");
@@ -93,7 +95,6 @@ namespace TextRPGTeam33
                 Console.ForegroundColor = ConsoleColor.Gray;
                 Console.WriteLine("0. 나가기");
                 Console.ResetColor();
-
 
                 Console.Write("\n원하는 행동을 입력해주세요.\n>>");
                 string input = Console.ReadLine();
