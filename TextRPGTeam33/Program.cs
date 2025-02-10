@@ -14,7 +14,9 @@ partial class Program
 
     static void Main()
     {
-        Process.Start("cmd.exe", "/c mode con cols=150 lines=20");
+        Console.SetWindowSize(100, 30); // 너비 100, 높이 30
+        Console.SetBufferSize(100, 30); // 버퍼 크기도 동일하게 설정
+
         GameSave gameSave = new GameSave();
         Character player = gameSave.DisplaySave();
 
@@ -212,7 +214,7 @@ partial class Program
         gameSave.Save(player, gameSave.GetCurrentSaveFile());
         Console.Clear();
         Console.WriteLine("당신은 일기를 작성하셨습니다.");
-        Thread.Sleep(2000);
+        Thread.Sleep(1000);
     }
 
     
