@@ -26,24 +26,26 @@ partial class Program
             Console.Clear();
             if (player != null)
             {
+                Console.WindowWidth = 100;  // 가로 크기 설정
+                Console.WindowHeight = 40;  // 세로 크기 설정
                 Console.ForegroundColor = ConsoleColor.Cyan;
-                Console.WriteLine("■ ■ ■ ■ ■ ■ ■ ■ ■ ■ ■ ■ ■ ■ ■ ■ ■ ■ ■ ■ ■");
-                Console.Write("■         ");
+                Console.WriteLine("■\t■\t■\t■\t■\t■\t■\t■\t■\t■\t■");
+                Console.Write("■\t\t\t\t");
                 Console.ForegroundColor = ConsoleColor.White;
                 Console.Write("오늘도 하루가 시작되었다.");
                 Console.ForegroundColor = ConsoleColor.Cyan;
-                Console.WriteLine("     ■");
-                Console.Write("■           ");
+                Console.WriteLine("\t\t\t■");
+                Console.Write("■\t\t\t\t");
                 Console.ForegroundColor = ConsoleColor.Gray;
                 Console.Write("1. 부산역을 나선다.");
                 Console.ForegroundColor = ConsoleColor.Cyan;
-                Console.WriteLine("         ■");
-                Console.Write("■           ");
+                Console.WriteLine("\t\t\t\t■");
+                Console.Write("■\t\t\t\t");
                 Console.ForegroundColor = ConsoleColor.Red;
                 Console.Write("0. 오늘은 쉴까?");
                 Console.ForegroundColor = ConsoleColor.Cyan;
-                Console.WriteLine("             ■");
-                Console.WriteLine("■ ■ ■ ■ ■ ■ ■ ■ ■ ■ ■ ■ ■ ■ ■ ■ ■ ■ ■ ■ ■");
+                Console.WriteLine("\t\t\t\t\t■");
+                Console.WriteLine("■\t■\t■\t■\t■\t■\t■\t■\t■\t■\t■");
                 Console.ResetColor();
                 Console.Write("원하시는 행동을 입력해주세요:");
                 string startChoice = Console.ReadLine() ?? "0";
