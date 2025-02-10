@@ -2,43 +2,31 @@
 using System.Runtime.InteropServices;
 using System;
 using System.Numerics;
-using System.Threading;
-using System.Diagnostics;
 using TextRPGTeam33;
-using static System.Net.Mime.MediaTypeNames;
-using System.Xml.Linq;
-using System.Drawing;  // Font, FontFamily
+
 
 partial class Program
 {
-    
+    static GameSave gameSave;
     public static int adventureCount = 0;  // 탐험 횟수를 추적하는 변수
      public static int days = 0;  // 날짜를 추적하는 변수
 
     static void Main()
     {
-
-
-        GameSave gameSave = new GameSave();
+        gameSave = new GameSave();
         Character player = gameSave.DisplaySave();
 
         Console.Clear();
         bool isValidInput = false;
         while (!isValidInput)
-        {
+        { 
             Console.Clear();
             if (player != null)
             {
                 Console.WindowWidth = 100;  // 가로 크기 설정
                 Console.WindowHeight = 40;  // 세로 크기 설정
                 Console.ForegroundColor = ConsoleColor.Cyan;
-                int repeatCount = 82;
-                var info = ConsoleHelper.GetCurrentFont();
-                ConsoleHelper.SetCurrentFont("궁서", 35);
-                Console.Clear();
-                Console.WriteLine();
-
-
+               /* int repeatCount = 82;
                 // ■와 빈 문자열을 번갈아 출력
                 for (int i = 0; i < repeatCount; i++)
                 {
@@ -51,37 +39,29 @@ partial class Program
                         Console.Write(" ");  // 빈 문자열 출력 (출력은 안됨)
                     }
                 }
-
+               */
                 // 출력 후 줄 바꿈
                 Console.WriteLine();
-                //Console.WriteLine("■\t■\t■\t■\t■\t■\t■\t■\t■\t■\t■");
-                Console.Write("■\t\t\t\t");
+                Console.WriteLine(" ㅁ-ㅁ-ㅁ-ㅁ-ㅁ-ㅁ-ㅁ-ㅁ-ㅁ-ㅁ-ㅁ-ㅁ-ㅁ-ㅁ");
+                Console.Write("ㅁ\t");
                 Console.ForegroundColor = ConsoleColor.White;
                 Console.Write("오늘도 하루가 시작되었다.");
                 Console.ForegroundColor = ConsoleColor.Cyan;
-                Console.WriteLine("\t\t\t■");
-                Console.Write("■\t\t\t\t");
+                Console.WriteLine("\t ㅁ");
+                Console.Write("ㅁ\t");
                 Console.ForegroundColor = ConsoleColor.Gray;
                 Console.Write("1. 부산역을 나선다.");
                 Console.ForegroundColor = ConsoleColor.Cyan;
-                Console.WriteLine("\t\t\t\t■");
-                Console.Write("■\t\t\t\t");
+                Console.WriteLine("\t\t ㅁ");
+                Console.Write("ㅁ\t");
                 Console.ForegroundColor = ConsoleColor.Red;
                 Console.Write("0. 오늘은 쉴까?");
                 Console.ForegroundColor = ConsoleColor.Cyan;
-                Console.WriteLine("\t\t\t\t\t■");
+                Console.WriteLine("\t\t\t ㅁ");
                 // ■와 빈 문자열을 번갈아 출력
-                for (int i = 0; i < repeatCount; i++)
-                {
-                    if (i % 2 == 0)
-                    {
-                        Console.Write("■");  // ■ 출력
-                    }
-                    else
-                    {
-                        Console.Write(" ");  // 빈 문자열 출력 (출력은 안됨)
-                    }
-                }
+                Console.WriteLine(" ㅁ-ㅁ-ㅁ-ㅁ-ㅁ-ㅁ-ㅁ-ㅁ-ㅁ-ㅁ-ㅁ-ㅁ-ㅁ-ㅁ");
+
+                // Console.WriteLine("ㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁ");
 
                 // 출력 후 줄 바꿈
                 Console.WriteLine();
@@ -248,11 +228,12 @@ partial class Program
         // 여러가지 이벤트 추가
         adventureCount++;
     }
+
     static void Save(Character player)
 
     {
-        GameSave gameSave = new GameSave();
-        gameSave.Save(player, gameSave.GetCurrentSaveFile());
+        string currentSaveFile = gameSave.GetCurrentSaveFile();
+        gameSave.Save(player, currentSaveFile);
         Console.Clear();
         Console.WriteLine("당신은 일기를 작성하셨습니다.");
         Thread.Sleep(1000);
