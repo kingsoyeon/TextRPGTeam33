@@ -290,12 +290,12 @@ class Program
             Console.ForegroundColor = ConsoleColor.Yellow;
             Console.WriteLine("  ■");
             Console.Write("■     ");
-            Console.ForegroundColor = ConsoleColor.DarkGreen;
+            Console.ForegroundColor = ConsoleColor.Green;
             Console.Write("▶ 1. 상태보기");
             Console.ForegroundColor = ConsoleColor.Yellow;
             Console.WriteLine("                     ■");
             Console.Write("■     ");
-            Console.ForegroundColor = ConsoleColor.DarkBlue;
+            Console.ForegroundColor = ConsoleColor.DarkCyan;
             Console.Write("▶ 2. 인벤토리");
             Console.ForegroundColor = ConsoleColor.Yellow;
             Console.WriteLine("                     ■");
@@ -310,10 +310,15 @@ class Program
             Console.ForegroundColor = ConsoleColor.Yellow;
             Console.WriteLine("                         ■");
             Console.Write("■     ");
-            Console.ForegroundColor = ConsoleColor.Green;
+            Console.ForegroundColor = ConsoleColor.Red;
             Console.Write("▶ 5. 포션");
             Console.ForegroundColor = ConsoleColor.Yellow;
             Console.WriteLine("                         ■");
+            Console.Write("■     ");
+            Console.ForegroundColor = ConsoleColor.Yellow;
+            Console.Write("▶ 6. 퀘스트");
+            Console.ForegroundColor = ConsoleColor.Yellow;
+            Console.WriteLine("                       ■");
             Console.Write("■     ");
             Console.ForegroundColor = ConsoleColor.DarkGray;
             Console.Write("▶ 0. 나가기");
@@ -355,6 +360,10 @@ class Program
             else if (choice == "5")
             {
                 DrinkPotion(player);
+            }
+            else if (choice == "6")
+            {
+                Quest.Instance.DisplayQuests(player);
             }
             else if (choice == "0")
             {
