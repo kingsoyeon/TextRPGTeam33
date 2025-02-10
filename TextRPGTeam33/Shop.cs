@@ -56,8 +56,9 @@ namespace TextRPGTeam33
 
                     string stat; // 아이템 stat(값)에 방어력, 공격력, 회복력 글자 추가
                     if (itemList[i].Type == ItemType.Amor) { stat = $"방어력 +{itemList[i].Value}"; } // ItemType이 Amor일 경우 "방어력"
-                    else if (itemList[i].Type == ItemType.Weapon) {  stat = $"공격력 +{itemList[i].Value}"; }// ItemType이 Weapon일 경우 "공격력"
-                    else {  stat = $"회복량 +{itemList[i].Value}"; } // // 그외(ItemType이 Potion) 일 경우 "회복력"
+                    else if (itemList[i].Type == ItemType.Weapon) { stat = $"공격력 +{itemList[i].Value}"; }// ItemType이 Weapon일 경우 "공격력"
+                    else if (itemList[i].Type == ItemType.Potion) { stat = $"HP회복량 +{itemList[i].Value}"; } // ItemType이 Potion일 경우 "HP회복력"
+                    else { stat = $"MP회복량 +{itemList[i].Value}"; } //  ItemType이 Potion일 경우 "MP회복력"
 
                     Console.WriteLine($"- {itemList[i].Name,-8} | {stat,-6} | {itemList[i].Descrip,-30} | {price}"); // - {이름} | 값(공격력, 방어력, 회복력) | 아이템 설명 | 가격/보유여부
                 }
@@ -118,9 +119,10 @@ namespace TextRPGTeam33
                 }
 
                 string stat;
-                if (itemList[i].Type == ItemType.Amor) { stat = $"방어력 +{itemList[i].Value}"; }
-                else if (itemList[i].Type == ItemType.Weapon) { stat = $"공격력 +{itemList[i].Value}"; }
-                else { stat = $"회복량 +{itemList[i].Value}"; }
+                if (itemList[i].Type == ItemType.Amor) { stat = $"방어력 +{itemList[i].Value}"; } // ItemType이 Amor일 경우 "방어력"
+                else if (itemList[i].Type == ItemType.Weapon) { stat = $"공격력 +{itemList[i].Value}"; }// ItemType이 Weapon일 경우 "공격력"
+                else if (itemList[i].Type == ItemType.Potion) { stat = $"HP회복량 +{itemList[i].Value}"; } // ItemType이 Potion일 경우 "HP회복력"
+                else { stat = $"MP회복량 +{itemList[i].Value}"; } //  ItemType이 Potion일 경우 "MP회복력"
 
                 Console.WriteLine($"- {i + 1} {itemList[i].Name,-8} | {stat,-6} | {itemList[i].Descrip,-30} | {price}"); // - index 이름 | 값(공격력, 방어력, 회복력) | 아이템 설명 | 가격/보유여부
             }
@@ -136,12 +138,12 @@ namespace TextRPGTeam33
                 var item = itemList[index - 1];
                 int price = item.Cost;
 
-                if (item.Type != ItemType.Potion && item.IsPurchase) // ItemType이 Potion이 아니고, 보유중이 라면... => 포션은 여러번 구매 가능
+                if (item.Type != ItemType.Potion && item.Type != ItemType.MPPotion && item.IsPurchase) // ItemType이 Potion 과 MPPotion이 아니고, 보유중이 라면... => 포션은 여러번 구매 가능
                 {
                     Console.WriteLine("이미 보유한 아이템입니다.");
                     Thread.Sleep(1000);
                 }
-                else if (item.Type == ItemType.Potion) // ItemType이 Potion 이라면...
+                else if (item.Type == ItemType.Potion || item.Type == ItemType.MPPotion) // ItemType이 Potion 이라면...
                 {
                     Console.Write("\n구매할 수량을 입력해주세요: ");
                     if (int.TryParse(Console.ReadLine(), out int quantity) && quantity > 0) // 입력값을 정수로 변환 시켜 quantity에 넣는다.
@@ -221,14 +223,15 @@ namespace TextRPGTeam33
                 Price = $"{actualPrice} G";
 
                 string stat;
-                if (item.Type == ItemType.Amor) { stat = $"방어력 +{item.Value}"; }
-                else if (item.Type == ItemType.Weapon) { stat = $"공격력 +{item.Value}"; }
-                else { stat = $"회복량 +{item.Value}"; }
+                if (inventoryItems[i].Type == ItemType.Amor) { stat = $"방어력 +{inventoryItems[i].Value}"; } // ItemType이 Amor일 경우 "방어력"
+                else if (inventoryItems[i].Type == ItemType.Weapon) { stat = $"공격력 +{inventoryItems[i].Value}"; } // ItemType이 Weapon일 경우 "공격력"
+                else if (inventoryItems[i].Type == ItemType.Potion) { stat = $"HP회복량 +{inventoryItems[i].Value}"; } // ItemType이 Potion일 경우 "HP회복력"
+                else { stat = $"MP회복량 +{inventoryItems[i].Value}"; }//  ItemType이 Potion일 경우 "MP회복력"
 
                 string equippedMark = item.IsEquip ? "[E] " : ""; // 장착중이면  [E] 출력
                 string countDisplay = "";
 
-                if (item.Type == ItemType.Potion || ((item.Type == ItemType.Weapon || item.Type == ItemType.Amor) && item.Count > 1))  // 포션이거나 장비의 개수가 2개 이상일 때만 보유 개수 표시
+                if (item.Type == ItemType.Potion || item.Type == ItemType.MPPotion || ((item.Type == ItemType.Weapon || item.Type == ItemType.Amor) && item.Count > 1))   // 포션이거나 장비의 개수가 2개 이상일 때만 보유 개수 표시
                 {
                     countDisplay = $"[보유 : {item.Count}개]"; // 여러개 보유중이면 보유 개수 출력
                 }
