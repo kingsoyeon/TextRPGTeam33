@@ -1,16 +1,18 @@
 using System;
+using System.Numerics;
 using System.Threading;
 using TextRPGTeam33;
 
 partial class Program
 {
     static int adventureCount = 0;  // 탐험 횟수를 추적하는 변수
-    static int days = 0;  // 날짜를 추적하는 변수
+     public static int days = 0;  // 날짜를 추적하는 변수
 
     static void Main()
     {
-        CharacterCreator characterCreator = new CharacterCreator();
-        Character player = characterCreator.Charactercreator();
+
+        GameSave gameSave = new GameSave();
+        Character player = gameSave.DisplaySave();
 
         Console.Clear();
         bool isValidInput = false;
@@ -103,6 +105,10 @@ partial class Program
             Console.ForegroundColor = ConsoleColor.Yellow;
             Console.WriteLine("                    ■");
             Console.Write("■     ");
+            Console.Write("▶ 5. 저장 한다.");
+            Console.ForegroundColor = ConsoleColor.Yellow;
+            Console.WriteLine("                    ■");
+            Console.Write("■     ");
             Console.ForegroundColor = ConsoleColor.DarkGray;
             Console.Write("▶ 0. 나가기");
             Console.ForegroundColor = ConsoleColor.Yellow;
@@ -128,6 +134,10 @@ partial class Program
             else if (choice == "4")
             {
                 DrinkPotion(player);
+            }
+            else if (choice == "5")
+            {
+                Save(player);
             }
             else if (choice == "0")
             {
@@ -187,6 +197,15 @@ partial class Program
         // 여러가지 이벤트 추가
         adventureCount++;
     }
+    static void Save(Character player)
+
+    {
+
+
+
+    }
+
+    
     static void rest(Character player)
     {
         Console.Clear();
