@@ -36,7 +36,9 @@ namespace TextRPGTeam33
         public Inventory Inventory { get; set; }
         public int DungeonClearCount { get; set; }
 
-        public bool isLevelUp = false;
+        public bool isLevelUp { get; set; }
+
+        public int speed {  get; set; }
 
 
         
