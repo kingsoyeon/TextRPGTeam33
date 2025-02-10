@@ -22,17 +22,17 @@ namespace TextRPGTeam33
         public int PlusDefense { get; set; }
 
         public int Hp { get; set; }
-        public int MaxHP { get; }
+        public int MaxHP { get; set; }
 
         public int Mp { get; set; }
-        public int MaxMp { get; }
+        public int MaxMp { get; set; }
         public int Gold { get; set; }
 
         public int Exp { get; set; }
         
         public int LevelUpExp { get; set; }
 
-        public Inventory Inventory { get; }
+        public Inventory Inventory { get; set; }
         public int DungeonClearCount { get; set; }
 
 
