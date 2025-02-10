@@ -5,6 +5,9 @@ using System.Numerics;
 using System.Threading;
 using System.Diagnostics;
 using TextRPGTeam33;
+using static System.Net.Mime.MediaTypeNames;
+using System.Xml.Linq;
+using System.Drawing;  // Font, FontFamily
 
 partial class Program
 {
@@ -30,6 +33,11 @@ partial class Program
                 Console.WindowHeight = 40;  // 세로 크기 설정
                 Console.ForegroundColor = ConsoleColor.Cyan;
                 int repeatCount = 82;
+                var info = ConsoleHelper.GetCurrentFont();
+                ConsoleHelper.SetCurrentFont("궁서", 35);
+                Console.Clear();
+                Console.WriteLine();
+
 
                 // ■와 빈 문자열을 번갈아 출력
                 for (int i = 0; i < repeatCount; i++)
