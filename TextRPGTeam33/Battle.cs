@@ -86,7 +86,15 @@ namespace TextRPGTeam33
                         if (sel == 0)
                             continue;
                         else
-                            isEnd = skillManager.UseSkill(sel - 1);
+                        {
+                            int key = skillManager.UseSkill(sel - 1);
+                            if (key == -1)
+                                continue;
+                            else if (key == 0)
+                                isEnd = false;
+                            else if (key == 1)
+                                isEnd = true;
+                        }
                     }
                     else
                     {
@@ -256,7 +264,8 @@ namespace TextRPGTeam33
                     continue;
 
                 int playerHp = player.Hp;
-                player.Hp -= m.atk;
+                int playerDef = (int)Math.Ceiling((float)player.Defense * 0.1f);
+                player.Hp -= m.atk - playerDef;
                 if (player.Hp < 0) player.Hp = 0;
 
                 while (true)
@@ -268,6 +277,7 @@ namespace TextRPGTeam33
                     Console.WriteLine($"{player.Name} 을(를) 맞췄습니다. [데미지 : {m.atk}]\n");
 
                     Console.WriteLine($"Lv.{player.Level} {player.Name}");
+                    Console.WriteLine($"{playerDef} 만큼 방어했습니다");
                     Console.WriteLine($"HP {playerHp} -> {player.Hp}\n");
 
                     Console.WriteLine("0. 다음\n");

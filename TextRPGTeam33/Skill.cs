@@ -9,11 +9,19 @@ namespace TextRPGTeam33
 {
     public enum SkillType
     {
-        GUN_FIRE,
+        //탈열병
+        GUN_SHOT,
+        GRENADE,
+        //개조련사
         ATTACK_TWICE,
         BRING_ITEM,
+        //폭발물
         RANGE_ATTACK,
+        BOMB_UPGRADE,
+        //소방관
         HYDRO_PUMP,
+        BACKDRAFT,
+        //튜터님
         FIRE_RAY,
         BOLT_TACKLE
     }
