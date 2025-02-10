@@ -13,6 +13,7 @@ namespace TextRPGTeam33
         private readonly string saveFile2 = "gamesave2.json";
         private readonly string saveFile3 = "gamesave3.json";
         private readonly CharacterCreator characterCreator;
+        private string currentSaveFile;  // 현재 사용 중인 세이브 파일
 
         public class GameData  // 캐릭터와 days를 함께 저장하기 위한 클래스
         {
@@ -29,7 +30,11 @@ namespace TextRPGTeam33
         {
             if (!HasAnySaveFile())
             {
-                return characterCreator.Charactercreator();
+                Character newCharacter = characterCreator.Charactercreator();
+                // 새 캐릭터 생성 시 첫 저장 슬롯 설정
+                currentSaveFile = saveFile1;
+                Save(newCharacter, saveFile1);
+                return newCharacter;
             }
 
             while (true)
@@ -50,7 +55,6 @@ namespace TextRPGTeam33
                 DisplaySlotInfo("3. 세이브 3", saveFile3);
                 Console.WriteLine();
 
-                Console.WriteLine("0. 돌아가기");
                 Console.WriteLine("\n원하시는 행동을 입력해주세요.");
                 Console.Write(">>");
 
@@ -72,10 +76,6 @@ namespace TextRPGTeam33
                     }
 
                     return HandleSlotSelection(input, selectedFile);
-                }
-                else if (input == "0")
-                {
-                    return null;
                 }
 
                 Console.WriteLine("잘못된 입력입니다.");
@@ -123,11 +123,14 @@ namespace TextRPGTeam33
                 {
                     if (File.Exists(filePath))
                     {
-                        return Load(filePath);
+                        Character loadedCharacter = Load(filePath);
+                        currentSaveFile = filePath;  // 여기서 currentSaveFile을 명시적으로 설정
+                        return loadedCharacter;
                     }
                     else
                     {
                         var newPlayer = characterCreator.Charactercreator();
+                        currentSaveFile = filePath;  // 새 캐릭터 생성 시 슬롯 설정
                         Save(newPlayer, filePath);
                         return newPlayer;
                     }
@@ -151,8 +154,16 @@ namespace TextRPGTeam33
 
         public void Save(Character player, string filePath)
         {
+            Console.WriteLine($"Saving to file: {filePath}");
             try
             {
+                filePath = filePath ?? currentSaveFile ?? saveFile1;
+                // 파일 경로가 제공되지 않았다면 기본 슬롯 사용
+                if (string.IsNullOrEmpty(filePath))
+                {
+                    filePath = saveFile1;  // 기본적으로 첫 번째 슬롯 사용
+                }
+
                 var saveData = new GameData
                 {
                     Character = player,
@@ -165,11 +176,13 @@ namespace TextRPGTeam33
                 });
                 File.WriteAllText(filePath, jsonString);
 
+                currentSaveFile = filePath;
+
             }
             catch (Exception ex)
             {
                 Console.WriteLine($"저장 중 오류가 발생했습니다: {ex.Message}");
-                Thread.Sleep(1000);
+                Thread.Sleep(5000);
             }
         }
 
@@ -179,13 +192,14 @@ namespace TextRPGTeam33
             {
                 string jsonString = File.ReadAllText(filePath);
                 var saveData = JsonSerializer.Deserialize<GameData>(jsonString);
-                Program.days = saveData.CurrentDays;  // 저장된 days 복원
+                Program.days = saveData.CurrentDays;
+                currentSaveFile = filePath;  // 현재 슬롯 저장
                 return saveData.Character;
             }
             catch (Exception ex)
             {
                 Console.WriteLine($"불러오기 중 오류가 발생했습니다: {ex.Message}");
-                Thread.Sleep(1000);
+                Thread.Sleep(5000);
                 return null;
             }
         }
@@ -207,11 +221,31 @@ namespace TextRPGTeam33
                 catch (Exception ex)
                 {
                     Console.WriteLine($"저장 파일 삭제 중 오류가 발생했습니다: {ex.Message}");
-                    Thread.Sleep(1000);
+                    Thread.Sleep(5000);
                 }
             }
         }
+        public string GetCurrentSaveFile()
+        {
+            // currentSaveFile이 null이나 빈 문자열이면 첫 번째 슬롯 반환
+            if (string.IsNullOrWhiteSpace(currentSaveFile))
+            {
+                // 저장된 파일들 중 가장 최근에 사용된 파일 찾기
+                var saveFiles = new[] { saveFile1, saveFile2, saveFile3 };
+                var existingFiles = saveFiles.Where(File.Exists).ToList();
 
+                // 저장된 파일이 있다면 가장 최근 파일 사용
+                if (existingFiles.Any())
+                {
+                    return existingFiles.OrderByDescending(f => new FileInfo(f).LastWriteTime).First();
+                }
 
+                // 아무 파일도 없으면 첫 번째 슬롯 반환
+                return saveFile1;
+            }
+
+            return currentSaveFile;
+        }
     }
+
 }
