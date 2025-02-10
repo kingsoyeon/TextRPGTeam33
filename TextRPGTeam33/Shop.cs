@@ -28,15 +28,20 @@ namespace TextRPGTeam33
             while (isShopOpen) // isShopOpen = false가 될시 종료
             {
                 Console.Clear();
-                Console.WriteLine("상점");
-                Console.WriteLine("필요한 아이템을 얻을 수 있는 상점입니다.");
-
+                Console.WriteLine("상점 주인");
+                Console.WriteLine("필요한 물건이 있나?");
+                
+                Console.ForegroundColor = ConsoleColor.DarkYellow;
                 Console.WriteLine("\n[보유 골드]");
                 Console.WriteLine($"{player.Gold} G");
+                Console.ResetColor();
 
-                Console.WriteLine("\n[아이템 목록]");
+                Console.ForegroundColor = ConsoleColor.Yellow;
+                Console.WriteLine("\n========================================================<<상점>>========================================================");
+                Console.ResetColor();
 
-               for (int i = 0; i < itemList.Count; i++) // itemList에서 아이템 내용 출력
+
+                for (int i = 0; i < itemList.Count; i++) // itemList에서 아이템 내용 출력
                 {
                     string price;
                     if (itemList[i].IsPurchase)
@@ -91,6 +96,7 @@ namespace TextRPGTeam33
         private void BuyScreen() // 구매창 출력
         {
             Console.Clear();
+
             Console.WriteLine("상점 - 아이템 구매");
             Console.WriteLine("필요한 아이템을 얻을 수 있는 상점입니다.");
             Console.WriteLine("\n[보유 골드]");
