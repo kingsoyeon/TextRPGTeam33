@@ -14,8 +14,7 @@ partial class Program
 
     static void Main()
     {
-        Console.SetWindowSize(110, 30); // 너비 100, 높이 30
-        Console.SetBufferSize(110, 30); // 버퍼 크기도 동일하게 설정
+
 
         GameSave gameSave = new GameSave();
         Character player = gameSave.DisplaySave();
@@ -28,23 +27,23 @@ partial class Program
             if (player != null)
             {
                 Console.ForegroundColor = ConsoleColor.Cyan;
-                Console.WriteLine("■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■");
+                Console.WriteLine("■ ■ ■ ■ ■ ■ ■ ■ ■ ■ ■ ■ ■ ■ ■ ■ ■ ■ ■ ■ ■");
                 Console.Write("■         ");
                 Console.ForegroundColor = ConsoleColor.White;
                 Console.Write("오늘도 하루가 시작되었다.");
                 Console.ForegroundColor = ConsoleColor.Cyan;
                 Console.WriteLine("     ■");
-                Console.Write("■          ");
+                Console.Write("■           ");
                 Console.ForegroundColor = ConsoleColor.Gray;
                 Console.Write("1. 부산역을 나선다.");
                 Console.ForegroundColor = ConsoleColor.Cyan;
-                Console.WriteLine("          ■");
-                Console.Write("■          ");
+                Console.WriteLine("         ■");
+                Console.Write("■           ");
                 Console.ForegroundColor = ConsoleColor.Red;
                 Console.Write("0. 오늘은 쉴까?");
                 Console.ForegroundColor = ConsoleColor.Cyan;
-                Console.WriteLine("              ■");
-                Console.WriteLine("■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■");
+                Console.WriteLine("             ■");
+                Console.WriteLine("■ ■ ■ ■ ■ ■ ■ ■ ■ ■ ■ ■ ■ ■ ■ ■ ■ ■ ■ ■ ■");
                 Console.ResetColor();
                 Console.Write("원하시는 행동을 입력해주세요:");
                 string startChoice = Console.ReadLine() ?? "0";
@@ -78,8 +77,7 @@ partial class Program
         bool inDungeon = true;
         while (inDungeon)
         {
-            Console.SetWindowSize(110, 30); // 너비 100, 높이 30
-            Console.SetBufferSize(110, 30); // 버퍼 크기도 동일하게 설정
+
             Console.Clear();
             Console.ForegroundColor = ConsoleColor.White;
             Console.WriteLine($"살아남은 날짜:{days}");
@@ -289,8 +287,7 @@ partial class Program
     }
     static void End(Character player)
     {
-        Console.SetWindowSize(110, 30); // 너비 100, 높이 30
-        Console.SetBufferSize(110, 30); // 버퍼 크기도 동일하게 설정
+
         Console.BackgroundColor = ConsoleColor.Red;
         Console.ForegroundColor = ConsoleColor.White;
         Console.Write("                                                                                                                        ");
