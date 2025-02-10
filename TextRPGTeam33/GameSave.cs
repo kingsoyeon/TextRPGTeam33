@@ -9,9 +9,10 @@ namespace TextRPGTeam33
 {
     public class GameSave
     {
-        private readonly string saveFile1 = "gamesave1.json";
-        private readonly string saveFile2 = "gamesave2.json";
-        private readonly string saveFile3 = "gamesave3.json";
+        private readonly string saveFile1 = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments), "TextRPGTeam33", "gamesave1.json");
+        private readonly string saveFile2 = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments), "TextRPGTeam33", "gamesave2.json");
+        private readonly string saveFile3 = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments), "TextRPGTeam33", "gamesave3.json");
+
         private readonly CharacterCreator characterCreator;
         private string currentSaveFile;  // 현재 사용 중인 세이브 파일
 
@@ -19,6 +20,8 @@ namespace TextRPGTeam33
         {
             public Character Character { get; set; }
             public int CurrentDays { get; set; }
+            public List<Item> InventoryItems { get; set; }
+            public int AdventureCount { get; set; }            
         }
 
         public GameSave()
@@ -92,7 +95,7 @@ namespace TextRPGTeam33
                     string jsonString = File.ReadAllText(filePath);
                     var saveData = JsonSerializer.Deserialize<GameData>(jsonString); 
                     Console.WriteLine($"│ Lv.{saveData.Character.Level.ToString("00")} {saveData.Character.Name}[{saveData.Character.Job}]");
-                    Console.WriteLine($"│ 생존 {saveData.CurrentDays}일차");
+                    Console.WriteLine($"│ 생존 {saveData.CurrentDays}일차 탐험횟수:0{saveData.AdventureCount}/02");
                 }
                 catch
                 {
@@ -154,34 +157,41 @@ namespace TextRPGTeam33
 
         public void Save(Character player, string filePath)
         {
-            Console.WriteLine($"Saving to file: {filePath}");
+            Console.WriteLine($"저장 시도 경로: {filePath}");
+            Console.WriteLine($"파일 존재 여부: {File.Exists(filePath)}");
             try
             {
-                filePath = filePath ?? currentSaveFile ?? saveFile1;
-                // 파일 경로가 제공되지 않았다면 기본 슬롯 사용
-                if (string.IsNullOrEmpty(filePath))
-                {
-                    filePath = saveFile1;  // 기본적으로 첫 번째 슬롯 사용
-                }
+                // 디렉토리 생성
+                Directory.CreateDirectory(Path.GetDirectoryName(filePath));
 
                 var saveData = new GameData
                 {
                     Character = player,
-                    CurrentDays = Program.days  // 현재 days도 함께 저장
+                    CurrentDays = Program.days,
+                    InventoryItems = player.Inventory.GetItems(),
+                    AdventureCount = Program.adventureCount
                 };
 
                 string jsonString = JsonSerializer.Serialize(saveData, new JsonSerializerOptions
                 {
-                    WriteIndented = true
+                    WriteIndented = true,
+                    ReferenceHandler = System.Text.Json.Serialization.ReferenceHandler.IgnoreCycles,
+                    DefaultIgnoreCondition = System.Text.Json.Serialization.JsonIgnoreCondition.WhenWritingNull
                 });
+
                 File.WriteAllText(filePath, jsonString);
 
                 currentSaveFile = filePath;
-
+                Console.WriteLine($"저장 경로: {filePath}");
+                Console.WriteLine($"파일 크기: {new FileInfo(filePath).Length} 바이트");
+                Thread.Sleep(1000);
             }
             catch (Exception ex)
             {
                 Console.WriteLine($"저장 중 오류가 발생했습니다: {ex.Message}");
+                Console.WriteLine($"메시지: {ex.Message}");
+                Console.WriteLine($"예외 유형: {ex.GetType().Name}");
+                Console.WriteLine($"스택 트레이스: {ex.StackTrace}");
                 Thread.Sleep(5000);
             }
         }
@@ -191,14 +201,33 @@ namespace TextRPGTeam33
             try
             {
                 string jsonString = File.ReadAllText(filePath);
-                var saveData = JsonSerializer.Deserialize<GameData>(jsonString);
+                var saveData = JsonSerializer.Deserialize<GameData>(jsonString, new JsonSerializerOptions
+                {
+                    PropertyNameCaseInsensitive = true,
+                    ReferenceHandler = System.Text.Json.Serialization.ReferenceHandler.IgnoreCycles
+                });
+
                 Program.days = saveData.CurrentDays;
-                currentSaveFile = filePath;  // 현재 슬롯 저장
-                return saveData.Character;
+                Program.adventureCount = saveData.AdventureCount;
+
+                Character loadedCharacter = saveData.Character;
+
+                // 인벤토리 복원
+                loadedCharacter.Inventory = new Inventory();
+
+                // 아이템 리스트 복원 시 주의
+                if (saveData.InventoryItems != null)
+                {
+                    loadedCharacter.Inventory.AddItem(saveData.InventoryItems);
+                }
+
+                currentSaveFile = filePath;
+                return loadedCharacter;
             }
             catch (Exception ex)
             {
                 Console.WriteLine($"불러오기 중 오류가 발생했습니다: {ex.Message}");
+                Console.WriteLine($"예외 상세: {ex.StackTrace}");
                 Thread.Sleep(5000);
                 return null;
             }
@@ -207,7 +236,26 @@ namespace TextRPGTeam33
 
         public bool HasAnySaveFile()
         {
-            return File.Exists(saveFile1) || File.Exists(saveFile2) || File.Exists(saveFile3);
+            // 각 저장 파일 경로에 대해 실제 파일 존재 및 유효한 저장 데이터인지 확인
+            bool isValidSaveFile(string filePath)
+            {
+                if (!File.Exists(filePath)) return false;
+
+                try
+                {
+                    string jsonString = File.ReadAllText(filePath);
+                    var saveData = JsonSerializer.Deserialize<GameData>(jsonString);
+                    return saveData?.Character != null;
+                }
+                catch
+                {
+                    return false;
+                }
+            }
+
+            return isValidSaveFile(saveFile1) ||
+                   isValidSaveFile(saveFile2) ||
+                   isValidSaveFile(saveFile3);
         }
 
         private void DeleteSaveFile(string filePath)
@@ -227,21 +275,13 @@ namespace TextRPGTeam33
         }
         public string GetCurrentSaveFile()
         {
-            // currentSaveFile이 null이나 빈 문자열이면 첫 번째 슬롯 반환
+            // 현재 실행 디렉토리를 기본 경로로 사용
+            string defaultSavePath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "gamesave1.json");
+
+            // currentSaveFile이 null이나 빈 문자열이면 기본 경로 사용
             if (string.IsNullOrWhiteSpace(currentSaveFile))
             {
-                // 저장된 파일들 중 가장 최근에 사용된 파일 찾기
-                var saveFiles = new[] { saveFile1, saveFile2, saveFile3 };
-                var existingFiles = saveFiles.Where(File.Exists).ToList();
-
-                // 저장된 파일이 있다면 가장 최근 파일 사용
-                if (existingFiles.Any())
-                {
-                    return existingFiles.OrderByDescending(f => new FileInfo(f).LastWriteTime).First();
-                }
-
-                // 아무 파일도 없으면 첫 번째 슬롯 반환
-                return saveFile1;
+                currentSaveFile = defaultSavePath;
             }
 
             return currentSaveFile;

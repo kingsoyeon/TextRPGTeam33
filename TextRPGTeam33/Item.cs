@@ -14,7 +14,7 @@ namespace TextRPGTeam33
     }
     public class Item
     {
-        public Guid Id { get; set; } // 아이템 고유 ID
+        public Guid Id { get; set; } = Guid.NewGuid(); // 아이템 고유 ID
         public string Name { get; set; } // 아이템 이름
         public ItemType Type { get; set; } // 아이템 타입
         public int Value { get; set; } // 값
@@ -24,10 +24,6 @@ namespace TextRPGTeam33
         public int Count { get; set; } // 아이템 개수
         public bool IsPurchase { get; set; } //보유 상태
         public bool IsEquip { get; set; } // 장착 여부
-        public Item()
-        {
-            Id = Guid.NewGuid();
-        }
 
         public Item(string name, ItemType type, int value, int itemRate, string descrip, int cost, int count) // 아이템 리스트 초기화
         {
