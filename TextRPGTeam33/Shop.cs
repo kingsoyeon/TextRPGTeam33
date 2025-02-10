@@ -176,7 +176,7 @@ namespace TextRPGTeam33
                     item.IsPurchase = true;
 
                     var newItem = Item.CreateNewItem(item); // 새로운 아이템 생성
-                    inventory.AddItem(newItems); // newItem을 인벤토리에 추가
+                    inventory.AddItem(newItem); // newItem을 인벤토리에 추가
 
                     Console.WriteLine($"{item.Name}를 구매를 완료했습니다.");
                     Thread.Sleep(1000);
