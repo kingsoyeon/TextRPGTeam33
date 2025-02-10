@@ -181,8 +181,6 @@ namespace TextRPGTeam33
 
         public void Save(Character player, string filePath)
         {
-            Console.WriteLine($"저장 시도 경로: {filePath}");
-            Console.WriteLine($"파일 존재 여부: {File.Exists(filePath)}");
             try
             {
                 // 디렉토리 생성
@@ -208,10 +206,6 @@ namespace TextRPGTeam33
                 File.WriteAllText(filePath, jsonString);
 
                 currentSaveFile = filePath;
-                Console.WriteLine($"저장 경로: {filePath}");
-                Console.WriteLine($"파일 크기: {new FileInfo(filePath).Length} 바이트");
-                Console.WriteLine($"게임이 {Path.GetFileName(filePath)}에 저장되었습니다.");
-                Thread.Sleep(5000);
             }
             catch (Exception ex)
             {
