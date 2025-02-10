@@ -83,8 +83,8 @@ partial class Program
 
             Console.Clear();
             Console.ForegroundColor = ConsoleColor.White;
-            Console.WriteLine($"→살아남은 날짜:{days}");
-            Console.WriteLine($"→탐험횟수:0{adventureCount}/02");
+            Console.WriteLine($"→ 살아남은 날짜:{days}");
+            Console.WriteLine($"→ 탐험횟수:0{adventureCount}/02");
             Console.ForegroundColor = ConsoleColor.Yellow;
             Console.WriteLine("====================<<행동>>=====================");
             Console.ForegroundColor = ConsoleColor.Yellow;
@@ -182,7 +182,7 @@ partial class Program
     static void Explore(Character player)
     {
         Random random = new Random();
-        int randomChoice = random.Next(0, 5);
+        int randomChoice = random.Next(0, 1);
         // 탐험이 시작되면 탐험 횟수 증가
         Console.Clear();
         Console.WriteLine($"탐험 {adventureCount + 1}회 진행 중...");
