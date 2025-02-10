@@ -9,13 +9,15 @@ namespace TextRPGTeam33
 {
     public class Skill
     {
-        string name;
-        int mp;
-        int atk;
+        public string name;
+        public string desc;
+        public int mp;
+        public int atk;
 
-        public Skill(string name, int mp, int atk)
+        public Skill(string name, string desc, int mp, int atk)
         {
             this.name = name;
+            this.desc = desc;
             this.mp = mp;
             this.atk = atk;
         }
