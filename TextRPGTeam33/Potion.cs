@@ -24,7 +24,7 @@ namespace TextRPGTeam33
             .Where(x => x.Type == ItemType.Potion && x.Count > 0)
             .ToList();
         }
-        public void DisplayPotion() // 표션정보 출력
+        public int DisplayPotion() // 표션정보 출력
         {
             while (true)
             {
@@ -81,7 +81,7 @@ namespace TextRPGTeam33
                 Console.Write("\n원하는 행동을 입력해주세요.\n>>");
                 string input = Console.ReadLine();
 
-                if (input == "0") return; // 나가기(메인화면)
+                if (input == "0") return 0; // 나가기
                 else if (input == "1") // 1. 포션 선택
                 {
                     if (potions.Count > 0)
