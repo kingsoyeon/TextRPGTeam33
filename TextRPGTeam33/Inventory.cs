@@ -24,7 +24,7 @@ namespace TextRPGTeam33
                 }
                 else
                 {
-                    Items[itemIdx].Count++;
+                    Items[itemIdx].Count += item.Count;
                 }
 
             }
@@ -41,7 +41,7 @@ namespace TextRPGTeam33
             }
             else
             {
-                Items[itemIdx].Count++;
+                Items[itemIdx].Count += item.Count;
             }
         }
 
@@ -164,7 +164,7 @@ namespace TextRPGTeam33
                
             }
             else {
-                str += $"{item.Name} | 회복량 +{item.Value} | {item.Descrip} | 보유 {item.Count}개";
+                str += $"{item.Name} | 체력 +{item.Value} | {item.Descrip} | 보유 {item.Count}개";
                 
             }
 
