@@ -251,6 +251,7 @@ namespace TextRPGTeam33
 
                 while (true)
                 {
+                    
                     Console.WriteLine($"{job}을 선택하셨습니다. 이대로 진행하시겠습니까?");
                     Console.WriteLine("1. 생성하기");
                     Console.WriteLine("0. 다시 선택하기");
@@ -267,6 +268,7 @@ namespace TextRPGTeam33
                     }
                     else
                     {
+                        Console.Clear() ;
                         break;
                     }
                 }
