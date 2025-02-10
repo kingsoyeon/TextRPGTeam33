@@ -14,8 +14,8 @@ partial class Program
 
     static void Main()
     {
-        Console.SetWindowSize(100, 30); // 너비 100, 높이 30
-        Console.SetBufferSize(100, 30); // 버퍼 크기도 동일하게 설정
+        Console.SetWindowSize(120, 50); // 너비 100, 높이 30
+        Console.SetBufferSize(120, 50); // 버퍼 크기도 동일하게 설정
 
         GameSave gameSave = new GameSave();
         Character player = gameSave.DisplaySave();
@@ -78,6 +78,8 @@ partial class Program
         bool inDungeon = true;
         while (inDungeon)
         {
+            Console.SetWindowSize(120, 50); // 너비 100, 높이 30
+            Console.SetBufferSize(120, 50); // 버퍼 크기도 동일하게 설정
             Console.Clear();
             Console.ForegroundColor = ConsoleColor.White;
             Console.WriteLine($"살아남은 날짜:{days}");
@@ -287,6 +289,8 @@ partial class Program
     }
     static void End(Character player)
     {
+        Console.SetWindowSize(120, 50); // 너비 100, 높이 30
+        Console.SetBufferSize(120, 50); // 버퍼 크기도 동일하게 설정
         Console.BackgroundColor = ConsoleColor.Red;
         Console.ForegroundColor = ConsoleColor.White;
         Console.Write("                                                                                                                        ");
