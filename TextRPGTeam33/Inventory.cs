@@ -24,7 +24,7 @@ namespace TextRPGTeam33
                 }
                 else
                 {
-                    Items[itemIdx].Count++;
+                    Items[itemIdx].Count += item.Count;
                 }
 
             }
@@ -41,7 +41,7 @@ namespace TextRPGTeam33
             }
             else
             {
-                Items[itemIdx].Count++;
+                Items[itemIdx].Count += item.Count;
             }
         }
 
