@@ -13,16 +13,36 @@ namespace TextRPGTeam33
 
         public void AddItem(List<Item> itemList)
         {
+            int itemIdx = 0;
             if (itemList == null) return;
             foreach (Item item in itemList)
             {
-                Items.Add(item);
+                itemIdx = Items.FindIndex(n => n.Name == item.Name);
+                if (itemIdx < 0)
+                {
+                    Items.Add(item);
+                }
+                else
+                {
+                    Items[itemIdx].Count++;
+                }
+
             }
         }
         public void AddItem(Item item)
         {
+            int itemIdx = 0;
             if (item == null) return;
-            Items.Add(item);
+            itemIdx = Items.FindIndex(n => n.Name == item.Name);
+
+            if (itemIdx < 0)
+            {
+                Items.Add(item);
+            }
+            else
+            {
+                Items[itemIdx].Count++;
+            }
         }
 
         public void RemoveItem(Item item)
