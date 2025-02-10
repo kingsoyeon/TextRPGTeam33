@@ -61,8 +61,8 @@ namespace TextRPGTeam33
             monsterCnt += rand.Next(0, stageLevel);
             if (monsterCnt > 5) monsterCnt = 5; //최대 5마리
 
-            //10층마다 보스 몬스터 추가
-            if ((player.DungeonClearCount + 1) % 5 == 0)
+            //전투 횟수 10회마다 보스 몬스터 추가
+            if ((player.DungeonClearCount + 1) % 10 == 0)
             {
                 monsterCnt -= 1;
                 new Monster("샌즈", 10, 60, 15, true);
