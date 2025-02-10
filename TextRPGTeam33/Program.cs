@@ -23,24 +23,8 @@ partial class Program
             Console.Clear();
             if (player != null)
             {
-                Console.WindowWidth = 100;  // 가로 크기 설정
-                Console.WindowHeight = 40;  // 세로 크기 설정
+
                 Console.ForegroundColor = ConsoleColor.Cyan;
-               /* int repeatCount = 82;
-                // ■와 빈 문자열을 번갈아 출력
-                for (int i = 0; i < repeatCount; i++)
-                {
-                    if (i % 2 == 0)
-                    {
-                        Console.Write("■");  // ■ 출력
-                    }
-                    else
-                    {
-                        Console.Write(" ");  // 빈 문자열 출력 (출력은 안됨)
-                    }
-                }
-               */
-                // 출력 후 줄 바꿈
                 Console.WriteLine();
                 Console.WriteLine(" ㅁ-ㅁ-ㅁ-ㅁ-ㅁ-ㅁ-ㅁ-ㅁ-ㅁ-ㅁ-ㅁ-ㅁ-ㅁ-ㅁ");
                 Console.Write("ㅁ\t");
