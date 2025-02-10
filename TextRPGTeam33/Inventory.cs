@@ -13,16 +13,36 @@ namespace TextRPGTeam33
 
         public void AddItem(List<Item> itemList)
         {
+            int itemIdx = 0;
             if (itemList == null) return;
             foreach (Item item in itemList)
             {
-                Items.Add(item);
+                itemIdx = Items.FindIndex(n => n.Name == item.Name);
+                if (itemIdx < 0)
+                {
+                    Items.Add(item);
+                }
+                else
+                {
+                    Items[itemIdx].Count += item.Count;
+                }
+
             }
         }
         public void AddItem(Item item)
         {
+            int itemIdx = 0;
             if (item == null) return;
-            Items.Add(item);
+            itemIdx = Items.FindIndex(n => n.Name == item.Name);
+
+            if (itemIdx < 0)
+            {
+                Items.Add(item);
+            }
+            else
+            {
+                Items[itemIdx].Count += item.Count;
+            }
         }
 
         public void RemoveItem(Item item)
@@ -32,7 +52,7 @@ namespace TextRPGTeam33
 
         public List<Item> GetItems()
         {
-            
+
             return Items;
         }
 
@@ -100,24 +120,34 @@ namespace TextRPGTeam33
                         selectedItem.IsEquip = false;
                         Console.WriteLine("선택한 아이템을 장착 해제했습니다.");
                         Thread.Sleep(1000);
-                        
+
                     }
                     else
                     {
-                        // 장착하지 않은 아이템 장착
+                        // 장착 중이었던 아이템 타입이 같으면 선택한 아이템으로 장착하고, 입고 있던 아이템은 장착 해제
+                        Item? equippedItem = PotionExcepted.Find(item => item.Type == selectedItem.Type && item.IsEquip);
+                        if (equippedItem != null)
+                        {
+                            player.UnEquipItem(equippedItem);
+                            equippedItem.IsEquip = false;
+                            Console.WriteLine($"장착 중인 {equippedItem.Name}을 장착 해제했습니다.");
+                            Thread.Sleep(1000);
+                        }
+
+                        // 장착 중이었던 아이템 타입이 다르다면 장착
+
                         player.EquipItem(selectedItem);
                         selectedItem.IsEquip = true;
                         Console.WriteLine("선택한 아이템을 장착했습니다.");
                         Thread.Sleep(1000);
-                        
                     }
                 }
 
                 else { Console.WriteLine("잘못된 입력"); }
-              
+
             }
-            else { Console.WriteLine("잘못된 입력입니다."); }
         }
+        
         
         public string InventoryDisplay(Item item)
         {
