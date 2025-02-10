@@ -14,7 +14,7 @@ namespace TextRPGTeam33
         List<Skill> skills;
         List<Monster> monsters;
         Random rand;
-        int skillCount;
+        public int skillCount;
 
         public SkillManager(Character player, List<Monster> monsters)
         {
