@@ -200,9 +200,8 @@ partial class Program
     static void Save(Character player)
 
     {
-
-
-
+        GameSave gameSave = new GameSave();
+        gameSave.Save(player, gameSave.GetCurrentSaveFile());
     }
 
     
