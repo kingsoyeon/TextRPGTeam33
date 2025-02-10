@@ -136,6 +136,7 @@ namespace TextRPGTeam33
                 Console.WriteLine("이미 체력이 최대입니다!");
                 Thread.Sleep(1000);
             }
+
         }
     }
 }

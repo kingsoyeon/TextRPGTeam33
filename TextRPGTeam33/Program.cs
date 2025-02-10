@@ -77,11 +77,11 @@ partial class Program
             Console.ForegroundColor = ConsoleColor.Yellow;
             Console.WriteLine("■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■");
             Console.ForegroundColor = ConsoleColor.Yellow;
-            Console.Write("■ ");
+            Console.Write("■         ");
             Console.ForegroundColor = ConsoleColor.White;
             Console.Write("오늘 할 일을 선택하세요.");
             Console.ForegroundColor = ConsoleColor.Yellow;
-            Console.WriteLine("  ■");
+            Console.WriteLine("      ■");
             Console.Write("■     ");
             Console.ForegroundColor = ConsoleColor.Green;
             Console.Write("▶ 1. 상태보기");
@@ -101,7 +101,7 @@ partial class Program
             Console.ForegroundColor = ConsoleColor.Red;
             Console.Write("▶ 4. 포션 사용");
             Console.ForegroundColor = ConsoleColor.Yellow;
-            Console.WriteLine("                         ■");
+            Console.WriteLine("                    ■");
             Console.Write("■     ");
             Console.ForegroundColor = ConsoleColor.DarkGray;
             Console.Write("▶ 0. 나가기");
