@@ -75,7 +75,7 @@ namespace TextRPGTeam33
                 }
             }
         }
-        private void SelectPotion() // 포션 선택
+        public void SelectPotion() // 포션 선택
         {
             while (true)
             {
