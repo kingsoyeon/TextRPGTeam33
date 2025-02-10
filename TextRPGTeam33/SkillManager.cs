@@ -124,6 +124,8 @@ namespace TextRPGTeam33
             int monsterHp = 0;
             int monster2Hp = 0;
             int cnt = 0;
+            List<Monster> target;
+            target = new List<Monster>();
 
             switch (skills[i].type) // 스킬 종류에 따라 효과 적용 (제작 중)
             {
@@ -153,6 +155,7 @@ namespace TextRPGTeam33
                         if (m.hp <= 0)
                             continue;
 
+                        target.Add(m);
                         m.hp -= skills[i].atk;
                         if (m.hp < 0) m.hp = 0;
                     }
@@ -224,11 +227,8 @@ namespace TextRPGTeam33
                         Console.WriteLine("아이템 획득 확률이 10% 증가합니다\n");
                         break;
                     case SkillType.RANGE_ATTACK:
-                        foreach (Monster m in monsters)
+                        foreach (Monster m in target)
                         {
-                            if (m.hp <= 0)
-                                continue;
-
                             Console.WriteLine($"Lv.{monsters[index].level} {monsters[index].name} 을(를) 맞췄습니다. [데미지 : {skills[i].atk}]\n");
 
                             Console.WriteLine($"Lv.{monsters[index].level} {monsters[index].name}");
@@ -259,7 +259,7 @@ namespace TextRPGTeam33
                         }
                         break;
                 }
-                
+
                 Console.WriteLine("0. 다음\n");
 
                 Console.Write(">> ");
