@@ -83,8 +83,8 @@ partial class Program
 
             Console.Clear();
             Console.ForegroundColor = ConsoleColor.White;
-            Console.WriteLine($"살아남은 날짜:{days}");
-            Console.WriteLine($"탐험횟수:0{adventureCount}/02");
+            Console.WriteLine($"→살아남은 날짜:{days}");
+            Console.WriteLine($"→탐험횟수:0{adventureCount}/02");
             Console.ForegroundColor = ConsoleColor.Yellow;
             Console.WriteLine("====================<<행동>>=====================");
             Console.ForegroundColor = ConsoleColor.Yellow;
@@ -217,7 +217,7 @@ partial class Program
     {
         Console.WriteLine("이벤트 발생!");
         Thread.Sleep(2000);
-        // 여러가지 이벤트 추가
+        OpenQuest(player);
         adventureCount++;
     }
 
@@ -228,7 +228,13 @@ partial class Program
         gameSave.Save(player, currentSaveFile);
         Console.Clear();
         Console.WriteLine("당신은 일기를 작성하셨습니다.");
-        Thread.Sleep(1000);
+        Thread.Sleep(500);
+        Console.Write(".");
+        Thread.Sleep(500);
+        Console.Write(".");
+        Thread.Sleep(500);
+        Console.WriteLine(".");
+        Thread.Sleep(500);
     }
 
     
@@ -286,6 +292,11 @@ partial class Program
         adventureCount++;
     }
 
+    static void OpenQuest(Character player) {
+        Quest questSystem = Quest.Instance;
+        questSystem.DisplayQuests(player);
+
+    }
     static void DrinkPotion(Character player)
     {
         Potion potion = new Potion(player, player.Inventory);
