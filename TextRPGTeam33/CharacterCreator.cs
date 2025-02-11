@@ -146,9 +146,7 @@ namespace TextRPGTeam33
                 // #13 파피루스
                 if (killSans)
                 {
-                    Console.WriteLine(" |\t13. 파피루스\t|");
-                    Console.ResetColor();
-                    Console.WriteLine("<|--------------------------------------|>");
+                    Console.WriteLine(" |\t13. 파피루스\t\t\t|");
                     Console.WriteLine(" |\t\t\t\t\t|");
                 }
                 Console.WriteLine("<<======================================>>");
