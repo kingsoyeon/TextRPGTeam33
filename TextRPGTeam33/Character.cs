@@ -40,6 +40,7 @@ namespace TextRPGTeam33
 
         public int speed {  get; set; }
 
+        public bool killSans { get; set; }
 
         
         public Character(int level, string name, string job, int atk, int def, int maxHp, int maxMp, int gold)
