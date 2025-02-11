@@ -103,44 +103,56 @@ namespace TextRPGTeam33
             while (true)
             {
                 // 직업 입력
-                Console.WriteLine("직업을 선택하세요");
+                Console.WriteLine("\t당신의 직업은 무엇인가요?");
                 Console.WriteLine("");
-
-                //   #1 탈영병
+                Console.WriteLine("<@======================================@>");
                 Console.ForegroundColor = ConsoleColor.Cyan;
-                Console.WriteLine("1. 탈영병 (얼음 속성)");
-                Console.WriteLine("");
-
-                //  #2 개 조련사
-                Console.ForegroundColor = ConsoleColor.Yellow;
-                Console.WriteLine("2. 개 조련사 (번개 속성)");
-                Console.WriteLine("");
-
-                // #3 폭발물 산업기사
-                Console.ForegroundColor = ConsoleColor.Red;
-                Console.WriteLine("3. 폭발물 산업기사 (불 속성)");
-                Console.WriteLine("");
-
-                // #4 소방관
-                Console.ForegroundColor = ConsoleColor.Blue;
-                Console.WriteLine("4. 소방관 (물 속성)");
-               
-
-                Console.WriteLine("");
-
-                // #5 튜터님
-                Console.ForegroundColor = ConsoleColor.DarkYellow;
-                Console.WriteLine("5. 이성언 튜터 (바위 속성)");
+                Console.WriteLine(" |\t\t\t\t\t|");
+                //   #1 탈영병
+                Console.WriteLine(" |\t1. 탈영병 (얼음 속성)\t\t|");
+                Console.WriteLine(" |\t\t\t\t\t|");
                 Console.ResetColor();
-
-                Console.WriteLine("");
+                Console.WriteLine("<|--------------------------------------|>");
+                Console.ForegroundColor = ConsoleColor.Yellow;
+                Console.WriteLine(" |\t\t\t\t\t|");
+                //  #2 개 조련사
+                Console.WriteLine(" |\t2. 개 조련사 (번개 속성)\t|");
+                Console.WriteLine(" |\t\t\t\t\t|");
+                Console.ResetColor();
+                Console.WriteLine("<|--------------------------------------|>");
+                Console.ForegroundColor = ConsoleColor.Red;
+                Console.WriteLine(" |\t\t\t\t\t|");
+                // #3 폭발물 산업기사
+                Console.WriteLine(" |\t3. 폭발물 산업기사 (불 속성)\t|");
+                Console.WriteLine(" |\t\t\t\t\t|");
+                Console.ResetColor();
+                Console.WriteLine("<|--------------------------------------|>");
+                Console.ForegroundColor = ConsoleColor.Blue;
+                Console.WriteLine(" |\t\t\t\t\t|");
+                // #4 소방관
+                Console.WriteLine(" |\t4. 소방관 (물 속성)\t\t|");
+                Console.WriteLine(" |\t\t\t\t\t|");
+                Console.ResetColor();
+                Console.WriteLine("<|--------------------------------------|>");
+                Console.ForegroundColor = ConsoleColor.DarkYellow;
+                Console.WriteLine(" |\t\t\t\t\t|");
+                // #5 튜터
+                Console.WriteLine(" |\t5. 이성언 튜터 (바위 속성)\t|");
+                Console.WriteLine(" |\t\t\t\t\t|");
+                Console.ResetColor();
+                Console.WriteLine("<|--------------------------------------|>");
+                Console.WriteLine(" |\t\t\t\t\t|");
 
                 // #13 파피루스
                 if (killSans)
                 {
-                    Console.WriteLine("13. 파피루스");
+                    Console.WriteLine(" |\t13. 파피루스\t|");
+                    Console.ResetColor();
+                    Console.WriteLine("<|--------------------------------------|>");
+                    Console.WriteLine(" |\t\t\t\t\t|");
                 }
-
+                Console.WriteLine("<<======================================>>");
+                Console.WriteLine("");
 
                 Console.WriteLine("원하시는 번호를 선택하세요.");
                 Console.Write(">> ");
@@ -967,19 +979,30 @@ namespace TextRPGTeam33
 
                 while (true)
                 {
-                    
-                    Console.WriteLine($"{job}을 선택하셨습니다. 이대로 진행하시겠습니까?");
-                    Console.WriteLine("1. 생성하기");
-                    Console.WriteLine("0. 다시 선택하기");
+                    Console.ForegroundColor = ConsoleColor.Cyan;
+                    Console.WriteLine(" ㅁ-ㅁ-ㅁ-ㅁ-ㅁ-ㅁ-ㅁ-ㅁ-ㅁ-ㅁ-ㅁ-ㅁ-ㅁ-ㅁ-ㅁ-ㅁ-ㅁ-ㅁ-ㅁ-ㅁ-ㅁ-ㅁ-ㅁ-ㅁ-ㅁ-ㅁ-ㅁ-ㅁ-ㅁ");
+                    Console.ResetColor();
+                    Console.WriteLine($"\t{job}을(를) 선택하셨습니다. 이대로 진행하시겠습니까?");
+                    Console.WriteLine("\t1. 생성하기");
+                    Console.WriteLine("\t0. 다시 선택하기");
+                    Console.ForegroundColor = ConsoleColor.Cyan;
+                    Console.WriteLine(" ㅁ-ㅁ-ㅁ-ㅁ-ㅁ-ㅁ-ㅁ-ㅁ-ㅁ-ㅁ-ㅁ-ㅁ-ㅁ-ㅁ-ㅁ-ㅁ-ㅁ-ㅁ-ㅁ-ㅁ-ㅁ-ㅁ-ㅁ-ㅁ-ㅁ-ㅁ-ㅁ-ㅁ-ㅁ");
+                    Console.ResetColor();
                     Console.Write(">> ");
 
                     string input = Console.ReadLine();
                     if (input == "1")
                     {
                         Console.Clear();
-                        Console.WriteLine("캐릭터 생성을 완료했습니다.");
-                        Console.WriteLine($"이름: {name}");
-                        Console.WriteLine($"직업: {job}");
+                        Console.ForegroundColor = ConsoleColor.Cyan;
+                        Console.WriteLine(" ㅁ-ㅁ-ㅁ-ㅁ-ㅁ-ㅁ-ㅁ-ㅁ-ㅁ-ㅁ-ㅁ-ㅁ-ㅁ-ㅁ-ㅁ-ㅁ-ㅁ");
+                        Console.ResetColor();
+                        Console.WriteLine("\t캐릭터 생성을 완료했습니다.");
+                        Console.WriteLine($"\t이름: {name}");
+                        Console.WriteLine($"\t직업: {job}");
+                        Console.ForegroundColor = ConsoleColor.Cyan;
+                        Console.WriteLine(" ㅁ-ㅁ-ㅁ-ㅁ-ㅁ-ㅁ-ㅁ-ㅁ-ㅁ-ㅁ-ㅁ-ㅁ-ㅁ-ㅁ-ㅁ-ㅁ-ㅁ");
+                        Console.ResetColor();
                         Thread.Sleep(2000);
                         return new Character(level, name, job, atk, def, maxHp, maxMp, gold, killSans);
                     }
