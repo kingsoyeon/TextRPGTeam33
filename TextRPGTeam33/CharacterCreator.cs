@@ -358,17 +358,7 @@ namespace TextRPGTeam33
                         Console.WriteLine("  ////");
                         Console.WriteLine(" ////");
                         Console.ResetColor();
-<<<<<<< HEAD
 
-=======
-                        Console.WriteLine("");
-                        Console.WriteLine("원래 군부대에서 근무하던 병사였지만, 좀비 사태 이후 부대가 붕괴되었다.");
-                        Console.WriteLine("남은 생존자들과 함께하려 했으나 군 내부의 부조리와 생존 방식에 의문을 품고 탈영했다.");
-                        Console.WriteLine("지금은 부산역을 거처로 살아남기 위해 싸우고 있다.");
-                        Console.WriteLine("");
-                        Console.WriteLine("군사 훈련을 받았기에 기본적인 전투 스탯이 뛰어나고, 총기를 잘 다룰 수 있다.\n");
-                        Console.WriteLine("");
->>>>>>> 3c004e3c19e438148fd5ca0522a68d5d350a9a10
                         break;
 
                     case "개 조련사":
