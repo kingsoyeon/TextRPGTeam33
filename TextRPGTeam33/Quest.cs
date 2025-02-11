@@ -78,10 +78,6 @@ namespace TextRPGTeam33
         
         public void DisplayQuests(Character player)
         {
-            // 디버그용 코드 추가
-            Console.WriteLine($"Debug: RewardClaimed = {currentQuest?.RewardClaimed}");
-            Console.WriteLine($"Debug: IsAccepted = {currentQuest?.IsAccepted}");
-
             var availableQuests = quests.Where(q => !acceptedQuests.Contains(q) && !q.IsCompleted).ToList(); // 수락되지 않은 퀘스트 중에서 랜덤으로 1개 선택
 
             if (availableQuests.Count == 0)
@@ -122,8 +118,16 @@ namespace TextRPGTeam33
 
                 if (input == "1")
                 {
-                    acceptedQuests.Add(currentQuest);
-                    currentQuest.IsAccepted = true;
+                    var questToAdd = new QuestData(
+                        currentQuest.Id,
+                        currentQuest.Name,
+                        currentQuest.Description,
+                        currentQuest.TargetCount,
+                        currentQuest.RewardItem,
+                        currentQuest.RewardExp
+                    );
+                    acceptedQuests.Add(questToAdd);
+                    questToAdd.IsAccepted = true;
                     Console.WriteLine("\n퀘스트를 수락했습니다!");
                     Thread.Sleep(1500);
                 }
@@ -233,10 +237,10 @@ namespace TextRPGTeam33
 
         public void UpdateQuestProgress(int questId) // 퀘스트 진행도 업데이트
         {
-            var quest = quests.Find(q => q.Id == questId);
-            if (quest != null && quest.IsAccepted)
+            var acceptedQuest = acceptedQuests.Find(q => q.Id == questId && q.IsAccepted);
+            if (acceptedQuest != null)
             {
-                quest.CurrentCount++;
+                acceptedQuest.CurrentCount++;
             }
         }
 
@@ -262,7 +266,7 @@ namespace TextRPGTeam33
 
                 currentQuest.CurrentCount = 0;  // 진행도 초기화 추가
                 currentQuest.IsAccepted = false;  // 수락 상태 초기화
-                currentQuest.RewardClaimed = true;
+                currentQuest.RewardClaimed = false;
 
                 acceptedQuests.Remove(currentQuest);
 
