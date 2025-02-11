@@ -18,18 +18,20 @@ namespace TextRPGTeam33
             }
         }
 
-        private class QuestData // 개별 퀘스트 정보를 담는 내부 클래스
+        public class QuestData // 개별 퀘스트 정보를 담는 내부 클래스
         {
-            public int Id { get; }  // 퀘스트 고유 ID
-            public string Name { get; }  // 퀘스트 이름
-            public string Description { get; }  // 퀘스트 설명
-            public int TargetCount { get; }  // 목표 수량
+            public int Id { get; set; }  // 퀘스트 고유 ID
+            public string Name { get; set; }  // 퀘스트 이름
+            public string Description { get; set; }  // 퀘스트 설명
+            public int TargetCount { get; set; }  // 목표 수량
             public int CurrentCount { get; set; }  // 현재 진행도
-            public Item RewardItem { get; }  // 보상 아이템
-            public int RewardExp { get; }  // 보상 경험치
+            public Item RewardItem { get; set; }  // 보상 아이템
+            public int RewardExp { get; set; }  // 보상 경험치
             public bool IsCompleted => CurrentCount >= TargetCount;  // 퀘스트 완료 여부
             public bool IsAccepted { get; set; } = false;  // 퀘스트 수락 상태
             public bool RewardClaimed { get; set; } = false; // 보상 수령 여부
+
+            public QuestData() { } // 기본 생성자 추가
 
             public QuestData(int id, string name, string description, int targetCount, Item rewardItem, int rewardExp) // QuestDate 생성자 - 데이터 초기화
             {
@@ -238,6 +240,15 @@ namespace TextRPGTeam33
                 return true;
             }
             return false;
+        }
+        public List<QuestData> GetQuestList()
+        {
+            return acceptedQuests;  // 현재 진행 중인 퀘스트 리스트 반환
+        }
+
+        public void LoadQuestList(List<QuestData> questList)
+        {
+            acceptedQuests = questList;  // 저장된 퀘스트 리스트 복원
         }
     }
 }
