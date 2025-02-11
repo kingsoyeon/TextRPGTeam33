@@ -1,10 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Text.Json;
-using System.Threading.Tasks;
-using static TextRPGTeam33.Quest;
+using System.Threading;
+using System.IO;
 
 namespace TextRPGTeam33
 {
@@ -25,7 +24,8 @@ namespace TextRPGTeam33
             public List<Item> InventoryItems { get; set; }
             public int AdventureCount { get; set; }
 
-            public List<QuestData> QuestList { get; set; }
+            public List<Quest.QuestData> QuestList { get; set; }
+            public Dictionary<string, Achievement.AchievementData> Achievements { get; set; }
         }
 
         public GameSave()
@@ -86,17 +86,16 @@ namespace TextRPGTeam33
                 if (input == "1" || input == "2" || input == "3")
                 {
                     string selectedFile = input == "1" ? saveFile1 : (input == "2" ? saveFile2 : saveFile3); // 1번이 이라면 saveFile1, 1번이 아닌 2번이라면 saveFile2, 2번도 아니라면 saveFile3
+                    currentSaveFile = selectedFile;  // 새 캐릭터 생성 시에도 선택한 슬롯 저장
 
                     if (!File.Exists(selectedFile)) // 빈 슬롯 선택시 바로 캐릭터 생성으로
                     {
-                        currentSaveFile = selectedFile;  // 새 캐릭터 생성 시에도 선택한 슬롯 저장
-
                         bool anySansKilled = CheckAnySansKilled(); // 다른 세이브 데이터에서 Sans 처치 여부 확인
                         var baseCharacter = new Character();
                         baseCharacter.KillSans = anySansKilled;
 
                         var newPlayer = characterCreator.Charactercreator(baseCharacter); // 캐릭터 생성
-                        if (newPlayer != null) // 슬롯이 비어있지 않다면...
+                        if (newPlayer != null) // 캐릭터 생성 되었다면...
                         {
                             Save(newPlayer, selectedFile); // 선택된 슬롯에 저장
                         }
@@ -112,6 +111,7 @@ namespace TextRPGTeam33
                 }
             }
         }
+
         private void DisplaySlotInfo(string slotTitle, string filePath) //슬롯 정보 출력 함수
         {
             Console.WriteLine(slotTitle); // 슬롯 이름 출력
@@ -178,7 +178,7 @@ namespace TextRPGTeam33
                     Thread.Sleep(1000);
                     return DisplaySave();  // 삭제 후 저장 목록으로 돌아가기
                 }
-                else if (action == "0") // 0. 돌아기기 선택
+                else if (action == "0") // 0. 돌아가기 선택
                 {
                     return DisplaySave();  // 돌아가기 선택시 저장 목록으로
                 }
@@ -194,16 +194,14 @@ namespace TextRPGTeam33
         {
             try
             {
-
-                Directory.CreateDirectory(Path.GetDirectoryName(filePath)); // 디렉토리 생성
-
                 var saveData = new GameData // saveData에 GameData(json)
                 {
                     Character = player, // 캐릭터 정보
                     CurrentDays = Program.days, // 날짜 정보
                     InventoryItems = player.Inventory.GetItems(), // 인벤토리 정보
                     AdventureCount = Program.adventureCount, // 탐험 횟수 
-                    QuestList = Quest.Instance.GetQuestList()  // 퀘스트 리스트 저장
+                    QuestList = Quest.Instance.GetQuestList(),  // 퀘스트 리스트 저장
+                    Achievements = Achievement.Instance.GetAchievements() // 업적 저장
                 };
 
                 var options = new JsonSerializerOptions
@@ -236,7 +234,7 @@ namespace TextRPGTeam33
                 var saveData = JsonSerializer.Deserialize<GameData>(jsonString, new JsonSerializerOptions //json 문자열 타입<GameData)를 객체로 변환 => saveData에 변수로 저장
                 {
                     PropertyNameCaseInsensitive = true, // 속성 이름 비교할 때 대소문자 구분 X
-                    ReferenceHandler = System.Text.Json.Serialization.ReferenceHandler.IgnoreCycles // Null값을 가진 속성을 Json으로 직렬화할때 처리 // WhenWritingNull: Null 값은 저장 안됨
+                    ReferenceHandler = System.Text.Json.Serialization.ReferenceHandler.IgnoreCycles // 무한 참조 루프 방지, IgnoreCycles: 순환 참조 무시
                 });
 
                 Program.days = saveData.CurrentDays; //  saveData의 CurrentDays를 Program의 days에 저장
@@ -252,6 +250,10 @@ namespace TextRPGTeam33
                 if (saveData.QuestList != null)
                 {
                     Quest.Instance.LoadQuestList(saveData.QuestList);  // 퀘스트 리스트 로드
+                }
+                if (saveData.Achievements != null)
+                {
+                    Achievement.Instance.LoadAchievements(saveData.Achievements);  // 업적 데이터 로드
                 }
 
                 currentSaveFile = filePath; // 선택된 슬롯을 저장 슬롯으로 지정
@@ -299,7 +301,7 @@ namespace TextRPGTeam33
                 {
                     File.Delete(filePath); // 세이브 데이터 삭제
                 }
-                catch (Exception ex) //세이 데이터 삭제 오류 출력
+                catch (Exception ex) //세이브 데이터 삭제 오류 출력
                 {
                     Console.WriteLine($"저장 파일 삭제 중 오류가 발생했습니다: {ex.Message}");
                     Thread.Sleep(5000);
