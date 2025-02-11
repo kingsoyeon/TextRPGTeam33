@@ -13,6 +13,7 @@ namespace TextRPGTeam33
         private readonly string saveFile1;
         private readonly string saveFile2;
         private readonly string saveFile3;
+        private readonly string globalDataFile;  // 글로벌 데이터 파일
         private string currentSaveFile;  // 현재 사용 중인 세이브 파일
 
         private readonly CharacterCreator characterCreator;
@@ -28,10 +29,19 @@ namespace TextRPGTeam33
             public Dictionary<string, Achievement.AchievementData> Achievements { get; set; }
         }
 
+        public class GlobalData
+        {
+            public bool HasKilledSans { get; set; }
+            public Dictionary<string, Achievement.AchievementData> GlobalAchievements { get; set; }
+                = new Dictionary<string, Achievement.AchievementData>();
+        }
+
+        private GlobalData globalData;
+
         public GameSave()
         {
             // 애플리케이션 데이터 폴더에 저장
-            saveDirectory = Path.Combine( Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "TextRPGTeam33" );
+            saveDirectory = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "TextRPGTeam33");
 
             // 디렉토리가 없으면 생성
             if (!Directory.Exists(saveDirectory))
@@ -43,8 +53,10 @@ namespace TextRPGTeam33
             saveFile1 = Path.Combine(saveDirectory, "gamesave1.json");
             saveFile2 = Path.Combine(saveDirectory, "gamesave2.json");
             saveFile3 = Path.Combine(saveDirectory, "gamesave3.json");
+            globalDataFile = Path.Combine(saveDirectory, "global.json");
 
             characterCreator = new CharacterCreator();
+            LoadGlobalData();
         }
 
         public Character DisplaySave()
@@ -54,7 +66,7 @@ namespace TextRPGTeam33
                 var defaultCharacter = new Character();
                 defaultCharacter.KillSans = false;
                 Character newCharacter = characterCreator.Charactercreator(defaultCharacter); //캐릭터 생성
-                
+
                 currentSaveFile = saveFile1; // 현재 세이브 = 1번 슬롯
                 Save(newCharacter, saveFile1); // 1번 슬롯에 세이브
                 return newCharacter;
@@ -104,7 +116,7 @@ namespace TextRPGTeam33
 
                     return HandleSlotSelection(input, selectedFile); //캐릭터 선택 함수
                 }
-                else 
+                else
                 {
                     Console.WriteLine("잘못된 입력입니다.");
                     Thread.Sleep(1000);
@@ -194,6 +206,11 @@ namespace TextRPGTeam33
         {
             try
             {
+                if (player.KillSans)
+                {
+                    globalData.HasKilledSans = true;
+                    SaveGlobalData();
+                }
                 var saveData = new GameData // saveData에 GameData(json)
                 {
                     Character = player, // 캐릭터 정보
@@ -203,6 +220,8 @@ namespace TextRPGTeam33
                     QuestList = Quest.Instance.GetQuestList(),  // 퀘스트 리스트 저장
                     Achievements = Achievement.Instance.GetAchievements() // 업적 저장
                 };
+
+                UpdateGlobalAchievements(saveData.Achievements);
 
                 var options = new JsonSerializerOptions
                 {
@@ -253,10 +272,17 @@ namespace TextRPGTeam33
                 }
                 if (saveData.Achievements != null)
                 {
-                    Achievement.Instance.LoadAchievements(saveData.Achievements);  // 업적 데이터 로드
+                    foreach (var achievement in globalData.GlobalAchievements)
+                    {
+                        if (achievement.Value.IsUnlocked)
+                        {
+                            saveData.Achievements[achievement.Key].IsUnlocked = true;
+                            saveData.Achievements[achievement.Key].UnlockDate = achievement.Value.UnlockDate;
+                        }
+                    }
+                    Achievement.Instance.LoadAchievements(saveData.Achievements);
                 }
 
-                currentSaveFile = filePath; // 선택된 슬롯을 저장 슬롯으로 지정
                 return loadedCharacter;
             }
             catch (Exception ex) // Load() 오류 텍스트 출력
@@ -268,6 +294,50 @@ namespace TextRPGTeam33
             }
         }
 
+        private void SaveGlobalData()
+        {
+            try
+            {
+                var options = new JsonSerializerOptions
+                {
+                    WriteIndented = true,
+                    ReferenceHandler = System.Text.Json.Serialization.ReferenceHandler.IgnoreCycles
+                };
+
+                string jsonString = JsonSerializer.Serialize(globalData, options);
+                File.WriteAllText(globalDataFile, jsonString);
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"글로벌 데이터 저장 중 오류 발생: {ex.Message}");
+            }
+        }
+
+        private void LoadGlobalData()
+        {
+            try
+            {
+                if (File.Exists(globalDataFile))
+                {
+                    string jsonString = File.ReadAllText(globalDataFile);
+                    globalData = JsonSerializer.Deserialize<GlobalData>(jsonString) ?? new GlobalData();
+                }
+                else
+                {
+                    globalData = new GlobalData
+                    {
+                        HasKilledSans = false,
+                        GlobalAchievements = new Dictionary<string, Achievement.AchievementData>()
+                    };
+                    SaveGlobalData();
+                }
+            }
+            catch
+            {
+                globalData = new GlobalData();
+                SaveGlobalData();
+            }
+        }
 
         public bool HasAnySaveFile() // 세이브 데이터 존재 확인 함수
         {
@@ -286,7 +356,7 @@ namespace TextRPGTeam33
                     return false; //문자열 변환 이나 객체 변환 실패시 false 반환 => 캐릭터 슬롯 비어있는것으로 판단하여 캐릭터 생성
                 }
             }
-            
+
             // 세개의 슬롯 중 하나라도 세이브 데이터가 있다면 true 반환
             return isValidSaveFile(saveFile1) ||
                    isValidSaveFile(saveFile2) ||
@@ -315,29 +385,31 @@ namespace TextRPGTeam33
 
         private bool CheckAnySansKilled()
         {
-            try
+            return globalData.HasKilledSans;
+        }
+        public void UpdateGlobalAchievements(Dictionary<string, Achievement.AchievementData> achievements)
+        {
+            foreach (var achievement in achievements)
             {
-                // 모든 세이브 파일 확인
-                string[] saveFiles = { saveFile1, saveFile2, saveFile3 };
-                foreach (string file in saveFiles)
+                if (achievement.Value.IsUnlocked)
                 {
-                    if (File.Exists(file)) // 슬롯에서 데이터가 있다면...
+                    if (!globalData.GlobalAchievements.ContainsKey(achievement.Key))
                     {
-                        string jsonString = File.ReadAllText(file);
-                        var saveData = JsonSerializer.Deserialize<GameData>(jsonString);
-                        if (saveData?.Character?.KillSans == true) // 어떤 슬롯에서든 saveData killSans이 true가 1개 이상 있다면...
-                        {
-                            return true; //true로 반환
-                        }
+                        globalData.GlobalAchievements[achievement.Key] = achievement.Value;
+                    }
+                    else if (!globalData.GlobalAchievements[achievement.Key].IsUnlocked)
+                    {
+                        globalData.GlobalAchievements[achievement.Key] = achievement.Value;
                     }
                 }
             }
-            catch
-            {
-                return false; // 오류 발생 시 false 반환
-            }
-            return false;
+            SaveGlobalData();
         }
+        public Dictionary<string, Achievement.AchievementData> GetGlobalAchievements()
+        {
+            return globalData.GlobalAchievements;
+        }
+
     }
 
 }
