@@ -68,6 +68,7 @@ namespace TextRPGTeam33
             Inventory = new Inventory();
 
         }
+        public Character() { }
 
         // 상태 보기 화면
         public void StatusDisplay()
