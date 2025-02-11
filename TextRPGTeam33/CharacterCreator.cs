@@ -320,7 +320,7 @@ namespace TextRPGTeam33
                         Console.WriteLine($"이름: {name}");
                         Console.WriteLine($"직업: {job}");
                         Thread.Sleep(2000);
-                        return new Character(level, name, job, atk, def, maxHp, maxMp, gold);
+                        return new Character(level, name, job, atk, def, maxHp, maxMp, gold, killSans);
                     }
                     else
                     {
