@@ -155,7 +155,7 @@ namespace TextRPGTeam33
                     Console.WriteLine("\n[MP 포션]");
                     for (int i = 0; i < mpPotions.Count; i++)
                     {
-                        Console.ForegroundColor = ConsoleColor.Green;
+                        Console.ForegroundColor = ConsoleColor.Yellow;
                         Console.Write("●");
                         Console.ResetColor();
                         Console.WriteLine($"{hpPotions.Count + i + 1}. {mpPotions[i].Name} | MP 회복량: +{mpPotions[i].Value} | 남은 수량: {mpPotions[i].Count}개");
