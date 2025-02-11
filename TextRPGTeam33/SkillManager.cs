@@ -124,8 +124,9 @@ namespace TextRPGTeam33
         {
             int index = 0;
             int index2 = 0;
-            int monsterHp = 0;
+            int monster1Hp = 0;
             int monster2Hp = 0;
+            int[] monsterHp = new int[10];
             int playerHp = 0;
             int cnt = 0;
             List<Monster> target;
@@ -139,7 +140,7 @@ namespace TextRPGTeam33
                 case SkillType.BOLT_TACKLE:
                     index = ChooseTarget(i);
                     if (index == -1) return -1;
-                    monsterHp = monsters[index].hp;
+                    monster1Hp = monsters[index].hp;
                     monsters[index].hp -= skills[i].atk;
                     if (monsters[index].hp < 0) monsters[index].hp = 0;
                     break;
@@ -152,12 +153,14 @@ namespace TextRPGTeam33
                     playerHp = player.Hp;
                     player.Hp -= skills[i].atk;
                     if (player.Hp < 0) player.Hp = 0;
+                    int j = 0;
                     foreach (Monster m in monsters)
                     {
                         if (m.hp <= 0)
                             continue;
 
                         target.Add(m);
+                        monsterHp[j++] = m.hp;
                         m.hp -= skills[i].atk;
                         if (m.hp < 0) m.hp = 0;
                     }
@@ -181,7 +184,7 @@ namespace TextRPGTeam33
                         else
                             break;
                     }
-                    monsterHp = monsters[index].hp;
+                    monster1Hp = monsters[index].hp;
 
                     monsters[index].hp -= skills[i].atk;
                     if (monsters[index].hp < 0) monsters[index].hp = 0;
@@ -221,9 +224,9 @@ namespace TextRPGTeam33
                         Console.WriteLine();
                         Console.WriteLine($"Lv.{monsters[index].level} {monsters[index].name}");
                         if (monsters[index].hp > 0)
-                            Console.WriteLine($"HP {monsterHp} -> {monsters[index].hp}\n");
+                            Console.WriteLine($"HP {monster1Hp} -> {monsters[index].hp}\n");
                         else
-                            Console.WriteLine($"HP {monsterHp} -> Dead\n");
+                            Console.WriteLine($"HP {monster1Hp} -> Dead\n");
                         break;
                     case SkillType.GUN_SHOT:
                     case SkillType.FIRE_RAY:
@@ -232,9 +235,9 @@ namespace TextRPGTeam33
 
                         Console.WriteLine($"Lv.{monsters[index].level} {monsters[index].name}");
                         if (monsters[index].hp > 0)
-                            Console.WriteLine($"HP {monsterHp} -> {monsters[index].hp}\n");
+                            Console.WriteLine($"HP {monster1Hp} -> {monsters[index].hp}\n");
                         else
-                            Console.WriteLine($"HP {monsterHp} -> Dead\n");
+                            Console.WriteLine($"HP {monster1Hp} -> Dead\n");
                         break;
                     case SkillType.BRING_ITEM:
                         Console.WriteLine("아이템을 물어왔습니다\n");
@@ -252,15 +255,17 @@ namespace TextRPGTeam33
                             Console.WriteLine($"HP {playerHp} -> {player.Hp}\n");
                         else
                             Console.WriteLine($"HP {playerHp} -> Dead\n");
+
+                        int j = 0;
                         foreach (Monster m in target)
                         {
-                            Console.WriteLine($"Lv.{monsters[index].level} {monsters[index].name} 을(를) 맞췄습니다. [데미지 : {skills[i].atk}]\n");
+                            Console.WriteLine($"Lv.{m.level} {m.name} 을(를) 맞췄습니다. [데미지 : {skills[i].atk}]\n");
 
-                            Console.WriteLine($"Lv.{monsters[index].level} {monsters[index].name}");
-                            if (monsters[index].hp > 0)
-                                Console.WriteLine($"HP {monsterHp} -> {monsters[index].hp}\n");
+                            Console.WriteLine($"Lv.{m.level} {m.name}");
+                            if (m.hp > 0)
+                                Console.WriteLine($"HP {monsterHp[j++]} -> {m.hp}\n");
                             else
-                                Console.WriteLine($"HP {monsterHp} -> Dead\n");
+                                Console.WriteLine($"HP {monsterHp[j++]} -> Dead\n");
                         }
                         break;
                     case SkillType.BOMB_UPGRADE:
@@ -273,9 +278,9 @@ namespace TextRPGTeam33
 
                         Console.WriteLine($"Lv.{monsters[index].level} {monsters[index].name}");
                         if (monsters[index].hp > 0)
-                            Console.WriteLine($"HP {monsterHp} -> {monsters[index].hp}\n");
+                            Console.WriteLine($"HP {monster1Hp} -> {monsters[index].hp}\n");
                         else
-                            Console.WriteLine($"HP {monsterHp} -> Dead\n");
+                            Console.WriteLine($"HP {monster1Hp} -> Dead\n");
 
                         if (cnt > 1)
                         {
