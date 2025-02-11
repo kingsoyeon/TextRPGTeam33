@@ -902,7 +902,7 @@ namespace TextRPGTeam33
                         break;
 
                     case "파피루스":
-                        // 파피루스 설명
+                        Console.Write("                    .777777777.                             ");
                         Console.ForegroundColor = ConsoleColor.Red;
                         Console.Write("파");
                         Console.ForegroundColor = ConsoleColor.Blue;
@@ -910,16 +910,54 @@ namespace TextRPGTeam33
                         Console.ForegroundColor = ConsoleColor.Red;
                         Console.Write("루");
                         Console.ForegroundColor = ConsoleColor.Blue;
-                        Console.Write("스");
+                        Console.WriteLine("스");
                         Console.ResetColor();
-                        Console.WriteLine("");
-                        Console.WriteLine("좀비 사태 발발 이후, 부산역의 주요 출입구를 지키며 생존자들의 안전을 지키기 위해 검문했다.");
-                        Console.WriteLine("\"내 검문을 통과하는 자만이 이곳에 들어올 수 있다!\" 라고 외치며 철저하게 검사했다.");
-                        Console.WriteLine("생존자들에게 있어서 그는 이 혼란스러운 세상에서 한줄기 빛과 같은 존재였다.");
+                        Console.WriteLine("                  .7777777777777.                           ");
+                        Console.Write("                 .7..777777777777.                          ");
+                        Console.WriteLine("좀비 사태 발발 이후, 부산역의 주요 출입구를 지키며 ");
+                        Console.Write("                 7777.777777777777                          ");
+                        Console.WriteLine("생존자들의 안전을 지키기 위해 검문했다.");
+                        Console.Write("                 7777.7777::  ::77.                         ");
+                        Console.WriteLine("\"내 검문을 통과하는 자만이 이곳에 들어올 수 있다!\" 라고");
+                        Console.Write("                 7777.777777..7777.                         ");
+                        Console.WriteLine("외치며 철저하게 검사했다.");
+                        Console.Write("                 7777.777777..7777.                         ");
+                        Console.WriteLine("생존자들에게 있어서 그는 이 혼란스러운 세상에서");
+                        Console.Write("                 77777777777777.:7                          ");
+                        Console.WriteLine("한줄기 빛과 같은 존재였다.");
+                        Console.Write("                 7.7777..777777.                            ");
                         Console.WriteLine("그는 그의 형, 샌즈가 아직도 살아있다고 믿으며 싸워왔다.");
-                        Console.WriteLine("그러나 샌즈가 죽었다는 소식을 접한 후, 혼자의 힘으로 정의를 지키기 위해 싸우기로 결단을 내렸다.");
-                        Console.WriteLine("");
-                        Console.WriteLine("정의를 위해서라면 무엇이든 할 준비가 되어 있고, 어떤 위험도 마다하지 않는다.\n");
+                        Console.Write("                 .777777777777..                            ");
+                        Console.WriteLine("그러나 샌즈가 죽었다는 소식을 접한 후,");
+                        Console.Write("                   .7777777777..                            ");
+                        Console.WriteLine("혼자의 힘으로 정의를 지키기 위해 싸우기로 결단을 내렸다.");
+                        Console.WriteLine("                    .7.?777777...                           ");
+                        Console.Write("            .....   .7.777777~.+.   .~~~~.~.                ");
+                        Console.WriteLine("정의를 위해서라면 무엇이든 할 준비가 되어 있고,");
+                        Console.Write("           ~~~~................7.~~..~,~~~~~~,              ");
+                        Console.WriteLine("어떤 위험도 마다하지 않는다.");
+                        Console.WriteLine("           ~~~~................7....~~:.+~.~~~~.            ");
+                        Console.WriteLine("          .,~~~~.....7.77I7.?77:..~~.IIIIIIII.~~~...~~~~~~. ");
+                        Console.WriteLine("      . IIII~~~~~:..7777777777...~~.IIIIIIIIII.~~~~~~~...,~.");
+                        Console.WriteLine("    .IIII.II.~~~~~~............~~~IIIIIIIIIIIII~~~~.     .  ");
+                        Console.WriteLine("   ?IIIIIIIII.~~~~~~~~~.......~~~I.IIIIIIIIIIII             ");
+                        Console.WriteLine("  .IIIII.IIIII.~~~~~~~~~~~~~~~~.IIIIIIIIIIIIIII             ");
+                        Console.WriteLine("  :IIIII.IIIIII.~~~~~~~~~~~~~.IIIII.IIIIIIIIII.             ");
+                        Console.WriteLine("  .IIIII.IIIIIII?~~.~~~~~~~.IIIIIIII.IIIIIIII.              ");
+                        Console.WriteLine("   IIIIIIIIIIIIIII.~I:.,.II~~~IIIIIIII+....+                ");
+                        Console.WriteLine("  .+.IIII.IIIIIIIIII.IIIIIIIIIIIIIIIII++++++                ");
+                        Console.WriteLine("  .++++...,IIIIIIIIIIIIIII..I.IIIIIII 7777                  ");
+                        Console.WriteLine("  .7.++.   .IIIIIIIIIIIIIII.IIIIIIII  7777                  ");
+                        Console.WriteLine(" ,777.       .IIIIIIIIIIIIIIIIIIII.   ?777                  ");
+                        Console.WriteLine(",777.           ..IIIIIIIIIIII..      :77,                  ");
+                        Console.WriteLine("77777777777777? ..  ++++++~           .77.                  ");
+                        Console.WriteLine(" .7777777777777.++++++++++.           .77.                  ");
+                        Console.WriteLine("               +++++.7777             .77                   ");
+                        Console.WriteLine("                .:.+ 7777             777.                  ");
+                        Console.WriteLine("       :       .:::: 7777             I77.                  ");
+                        Console.WriteLine("       ::.:::::::::..+777             7.7.                  ");
+                        Console.WriteLine("       .::::.::::::++++++..           7.7                   ");
+                        Console.WriteLine("        .:::::::::.++++++++++~.       7..7                  ");
 
                         break;
                 }
