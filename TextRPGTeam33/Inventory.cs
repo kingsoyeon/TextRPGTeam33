@@ -164,9 +164,13 @@ namespace TextRPGTeam33
                 str += $"{item.Name} | 방어력 +{item.Value} | {item.Descrip}";
                
             }
-            else {
+            else if(item.Type == ItemType.Potion) 
+                {
                 str += $"{item.Name} | 체력 +{item.Value} | {item.Descrip} | 보유 {item.Count}개";
-                
+            }
+            else
+            {
+                str += $"{item.Name} | 마나 +{item.Value} | {item.Descrip} | 보유 {item.Count}개";
             }
 
             return str;
