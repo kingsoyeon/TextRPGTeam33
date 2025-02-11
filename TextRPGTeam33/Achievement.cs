@@ -41,7 +41,8 @@ namespace TextRPGTeam33
                     {
                         Name = "첫 발걸음",
                         Description = "게임을 처음 시작했습니다.",
-                        IsUnlocked = false
+                        IsUnlocked = false,
+                        UnlockDate = DateTime.MinValue
                     }
                 },
                 {
@@ -50,16 +51,18 @@ namespace TextRPGTeam33
                     {
                         Name = "성장하는 모험가",
                         Description = "레벨 10을 달성했습니다.",
-                        IsUnlocked = false
+                        IsUnlocked = false,
+                        UnlockDate = DateTime.MinValue
                     }
                 },
                  {
                     "SANS_KILLER",
                     new AchievementData
                     {
-                        Name = "센즈를 처치한 자",
-                        Description = "Sans를 처치했습니다.",
-                        IsUnlocked = false
+                        Name = "샌즈를 처치한 자",
+                        Description = "샌즈를 처치했습니다.",
+                        IsUnlocked = false,
+                        UnlockDate = DateTime.MinValue
                     }
                 },
                 {
@@ -68,7 +71,8 @@ namespace TextRPGTeam33
                     {
                         Name = "부자 모험가",
                         Description = "10000 G를 모았습니다.",
-                        IsUnlocked = false
+                        IsUnlocked = false,
+                        UnlockDate = DateTime.MinValue
                     }
                 },
                 {
@@ -77,7 +81,8 @@ namespace TextRPGTeam33
                     {
                         Name = "생존자",
                         Description = "30일 동안 생존했습니다.",
-                        IsUnlocked = false
+                        IsUnlocked = false,
+                        UnlockDate = DateTime.MinValue
                     }
                 }
             };
@@ -85,24 +90,32 @@ namespace TextRPGTeam33
 
         public void CheckAchievements(Character player)
         {
-            UnlockAchievement("FIRST_STEPS"); // 첫 발걸음
+            if (player == null) return;
 
-            if (player.Level >= 10) // 10레벨 이상일시 
+            // 각 업적 조건을 개별적으로 체크
+            if (!achievements["FIRST_STEPS"].IsUnlocked)
             {
-                UnlockAchievement("LEVEL_10");  //성장하는 모험가
+                UnlockAchievement("FIRST_STEPS");
             }
 
-            if (player.KillSans)
+            if (player.Level >= 10 && !achievements["LEVEL_10"].IsUnlocked)
             {
-                UnlockAchievement("SANS_KILLER"); // 센즈를 처치한 자
+                UnlockAchievement("LEVEL_10");
             }
-            if (player.Gold >= 10000)
+
+            if (player.KillSans && !achievements["SANS_KILLER"].IsUnlocked)
             {
-                UnlockAchievement("RICH_ADVENTURER"); // 부자 모험가
+                UnlockAchievement("SANS_KILLER");
             }
-            if (Program.days >= 30)
+
+            if (player.Gold >= 10000 && !achievements["RICH_ADVENTURER"].IsUnlocked)
             {
-                UnlockAchievement("SURVIVOR"); // 생존자
+                UnlockAchievement("RICH_ADVENTURER");
+            }
+
+            if (Program.days >= 30 && !achievements["SURVIVOR"].IsUnlocked)
+            {
+                UnlockAchievement("SURVIVOR");
             }
         }
 
@@ -157,11 +170,11 @@ namespace TextRPGTeam33
 
         public void LoadAchievements(Dictionary<string, AchievementData> loadedAchievements)
         {
-            if (loadedAchievements == null)
+            if (loadedAchievements != null)
             {
-                achievements = loadedAchievements;
+                achievements = new Dictionary<string, AchievementData>(loadedAchievements);
             }
         }
-        
+
     }
 }
