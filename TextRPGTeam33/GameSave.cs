@@ -52,7 +52,7 @@ namespace TextRPGTeam33
             if (!HasAnySaveFile()) // 슬롯이 비어있다면...
             {
                 var defaultCharacter = new Character();
-                defaultCharacter.killSans = false;
+                defaultCharacter.KillSans = false;
                 Character newCharacter = characterCreator.Charactercreator(defaultCharacter); //캐릭터 생성
                 
                 currentSaveFile = saveFile1; // 현재 세이브 = 1번 슬롯
@@ -93,7 +93,7 @@ namespace TextRPGTeam33
 
                         bool anySansKilled = CheckAnySansKilled(); // 다른 세이브 데이터에서 Sans 처치 여부 확인
                         var baseCharacter = new Character();
-                        baseCharacter.killSans = anySansKilled;
+                        baseCharacter.KillSans = anySansKilled;
 
                         var newPlayer = characterCreator.Charactercreator(baseCharacter); // 캐릭터 생성
                         if (newPlayer != null) // 슬롯이 비어있지 않다면...
@@ -162,7 +162,7 @@ namespace TextRPGTeam33
                     {
                         bool anySansKilled = CheckAnySansKilled(); // 다른 세이브 파일들에서 Sans 처치 여부 확인
                         var baseCharacter = new Character();
-                        baseCharacter.killSans = anySansKilled;
+                        baseCharacter.KillSans = anySansKilled;
                         var newPlayer = characterCreator.Charactercreator(baseCharacter); // 캐릭터 생성
                         if (newPlayer != null)
                         {
@@ -323,7 +323,7 @@ namespace TextRPGTeam33
                     {
                         string jsonString = File.ReadAllText(file);
                         var saveData = JsonSerializer.Deserialize<GameData>(jsonString);
-                        if (saveData?.Character?.killSans == true) // 어떤 슬롯에서든 saveData killSans이 true가 1개 이상 있다면...
+                        if (saveData?.Character?.KillSans == true) // 어떤 슬롯에서든 saveData killSans이 true가 1개 이상 있다면...
                         {
                             return true; //true로 반환
                         }
