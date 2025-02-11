@@ -224,7 +224,7 @@ namespace TextRPGTeam33
         {
             if (currentQuest != null && currentQuest.IsCompleted)
             {
-                player.Exp += currentQuest.RewardExp; // 경험치 보상
+                bool isLevelUp = player.LevelUp(currentQuest.RewardExp);
 
                 if (currentQuest.RewardItem.Type == ItemType.Potion) // 아이템 보상
                 {
