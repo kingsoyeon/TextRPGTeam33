@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Text.Json;
 using System.Threading.Tasks;
+using static TextRPGTeam33.Quest;
 
 namespace TextRPGTeam33
 {
@@ -22,7 +23,9 @@ namespace TextRPGTeam33
             public Character Character { get; set; }
             public int CurrentDays { get; set; }
             public List<Item> InventoryItems { get; set; }
-            public int AdventureCount { get; set; }            
+            public int AdventureCount { get; set; }
+
+            public List<QuestData> QuestList { get; set; }
         }
 
         public GameSave()
@@ -189,7 +192,8 @@ namespace TextRPGTeam33
                     Character = player, // 캐릭터 정보
                     CurrentDays = Program.days, // 날짜 정보
                     InventoryItems = player.Inventory.GetItems(), // 인벤토리 정보
-                    AdventureCount = Program.adventureCount // 탐험 횟수 
+                    AdventureCount = Program.adventureCount, // 탐험 횟수 
+                    QuestList = Quest.Instance.GetQuestList()  // 퀘스트 리스트 저장
                 };
 
                 var options = new JsonSerializerOptions
@@ -237,6 +241,10 @@ namespace TextRPGTeam33
                 if (saveData.InventoryItems != null) // saveData에 인벤토리 아이템이 비어있지 않다면...
                 {
                     loadedCharacter.Inventory.AddItem(saveData.InventoryItems); // saveData의 아이템들을 Character의 인벤토리에 저장
+                }
+                if (saveData.QuestList != null)
+                {
+                    Quest.Instance.LoadQuestList(saveData.QuestList);  // 퀘스트 리스트 로드
                 }
 
                 currentSaveFile = filePath; // 선택된 슬롯을 저장 슬롯으로 지정
