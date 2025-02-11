@@ -64,7 +64,7 @@ namespace TextRPGTeam33
             bool isHidden = false;
 
             //스테이지 레벨에 따라 몬스터 수 증가 확률 조정 - 최대 4마리(30층 이후 100%)
-            increaseRate = Math.Min(1.0, (double)stageLevel / 30.0);
+            double increaseRate = Math.Min(1.0, (double)stageLevel / 30.0);
             if (rand.NextDouble() < increaseRate) monsterCnt++;
 
             //전투 횟수 10회마다 보스 몬스터 추가
