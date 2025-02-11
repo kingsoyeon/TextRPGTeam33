@@ -62,6 +62,7 @@ namespace TextRPGTeam33
             int bossHp = 0;
             int bossAtk = 0;
             bool isHidden = false;
+            int itemCnt = 0;
 
             //스테이지 레벨에 따라 몬스터 수 증가 확률 조정 - 최대 4마리(30층 이후 100%)
             double increaseRate = Math.Min(1.0, (double)stageLevel / 30.0);
@@ -74,7 +75,14 @@ namespace TextRPGTeam33
                 {
                     //파피루스의 뼈조각 수량에 따라 히든 보스 조우 확률 증가
                     List<Item> item = player.Inventory.GetItems();
-                    int itemCnt = item.Count(x => x.Name == "파피루스의 뼈조각");
+                    foreach (Item x in item)
+                    {
+                        if (x.Name == "파피루스의 뼈조각")
+                        {
+                            itemCnt = x.Count;
+                            break;
+                        }
+                    }
                     double hiddenRate = itemCnt * 0.2;
 
                     hiddenRate = Math.Min(1.0, hiddenRate);
