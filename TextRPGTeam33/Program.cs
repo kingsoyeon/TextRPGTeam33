@@ -108,7 +108,7 @@ partial class Program
             Console.WriteLine("\t\t\t\t|");
             Console.WriteLine("|\t\t\t\t\t\t|");
             Console.Write("|\t");
-            Console.ForegroundColor = ConsoleColor.DarkRed;
+            Console.ForegroundColor = ConsoleColor.Cyan;
             Console.Write("▶ 3. 휴식");
             Console.ForegroundColor = ConsoleColor.Yellow;
             Console.WriteLine("\t\t\t\t|");
