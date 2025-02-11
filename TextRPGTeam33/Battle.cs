@@ -101,14 +101,7 @@ namespace TextRPGTeam33
                     }
                     else if (input == 3)
                     {
-                        int sel;
-                        while (true)
-                        {
-                            Console.Clear();
-                            sel = potion.DisplayPotion();
-                            if (sel == 0)
-                                break;
-                        }
+                        int sel = potion.DisplayPotion();
 
                         if (sel == 0)
                             continue;
