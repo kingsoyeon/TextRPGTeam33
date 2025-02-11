@@ -184,6 +184,7 @@ namespace TextRPGTeam33
                     this.Attack += 1;
                     this.Defense += 1;
                     isLevelUp = true;
+                    return;
                 }
                 else break;
             }
