@@ -17,7 +17,15 @@ namespace TextRPGTeam33
             {
                 // 캐릭터 생성 처음 화면
                 Console.Clear();
-                Console.WriteLine("원하시는 이름을 입력해주세요.");
+                Console.ForegroundColor = ConsoleColor.Cyan;
+                Console.WriteLine(" ㅁ-ㅁ-ㅁ-ㅁ-ㅁ-ㅁ-ㅁ-ㅁ-ㅁ-ㅁ-ㅁ-ㅁ-ㅁ-ㅁ");
+                Console.Write("ㅁ\t");
+                Console.ResetColor();
+                Console.Write("원하시는 이름을 입력해주세요.");
+                Console.ForegroundColor = ConsoleColor.Cyan;
+                Console.WriteLine("\t ㅁ");
+                Console.WriteLine(" ㅁ-ㅁ-ㅁ-ㅁ-ㅁ-ㅁ-ㅁ-ㅁ-ㅁ-ㅁ-ㅁ-ㅁ-ㅁ-ㅁ");
+                Console.ResetColor();
                 Console.Write(">> ");
 
                 // 이름 입력
@@ -28,21 +36,38 @@ namespace TextRPGTeam33
                 while (true)
                 {
                     Console.Clear();
-                    Console.WriteLine("캐릭터 생성");
-                    Console.WriteLine("원하시는 이름을 입력해주세요.");
+                    Console.ForegroundColor = ConsoleColor.Cyan;
+                    Console.WriteLine(" ㅁ-ㅁ-ㅁ-ㅁ-ㅁ-ㅁ-ㅁ-ㅁ-ㅁ-ㅁ-ㅁ-ㅁ-ㅁ-ㅁ");
+                    Console.Write("ㅁ\t");
+                    Console.ResetColor();
+                    Console.Write("원하시는 이름을 입력해주세요.");
+                    Console.ForegroundColor = ConsoleColor.Cyan;
+                    Console.WriteLine("\t ㅁ");
+                    Console.WriteLine(" ㅁ-ㅁ-ㅁ-ㅁ-ㅁ-ㅁ-ㅁ-ㅁ-ㅁ-ㅁ-ㅁ-ㅁ-ㅁ-ㅁ");
+                    Console.ResetColor();
                     Console.Write(">> ");
 
-                    Console.WriteLine($"이름 : {name}으로 진행하시겠습니까?");
+                    Console.Clear();
                     Console.WriteLine("");
-                    Console.WriteLine($"1. 진행하기");
-                    Console.WriteLine($"0. 다시 입력하기");
+                    Console.ForegroundColor = ConsoleColor.Cyan;
+                    Console.WriteLine(" ㅁ-ㅁ-ㅁ-ㅁ-ㅁ-ㅁ-ㅁ-ㅁ-ㅁ-ㅁ-ㅁ-ㅁ-ㅁ-ㅁ-ㅁ-ㅁ-ㅁ"); 
+                    Console.ResetColor();
+                    Console.WriteLine($"\t이름 : {name}으로 진행하시겠습니까?");
+                    Console.WriteLine("");
+                    Console.WriteLine("\t1. 진행하기");
+                    Console.WriteLine("\t0. 다시 입력하기");
+                    Console.ForegroundColor = ConsoleColor.Cyan;
+                    Console.WriteLine(" ㅁ-ㅁ-ㅁ-ㅁ-ㅁ-ㅁ-ㅁ-ㅁ-ㅁ-ㅁ-ㅁ-ㅁ-ㅁ-ㅁ-ㅁ-ㅁ-ㅁ");
+                    Console.ResetColor();
                     Console.Write(">> ");
 
                     string input = Console.ReadLine();
                     if (input == "1")
                     {
                         Console.Clear();
-                        Console.WriteLine($"이름: {name}");
+                        Console.ForegroundColor = ConsoleColor.Yellow;
+                        Console.WriteLine($"**부산역에 오신걸 환영합니다.{name}님**");
+                        Console.ResetColor();
                         break;
 
                     }
