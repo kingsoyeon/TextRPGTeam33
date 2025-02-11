@@ -10,6 +10,7 @@ namespace TextRPGTeam33
     public class Inventory
     {
         private List<Item> Items = new List<Item>();
+        internal static Potion potion;
 
         public void AddItem(List<Item> itemList)
         {

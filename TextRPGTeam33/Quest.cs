@@ -29,6 +29,7 @@ namespace TextRPGTeam33
             public int RewardExp { get; }  // 보상 경험치
             public bool IsCompleted => CurrentCount >= TargetCount;  // 퀘스트 완료 여부
             public bool IsAccepted { get; set; } = false;  // 퀘스트 수락 상태
+            public bool RewardClaimed { get; set; } = false; // 보상 수령 여부
 
             public QuestData(int id, string name, string description, int targetCount, Item rewardItem, int rewardExp) // QuestDate 생성자 - 데이터 초기화
             {
@@ -43,6 +44,7 @@ namespace TextRPGTeam33
         }
 
         private List<QuestData> quests; // 퀘스트 전체 목록
+        private List<QuestData> acceptedQuests; // 수락한 퀘스트 스택
         private QuestData currentQuest; // 현재 선택된 퀘스트
 
         private Quest() // 생성자에서 퀘스트 목록 초기화
@@ -67,150 +69,133 @@ namespace TextRPGTeam33
                     new Item("고급 회복 포션", ItemType.Potion, 50, 100, "매우 강력한 회복 효과를 가진 포션입니다.", 1000, 3),
                     400)
             };
+            acceptedQuests = new List<QuestData>(); // 수락한 퀘스트 목록 초기화
+        }
+        
+        public void DisplayQuests(Character player)
+        {
+            if (quests.All(q => acceptedQuests.Contains(q)))
+            {
+                Console.WriteLine("현재 수락 가능한 퀘스트가 없습니다.");
+                Thread.Sleep(1500);
+                return;
+            }
+
+            var availableQuests = quests.Where(q => !q.IsAccepted && !q.IsCompleted).ToList(); // 수락되지 않은 퀘스트 중에서 랜덤으로 1개 선택
+            Random rand = new Random();
+            currentQuest = availableQuests[rand.Next(availableQuests.Count)];
+
+            Console.Clear();
+            Console.WriteLine("Quest!!\n");
+            Console.WriteLine($"{currentQuest.Name}\n");
+            Console.WriteLine($"{currentQuest.Description}\n");
+            Console.WriteLine($"- {currentQuest.Name} ({currentQuest.CurrentCount}/{currentQuest.TargetCount})");
+            Console.WriteLine("\n- 보상 -");
+            Console.WriteLine($"  {currentQuest.RewardItem.Name} x {currentQuest.RewardItem.Count}");
+            Console.WriteLine($"  경험치 {currentQuest.RewardExp}\n");
+
+            Console.WriteLine("1. 수락");
+            Console.WriteLine("0. 거절");
+
+            Console.Write("\n원하시는 행동을 입력해주세요.\n>>");
+            string input = Console.ReadLine();
+
+            if (input == "1")
+            {
+                acceptedQuests.Add(currentQuest);
+                currentQuest.IsAccepted = true;
+                Console.WriteLine("\n퀘스트를 수락했습니다!");
+                Thread.Sleep(1500);
+            }
+            else
+            {
+                Console.WriteLine("\n퀘스트를 거절했습니다.");
+                Thread.Sleep(1500);
+            }
         }
 
-        public void DisplayQuests(Character player) // 퀘스트 출력
+        public void DisplayQuestList(Character player)
         {
             while (true)
             {
                 Console.Clear();
                 Console.WriteLine("Quest!!\n");
-                for (int i = 0; i < quests.Count; i++) // 퀘스트 상표 표시
+
+                // 퀘스트 목록 표시
+                for (int i = 0; i < acceptedQuests.Count; i++)
                 {
-                    string status = ""; // 퀘스트 상태 초기화
-                    if (quests[i].IsCompleted) // 퀘스트를 완료하면 (완료)라 표현되고 색상을 회색을 변경
-                    {
-                        Console.ForegroundColor = ConsoleColor.DarkGray;
-                        status = "(완료)";
-                    }
-                    else if (quests[i].IsAccepted) // 퀘스트가 진행중이면 (진행중)이라 표현되고 색상을 노란색으로 변경
+                    if (acceptedQuests[i].IsCompleted && !acceptedQuests[i].RewardClaimed)
                     {
                         Console.ForegroundColor = ConsoleColor.Yellow;
-                        status = "(진행중)";
                     }
-
-                    Console.WriteLine($"{i + 1}. {quests[i].Name} {status}");
-                    Console.ResetColor();  // 각 퀘스트 출력 직후 색상 초기화
+                    else if (acceptedQuests[i].RewardClaimed)
+                    {
+                        Console.ForegroundColor = ConsoleColor.DarkGray;
+                    }
+                    Console.WriteLine($"{i + 1}. {acceptedQuests[i].Name}");
+                    Console.ResetColor();
                 }
 
                 Console.WriteLine("\n0. 나가기");
                 Console.WriteLine("\n원하시는 퀘스트를 선택해주세요.");
                 Console.Write(">>");
 
-                string input = Console.ReadLine() ?? "";
+                string input = Console.ReadLine();
 
-                if (input == "0") return;
-
-                if (int.TryParse(input, out int selected) && selected > 0 && selected <= quests.Count) //input값을 정수(int)로 변환 시켜 selected에 넣는다.
+                if (input == "0")
                 {
-                    
-                    currentQuest = quests[selected - 1]; // 배열은 0부터 시작 하지만 플레이어는 1부터 입력함으로 1을 [0]으로 변경시키는 과정
-
-                    Console.Clear();
-                    Console.WriteLine("Quest!!\n");
-                    Console.WriteLine($"{currentQuest.Name}\n");
-                    Console.WriteLine($"{currentQuest.Description}\n");
-                    Console.WriteLine($"- {currentQuest.Name} ({currentQuest.CurrentCount}/{currentQuest.TargetCount})");
-                    Console.WriteLine("\n- 보상 -");
-                    Console.WriteLine($"  {currentQuest.RewardItem.Name} x 1");
-                    Console.WriteLine($"  경험치 {currentQuest.RewardExp}\n");
-
-                    if (currentQuest.IsCompleted) // 퀘스트 완료
-                    {
-                        Console.WriteLine("1. 보상 받기");
-                        Console.WriteLine("0. 돌아 가기");
-                    }
-                    else if (!currentQuest.IsAccepted) // 퀘스트 수락 전
-                    {
-                        Console.WriteLine("1. 수락");
-                        Console.WriteLine("0. 거절");
-                    }
-                    else // 퀘스트 수락 이후
-                    {
-                        Console.WriteLine("2. 취소하기");
-                        Console.WriteLine("0. 돌아가기");
-                    }
-
-                    Console.Write("\n원하시는 행동을 입력해주세요.\n>>");
-                    string action = Console.ReadLine() ?? "";
-
-                    if (action == "1") 
-                    {
-                        if (currentQuest.IsCompleted) // 퀘스트 완료 후 1을 누르면...
-                        {
-                            CompleteQuest(player); // 퀘스트 성공 후 보상 수령
-                        }
-                        else if (!currentQuest.IsAccepted) // 퀘스트 수락
-                        {
-                            currentQuest.IsAccepted = true;
-                            Console.WriteLine("\n퀘스트를 수락했습니다!");
-                        }
-                        else 
-                        {
-                            Console.WriteLine("잘못된 입력입니다.");
-                            Thread.Sleep(1000);
-                        }
-                        Console.WriteLine("\n계속하려면 아무 키나 누르세요...");
-                        Console.ReadKey();
-                    }
-                    else if (action == "2" && currentQuest.IsAccepted && !currentQuest.IsCompleted) // 퀘스트 수락 상태에 2를 누르면...
-                    {
-                        currentQuest.IsAccepted = false;
-                        currentQuest.CurrentCount = 0;  // 진행상황 초기화
-                        Console.WriteLine("\n퀘스트를 취소했습니다.");
-                        Console.WriteLine("\n계속하려면 아무 키나 누르세요...");
-                        Console.ReadKey();
-                    }
-                    else if (action == "0")
-                    {
-                        continue;
-                    }
-                    else
-                    {
-                        Console.WriteLine("잘못된 입력입니다.");
-                        Thread.Sleep(1000);
-                    }
+                    // 보상 수령이 완료된 퀘스트 제거
+                    acceptedQuests.RemoveAll(q => q.RewardClaimed);
+                    break;
                 }
-                else
+
+                if (int.TryParse(input, out int selected) && selected > 0 && selected <= acceptedQuests.Count)
                 {
-                    Console.WriteLine("잘못된 입력입니다.");
-                    Thread.Sleep(1000);
+                    DisplayQuestDetail(player, acceptedQuests[selected - 1]);
                 }
             }
         }
 
-        public void SelectQuest(int index) // 퀘스트 선택 
+        private void DisplayQuestDetail(Character player, QuestData quest)
         {
-            if (index <= 0 || index > quests.Count) return; // 퀘스트 목록 출력
-
-            currentQuest = quests[index - 1]; // 배열은 0부터 시작 하지만 플레이어는 1부터 입력함으로 1을 [0]으로 변경시키는 과정
-            DisplayQuestDetail();
-        }
-
-        public void DisplayQuestDetail() // 퀘스트 목록을 표시하고 상호작용
-        {
-            Console.Clear();
-
-            if (currentQuest == null) return; // 지금 퀘스트가 없다면 돌아가다.
-            
-            Console.WriteLine("Quest!!\n");
-            Console.WriteLine($"{currentQuest.Name}\n");
-            Console.WriteLine($"{currentQuest.Description}\n");
-            Console.WriteLine($"- {currentQuest.Name} ({currentQuest.CurrentCount}/{currentQuest.TargetCount})");
-            Console.WriteLine($"- 보상 - {currentQuest.RewardItem.Name}, 경험치 {currentQuest.RewardExp}\n");
-
-            if (currentQuest.IsCompleted) // 퀘스트 완료 후
+            while (true)
             {
-                Console.WriteLine("1. 보상 받기");
-                Console.WriteLine("0. 돌아 가기");
-            }
-            else // 오류날시 (코드 작동 안됨)
-            {
-                Console.WriteLine("\"오류발생\" 1. 수락");
+                Console.Clear();
+                Console.WriteLine("Quest!!\n");
+                Console.WriteLine($"{quest.Name}\n");
+                Console.WriteLine($"{quest.Description}\n");
+                Console.WriteLine($"- {quest.Name} ({quest.CurrentCount}/{quest.TargetCount})");
+                Console.WriteLine("\n- 보상 -");
+                Console.WriteLine($"  {quest.RewardItem.Name} x {quest.RewardItem.Count}");
+                Console.WriteLine($"  경험치 {quest.RewardExp}\n");
 
-                Console.WriteLine("\"오류발생\" 2. 거절");
+                if (quest.IsCompleted && !quest.RewardClaimed)
+                {
+                    Console.WriteLine("1. 보상 수령");
+                    Console.WriteLine("0. 돌아가기");
+                }
+                else if (!quest.RewardClaimed)
+                {
+                    Console.WriteLine("2. 퀘스트 포기");
+                    Console.WriteLine("0. 돌아가기");
+                }
+
+                Console.Write("\n원하시는 행동을 입력해주세요.\n>>");
+                string action = Console.ReadLine();
+
+                if (action == "0") break;
+                else if (action == "1" && quest.IsCompleted && !quest.RewardClaimed)
+                {
+                    CompleteQuest(player);
+                    quest.RewardClaimed = true;
+                    break;
+                }
+                else if (action == "2" && !quest.IsCompleted)
+                {
+                    acceptedQuests.Remove(quest);
+                    break;
+                }
             }
-            Console.Write("\n원하시는 행동을 입력해주세요.\n>>");
         }
 
         public void UpdateQuestProgress(int questId) // 퀘스트 진행도 업데이트
