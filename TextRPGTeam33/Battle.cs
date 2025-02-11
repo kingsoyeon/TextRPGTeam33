@@ -332,17 +332,16 @@ namespace TextRPGTeam33
 
                     Console.WriteLine("MP를 10만큼 회복합니다\n");
 
+                    stage.StageClear(monsters, startHp, skillManager.skillCount);
+
+                    Console.WriteLine();
                     Console.WriteLine("0. 다음\n");
 
                     Console.Write(">> ");
 
                     string input = Console.ReadLine();
                     if (input == "0")
-                    {
-                        Console.Clear();
-                        stage.StageClear(monsters, startHp, skillManager.skillCount);
                         break;
-                    }
                     else
                     {
                         Console.Clear();
