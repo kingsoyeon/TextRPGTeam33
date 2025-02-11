@@ -291,6 +291,7 @@ namespace TextRPGTeam33
                      switch (job)
                 {
                     case "탈영병":
+                        Console.ResetColor();
                         Console.ForegroundColor = ConsoleColor.Cyan;
                         Console.Write("                       　         QQQQQQQQQ");
                         Console.WriteLine("\t\t탈영병");
@@ -381,6 +382,7 @@ namespace TextRPGTeam33
                         break;
 
                     case "개 조련사":
+                        Console.ResetColor();
                         Console.ForegroundColor = ConsoleColor.Yellow;
                         Console.WriteLine("               ");
                         Console.Write("             QQQQQQQ");
@@ -459,7 +461,7 @@ namespace TextRPGTeam33
                         break;
 
                     case "폭발물 산업기사":
-         
+                        Console.ResetColor();
                         Console.ForegroundColor = ConsoleColor.Red;
                         Console.Write("                                      ※  ");
                         Console.WriteLine("\t\t\t폭발물 산업기사");
@@ -550,6 +552,7 @@ namespace TextRPGTeam33
                         break;
 
                     case "소방관":
+                        Console.ResetColor();
                         Console.ForegroundColor = ConsoleColor.Blue;
                         Console.Write("                       ㅁㅁㅁ");
                         Console.WriteLine("\t\t\t\t소방관");
@@ -644,7 +647,7 @@ namespace TextRPGTeam33
                         break;
 
                     case "이성언 튜터":
-                        
+                        Console.ResetColor();   
                         Console.ForegroundColor = ConsoleColor.DarkGray;
                         Console.Write("                        . ");
                         Console.ForegroundColor = ConsoleColor.DarkYellow;
