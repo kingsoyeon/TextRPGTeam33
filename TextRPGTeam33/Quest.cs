@@ -262,7 +262,7 @@ namespace TextRPGTeam33
 
                 currentQuest.CurrentCount = 0;  // 진행도 초기화 추가
                 currentQuest.IsAccepted = false;  // 수락 상태 초기화
-                currentQuest.RewardClaimed = true;
+                currentQuest.RewardClaimed = false;
 
                 acceptedQuests.Remove(currentQuest);
 
