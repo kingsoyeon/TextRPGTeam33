@@ -78,8 +78,8 @@ namespace TextRPGTeam33
                 int maxHp = 0;
                 int maxMp = 0;
                 int gold = 1500;
-                bool killSans = isKilledSans.killSans;
-
+                bool killSans = isKilledSans.KillSans;
+            
             while (true)
             {
                 // 직업 입력
