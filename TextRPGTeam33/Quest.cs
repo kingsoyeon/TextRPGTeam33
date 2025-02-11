@@ -76,27 +76,23 @@ namespace TextRPGTeam33
         
         public void DisplayQuests(Character player)
         {
-            var availableQuests = quests.Where(q => !q.IsAccepted && !q.IsCompleted).ToList(); // 수락되지 않은 퀘스트 중에서 랜덤으로 1개 선택
-
-            // 던전 클리어 횟수에 따라 적절한 퀘스트 표시
-            if (player.DungeonClearCount >= 45)  // 50층 근처에서는 보스 퀘스트 표시
-            {
-                availableQuests = availableQuests.Where(q => q.Id == 3).ToList();
-            }
-            else if (player.DungeonClearCount >= 20)  // 중반에는 돌연변이 퀘스트
-            {
-                availableQuests = availableQuests.Where(q => q.Id == 2).ToList();
-            }
-            else  // 초반에는 기본 좀비 퀘스트
-            {
-                availableQuests = availableQuests.Where(q => q.Id == 1).ToList();
-            }
-
             if (quests.All(q => acceptedQuests.Contains(q)))
             {
                 Console.WriteLine("현재 수락 가능한 퀘스트가 없습니다.");
                 Thread.Sleep(1500);
                 return;
+            }
+
+            var availableQuests = quests.Where(q => !q.IsAccepted && !q.IsCompleted).ToList(); // 수락되지 않은 퀘스트 중에서 랜덤으로 1개 선택
+
+            // 던전 클리어 횟수에 따라 적절한 퀘스트 표시
+            if (player.DungeonClearCount < 20)  // 초반에는 기본 좀비 퀘스트만
+            {
+                availableQuests = availableQuests.Where(q => q.Id == 1).ToList();
+            }
+            else if (player.DungeonClearCount < 45)  // 20~44층에서는 좀비+돌연변이 퀘스트
+            {
+                availableQuests = availableQuests.Where(q => q.Id <= 2).ToList();
             }
 
             Random rand = new Random();
