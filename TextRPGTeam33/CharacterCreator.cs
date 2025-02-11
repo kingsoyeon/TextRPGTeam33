@@ -42,6 +42,7 @@ namespace TextRPGTeam33
                     Console.WriteLine("");
                     Console.WriteLine($"1. 진행하기");
                     Console.WriteLine($"0. 다시 입력하기");
+                    Console.Write(">> ");
 
                     string input = Console.ReadLine();
                     if (input == "1")
@@ -129,6 +130,7 @@ namespace TextRPGTeam33
 
                 switch (selectJob)
                 {
+                    
                     // 기본스탯 높음
                     // 스킬 소비 마나 4/3/20(수류탄)
                     // 얼음 속성
@@ -195,10 +197,12 @@ namespace TextRPGTeam33
 
                     // 히든직업
                     case "13":
+                        // 히든보스를 죽이지 않았는데, 13번을 입력할 시
                         if (!killSans) 
                         {
                             Console.WriteLine("...");
                             Thread.Sleep(1500);
+                            Console.Clear();
                             continue;
                         }
 
@@ -271,6 +275,7 @@ namespace TextRPGTeam33
                         Console.ForegroundColor = ConsoleColor.Cyan;
                         Console.WriteLine("탈영병");
                         Console.ResetColor();
+                        Console.WriteLine("");
                         Console.WriteLine("원래 군부대에서 근무하던 병사였지만, 좀비 사태 이후 부대가 붕괴되었다.");
                         Console.WriteLine("남은 생존자들과 함께하려 했으나 군 내부의 부조리와 생존 방식에 의문을 품고 탈영했다.");
                         Console.WriteLine("지금은 부산역을 거처로 살아남기 위해 싸우고 있다.");
@@ -283,6 +288,7 @@ namespace TextRPGTeam33
                         Console.ForegroundColor = ConsoleColor.Yellow;
                         Console.WriteLine("개 조련사");
                         Console.ResetColor();
+                        Console.WriteLine("");
                         Console.WriteLine("재난 이전부터 군견 훈련소에서 일하던 조련사였다.");
                         Console.WriteLine("사태 발생 후 길들인 개와 함께 도망쳤고, 이후 부산 시내에서 생존하면서 떠돌이 개들을 훈련해 동료로 삼았다.");
                         Console.WriteLine("");
@@ -290,10 +296,11 @@ namespace TextRPGTeam33
 
                         break;
 
-                    case "폭발물 산업기사 ":
+                    case "폭발물 산업기사":
                         Console.ForegroundColor= ConsoleColor.Red;
                         Console.WriteLine("폭발물 산업기사");
                         Console.ResetColor();
+                        Console.WriteLine("");
                         Console.WriteLine("과거에는 건설 및 해체 작업에서 폭약을 다루던 기술자였다.");
                         Console.WriteLine("좀비 사태 이후엔 강력한 폭발물을 활용해 길을 뚫거나, 적을 제압하는 역할을 맡고 있다.");
                         Console.WriteLine("");
@@ -304,6 +311,7 @@ namespace TextRPGTeam33
                         Console.ForegroundColor = ConsoleColor.Blue;
                         Console.WriteLine("소방관");
                         Console.ResetColor();
+                        Console.WriteLine("");
                         Console.WriteLine("좀비 상태 발생 당시 시민들을 구하려다가 소방서가 무너지고 동료들과 떨어졌다.");
                         Console.WriteLine("이후 혼자 살아남아 생존 기술을 익히고, 여전히 사람들을 구하려고 노력 중이다.");
                         Console.WriteLine("");
@@ -314,6 +322,7 @@ namespace TextRPGTeam33
                         Console.ForegroundColor = ConsoleColor.DarkYellow;
                         Console.WriteLine("이성언 튜터");
                         Console.ResetColor();
+                        Console.WriteLine("");
                         Console.WriteLine("내일배움캠프에서 학생들을 가르치고 있다가 사회가 붕괴한 후 혼란 속에서도 지식을 전하려 했다.");
                         Console.WriteLine("그러나 생존을 위해 더 실용적인 기술을 배워야 했고, 여러 생존자들과 만나면서 다양한 기술을 익혔다.");
                         Console.WriteLine("");
@@ -322,6 +331,24 @@ namespace TextRPGTeam33
 
                     case "파피루스":
                         // 파피루스 설명
+                        Console.ForegroundColor = ConsoleColor.Red;
+                        Console.Write("파");
+                        Console.ForegroundColor = ConsoleColor.Blue;
+                        Console.Write("피");
+                        Console.ForegroundColor = ConsoleColor.Red;
+                        Console.Write("루");
+                        Console.ForegroundColor = ConsoleColor.Blue;
+                        Console.Write("스");
+                        Console.ResetColor();
+                        Console.WriteLine("");
+                        Console.WriteLine("좀비 사태 발발 이후, 부산역의 주요 출입구를 지키며 생존자들의 안전을 지키기 위해 검문했다.");
+                        Console.WriteLine("\"내 검문을 통과하는 자만이 이곳에 들어올 수 있다!\" 라고 외치며 철저하게 검사했다.");
+                        Console.WriteLine("생존자들에게 있어서 그는 이 혼란스러운 세상에서 한줄기 빛과 같은 존재였다.");
+                        Console.WriteLine("그는 그의 형, 샌즈가 아직도 살아있다고 믿으며 싸워왔다.");
+                        Console.WriteLine("그러나 샌즈가 죽었다는 소식을 접한 후, 혼자의 힘으로 정의를 지키기 위해 싸우기로 결단을 내렸다.");
+                        Console.WriteLine("");
+                        Console.WriteLine("정의를 위해서라면 무엇이든 할 준비가 되어 있고, 어떤 위험도 마다하지 않는다.\n");
+
                         break;
                 }
 
@@ -331,6 +358,7 @@ namespace TextRPGTeam33
                     Console.WriteLine($"{job}을 선택하셨습니다. 이대로 진행하시겠습니까?");
                     Console.WriteLine("1. 생성하기");
                     Console.WriteLine("0. 다시 선택하기");
+                    Console.Write(">> ");
 
                     string input = Console.ReadLine();
                     if (input == "1")
