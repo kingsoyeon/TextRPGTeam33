@@ -64,9 +64,9 @@ namespace TextRPGTeam33
             if (monsterCnt > 5) monsterCnt = 5; //최대 5마리
 
             //전투 횟수 10회마다 보스 몬스터 추가
-            if ((player.DungeonClearCount + 1) % 10 == 0)
+            if ((stageLevel) % 10 == 0)
             {
-                if (player.DungeonClearCount >= 50)
+                if (stageLevel >= 50)
                 {
                     //파피루스의 뼈조각 수량에 따라 히든 보스 조우 확률 증가
                     List<Item> item = player.Inventory.GetItems();
@@ -167,6 +167,10 @@ namespace TextRPGTeam33
                         }
                     }
                 }
+
+                //히든보스 샌즈 처치 시 히든직업 등장
+                if (monster.name == "샌즈")
+                    player.killSans = true;
             }
 
             //보상 지급
