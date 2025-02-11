@@ -63,7 +63,7 @@ namespace TextRPGTeam33
             int bossAtk = 0;
             bool isHidden = false;
 
-            //스테이지 레벨에 따라 몬스터 수 증가 확률 조정(30층 이후 100%)
+            //스테이지 레벨에 따라 몬스터 수 증가 확률 조정 - 최대 4마리(30층 이후 100%)
             increaseRate = Math.Min(1.0, (double)stageLevel / 30.0);
             if (rand.NextDouble() < increaseRate) monsterCnt++;
 
@@ -83,8 +83,11 @@ namespace TextRPGTeam33
                     {
                         monsterCnt = 0;
                         isHidden = true;
+                        bossLv = stageLevel / 10 * 5;
+                        bossHp = stageLevel / 10 * 21;
+                        bossAtk = 7 + (stageLevel / 10 * 4);
 
-                        createMonster.Add(new Monster("샌즈", 20, 80, 20, true));
+                        createMonster.Add(new Monster("샌즈", bossLv, bossHp, bossAtk, true));
 
                         var removeItem = bossItemList.Find(n => n.Name == "파피루스의 뼈조각"); //보상 목록에서 파피루스의 뼈조각 제외
                         if (removeItem != null)
