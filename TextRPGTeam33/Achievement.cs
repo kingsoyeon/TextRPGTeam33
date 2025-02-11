@@ -11,12 +11,22 @@ namespace TextRPGTeam33
     public class Achievement
     {
         private static Achievement instance;
+        private static readonly object lockObject = new object();
+        private static Dictionary<string, AchievementData> achievements;
         public static Achievement Instance
         {
             get
             {
                 if (instance == null)
-                    instance = new Achievement();
+                {
+                    lock (lockObject)
+                    {
+                        if (instance == null)
+                        {
+                            instance = new Achievement();
+                        }
+                    }
+                }
                 return instance;
             }
         }
@@ -29,63 +39,65 @@ namespace TextRPGTeam33
             public DateTime UnlockDate { get; set; }
         }
 
-        private Dictionary<string, AchievementData> achievements;
 
         private Achievement()
         {
-            achievements = new Dictionary<string, AchievementData>
+            if (achievements == null)
             {
+                    achievements = new Dictionary<string, AchievementData>
                 {
-                    "FIRST_STEPS",
-                    new AchievementData
                     {
-                        Name = "첫 발걸음",
-                        Description = "게임을 처음 시작했습니다.",
-                        IsUnlocked = false,
-                        UnlockDate = DateTime.MinValue
-                    }
-                },
-                {
-                    "LEVEL_10",
-                    new AchievementData
+                        "FIRST_STEPS",
+                        new AchievementData
+                        {
+                            Name = "첫 발걸음",
+                            Description = "게임을 처음 시작했습니다.",
+                            IsUnlocked = false,
+                            UnlockDate = DateTime.MinValue
+                        }
+                    },
                     {
-                        Name = "성장하는 모험가",
-                        Description = "레벨 10을 달성했습니다.",
-                        IsUnlocked = false,
-                        UnlockDate = DateTime.MinValue
-                    }
-                },
-                 {
-                    "SANS_KILLER",
-                    new AchievementData
+                        "LEVEL_10",
+                        new AchievementData
+                        {
+                            Name = "성장하는 모험가",
+                            Description = "레벨 10을 달성했습니다.",
+                            IsUnlocked = false,
+                            UnlockDate = DateTime.MinValue
+                        }
+                    },
+                        {
+                        "SANS_KILLER",
+                        new AchievementData
+                        {
+                            Name = "샌즈를 처치한 자",
+                            Description = "샌즈를 처치했습니다.",
+                            IsUnlocked = false,
+                            UnlockDate = DateTime.MinValue
+                        }
+                    },
                     {
-                        Name = "샌즈를 처치한 자",
-                        Description = "샌즈를 처치했습니다.",
-                        IsUnlocked = false,
-                        UnlockDate = DateTime.MinValue
-                    }
-                },
-                {
-                    "RICH_ADVENTURER",
-                    new AchievementData
+                        "RICH_ADVENTURER",
+                        new AchievementData
+                        {
+                            Name = "부자 모험가",
+                            Description = "10000 G를 모았습니다.",
+                            IsUnlocked = false,
+                            UnlockDate = DateTime.MinValue
+                        }
+                    },
                     {
-                        Name = "부자 모험가",
-                        Description = "10000 G를 모았습니다.",
-                        IsUnlocked = false,
-                        UnlockDate = DateTime.MinValue
+                        "SURVIVOR",
+                        new AchievementData
+                        {
+                            Name = "생존자",
+                            Description = "30일 동안 생존했습니다.",
+                            IsUnlocked = false,
+                            UnlockDate = DateTime.MinValue
+                        }
                     }
-                },
-                {
-                    "SURVIVOR",
-                    new AchievementData
-                    {
-                        Name = "생존자",
-                        Description = "30일 동안 생존했습니다.",
-                        IsUnlocked = false,
-                        UnlockDate = DateTime.MinValue
-                    }
-                }
-            };
+                };
+            }
         }
 
         public void CheckAchievements(Character player)

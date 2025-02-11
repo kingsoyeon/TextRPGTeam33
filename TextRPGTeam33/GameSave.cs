@@ -64,8 +64,14 @@ namespace TextRPGTeam33
             if (!HasAnySaveFile()) // 슬롯이 비어있다면...
             {
                 var defaultCharacter = new Character();
-                defaultCharacter.KillSans = false;
+                defaultCharacter.KillSans = CheckAnySansKilled();
                 Character newCharacter = characterCreator.Charactercreator(defaultCharacter); //캐릭터 생성
+
+                // 새 캐릭터에도 글로벌 업적 적용
+                if (globalData.GlobalAchievements != null)
+                {
+                    Achievement.Instance.LoadAchievements(globalData.GlobalAchievements);
+                }
 
                 currentSaveFile = saveFile1; // 현재 세이브 = 1번 슬롯
                 Save(newCharacter, saveFile1); // 1번 슬롯에 세이브
@@ -208,9 +214,36 @@ namespace TextRPGTeam33
             {
                 if (player.KillSans)
                 {
+                    if (globalData == null)
+                    {
+                        globalData = new GlobalData();
+                    }
                     globalData.HasKilledSans = true;
-                    SaveGlobalData();
                 }
+                // 글로벌 데이터에 업적 저장
+                if (globalData == null)
+                {
+                    globalData = new GlobalData();
+                }
+
+                if (globalData.GlobalAchievements == null)
+                {
+                    globalData.GlobalAchievements = new Dictionary<string, Achievement.AchievementData>();
+                }
+
+                // 모든 해제된 업적 저장
+                foreach (var achievement in Achievement.Instance.GetAchievements())
+                {
+                    if (achievement.Value.IsUnlocked)
+                    {
+                        globalData.GlobalAchievements[achievement.Key] = achievement.Value;
+                    }
+                }
+
+                // 강제로 글로벌 데이터 저장
+                SaveGlobalData();
+
+
                 var saveData = new GameData // saveData에 GameData(json)
                 {
                     Character = player, // 캐릭터 정보
@@ -220,8 +253,6 @@ namespace TextRPGTeam33
                     QuestList = Quest.Instance.GetQuestList(),  // 퀘스트 리스트 저장
                     Achievements = Achievement.Instance.GetAchievements() // 업적 저장
                 };
-
-                UpdateGlobalAchievements(saveData.Achievements);
 
                 var options = new JsonSerializerOptions
                 {
@@ -272,14 +303,6 @@ namespace TextRPGTeam33
                 }
                 if (saveData.Achievements != null)
                 {
-                    foreach (var achievement in globalData.GlobalAchievements)
-                    {
-                        if (achievement.Value.IsUnlocked)
-                        {
-                            saveData.Achievements[achievement.Key].IsUnlocked = true;
-                            saveData.Achievements[achievement.Key].UnlockDate = achievement.Value.UnlockDate;
-                        }
-                    }
                     Achievement.Instance.LoadAchievements(saveData.Achievements);
                 }
 
@@ -298,6 +321,15 @@ namespace TextRPGTeam33
         {
             try
             {
+                if (globalData == null)
+                {
+                    globalData = new GlobalData
+                    {
+                        HasKilledSans = false,
+                        GlobalAchievements = new Dictionary<string, Achievement.AchievementData>()
+                    };
+                }
+
                 var options = new JsonSerializerOptions
                 {
                     WriteIndented = true,
@@ -306,10 +338,18 @@ namespace TextRPGTeam33
 
                 string jsonString = JsonSerializer.Serialize(globalData, options);
                 File.WriteAllText(globalDataFile, jsonString);
+
+                // 디버그용
+                Console.WriteLine($"글로벌 데이터 저장됨: {globalDataFile}");
+                Console.WriteLine($"Sans Kill: {globalData.HasKilledSans}");
+                Console.WriteLine($"업적 수: {globalData.GlobalAchievements.Count}");
+                Thread.Sleep(5000);
             }
             catch (Exception ex)
             {
                 Console.WriteLine($"글로벌 데이터 저장 중 오류 발생: {ex.Message}");
+                Console.WriteLine($"저장 경로: {globalDataFile}");
+                Console.WriteLine($"스택 트레이스: {ex.StackTrace}");
             }
         }
 
@@ -320,20 +360,36 @@ namespace TextRPGTeam33
                 if (File.Exists(globalDataFile))
                 {
                     string jsonString = File.ReadAllText(globalDataFile);
-                    globalData = JsonSerializer.Deserialize<GlobalData>(jsonString) ?? new GlobalData();
+                    globalData = JsonSerializer.Deserialize<GlobalData>(jsonString);
                 }
-                else
+
+                // 파일이 없거나 역직렬화에 실패한 경우
+                if (globalData == null)
                 {
                     globalData = new GlobalData
                     {
                         HasKilledSans = false,
                         GlobalAchievements = new Dictionary<string, Achievement.AchievementData>()
                     };
-                    SaveGlobalData();
+                    SaveGlobalData(); // 초기 데이터 저장
                 }
+
+                // 로드된 업적 정보 적용
+                if (globalData.GlobalAchievements != null && globalData.GlobalAchievements.Count > 0)
+                {
+                    Achievement.Instance.LoadAchievements(globalData.GlobalAchievements);
+                }
+
+                // 추가된 디버그 로그
+                Console.WriteLine($"로드된 데이터 - Sans Kill: {globalData.HasKilledSans}");
+                Console.WriteLine($"로드된 업적 수: {globalData.GlobalAchievements?.Count ?? 0}");
+                Thread.Sleep(5000);
             }
-            catch
+            catch (Exception ex)
             {
+                Console.WriteLine($"글로벌 데이터 로드 중 오류 발생: {ex.Message}");
+                Console.WriteLine($"스택 트레이스: {ex.StackTrace}");
+
                 globalData = new GlobalData();
                 SaveGlobalData();
             }
@@ -387,28 +443,7 @@ namespace TextRPGTeam33
         {
             return globalData.HasKilledSans;
         }
-        public void UpdateGlobalAchievements(Dictionary<string, Achievement.AchievementData> achievements)
-        {
-            foreach (var achievement in achievements)
-            {
-                if (achievement.Value.IsUnlocked)
-                {
-                    if (!globalData.GlobalAchievements.ContainsKey(achievement.Key))
-                    {
-                        globalData.GlobalAchievements[achievement.Key] = achievement.Value;
-                    }
-                    else if (!globalData.GlobalAchievements[achievement.Key].IsUnlocked)
-                    {
-                        globalData.GlobalAchievements[achievement.Key] = achievement.Value;
-                    }
-                }
-            }
-            SaveGlobalData();
-        }
-        public Dictionary<string, Achievement.AchievementData> GetGlobalAchievements()
-        {
-            return globalData.GlobalAchievements;
-        }
+
 
     }
 
