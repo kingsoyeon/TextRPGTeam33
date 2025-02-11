@@ -24,8 +24,7 @@ namespace TextRPGTeam33
                 new Monster("스프린터 좀비", 6, 24, 10, false),
                 new Monster("덩치 좀비", 7, 40, 12, false),
                 new Monster("폭발성 좀비", 8, 32, 13, false),
-                new Monster("맹독 좀비", 9, 35, 14, false),
-                new Monster("네크로맨서 좀비", 10, 55, 15, false)
+                new Monster("맹독 좀비", 9, 35, 14, false)
             };
 
             //일반 몬스터 아이템 보상 리스트
