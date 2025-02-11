@@ -130,66 +130,78 @@ namespace TextRPGTeam33
                 switch (selectJob)
                 {
                     // 기본스탯 높음
+                    // 스킬 소비 마나 4/3/20(수류탄)
                     // 얼음 속성
                     case "1":
-
                         job = "탈영병";
-                        atk = 10;
-                        def = 5;
-                        maxHp = 100;
+                        atk = 9;
+                        def = 4;
+                        maxHp = 90;
                         maxMp = 30;
 
                         break;
 
                     // 두번 공격, 아이템 물어 오기
+                    // 스킬 소비 마나 6/3
                     // 번개 속성
                     case "2":
 
                         job = "개 조련사";
-                        atk = 8;
-                        def = 7;
-                        maxHp = 110;
+                        atk = 4;
+                        def = 9;
+                        maxHp = 80;
                         maxMp = 30;
 
                         break;
 
                     // 범위 공격, 본인도 데미지
+                    // 스킬 소비 마나 25/3
                     // 불 속성
                     case "3":
 
                         job = "폭발물 산업기사";
-                        atk = 6;
+                        atk = 9;
                         def = 4;
                         maxHp = 70;
-                        maxMp = 70;
+                        maxMp = 50;
 
                         break;
 
                     // 하이드로펌프, 2명 공격
+                    // 스킬 소비 마나 15/20
                     // 물 속성
                     case "4":
 
                         job = "소방관";
-                        atk = 6;
-                        def = 5;
-                        maxHp = 80;
-                        maxMp = 60;
-
-                        break;
-
-                    // 파괴광선, 볼트태클
-                    // 바위속성
-                    case "5":
-
-                        job = "이성언 튜터";
-                        atk = 11;
-                        def = 6;
-                        maxHp = 80;
+                        atk = 8;
+                        def = 7;
+                        maxHp = 100;
                         maxMp = 40;
 
                         break;
 
+                    // 파괴광선, 볼트태클
+                    // 스킬 소비 마나 7/6
+                    // 바위속성
+                    case "5":
+
+                        job = "이성언 튜터";
+                        atk = 7;
+                        def = 6;
+                        maxHp = 80;
+                        maxMp = 30;
+
+                        break;
+
+                    // 히든직업
                     case "13":
+                        if (!killSans) 
+                        {
+                            Console.WriteLine("...");
+                            Thread.Sleep(1500);
+                            continue;
+                        }
+
                         job = "파피루스";
                         atk = 999;
                         def = 999;
@@ -306,6 +318,10 @@ namespace TextRPGTeam33
                         Console.WriteLine("그러나 생존을 위해 더 실용적인 기술을 배워야 했고, 여러 생존자들과 만나면서 다양한 기술을 익혔다.");
                         Console.WriteLine("");
                         Console.WriteLine("높은 학습 능력과 논리적인 사고를 바탕으로, 파괴광선과 볼트태클 스킬을 익혔다.\n");
+                        break;
+
+                    case "파피루스":
+                        // 파피루스 설명
                         break;
                 }
 
