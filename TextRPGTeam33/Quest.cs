@@ -76,14 +76,14 @@ namespace TextRPGTeam33
         
         public void DisplayQuests(Character player)
         {
-            if (quests.All(q => acceptedQuests.Contains(q)))
+            var availableQuests = quests.Where(q => !acceptedQuests.Contains(q) && !q.IsCompleted).ToList(); // 수락되지 않은 퀘스트 중에서 랜덤으로 1개 선택
+
+            if (availableQuests.Count == 0)
             {
                 Console.WriteLine("현재 수락 가능한 퀘스트가 없습니다.");
                 Thread.Sleep(1500);
                 return;
             }
-
-            var availableQuests = quests.Where(q => !q.IsAccepted && !q.IsCompleted).ToList(); // 수락되지 않은 퀘스트 중에서 랜덤으로 1개 선택
 
             // 던전 클리어 횟수에 따라 적절한 퀘스트 표시
             if (player.DungeonClearCount < 20)  // 초반에는 기본 좀비 퀘스트만
@@ -94,35 +94,42 @@ namespace TextRPGTeam33
             {
                 availableQuests = availableQuests.Where(q => q.Id <= 2).ToList();
             }
-
-            Random rand = new Random();
-            currentQuest = availableQuests[rand.Next(availableQuests.Count)];
-
-            Console.Clear();
-            Console.WriteLine("Quest!!\n");
-            Console.WriteLine($"{currentQuest.Name}\n");
-            Console.WriteLine($"{currentQuest.Description}\n");
-            Console.WriteLine($"- {currentQuest.Name} ({currentQuest.CurrentCount}/{currentQuest.TargetCount})");
-            Console.WriteLine("\n- 보상 -");
-            Console.WriteLine($"  {currentQuest.RewardItem.Name} x {currentQuest.RewardItem.Count}");
-            Console.WriteLine($"  경험치 {currentQuest.RewardExp}\n");
-
-            Console.WriteLine("1. 수락");
-            Console.WriteLine("0. 거절");
-
-            Console.Write("\n원하시는 행동을 입력해주세요.\n>>");
-            string input = Console.ReadLine();
-
-            if (input == "1")
+            if (availableQuests.Count > 0)
             {
-                acceptedQuests.Add(currentQuest);
-                currentQuest.IsAccepted = true;
-                Console.WriteLine("\n퀘스트를 수락했습니다!");
-                Thread.Sleep(1500);
+                Random rand = new Random();
+                currentQuest = availableQuests[rand.Next(availableQuests.Count)];
+
+                Console.Clear();
+                Console.WriteLine("Quest!!\n");
+                Console.WriteLine($"{currentQuest.Name}\n");
+                Console.WriteLine($"{currentQuest.Description}\n");
+                Console.WriteLine($"- {currentQuest.Name} ({currentQuest.CurrentCount}/{currentQuest.TargetCount})");
+                Console.WriteLine("\n- 보상 -");
+                Console.WriteLine($"  {currentQuest.RewardItem.Name} x {currentQuest.RewardItem.Count}");
+                Console.WriteLine($"  경험치 {currentQuest.RewardExp}\n");
+
+                Console.WriteLine("1. 수락");
+                Console.WriteLine("0. 거절");
+
+                Console.Write("\n원하시는 행동을 입력해주세요.\n>>");
+                string input = Console.ReadLine();
+
+                if (input == "1")
+                {
+                    acceptedQuests.Add(currentQuest);
+                    currentQuest.IsAccepted = true;
+                    Console.WriteLine("\n퀘스트를 수락했습니다!");
+                    Thread.Sleep(1500);
+                }
+                else
+                {
+                    Console.WriteLine("\n퀘스트를 거절했습니다.");
+                    Thread.Sleep(1500);
+                }
             }
             else
             {
-                Console.WriteLine("\n퀘스트를 거절했습니다.");
+                Console.WriteLine("현재 수락 가능한 퀘스트가 없습니다.");
                 Thread.Sleep(1500);
             }
         }
@@ -224,7 +231,7 @@ namespace TextRPGTeam33
         {
             if (currentQuest != null && currentQuest.IsCompleted)
             {
-                player.Exp += currentQuest.RewardExp; // 경험치 보상
+                bool isLevelUp = player.LevelUp(currentQuest.RewardExp);
 
                 if (currentQuest.RewardItem.Type == ItemType.Potion) // 아이템 보상
                 {
@@ -242,6 +249,9 @@ namespace TextRPGTeam33
 
                 currentQuest.CurrentCount = 0;  // 진행도 초기화 추가
                 currentQuest.IsAccepted = false;  // 수락 상태 초기화
+                currentQuest.RewardClaimed = true;  // 보상 수령 상태를 true로 변경
+
+                acceptedQuests.Remove(currentQuest);
 
                 Console.Clear();
                 Console.WriteLine("퀘스트 보상을 받았습니다!");
