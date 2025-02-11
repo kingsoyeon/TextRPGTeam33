@@ -195,6 +195,13 @@ namespace TextRPGTeam33
 
                     // 히든직업
                     case "13":
+                        if (!killSans) 
+                        {
+                            Console.WriteLine("...");
+                            Thread.Sleep(1500);
+                            continue;
+                        }
+
                         job = "파피루스";
                         atk = 999;
                         def = 999;
@@ -311,6 +318,10 @@ namespace TextRPGTeam33
                         Console.WriteLine("그러나 생존을 위해 더 실용적인 기술을 배워야 했고, 여러 생존자들과 만나면서 다양한 기술을 익혔다.");
                         Console.WriteLine("");
                         Console.WriteLine("높은 학습 능력과 논리적인 사고를 바탕으로, 파괴광선과 볼트태클 스킬을 익혔다.\n");
+                        break;
+
+                    case "파피루스":
+                        // 파피루스 설명
                         break;
                 }
 
