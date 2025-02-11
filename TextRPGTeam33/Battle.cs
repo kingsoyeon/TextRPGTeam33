@@ -101,6 +101,7 @@ namespace TextRPGTeam33
                     }
                     else if (input == 3)
                     {
+                        Potion potion = new(player, player.Inventory);
                         int sel = potion.DisplayPotion();
 
                         if (sel == 0)
