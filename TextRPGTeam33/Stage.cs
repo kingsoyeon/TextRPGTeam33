@@ -192,23 +192,7 @@ namespace TextRPGTeam33
 
             //보상 지급
             player.Gold += rewardGold;
-            player.Exp += rewardExp;
-
-            do
-            {
-                if (player.Exp >= player.LevelUpExp)
-                {
-                    rewardExp = player.Exp - player.LevelUpExp;
-                    player.LevelUpExp *= 2;
-                    player.Exp = rewardExp;
-                    player.Level++;
-                    player.Attack += 1;
-                    player.Defense += 1;
-                    isLevelUp = true;
-                }
-                else break;
-            }
-            while (true);
+            isLevelUp = player.LevelUp(rewardExp);
 
             //보상 정보 출력
             Console.WriteLine("[캐릭터 정보]");
