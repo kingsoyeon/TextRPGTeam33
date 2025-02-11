@@ -13,13 +13,14 @@ namespace TextRPGTeam33
         List<Monster> monsters;
         Character player;
         SkillManager skillManager;
+        Potion potion;
         Random rand;
         int startHp;
         int startMp;
 
         public bool isEnd { get; set; }
 
-        public Battle(Character player)
+        public Battle(Character player, Potion potion)
         {
             // 전투를 시작하면 1~4마리의 몬스터가 랜덤하게 등장합니다.
             // 표시되는 순서는 랜덤입니다.
@@ -28,6 +29,7 @@ namespace TextRPGTeam33
             monsters = stage.CreateMonster();
             this.player = player;
             skillManager = new SkillManager(player, monsters);
+            this.potion = potion;
             rand = new Random();
             startHp = player.Hp;
             startMp = player.Mp;
@@ -62,7 +64,8 @@ namespace TextRPGTeam33
                 Console.WriteLine($"MP {player.Mp}/{player.MaxMp}\n");
 
                 Console.WriteLine("1. 공격");
-                Console.WriteLine("2. 스킬\n");
+                Console.WriteLine("2. 스킬");
+                Console.WriteLine("3. 포션 사용\n");
                 Console.WriteLine("0. 나가기");
 
                 Console.WriteLine("원하시는 행동을 입력해주세요");
@@ -95,6 +98,13 @@ namespace TextRPGTeam33
                             else if (key == 1)
                                 isEnd = true;
                         }
+                    }
+                    else if (input == 3)
+                    {
+                        int sel = potion.DisplayPotion();
+
+                        if (sel == 0)
+                            continue;
                     }
                     else
                     {

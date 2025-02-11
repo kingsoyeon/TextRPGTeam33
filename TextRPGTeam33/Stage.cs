@@ -24,8 +24,7 @@ namespace TextRPGTeam33
                 new Monster("스프린터 좀비", 6, 24, 10, false),
                 new Monster("덩치 좀비", 7, 40, 12, false),
                 new Monster("폭발성 좀비", 8, 32, 13, false),
-                new Monster("맹독 좀비", 9, 35, 14, false),
-                new Monster("네크로맨서 좀비", 10, 55, 15, false)
+                new Monster("맹독 좀비", 9, 35, 14, false)
             };
 
             //일반 몬스터 아이템 보상 리스트
@@ -35,7 +34,7 @@ namespace TextRPGTeam33
                 new Item("방탄 조끼", ItemType.Amor, 9, 3, "경찰용 방탄 조끼입니다. 총알을 어느정도 막아줄 것 같습니다.", 2000, 1),
                 new Item("야구 방망이", ItemType.Weapon, 5, 5, "임시방편으로 사용하기 좋은 무기입니다.", 600, 1),
                 new Item("구급상자", ItemType.Potion, 30, 7, "기본적인 응급처치가 가능한 구급상자입니다.", 500, 1),
-                new Item("맛있는 샤와르마", ItemType.Potion, 40, 6, "뉴욕의 작은 가게에서 파는 중동식 샤워르마입니다. 힘든 전투 후에 먹으면 최고!", 1000, 1)
+                new Item("버터스카치 파이", ItemType.MPPotion, 30, 7, "달콤한 향이 나는 수제 파이입니다. 지하세계의 추억이 담겨있습니다.", 800, 1)
             };
             //보스 몬스터 아이템 보상 리스트
             bossItemList = new List<Item>
@@ -43,7 +42,9 @@ namespace TextRPGTeam33
                 new Item("군용 방탄복", ItemType.Amor, 15, 2, "군대에서 사용하던 고급 방탄복입니다. 매우 튼튼합니다.", 3500, 1),
                 new Item("후드 점퍼", ItemType.Amor, 17, 1, "파란색 후드티입니다. 입으면 슬리퍼가 신고 싶어집니다.", 4000, 1),
                 new Item("묠니르", ItemType.Weapon, 17, 1, "망치에 새겨진 작은 글씨를 보니 누군가 '누군가 이걸 들 자격이 있다'라고 적어놨습니다.", 3000, 1),
-                new Item("버터스카치 파이", ItemType.Potion, 55, 3, "달콤한 향이 나는 수제 파이입니다. 지하세계의 추억이 담겨있습니다.", 2000, 1),
+                new Item("파피루스의 뼈조각", ItemType.Weapon, 0, 50, "???", 0, 1),
+                new Item("맛있는 샤와르마", ItemType.Potion, 40, 5, "뉴욕의 작은 가게에서 파는 중동식 샤워르마입니다. 힘든 전투 후에 먹으면 최고!", 1000, 1),
+                new Item("특제 스테이크", ItemType.MPPotion, 45, 5, "음식에 고양이 털이 들어갔네요. 하지만 맛은 여전히 최고!", 1200, 1)
             };
         }
 
@@ -56,6 +57,7 @@ namespace TextRPGTeam33
             int monsterCnt = 3; //기본 몬스터 수
             int monsterId = 0;
             int minMonsterLv = 0;
+            bool isHidden = false;
 
             //스테이지 레벨에 따라 몬스터 수 랜덤 증가
             monsterCnt += rand.Next(0, stageLevel);
@@ -64,8 +66,35 @@ namespace TextRPGTeam33
             //전투 횟수 10회마다 보스 몬스터 추가
             if ((player.DungeonClearCount + 1) % 10 == 0)
             {
-                monsterCnt -= 1;
-                new Monster("샌즈", 10, 60, 15, true);
+                if (player.DungeonClearCount >= 50)
+                {
+                    //파피루스의 뼈조각 수량에 따라 히든 보스 조우 확률 증가
+                    List<Item> item = player.Inventory.GetItems();
+                    int itemCnt = item.Count(x => x.Name == "파피루스의 뼈조각");
+                    double hiddenRate = itemCnt * 0.2;
+
+                    hiddenRate = Math.Min(1.0, hiddenRate);
+
+                    if (rand.NextDouble() < hiddenRate)
+                    {
+                        monsterCnt = 0;
+                        isHidden = true;
+
+                        new Monster("샌즈", 20, 80, 20, true);
+
+                        var removeItem = bossItemList.Find(n => n.Name == "파피루스의 뼈조각"); //보상 목록에서 파피루스의 뼈조각 제외
+                        if (removeItem != null)
+                        {
+                            bossItemList.Remove(removeItem);
+                        }
+                    }
+                }
+
+                if (!isHidden)
+                {
+                    monsterCnt -= 1;
+                    new Monster("네크로맨서 좀비", 10, 55, 15, true);
+                }
             }
 
             //스테이지 레벨에 따라 몬스터 등장확률 변경

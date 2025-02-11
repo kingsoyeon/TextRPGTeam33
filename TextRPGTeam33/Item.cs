@@ -10,7 +10,8 @@ namespace TextRPGTeam33
     {
         Weapon,
         Amor,
-        Potion
+        Potion,
+        MPPotion
     }
     public class Item
     {
@@ -65,12 +66,13 @@ namespace TextRPGTeam33
                 new Item("야구 방망이", ItemType.Weapon, 5, 100, "임시방편으로 사용하기 좋은 무기입니다.", 600, 1),
                 new Item("소방 도끼", ItemType.Weapon, 10, 100, "소방서에서 가져온 도끼입니다. 좀비와 문 모두에게 효과적입니다.", 1500, 1),
                 new Item("묠니르", ItemType.Weapon, 17, 100, "망치에 새겨진 작은 글씨를 보니 누군가 '누군가 이걸 들 자격이 있다'라고 적어놨습니다.", 3000, 1),
-                // 회복
+                // HP회복
                 new Item("구급상자", ItemType.Potion, 30, 100, "기본적인 응급처치가 가능한 구급상자입니다.", 500, 1),
                 new Item("맛있는 샤와르마", ItemType.Potion, 40, 100, "뉴욕의 작은 가게에서 파는 중동식 샤워르마입니다. 힘든 전투 후에 먹으면 최고!", 1000, 1),
                 new Item("군용 의료키트", ItemType.Potion, 50, 100, "군용 의료키트입니다. 중상 치료도 가능합니다.", 1000, 1),
-                new Item("특제 스테이크", ItemType.Potion, 45, 100, "음식에 고양이 털이 들어갔네요. 하지만 맛은 여전히 최고!", 1500, 1),
-                new Item("버터스카치 파이", ItemType.Potion, 55, 100, "달콤한 향이 나는 수제 파이입니다. 지하세계의 추억이 담겨있습니다.", 2000, 1),
+                // MP회복
+                new Item("버터스카치 파이", ItemType.MPPotion, 30, 100, "달콤한 향이 나는 수제 파이입니다. 지하세계의 추억이 담겨있습니다.", 800, 1),
+                new Item("특제 스테이크", ItemType.MPPotion, 45, 100, "음식에 고양이 털이 들어갔네요. 하지만 맛은 여전히 최고!", 1200, 1),
             };
         }
 

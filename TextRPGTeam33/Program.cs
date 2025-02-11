@@ -83,8 +83,8 @@ partial class Program
 
             Console.Clear();
             Console.ForegroundColor = ConsoleColor.White;
-            Console.WriteLine($"→살아남은 날짜:{days}");
-            Console.WriteLine($"→탐험횟수:0{adventureCount}/02");
+            Console.WriteLine($"→ 살아남은 날짜:{days}");
+            Console.WriteLine($"→ 탐험횟수:0{adventureCount}/02");
             Console.ForegroundColor = ConsoleColor.Yellow;
             Console.WriteLine("====================<<행동>>=====================");
             Console.ForegroundColor = ConsoleColor.Yellow;
@@ -120,7 +120,14 @@ partial class Program
             Console.WriteLine("\t\t\t\t|");
             Console.WriteLine("|\t\t\t\t\t\t|");
             Console.Write("|\t");
+            Console.ForegroundColor = ConsoleColor.Magenta;
             Console.Write("▶ 5. 일기를 쓴다.");
+            Console.ForegroundColor = ConsoleColor.Yellow;
+            Console.WriteLine("\t\t\t|");
+            Console.WriteLine("|\t\t\t\t\t\t|");
+            Console.Write("|\t");
+            Console.ForegroundColor = ConsoleColor.Yellow;
+            Console.Write("▶ 6. 퀘스트 보기.");
             Console.ForegroundColor = ConsoleColor.Yellow;
             Console.WriteLine("\t\t\t|");
             Console.WriteLine("|\t\t\t\t\t\t|");
@@ -156,6 +163,10 @@ partial class Program
             {
                 Save(player);
             }
+            else if (choice == "6")
+            {
+                Quest.Instance.DisplayQuestList(player);
+            }
             else if (choice == "0")
             {
                 inDungeon = false;
@@ -169,9 +180,11 @@ partial class Program
             {
                 adventureCount = 0;  // 탐험 횟수 초기화
                 days++;  // 날짜 증가
-                Console.ForegroundColor = ConsoleColor.Green;
-                Console.WriteLine($"하루가 지나갔습니다! 현재 날짜: {days}일");
+                Console.Write($"하루가 지나갔습니다! 현재 날짜:");
+                Console.ForegroundColor = ConsoleColor.Cyan;
+                Console.Write($"{days}");
                 Console.ResetColor();
+                Console.WriteLine("일");
                 string currentSaveFile = gameSave.GetCurrentSaveFile();
                 gameSave.Save(player, currentSaveFile);
                 Thread.Sleep(2000);
@@ -182,7 +195,7 @@ partial class Program
     static void Explore(Character player)
     {
         Random random = new Random();
-        int randomChoice = random.Next(0, 5);
+        int randomChoice = random.Next(0, 1);
         // 탐험이 시작되면 탐험 횟수 증가
         Console.Clear();
         Console.WriteLine($"탐험 {adventureCount + 1}회 진행 중...");
@@ -275,11 +288,15 @@ partial class Program
         Character Character = new();
         Character.StatusDisplay();
     }
+    static void Potions(Character player) {
+        Potion potion = new(player, player.Inventory);
+        potion.DisplayPotion();
 
-    static void StartBattle(Character player)
-    {
-        Battle battle = new(player);
-        battle.BattleStart();
+    }
+        static void StartBattle(Character player)
+    {   
+        Battle battle = new Battle(player, Inventory.potion);
+        battle.BattleStart(); 
         if (player.Hp <= 0)
         {
             Console.Clear();

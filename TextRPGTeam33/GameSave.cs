@@ -101,9 +101,11 @@ namespace TextRPGTeam33
 
                     return HandleSlotSelection(input, selectedFile);
                 }
-
-                Console.WriteLine("잘못된 입력입니다.");
-                Thread.Sleep(1000);
+                else 
+                {
+                    Console.WriteLine("잘못된 입력입니다.");
+                    Thread.Sleep(1000);
+                }
             }
         }
         private void DisplaySlotInfo(string slotTitle, string filePath)

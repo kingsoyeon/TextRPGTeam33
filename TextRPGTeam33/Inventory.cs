@@ -10,6 +10,7 @@ namespace TextRPGTeam33
     public class Inventory
     {
         private List<Item> Items = new List<Item>();
+        internal static Potion potion;
 
         public void AddItem(List<Item> itemList)
         {
@@ -88,7 +89,7 @@ namespace TextRPGTeam33
                 Console.WriteLine("인벤토리-장착 관리");
                 Console.WriteLine("보유 중인 아이템을 관리할 수 있습니다.");
 
-                List<Item> PotionExcepted = Items.Where(item => item.Type != ItemType.Potion).ToList();
+                List<Item> PotionExcepted = Items.Where(item => item.Type != ItemType.Potion && item.Type != ItemType.MPPotion).ToList();
 
                 for (int i = 0; i < PotionExcepted.Count; i++)
                 {
@@ -163,9 +164,13 @@ namespace TextRPGTeam33
                 str += $"{item.Name} | 방어력 +{item.Value} | {item.Descrip}";
                
             }
-            else {
+            else if(item.Type == ItemType.Potion) 
+                {
                 str += $"{item.Name} | 체력 +{item.Value} | {item.Descrip} | 보유 {item.Count}개";
-                
+            }
+            else
+            {
+                str += $"{item.Name} | 마나 +{item.Value} | {item.Descrip} | 보유 {item.Count}개";
             }
 
             return str;

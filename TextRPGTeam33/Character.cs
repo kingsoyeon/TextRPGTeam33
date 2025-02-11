@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Numerics;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -34,6 +35,10 @@ namespace TextRPGTeam33
 
         public Inventory Inventory { get; set; }
         public int DungeonClearCount { get; set; }
+
+        public bool isLevelUp { get; set; }
+
+        public int speed {  get; set; }
 
 
         
@@ -142,6 +147,29 @@ namespace TextRPGTeam33
 
             if (item.Type == ItemType.Weapon) { PlusAttack -= item.Value; }     // 무기일 경우 공격력 감소
             else if ( item.Type == ItemType.Amor)   { PlusDefense -= item.Value; }  // 갑옷일 경우 방어력 감소
+        }
+
+        public void LevelUp(int rewardExp)
+        {
+            
+            this.Exp += rewardExp;
+            
+
+            do
+            {
+                if (this.Exp >= this.LevelUpExp)
+                {
+                    rewardExp = this.Exp - this.LevelUpExp;
+                    this.LevelUpExp *= 2;
+                    this.Exp = rewardExp;
+                    this.Level++;
+                    this.Attack += 1;
+                    this.Defense += 1;
+                    isLevelUp = true;
+                }
+                else break;
+            }
+            while (true);
         }
 
         
