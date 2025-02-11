@@ -43,7 +43,7 @@ namespace TextRPGTeam33
         public bool killSans { get; set; }
 
         
-        public Character(int level, string name, string job, int atk, int def, int maxHp, int maxMp, int gold)
+        public Character(int level, string name, string job, int atk, int def, int maxHp, int maxMp, int gold, bool killsans)
         {
             Name = name;
             Job = job;
@@ -59,6 +59,8 @@ namespace TextRPGTeam33
             MaxMp = maxMp;
 
             DungeonClearCount = 0;
+
+            killSans = killsans;
 
             Exp = 0;
             LevelUpExp = 10;
