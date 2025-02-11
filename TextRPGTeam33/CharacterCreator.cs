@@ -16,6 +16,8 @@ namespace TextRPGTeam33
             {
                 // 캐릭터 생성 처음 화면
                 Console.Clear();
+                Console.WriteLine();
+                Console.WriteLine();
                 Console.WriteLine("캐릭터 생성");
                 Console.WriteLine("원하시는 이름을 입력해주세요.");
                 Console.Write(">> ");

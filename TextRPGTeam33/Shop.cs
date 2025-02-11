@@ -61,23 +61,23 @@ namespace TextRPGTeam33
                     string stat; // 아이템 stat(값)에 방어력, 공격력, 회복력 글자 추가
 
                     if (itemList[i].Type == ItemType.Amor) {
-                        Console.ForegroundColor = ConsoleColor.Blue;
+                        Console.ForegroundColor = ConsoleColor.Green;
                         Console.Write("●");
                         Console.ResetColor();
                         stat = $"방어력+{itemList[i].Value}"; } // ItemType이 Amor일 경우 "방어력"
 
                     else if (itemList[i].Type == ItemType.Weapon) {
-                        Console.ForegroundColor = ConsoleColor.Red;
+                        Console.ForegroundColor = ConsoleColor.DarkCyan;
                         Console.Write("●");
                         Console.ResetColor();
                         stat = $"공격력 +{itemList[i].Value}"; }// ItemType이 Weapon일 경우 "공격력"
                     else if (itemList[i].Type == ItemType.Potion){
-                        Console.ForegroundColor = ConsoleColor.Green;
+                        Console.ForegroundColor = ConsoleColor.Red;
                         Console.Write("●");
                         Console.ResetColor();
                         stat = $"HP회복량 +{itemList[i].Value}"; } // ItemType이 Potion일 경우 "HP회복력"
                     else{
-                        Console.ForegroundColor = ConsoleColor.Yellow;
+                        Console.ForegroundColor = ConsoleColor.Blue;
                         Console.Write("●");
                         Console.ResetColor();
                         stat = $"MP회복량 +{itemList[i].Value}"; }// 그외(ItemType이 Potion) 일 경우 "MP회복력"
