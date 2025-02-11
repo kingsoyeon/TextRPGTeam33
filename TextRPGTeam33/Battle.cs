@@ -216,7 +216,8 @@ namespace TextRPGTeam33
                 playerAtk = 0;
 
             int monsterHp = monsters[i].hp;
-            monsters[i].hp -= playerAtk;
+            if (monsters[i].hp != 0)
+                monsters[i].hp -= playerAtk;
             if (monsters[i].hp <= 0)
             {
                 var acceptedQuests = Quest.Instance.GetQuestList();
