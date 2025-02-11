@@ -9,16 +9,20 @@ namespace TextRPGTeam33
 {
     public class CharacterCreator
     {
-        public Character Charactercreator()
+        public Character Charactercreator(Character isKilledSans)
         {
             string name = "";
             do
             {
                 // 캐릭터 생성 처음 화면
                 Console.Clear();
-                Console.WriteLine();
-                Console.WriteLine();
-                Console.WriteLine("캐릭터 생성");
+                Console.WriteLine("★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★");
+                Console.WriteLine("●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●");
+                Console.WriteLine("◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆");
+                Console.WriteLine("▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲");
+                Console.WriteLine("◀◀◀◀◀◀◀◀◀◀◀◀◀◀◀◀◀◀◀◀◀◀◀◀◀◀◀◀◀◀◀◀◀◀◀◀◀◀◀◀◀◀◀◀◀◀◀");
+                Console.WriteLine("♠♠♠♠♠♠♠♠♠♠♠♠♠♠♠♠♠♠♠♠♠♠♠♠♠♠♠♠♠♠♠♠♠♠♠♠♠♠♠♠♠♠♠♠");
+                Console.WriteLine("♥♥♥♥♥♥♥♥♥♥♥♥♥♥♥♥♥♥♥♥♥♥♥♥♥♥♥♥♥♥♥♥♥♥♥♥♥♥♥♥♥♥♥♥♥♥");
                 Console.WriteLine("원하시는 이름을 입력해주세요.");
                 Console.Write(">> ");
 
@@ -74,7 +78,8 @@ namespace TextRPGTeam33
                 int maxHp = 0;
                 int maxMp = 0;
                 int gold = 1500;
-
+                bool killSans = isKilledSans.KillSans;
+            
             while (true)
             {
                 // 직업 입력
@@ -109,6 +114,12 @@ namespace TextRPGTeam33
                 Console.ResetColor();
 
                 Console.WriteLine("");
+
+                // #13 파피루스
+                if (killSans)
+                {
+                    Console.WriteLine("13. 파피루스");
+                }
 
 
                 Console.WriteLine("원하시는 번호를 선택하세요.");
@@ -175,6 +186,15 @@ namespace TextRPGTeam33
                         def = 6;
                         maxHp = 80;
                         maxMp = 40;
+
+                        break;
+
+                    case "13":
+                        job = "파피루스";
+                        atk = 999;
+                        def = 999;
+                        maxHp = 999;
+                        maxMp = 999;
 
                         break;
 
@@ -304,7 +324,7 @@ namespace TextRPGTeam33
                         Console.WriteLine($"이름: {name}");
                         Console.WriteLine($"직업: {job}");
                         Thread.Sleep(2000);
-                        return new Character(level, name, job, atk, def, maxHp, maxMp, gold);
+                        return new Character(level, name, job, atk, def, maxHp, maxMp, gold, killSans);
                     }
                     else
                     {

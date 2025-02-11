@@ -18,18 +18,20 @@ namespace TextRPGTeam33
             }
         }
 
-        private class QuestData // 개별 퀘스트 정보를 담는 내부 클래스
+        public class QuestData // 개별 퀘스트 정보를 담는 내부 클래스
         {
-            public int Id { get; }  // 퀘스트 고유 ID
-            public string Name { get; }  // 퀘스트 이름
-            public string Description { get; }  // 퀘스트 설명
-            public int TargetCount { get; }  // 목표 수량
+            public int Id { get; set; }  // 퀘스트 고유 ID
+            public string Name { get; set; }  // 퀘스트 이름
+            public string Description { get; set; }  // 퀘스트 설명
+            public int TargetCount { get; set; }  // 목표 수량
             public int CurrentCount { get; set; }  // 현재 진행도
-            public Item RewardItem { get; }  // 보상 아이템
-            public int RewardExp { get; }  // 보상 경험치
+            public Item RewardItem { get; set; }  // 보상 아이템
+            public int RewardExp { get; set; }  // 보상 경험치
             public bool IsCompleted => CurrentCount >= TargetCount;  // 퀘스트 완료 여부
             public bool IsAccepted { get; set; } = false;  // 퀘스트 수락 상태
             public bool RewardClaimed { get; set; } = false; // 보상 수령 여부
+
+            public QuestData() { } // 기본 생성자 추가
 
             public QuestData(int id, string name, string description, int targetCount, Item rewardItem, int rewardExp) // QuestDate 생성자 - 데이터 초기화
             {
@@ -49,31 +51,47 @@ namespace TextRPGTeam33
 
         private Quest() // 생성자에서 퀘스트 목록 초기화
         {
-            quests = new List<QuestData> // 퀘스트 목록
+            quests = new List<QuestData> // Id, 이름, 설명, 아이템 보상, 경험치 보상
             {
-                new QuestData(1, "잃어버린 보급품을 찾아서",
-                    "이봐! 며칠 전에 보급팀이 물자를 운반하다가 연락이 끊겼다네.\n그 물자들이 우리에겐 매우 중요하다고! 자네가 찾아와 줄 수 있겠나?",
-                    1,
-                    new Item("군용 방어구", ItemType.Amor, 15, 100, "튼튼한 군용 방어구입니다.", 2000, 1),
-                    300),
+                new QuestData(1, "좀비 사냥꾼",
+                    "좀비들이 점점 더 늘어나고 있어... \n이대로 가다간 우리 거점이 위험해질 거야. 좀비 사냥을 도와주겠나?",
+                    5,  // 5마리 처치
+                    new Item("구급상자", ItemType.Potion, 30, 7, "기본적인 응급처치가 가능한 구급상자입니다.", 500, 2),
+                    300), // 300 경험치
 
-                new QuestData(2, "의문의 구조신호",
-                    "주둔지 근처에서 누군가가 보내는 구조 신호를 포착했네.\n위험할 수도 있지만, 우리 동료일 수도 있어. 확인해줄 수 있나?",
-                    1,
-                    new Item("군용 소총", ItemType.Weapon, 20, 100, "위력이 강한 군용 소총입니다.", 3000, 1),
-                    500),
+                new QuestData(2, "위험한 돌연변이",
+                    "최근 돌연변이 좀비들이 자주 목격된다는 보고가 있었네.\n좀 더 깊숙한 곳을 수색해볼 수 있겠나?",
+                    3,  // 3마리 처치 (높은 레벨 몬스터 타겟)
+                    new Item("방탄 조끼", ItemType.Amor, 9, 3, "경찰용 방탄 조끼입니다. 총알을 어느정도 막아줄 것 같습니다.", 2000, 1),
+                    500), // 500 경험치
 
-                new QuestData(3, "긴급 의료품 확보",
-                    "의료품이 거의 바닥났다네. 병원에 물자가 남아있을 거야.\n위험하지만 누군가는 가야해. 자네가 가주겠나?",
-                    1,
-                    new Item("고급 회복 포션", ItemType.Potion, 50, 100, "매우 강력한 회복 효과를 가진 포션입니다.", 1000, 3),
-                    400)
-            };
+                new QuestData(3, "네크로맨서의 그림자",
+                    "던전 깊은 곳에서 강력한 기운이 느껴진다...\n아마도 좀비들을 조종하는 존재가 있는 것 같아.",
+                    2,  // 보스 2회 처치
+                    new Item("파피루스의 뼈조각", ItemType.Weapon, 0, 50, "???", 0, 1),
+                    800) // 800 경험치
+        };
             acceptedQuests = new List<QuestData>(); // 수락한 퀘스트 목록 초기화
         }
         
         public void DisplayQuests(Character player)
         {
+            var availableQuests = quests.Where(q => !q.IsAccepted && !q.IsCompleted).ToList(); // 수락되지 않은 퀘스트 중에서 랜덤으로 1개 선택
+
+            // 던전 클리어 횟수에 따라 적절한 퀘스트 표시
+            if (player.DungeonClearCount >= 45)  // 50층 근처에서는 보스 퀘스트 표시
+            {
+                availableQuests = availableQuests.Where(q => q.Id == 3).ToList();
+            }
+            else if (player.DungeonClearCount >= 20)  // 중반에는 돌연변이 퀘스트
+            {
+                availableQuests = availableQuests.Where(q => q.Id == 2).ToList();
+            }
+            else  // 초반에는 기본 좀비 퀘스트
+            {
+                availableQuests = availableQuests.Where(q => q.Id == 1).ToList();
+            }
+
             if (quests.All(q => acceptedQuests.Contains(q)))
             {
                 Console.WriteLine("현재 수락 가능한 퀘스트가 없습니다.");
@@ -81,7 +99,6 @@ namespace TextRPGTeam33
                 return;
             }
 
-            var availableQuests = quests.Where(q => !q.IsAccepted && !q.IsCompleted).ToList(); // 수락되지 않은 퀘스트 중에서 랜덤으로 1개 선택
             Random rand = new Random();
             currentQuest = availableQuests[rand.Next(availableQuests.Count)];
 
@@ -238,6 +255,15 @@ namespace TextRPGTeam33
                 return true;
             }
             return false;
+        }
+        public List<QuestData> GetQuestList()
+        {
+            return acceptedQuests;  // 현재 진행 중인 퀘스트 리스트 반환
+        }
+
+        public void LoadQuestList(List<QuestData> questList)
+        {
+            acceptedQuests = questList;  // 저장된 퀘스트 리스트 복원
         }
     }
 }

@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Text.Json;
 using System.Threading.Tasks;
+using static TextRPGTeam33.Quest;
 
 namespace TextRPGTeam33
 {
@@ -22,7 +23,9 @@ namespace TextRPGTeam33
             public Character Character { get; set; }
             public int CurrentDays { get; set; }
             public List<Item> InventoryItems { get; set; }
-            public int AdventureCount { get; set; }            
+            public int AdventureCount { get; set; }
+
+            public List<QuestData> QuestList { get; set; }
         }
 
         public GameSave()
@@ -48,7 +51,9 @@ namespace TextRPGTeam33
         {
             if (!HasAnySaveFile()) // 슬롯이 비어있다면...
             {
-                Character newCharacter = characterCreator.Charactercreator(); //캐릭터 생성
+                var defaultCharacter = new Character();
+                defaultCharacter.killSans = false;
+                Character newCharacter = characterCreator.Charactercreator(defaultCharacter); //캐릭터 생성
                 
                 currentSaveFile = saveFile1; // 현재 세이브 = 1번 슬롯
                 Save(newCharacter, saveFile1); // 1번 슬롯에 세이브
@@ -85,7 +90,12 @@ namespace TextRPGTeam33
                     if (!File.Exists(selectedFile)) // 빈 슬롯 선택시 바로 캐릭터 생성으로
                     {
                         currentSaveFile = selectedFile;  // 새 캐릭터 생성 시에도 선택한 슬롯 저장
-                        var newPlayer = characterCreator.Charactercreator(); // 캐릭터 생성
+
+                        bool anySansKilled = CheckAnySansKilled(); // 다른 세이브 데이터에서 Sans 처치 여부 확인
+                        var baseCharacter = new Character();
+                        baseCharacter.killSans = anySansKilled;
+
+                        var newPlayer = characterCreator.Charactercreator(baseCharacter); // 캐릭터 생성
                         if (newPlayer != null) // 슬롯이 비어있지 않다면...
                         {
                             Save(newPlayer, selectedFile); // 선택된 슬롯에 저장
@@ -150,7 +160,10 @@ namespace TextRPGTeam33
                     }
                     else // 슬롯이 비어있다면...
                     {
-                        var newPlayer = characterCreator.Charactercreator(); // 캐릭터 생성
+                        bool anySansKilled = CheckAnySansKilled(); // 다른 세이브 파일들에서 Sans 처치 여부 확인
+                        var baseCharacter = new Character();
+                        baseCharacter.killSans = anySansKilled;
+                        var newPlayer = characterCreator.Charactercreator(baseCharacter); // 캐릭터 생성
                         if (newPlayer != null)
                         {
                             Save(newPlayer, filePath);
@@ -189,7 +202,8 @@ namespace TextRPGTeam33
                     Character = player, // 캐릭터 정보
                     CurrentDays = Program.days, // 날짜 정보
                     InventoryItems = player.Inventory.GetItems(), // 인벤토리 정보
-                    AdventureCount = Program.adventureCount // 탐험 횟수 
+                    AdventureCount = Program.adventureCount, // 탐험 횟수 
+                    QuestList = Quest.Instance.GetQuestList()  // 퀘스트 리스트 저장
                 };
 
                 var options = new JsonSerializerOptions
@@ -200,9 +214,7 @@ namespace TextRPGTeam33
                 };
 
                 string jsonString = JsonSerializer.Serialize(saveData, options); //Json 문자열 변환 (Gamedata, option)
-
                 File.WriteAllText(filePath, jsonString); // Json 문자열 파일을 저장
-
                 currentSaveFile = filePath; // 선택된 슬롯을 저장 슬롯으로 지정
             }
             catch (Exception ex) // Save() 오류 텍스트 출력
@@ -231,12 +243,15 @@ namespace TextRPGTeam33
                 Program.adventureCount = saveData.AdventureCount; //  saveData의 AdventureCount를 Program의 adventureCount에 저장
 
                 Character loadedCharacter = saveData.Character; // saveData의 캐릭터 정보를 Charater에 저장
-
                 loadedCharacter.Inventory = new Inventory(); // 새로운 Inventory 인스턴스 생성하여 할당
 
                 if (saveData.InventoryItems != null) // saveData에 인벤토리 아이템이 비어있지 않다면...
                 {
                     loadedCharacter.Inventory.AddItem(saveData.InventoryItems); // saveData의 아이템들을 Character의 인벤토리에 저장
+                }
+                if (saveData.QuestList != null)
+                {
+                    Quest.Instance.LoadQuestList(saveData.QuestList);  // 퀘스트 리스트 로드
                 }
 
                 currentSaveFile = filePath; // 선택된 슬롯을 저장 슬롯으로 지정
@@ -294,6 +309,32 @@ namespace TextRPGTeam33
         public string GetCurrentSaveFile() // 지금 슬롯을 알려주는 함수
         {
             return currentSaveFile; // 지금 슬롯 정보를 반환
+        }
+
+        private bool CheckAnySansKilled()
+        {
+            try
+            {
+                // 모든 세이브 파일 확인
+                string[] saveFiles = { saveFile1, saveFile2, saveFile3 };
+                foreach (string file in saveFiles)
+                {
+                    if (File.Exists(file)) // 슬롯에서 데이터가 있다면...
+                    {
+                        string jsonString = File.ReadAllText(file);
+                        var saveData = JsonSerializer.Deserialize<GameData>(jsonString);
+                        if (saveData?.Character?.killSans == true) // 어떤 슬롯에서든 saveData killSans이 true가 1개 이상 있다면...
+                        {
+                            return true; //true로 반환
+                        }
+                    }
+                }
+            }
+            catch
+            {
+                return false; // 오류 발생 시 false 반환
+            }
+            return false;
         }
     }
 

@@ -40,10 +40,10 @@ namespace TextRPGTeam33
 
         public int speed {  get; set; }
 
-        public bool killSans { get; set; }
+        public bool KillSans { get; set; }
 
         
-        public Character(int level, string name, string job, int atk, int def, int maxHp, int maxMp, int gold)
+        public Character(int level, string name, string job, int atk, int def, int maxHp, int maxMp, int gold, bool killSans)
         {
             Name = name;
             Job = job;
@@ -60,15 +60,13 @@ namespace TextRPGTeam33
 
             DungeonClearCount = 0;
 
+            KillSans = killSans;
+
             Exp = 0;
             LevelUpExp = 10;
             
             Inventory = new Inventory();
 
-        }
-
-        public Character()
-        {
         }
 
         // 상태 보기 화면
