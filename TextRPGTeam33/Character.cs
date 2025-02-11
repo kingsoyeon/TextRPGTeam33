@@ -80,7 +80,8 @@ namespace TextRPGTeam33
             Console.ResetColor();
             Console.WriteLine("");
 
-            // 캐릭터 스탯
+            ///// 캐릭터 스탯 /////
+
             Console.WriteLine($"Lv. {Level.ToString("00")}");     // 레벨 2자리수까지 표현
             Console.WriteLine($"{Name} ( {Job} )");
 
@@ -92,22 +93,29 @@ namespace TextRPGTeam33
             plusStat = PlusDefense == 0 ? $"방어력 : {Defense}" : $"방어력 : {Defense + PlusDefense} (+{PlusDefense})";
             Console.WriteLine(plusStat);
 
+            // 체력,마나,골드
             Console.Write("체력 : ");
             Console.ForegroundColor = ConsoleColor.Red;
             Console.WriteLine($"{ Hp} / { MaxHP}");
+            Console.ResetColor();
             Console.Write("마나 : ");
             Console.ForegroundColor = ConsoleColor.Blue;
             Console.WriteLine($"{ Mp} / { MaxMp}");
+            Console.ResetColor();
 
             Console.Write($"Gold : ");
             Console.ForegroundColor = ConsoleColor.DarkYellow;
-            Console.WriteLine($"{Gold}");
+            Console.WriteLine($"{Gold} G");
             Console.WriteLine("");
             Console.ForegroundColor = ConsoleColor.DarkCyan;
+
+
             Console.WriteLine("_____________________________________________________________________________________________________________________");
             Console.ResetColor();
 
             Console.ForegroundColor = ConsoleColor.Cyan;
+            Console.WriteLine("");
+            Console.WriteLine("");
             Console.WriteLine("1. 인벤토리");
             Console.ResetColor();
             Console.WriteLine("0. 나가기");
