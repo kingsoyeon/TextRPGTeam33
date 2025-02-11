@@ -11,6 +11,7 @@ namespace TextRPGTeam33
     {
         //탈열병
         GUN_SHOT,
+        GUN_RELOAD,
         GRENADE,
         //개조련사
         ATTACK_TWICE,
