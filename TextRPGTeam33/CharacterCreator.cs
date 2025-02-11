@@ -11,18 +11,12 @@ namespace TextRPGTeam33
     {
         public Character Charactercreator(Character isKilledSans)
         {
+            Console.OutputEncoding = Encoding.UTF8;
             string name = "";
             do
             {
                 // 캐릭터 생성 처음 화면
                 Console.Clear();
-                Console.WriteLine("★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★");
-                Console.WriteLine("●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●");
-                Console.WriteLine("◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆");
-                Console.WriteLine("▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲");
-                Console.WriteLine("◀◀◀◀◀◀◀◀◀◀◀◀◀◀◀◀◀◀◀◀◀◀◀◀◀◀◀◀◀◀◀◀◀◀◀◀◀◀◀◀◀◀◀◀◀◀◀");
-                Console.WriteLine("♠♠♠♠♠♠♠♠♠♠♠♠♠♠♠♠♠♠♠♠♠♠♠♠♠♠♠♠♠♠♠♠♠♠♠♠♠♠♠♠♠♠♠♠");
-                Console.WriteLine("♥♥♥♥♥♥♥♥♥♥♥♥♥♥♥♥♥♥♥♥♥♥♥♥♥♥♥♥♥♥♥♥♥♥♥♥♥♥♥♥♥♥♥♥♥♥");
                 Console.WriteLine("원하시는 이름을 입력해주세요.");
                 Console.Write(">> ");
 
@@ -273,18 +267,18 @@ namespace TextRPGTeam33
                 {
                     case "탈영병":
                         Console.ForegroundColor = ConsoleColor.Cyan;
-                        Console.Write("                       　         ●●●●●●●");
+                        Console.Write("                       　         QQQQQQQQQ");
                         Console.WriteLine("\t\t탈영병");
-                        Console.WriteLine("                      　         ●●●●●●");
-                        Console.Write("                  　            ●●●");
+                        Console.WriteLine("                      　         QQQQQQQ");
+                        Console.Write("                  　            QQQQ");
                         Console.ForegroundColor = ConsoleColor.White;
                         Console.WriteLine("\t\t\t원래 군부대에서");
                         Console.ForegroundColor = ConsoleColor.Cyan;
-                        Console.Write("               　              ●●");
+                        Console.Write("               　              QQQ");
                         Console.ForegroundColor = ConsoleColor.White;
                         Console.WriteLine("\t\t\t근무하던 병사였지만,");
                         Console.ForegroundColor = ConsoleColor.Cyan;
-                        Console.Write("                　            ●●");
+                        Console.Write("                　            QQQ");
                         Console.ForegroundColor = ConsoleColor.White;
                         Console.WriteLine("\t\t\t좀비 사태 이후");
                         Console.ForegroundColor = ConsoleColor.Cyan;
@@ -296,23 +290,23 @@ namespace TextRPGTeam33
                         Console.ForegroundColor = ConsoleColor.White;
                         Console.WriteLine("\t\t\t남은 생존자들과");
                         Console.ForegroundColor = ConsoleColor.Cyan;
-                        Console.Write("                        ㅁㅁㅇㅁㅁㅁ      　　■■■■■");
+                        Console.Write("                        ㅁㅁㅇㅁㅁㅁ      　　GGGGGG");
                         Console.ForegroundColor = ConsoleColor.White;
                         Console.WriteLine("\t함께하려 했으나");
                         Console.ForegroundColor = ConsoleColor.Cyan;
-                        Console.Write("                     ㅁㅁㅁㅇㅁㅁㅁ■　　　■■■■■■■■■");
+                        Console.Write("                     ㅁㅁㅁㅇㅁㅁㅁGG　　　GGGGGGGGG");
                         Console.ForegroundColor = ConsoleColor.White;
                         Console.WriteLine("\t군 내부의 부조리와");
                         Console.ForegroundColor = ConsoleColor.Cyan;
-                        Console.Write("                      ㅁ@@ㅇㅁㅁㅁㅁ■　■■■■■■■■   ■");
+                        Console.Write("                      ㅁ@@ㅇㅁㅁㅁㅁGG　GGGGGGGGG   G");
                         Console.ForegroundColor = ConsoleColor.White;
                         Console.WriteLine("\t생존 방식에 의문을 품고");
                         Console.ForegroundColor = ConsoleColor.Cyan;
-                        Console.Write("                     ㅁㅁㅇㅁㅁㅁㅁㅁ■■■■■■");
+                        Console.Write("                     ㅁㅁㅇㅁㅁㅁㅁㅁGGGGGGGGG");
                         Console.ForegroundColor = ConsoleColor.White;
                         Console.WriteLine("\t\t탈영했다.");
                         Console.ForegroundColor = ConsoleColor.Cyan;
-                        Console.Write("                      ㅁㅇㅁㅁㅁㅁㅁㅁ■■■");
+                        Console.Write("                      ㅁㅇㅁㅁㅁㅁㅁㅁGGGG");
                         Console.ForegroundColor = ConsoleColor.White;
                         Console.WriteLine("\t\t지금은 부산역을 거처로");
                         Console.ForegroundColor = ConsoleColor.Cyan;
@@ -330,26 +324,26 @@ namespace TextRPGTeam33
                         Console.ForegroundColor = ConsoleColor.White;
                         Console.WriteLine("\t\t\t군사 훈련을 받았기에");
                         Console.ForegroundColor = ConsoleColor.Cyan;
-                        Console.Write("                 ㅁㅇㅁㅁㅁㅁㅁㅁ ■");
+                        Console.Write("                 ㅁㅇㅁㅁㅁㅁㅁㅁDDD");
                         Console.ForegroundColor = ConsoleColor.White;
                         Console.WriteLine("\t\t\t기본적인 전투 스탯이 뛰어나고,");
                         Console.ForegroundColor = ConsoleColor.Cyan;
-                        Console.Write("                ㅁㅇㅁㅁㅁㅁㅁㅁ■■■");
+                        Console.Write("                ㅁㅇㅁㅁㅁㅁㅁㅁDDDDD");
                         Console.ForegroundColor = ConsoleColor.White;
                         Console.WriteLine("\t\t\t총기를 잘 다룰 수 있다.");
                         Console.ForegroundColor = ConsoleColor.Cyan;
-                        Console.Write("               ◆◆◆◆◆◆◆◆   ㅁㅁ ■■■■■");
+                        Console.Write("               @@@@@@@@@@   ㅁㅁ DDDDD");
                         Console.WriteLine("");
-                        Console.WriteLine("              ◆◆◆◆◆◆◆◆         ■■■■■");
-                        Console.WriteLine("             ◆◆◆◆◆◆◆◆           ■■■■■");
-                        Console.WriteLine("            ◆◆◆◆◆◆◆◆             ■■■■■");
-                        Console.WriteLine("           ◆◆◆◆◆◆◆◆              ■■■■■");
-                        Console.WriteLine("          //◆◆◆//                ■■■");
-                        Console.WriteLine("         //◆◆◆//");
+                        Console.WriteLine("              @@@@@@@@@@         DDDDDD");
+                        Console.WriteLine("             @@@@@@@@@@           DDDDDD");
+                        Console.WriteLine("            @@@@@@@@@@             DDDDDD");
+                        Console.WriteLine("           @@@@@@@@@@              DDDDDD");
+                        Console.WriteLine("          //@@@@//                 DDDD");
+                        Console.WriteLine("         //@@@@//");
                         Console.WriteLine("        //  ///");
                         Console.WriteLine("       //  ///");
                         Console.WriteLine("      //  ///");
-                        Console.WriteLine("    ▲//==///");
+                        Console.WriteLine("   44//==///");
                         Console.WriteLine("    //==///");
                         Console.WriteLine("       ///");
                         Console.WriteLine("      ///");
