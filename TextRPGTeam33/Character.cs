@@ -169,7 +169,7 @@ namespace TextRPGTeam33
             else if ( item.Type == ItemType.Amor)   { PlusDefense -= item.Value; }  // 갑옷일 경우 방어력 감소
         }
 
-        public void LevelUp(int rewardExp)
+        public bool LevelUp(int rewardExp)
         {
             this.Exp += rewardExp;
             
@@ -184,11 +184,13 @@ namespace TextRPGTeam33
                     this.Attack += 1;
                     this.Defense += 1;
                     isLevelUp = true;
-                    return;
+                    
                 }
                 else break;
             }
             while (true);
+
+            return isLevelUp;
         }
 
     }
