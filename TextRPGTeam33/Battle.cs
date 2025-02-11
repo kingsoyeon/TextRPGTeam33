@@ -349,6 +349,31 @@ namespace TextRPGTeam33
                         Thread.Sleep(1000);
                     }
                 }
+
+                // 퀘스트 완료 [임시]
+                var acceptedQuests = Quest.Instance.GetQuestList();
+                foreach (var quest in acceptedQuests)
+                {
+                    if (!quest.IsCompleted && !quest.RewardClaimed)
+                    {
+                        // 퀘스트 ID에 따라 적절한 조건 체크
+                        switch (quest.Id)
+                        {
+                            case 4: // 좀비 사냥꾼 - 레벨 1~4 몬스터
+                                if (monsters.Any(m => m.level <= 4 && !m.isBoss))
+                                    Quest.Instance.UpdateQuestProgress(quest.Id);
+                                break;
+                            case 5: // 위험한 돌연변이 - 레벨 5 이상 몬스터
+                                if (monsters.Any(m => m.level >= 5 && !m.isBoss))
+                                    Quest.Instance.UpdateQuestProgress(quest.Id);
+                                break;
+                            case 6: // 네크로맨서의 그림자 - 보스 몬스터
+                                if (monsters.Any(m => m.isBoss))
+                                    Quest.Instance.UpdateQuestProgress(quest.Id);
+                                break;
+                        }
+                    }
+                }
             }
             else
             {
