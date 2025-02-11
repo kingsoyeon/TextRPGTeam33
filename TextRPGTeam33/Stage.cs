@@ -167,6 +167,10 @@ namespace TextRPGTeam33
                         }
                     }
                 }
+
+                //히든보스 샌즈 처치 시 히든직업 등장
+                if (monster.name == "샌즈")
+                    player.killSans = true;
             }
 
             //보상 지급
