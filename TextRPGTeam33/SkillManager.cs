@@ -152,7 +152,11 @@ namespace TextRPGTeam33
                     }
                     monster1Hp = monsters[index].hp;
                     monsters[index].hp -= skills[i].atk;
-                    if (monsters[index].hp < 0) monsters[index].hp = 0;
+                    if (monsters[index].hp <= 0)
+                    {
+                        QuestUpdate();
+                        monsters[index].hp = 0;
+                    }
                     break;
                 case SkillType.GUN_RELOAD:
                     bullet = maxBullet;
@@ -175,7 +179,11 @@ namespace TextRPGTeam33
                         target.Add(m);
                         monsterHp[j++] = m.hp;
                         m.hp -= skills[i].atk;
-                        if (m.hp < 0) m.hp = 0;
+                        if (m.hp <= 0)
+                        {
+                            QuestUpdate();
+                            m.hp = 0;
+                        }
                     }
                     break;
                 case SkillType.BOMB_UPGRADE:
@@ -200,7 +208,11 @@ namespace TextRPGTeam33
                     monster1Hp = monsters[index].hp;
 
                     monsters[index].hp -= skills[i].atk;
-                    if (monsters[index].hp < 0) monsters[index].hp = 0;
+                    if (monsters[index].hp <= 0)
+                    {
+                        QuestUpdate();
+                        monsters[index].hp = 0;
+                    }
 
                     if (cnt > 1)
                     {
@@ -215,7 +227,11 @@ namespace TextRPGTeam33
                         monster2Hp = monsters[index2].hp;
 
                         monsters[index2].hp -= skills[i].atk;
-                        if (monsters[index2].hp < 0) monsters[index2].hp = 0;
+                        if (monsters[index2].hp <= 0)
+                        {
+                            QuestUpdate();
+                            monsters[index2].hp = 0;
+                        }
                     }
                     break;
             }
@@ -402,6 +418,33 @@ namespace TextRPGTeam33
                     Console.Clear();
                     Console.WriteLine("잘못된 입력입니다");
                     Thread.Sleep(1000);
+                }
+            }
+        }
+
+        private void QuestUpdate()
+        {
+            var acceptedQuests = Quest.Instance.GetQuestList();
+            foreach (var quest in acceptedQuests)
+            {
+                if (!quest.IsCompleted && !quest.RewardClaimed)
+                {
+                    // 퀘스트 ID에 따라 적절한 조건 체크
+                    switch (quest.Id)
+                    {
+                        case 1: // 좀비 사냥꾼 - 레벨 1~4 몬스터
+                            if (monsters.Any(m => m.level <= 4 && !m.isBoss))
+                                Quest.Instance.UpdateQuestProgress(quest.Id);
+                            break;
+                        case 2: // 위험한 돌연변이 - 레벨 5 이상 몬스터
+                            if (monsters.Any(m => m.level >= 5 && !m.isBoss))
+                                Quest.Instance.UpdateQuestProgress(quest.Id);
+                            break;
+                        case 3: // 네크로맨서의 그림자 - 보스 몬스터
+                            if (monsters.Any(m => m.isBoss))
+                                Quest.Instance.UpdateQuestProgress(quest.Id);
+                            break;
+                    }
                 }
             }
         }
