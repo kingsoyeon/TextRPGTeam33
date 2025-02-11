@@ -167,6 +167,10 @@ partial class Program
             {
                 Quest.Instance.DisplayQuestList(player);
             }
+            else if (choice == "7")
+            {
+                aaaaaaaaaaaaa(player);
+            }
             else if (choice == "0")
             {
                 inDungeon = false;
@@ -191,11 +195,34 @@ partial class Program
             }
         }
     }
-
-    static void Explore(Character player)
+    static void aaaaaaaaaaaaa(Character player)
+    {
+        string choice = Console.ReadLine() ?? "0";
+        bool eeeDungeon = true;
+        while (eeeDungeon)
+        {
+            if (choice == "1")
+            {
+                StartBattle(player);
+            }
+            else if (choice == "2")
+            {
+                insideShop(player);  // 탐험을 시작합니다
+            }
+            else if (choice == "3")
+            {
+                Event(player);
+            }
+            else if (choice == "0")
+            {
+                eeeDungeon = false;
+            } 
+        }
+    }
+static void Explore(Character player)
     {
         Random random = new Random();
-        int randomChoice = random.Next(0, 1);
+        int randomChoice = random.Next(0, 5);
         // 탐험이 시작되면 탐험 횟수 증가
         Console.Clear();
         Console.WriteLine($"탐험 {adventureCount + 1}회 진행 중...");

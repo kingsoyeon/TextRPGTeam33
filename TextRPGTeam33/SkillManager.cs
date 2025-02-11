@@ -15,6 +15,8 @@ namespace TextRPGTeam33
         List<Monster> monsters;
         Random rand;
         public int skillCount;
+        int bullet;
+        int maxBullet;
 
         public SkillManager(Character player, List<Monster> monsters)
         {
@@ -22,16 +24,19 @@ namespace TextRPGTeam33
             skills = new List<Skill>();
             this.monsters = monsters;
             rand = new Random();
+            maxBullet = 3;
+            bullet = maxBullet;
 
             switch (player.Job)
             {
                 case "탈영병":
-                    skills.Add(new Skill(SkillType.GUN_SHOT, "총 사격", "사격을 통해 공격합니다", 5, 7));
+                    skills.Add(new Skill(SkillType.GUN_SHOT, "총 사격", "사격을 통해 공격합니다", 4, 10));
+                    skills.Add(new Skill(SkillType.GUN_RELOAD, "재장전", "재장전합니다", 3, 0));
                     skills.Add(new Skill(SkillType.GRENADE, "수류탄 투척", "수류탄을 던져 폭파합니다", 20, 5));
                     break;
                 case "개 조련사":
                     skills.Add(new Skill(SkillType.ATTACK_TWICE, "두번 공격", "개와 함께 공격합니다", 6, 8));
-                    skills.Add(new Skill(SkillType.BRING_ITEM, "아이템 물어오기", "아이템을 물어오게 시킵니다", 4, 0));
+                    skills.Add(new Skill(SkillType.BRING_ITEM, "아이템 물어오기", "아이템을 물어오게 시킵니다", 3, 0));
                     break;
                 case "폭발물 산업기사":
                     skills.Add(new Skill(SkillType.RANGE_ATTACK, "범위 공격", "본인을 포함한 모두에게 데미지를 입힙니다", 25, 5));
@@ -140,9 +145,17 @@ namespace TextRPGTeam33
                 case SkillType.BOLT_TACKLE:
                     index = ChooseTarget(i);
                     if (index == -1) return -1;
+                    if (skills[i].type == SkillType.GUN_SHOT)
+                    {
+                        bullet--;
+                        if (bullet < 0) bullet = 0;
+                    }
                     monster1Hp = monsters[index].hp;
                     monsters[index].hp -= skills[i].atk;
                     if (monsters[index].hp < 0) monsters[index].hp = 0;
+                    break;
+                case SkillType.GUN_RELOAD:
+                    bullet = maxBullet;
                     break;
                 case SkillType.BRING_ITEM:
                     skillCount++;
@@ -354,6 +367,17 @@ namespace TextRPGTeam33
                 Console.WriteLine($"HP {player.Hp}/{player.MaxHP}");
                 Console.WriteLine($"MP {player.Mp}/{player.MaxMp}\n");
 
+                if (skills[index].type == SkillType.GUN_SHOT)
+                {
+                    if (bullet <= 0)
+                    {
+                        Console.Clear();
+                        Console.WriteLine("남은 총알이 없습니다");
+                        Thread.Sleep(1000);
+                        return -1;
+                    }
+                    Console.WriteLine($"남은 총알 개수 : {bullet}");
+                }
                 Console.WriteLine("0. 취소\n");
 
                 Console.WriteLine("원하시는 행동을 입력해주세요");
