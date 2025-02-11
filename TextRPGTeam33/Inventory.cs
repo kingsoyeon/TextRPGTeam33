@@ -88,7 +88,7 @@ namespace TextRPGTeam33
                 Console.WriteLine("인벤토리-장착 관리");
                 Console.WriteLine("보유 중인 아이템을 관리할 수 있습니다.");
 
-                List<Item> PotionExcepted = Items.Where(item => item.Type != ItemType.Potion).ToList();
+                List<Item> PotionExcepted = Items.Where(item => item.Type != ItemType.Potion && item.Type != ItemType.MPPotion).ToList();
 
                 for (int i = 0; i < PotionExcepted.Count; i++)
                 {
