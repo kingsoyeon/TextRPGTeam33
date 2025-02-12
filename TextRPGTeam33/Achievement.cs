@@ -46,7 +46,7 @@ namespace TextRPGTeam33
         {
             { "TotalKills", 0 },
             { "BossKills", 0 },
-            { "TitalWins", 0 }
+            { "TotalWins", 0 }
         };
 
         // 전투 통계 업데이트 메서드
