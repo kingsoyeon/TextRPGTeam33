@@ -173,7 +173,7 @@ namespace TextRPGTeam33
             if (combatStats["TotalKills"] >= 200 && !achievements["I_AM_LEGEND"].IsUnlocked)
             {
                 achievements["I_AM_LEGEND"].Progress = combatStats["TotalKills"];
-                achievements["I_AM_LEGEND"].TargetValue == 200;
+                achievements["I_AM_LEGEND"].TargetValue = 200;
                 UnlockAchievement("I_AM_LEGEND");
             }
 
