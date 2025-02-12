@@ -177,7 +177,7 @@ namespace TextRPGTeam33
                 UnlockAchievement("I_AM_LEGEND");
             }
 
-            if (Program.days >= 28 && !achievements["SURVIVOR"].IsUnlocked)
+            if (Program.days >= 28 && achievements.ContainsKey("SURVIVOR") && !achievements["SURVIVOR"].IsUnlocked)
             {
                 UnlockAchievement("SURVIVOR");
             }
