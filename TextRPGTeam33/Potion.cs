@@ -144,6 +144,7 @@ namespace TextRPGTeam33
                 {                    
                     for (int i = 0; i < hpPotions.Count; i++)
                     {
+                        Console.WriteLine("\n[HP 포션]");
                         Console.ForegroundColor = ConsoleColor.Green;
                         Console.Write("●");
                         Console.ResetColor();
