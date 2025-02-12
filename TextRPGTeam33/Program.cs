@@ -322,33 +322,66 @@ static void Explore(Character player)
     static void rest(Character player)
     {
         Console.Clear();
-        Console.WriteLine("휴식을 취하시면 탐험 횟수가 늘어납니다.");
-        Console.WriteLine("휴식을 취하시겠습니까?");
-        Console.WriteLine("1. 휴식을 취한다.");
-        Console.WriteLine("0. 나간다.");
+        Console.WriteLine("#---------------------------------------------------------------------------------------#");
+        Console.WriteLine("|여관주인\t\t\t\t\t\t\t\t\t\t|");
+        Console.WriteLine("|지친 몸을 회복할 방을 알아 보고 계시는가요?\t\t\t\t\t\t|");
+        Console.WriteLine("|가격은 1000 Gold입니다.\t\t\t\t\t\t\t\t|");
+        Console.WriteLine("|\t\t\t\t\t\t\t\t\t\t\t|");
+        Console.WriteLine("|\t\t\t\t\t\t\t\t\t\t\t|");
+        Console.WriteLine("|\t\t\t\t\t\t\t\t\t\t\t|");
+        Console.WriteLine("#---------------------------------------------------------------------------------------#");
+        Thread.Sleep(3000);
+        Console.Clear();
+        Console.WriteLine("#---------------------------------------------------------------------------------------#");
+        Console.WriteLine($"|※ TIP. 휴식을 취하시면 날짜가 늘어납니다.\t\t\t당신의 Gold : {player.Gold}\t|");
+        Console.WriteLine("|\t\t\t\t\t\t\t\t\t\t\t|");
+        Console.WriteLine("|\t\t\t\t\t\t\t\t\t\t\t|");
+        Console.WriteLine("|휴식을 취하시겠습니까?\t\t\t\t\t\t\t\t\t|");
+        Console.WriteLine("|1. 휴식을 취한다.\t\t\t\t\t\t\t\t\t|");
+        Console.WriteLine("|0. 나간다.\t\t\t\t\t\t\t\t\t\t|");
+        Console.WriteLine("|\t\t\t\t\t\t\t\t\t\t\t|");
+        Console.WriteLine("#---------------------------------------------------------------------------------------#");
+        Console.WriteLine(">>");
         string restChioce = Console.ReadLine() ?? "0";
         if (restChioce == "1")
         {
-            Console.Clear();
-            player.Hp = player.MaxHP;
-            player.Mp = player.MaxMp;
-            Console.WriteLine("휴식을 취합니다.");
-            Console.WriteLine("체력과 마나가 모두 회복됩니다.");
-            Thread.Sleep(1000);
-            adventureCount++;
+            if (player.Gold >= 1000)
+            {
+                player.Gold -= 1000;
+                Console.Clear();
+                player.Hp = player.MaxHP;
+                player.Mp = player.MaxMp;
+                Console.WriteLine("휴식을 취합니다.");
+                Console.WriteLine("체력과 마나가 모두 회복됩니다.");
+                Thread.Sleep(1000);
+                adventureCount *= 0;
+                days += 1;
+                Thread.Sleep(1000);
+            }
+            else
+            {
+                Console.WriteLine("여관주인");
+                Console.WriteLine("손님, 돈이 부족하신거 같습니다만...");
+                Thread.Sleep(1000);
+                return;
+            }
+           
+
         }
         else if (restChioce == "0")
         {
+            Console.Clear();
             Console.WriteLine("휴식을 취하지 않고 돌아갑니다.");
             Thread.Sleep(1000);
             return;
         }
         else
         {
+            Console.Clear();
             Console.WriteLine("잘못된 입력입니다.");
             Thread.Sleep(1000);
         }
-        adventureCount++;
+
     }
 
     static void OpenStatus()
