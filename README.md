@@ -62,7 +62,9 @@ TextRPGTeam33/
 ├── Potion.cs           - 포션 시스템
 ├── Skill.cs            - 스킬 정의
 ├── SkillManager.cs     - 스킬 관리
-└── Stage.cs            - 스테이지 관리
+├── Stage.cs            - 스테이지 관리
+├── Achievement.cs      - 업적 관리
+└── Recipe.cs           - 아이템 제작
 ```
 
 ## 시작하기
@@ -76,9 +78,9 @@ TextRPGTeam33/
    - 탐험
    - 휴식
    - 포션 사용
-   - 일기 쓰기
+   - 일기 쓰기 (저장)
    - 퀘스트 보기
-   - 저장
+   - 아이템 제작
 
 ## 개발 정보
 
