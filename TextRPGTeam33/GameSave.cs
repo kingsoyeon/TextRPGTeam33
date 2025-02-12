@@ -86,11 +86,11 @@ namespace TextRPGTeam33
                 Console.WriteLine("ㅁ-ㅁ-ㅁ-ㅁ-ㅁ-ㅁ-ㅁ-ㅁ-ㅁ-ㅁ-ㅁ-ㅁ-ㅁ-ㅁ-ㅁ-ㅁ-ㅁ");
                 
                 Console.WriteLine();
-                Console.Write("ㅁ\t\t");
+                Console.Write("\t\t");
                 Console.ResetColor();
                 Console.Write("저장된 캐릭터 목록");
                 Console.ForegroundColor = ConsoleColor.Cyan;
-                Console.WriteLine("\t\tㅁ");
+                Console.WriteLine("\t\t");
                 Console.WriteLine();
                 Console.WriteLine("ㅁ==============================================ㅁ");
 
