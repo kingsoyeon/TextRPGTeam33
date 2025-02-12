@@ -817,6 +817,8 @@ partial class Program
                 string currentSaveFile = gameSave.GetCurrentSaveFile();
                 gameSave.Save(player, currentSaveFile);
                 Thread.Sleep(2000);
+                Achievement.Instance.CheckAchievements(player); //=> 업적 달성 팝업
+                Achievement.Instance.DisplayAchievements();// 업적 리스트 출력
             }
         }
     }
@@ -841,7 +843,8 @@ partial class Program
             else if (choice == "0")
             {
                 eeeDungeon = false;
-            } 
+            }
+            break;
         }
     }
 static void Explore(Character player)
