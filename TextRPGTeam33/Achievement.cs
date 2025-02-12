@@ -37,6 +37,33 @@ namespace TextRPGTeam33
             public string Description { get; set; }
             public bool IsUnlocked { get; set; }
             public DateTime UnlockDate { get; set; }
+            // 추가: 업적 진행도 관련 데이터
+            public int Progress { get; set; } = 0;
+            public int TargetValue { get; set; } = 0;
+        }
+
+        private Dictionary<string, int> combatStats = new Dictionary<string, int>()
+        {
+            { "TotalKills", 0 },
+            { "BossKills", 0 },
+            { "TitalWins", 0 }
+        };
+
+        // 전투 통계 업데이트 메서드
+        public void UpdateCombatStats(string statName, int value)
+        {
+            if (combatStats.ContainsKey(statName))
+            {
+                combatStats[statName] = value;
+            }
+        }
+
+        public void IncrementCombatStat(string statName)
+        {
+            if (combatStats.ContainsKey(statName))
+            {
+                combatStats[statName]++;
+            }
         }
 
 
@@ -51,7 +78,7 @@ namespace TextRPGTeam33
                         new AchievementData
                         {
                             Name = "첫 발걸음",
-                            Description = "게임을 처음 시작했습니다.",
+                            Description = "인류에겐 작은 한 걸음이지만, 당신에겐 위대한 도약입니다.",
                             IsUnlocked = false,
                             UnlockDate = DateTime.MinValue
                         }
@@ -77,23 +104,46 @@ namespace TextRPGTeam33
                         }
                     },
                     {
-                        "RICH_ADVENTURER",
+                        "I_AM_LEGEND",
                         new AchievementData
                         {
-                            Name = "부자 모험가",
-                            Description = "10000 G를 모았습니다.",
+                            Name = "나는 전설이다.",
+                            Description = "200마리의 적을 처치하세요. 마지막 인류의 희망이 되었습니다.",
                             IsUnlocked = false,
                             UnlockDate = DateTime.MinValue
+                            TargetValue = 200
                         }
                     },
                     {
                         "SURVIVOR",
                         new AchievementData
                         {
-                            Name = "생존자",
-                            Description = "30일 동안 생존했습니다.",
+                            Name = "28일후",
+                            Description = "28일 동안 생존했습니다. 런던은 아직 괜찮을까요?",
                             IsUnlocked = false,
                             UnlockDate = DateTime.MinValue
+                        }
+                    },
+                    {
+                        "BOSS_HUNTER",
+                        new AchievementData
+                        {
+                            Name = "T-바이러스 항체",
+                            Description = "보스를 5번 처치했습니다. 이제 당신의 피는 특별합니다.",
+                            IsUnlocked = false,
+                            UnlockDate = DateTime.MinValue,
+                            TargetValue = 5
+                        }
+                    },
+                    {
+                        "BATTLE_EXPERT",
+                        new AchievementData
+                        {
+                            Name = "어벤져스 어셈블",
+                            Description = "100번째 전투 승리. 샤와르마 먹으러 가실래요?",
+                            IsUnlocked = false,
+                            UnlockDate = DateTime.MinValue,
+                            TargetValue = 100
                         }
                     }
                 };
@@ -120,14 +170,30 @@ namespace TextRPGTeam33
                 UnlockAchievement("SANS_KILLER");
             }
 
-            if (player.Gold >= 10000 && !achievements["RICH_ADVENTURER"].IsUnlocked)
+            if (combatStats["TotalKills"] >= 200 && !achievements["I_AM_LEGEND"].IsUnlocked)
             {
-                UnlockAchievement("RICH_ADVENTURER");
+                achievements["I_AM_LEGEND"].Progress = combatStats["TotalKills"]
+                achievements["I_AM_LEGEND"].TargetValue == 200;
+                UnlockAchievement("I_AM_LEGEND");
             }
 
-            if (Program.days >= 30 && !achievements["SURVIVOR"].IsUnlocked)
+            if (Program.days >= 28 && !achievements["SURVIVOR"].IsUnlocked)
             {
                 UnlockAchievement("SURVIVOR");
+            }
+
+            if (combatStats["BossKills"] >= 5 && !achievements["BOSS_HUNTER"].IsUnlocked)
+            {
+                achievements["BOSS_HUNTER"].Progress = combatStats["BossKills"];
+                achievements["BOSS_HUNTER"].TargetValue = 5;
+                UnlockAchievement("BOSS_HUNTER");
+            }
+
+            if (combatStats["TotalWins"] >= 100 && !achievements["BATTLE_EXPERT"].IsUnlocked)
+            {
+                achievements["BATTLE_EXPERT"].Progress = combatStats["TotalWins"];
+                achievements["BATTLE_EXPERT"].TargetValue = 100;
+                UnlockAchievement("BATTLE_EXPERT");
             }
         }
 
@@ -167,6 +233,12 @@ namespace TextRPGTeam33
                     Console.ForegroundColor = ConsoleColor.Gray;
                     Console.WriteLine($"□ {achievement.Name}");
                     Console.WriteLine($"  {achievement.Description}");
+
+                     // 진행도가 있는 업적의 경우 표시
+                    if (achievement.TargetValue > 0)
+                    {
+                        Console.WriteLine($"  진행도: {achievement.Progress}/{achievement.TargetValue}");
+                    }
                 }
                 Console.ResetColor();
                 Console.WriteLine();
