@@ -223,7 +223,7 @@ namespace TextRPGTeam33
                 }
                 else if (item.Type == ItemType.Potion || item.Type == ItemType.MPPotion) // ItemType이 Potion 이라면...
                 {
-                    Console.Write("\n구매할 수량을 입력해주세요: ");
+                    Console.Write("\n구매할 수량을 입력해주세요:\n>> ");
                     if (int.TryParse(Console.ReadLine(), out int quantity) && quantity > 0) // 입력값을 정수로 변환 시켜 quantity에 넣는다.
                     {
                         int totalPrice = price * quantity; // 가격 = 포션 가격 x 입력값
@@ -377,7 +377,7 @@ namespace TextRPGTeam33
                     var item = inventoryItems[index - 1];
 
                     Console.Write($"\n현재 보유 중인 {item.Name}의 개수: {item.Count}개");
-                    Console.Write("\n판매할 수량을 입력해주세요: ");
+                    Console.Write("\n판매할 수량을 입력해주세요:\n>> ");
 
                     if (!int.TryParse(Console.ReadLine(), out int quantity)) // 입력값이 잘못됬다면... / 입력값을 정수로 변환시켜 index에 넣는다.
                     {

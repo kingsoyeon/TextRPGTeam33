@@ -79,8 +79,9 @@ namespace TextRPGTeam33
                     }
                     else
                     {
-                        Console.WriteLine("잘못된 입력입니다");
-                        Console.ReadKey();
+                        Console.Clear();
+                        Console.WriteLine("잘못된 입력입니다.");
+                        Thread.Sleep(1000);
                     }
                 }
             } while (name=="");
@@ -152,8 +153,8 @@ namespace TextRPGTeam33
                 Console.WriteLine("<<======================================>>");
                 Console.WriteLine("");
 
-                Console.WriteLine("원하시는 번호를 선택하세요.");
-                Console.Write(">> ");
+
+                Console.Write("원하시는 행동을 입력해주세요:\n>>");
 
                 string selectJob = Console.ReadLine();
 
@@ -290,9 +291,10 @@ namespace TextRPGTeam33
                     //    break;
 
                     default:
-                        Console.WriteLine("잘못된 번호입니다. 다시 입력하세요.");
-                        Thread.Sleep(1500);
                         Console.Clear();
+                        Console.WriteLine("잘못된 입력입니다.");
+                        Thread.Sleep(1000);
+
                         continue;
                 }
 

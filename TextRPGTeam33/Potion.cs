@@ -189,8 +189,10 @@ namespace TextRPGTeam33
                     }
                     else
                     {
+                        Console.Clear();
                         Console.WriteLine("잘못된 입력입니다.");
                         Thread.Sleep(1000);
+
                     }
                 }
                 else

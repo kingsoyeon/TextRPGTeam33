@@ -101,7 +101,7 @@ namespace TextRPGTeam33
                 }
                 Console.WriteLine("0. 취소\n");
 
-                Console.WriteLine("원하시는 행동을 입력해주세요");
+                Console.WriteLine("원하시는 행동을 입력해주세요:");
                 Console.Write(">> ");
 
                 try
@@ -396,7 +396,7 @@ namespace TextRPGTeam33
                 }
                 Console.WriteLine("0. 취소\n");
 
-                Console.WriteLine("원하시는 행동을 입력해주세요");
+                Console.WriteLine("원하시는 행동을 입력해주세요:");
                 Console.Write(">> ");
 
                 try
