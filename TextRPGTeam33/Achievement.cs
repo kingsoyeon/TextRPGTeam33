@@ -110,7 +110,7 @@ namespace TextRPGTeam33
                             Name = "나는 전설이다.",
                             Description = "200마리의 적을 처치하세요. 마지막 인류의 희망이 되었습니다.",
                             IsUnlocked = false,
-                            UnlockDate = DateTime.MinValue
+                            UnlockDate = DateTime.MinValue,
                             TargetValue = 200
                         }
                     },
@@ -173,7 +173,7 @@ namespace TextRPGTeam33
             if (combatStats["TotalKills"] >= 200 && !achievements["I_AM_LEGEND"].IsUnlocked)
             {
                 achievements["I_AM_LEGEND"].Progress = combatStats["TotalKills"];
-                achievements["I_AM_LEGEND"].TargetValue == 200;
+                achievements["I_AM_LEGEND"].TargetValue = 200;
                 UnlockAchievement("I_AM_LEGEND");
             }
 
