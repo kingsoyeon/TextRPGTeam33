@@ -195,6 +195,14 @@ namespace TextRPGTeam33
                 {
                     DisplayQuestDetail(player, acceptedQuests[selected - 1]);
                 }
+
+                else  // 잘못된 입력 처리 추가
+                {
+                    Console.Clear();
+                    Console.WriteLine("잘못된 입력입니다");
+                    Thread.Sleep(1000);
+                    Console.Clear();
+                }
             }
         }
 
@@ -252,6 +260,13 @@ namespace TextRPGTeam33
 
                     acceptedQuests.Remove(quest);
                     break;
+                }
+                else  // 잘못된 입력 처리 추가
+                {
+                    Console.Clear();
+                    Console.WriteLine("잘못된 입력입니다");
+                    Thread.Sleep(1000);
+                    Console.Clear();
                 }
             }
         }
