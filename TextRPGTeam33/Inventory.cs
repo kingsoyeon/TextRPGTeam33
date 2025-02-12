@@ -60,20 +60,30 @@ namespace TextRPGTeam33
         public void InventoryScreen(Character player)
         {
             Console.Clear();
-            Console.WriteLine("인벤토리");
+            Console.ForegroundColor = ConsoleColor.Cyan;
             Console.WriteLine("보유 중인 아이템을 관리할 수 있습니다.");
+            
+            Console.ForegroundColor = ConsoleColor.Yellow;
+            Console.WriteLine("\n================================================<<인벤토리>>================================================");
+            Console.ResetColor();
             Console.WriteLine("");
-            Console.WriteLine("[아이템 목록]");
-
-
+            Console.WriteLine("");
+         
             for (int i = 0; i < Items.Count; i++)
             {
                 string itemInfo = InventoryDisplay(Items[i]);
+
                 Console.WriteLine($"-{itemInfo}");
             }
             Console.WriteLine("");
             Console.WriteLine("");
+            Console.ForegroundColor = ConsoleColor.Yellow;
+            Console.WriteLine("____________________________________________________________________________________________________________");
+            Console.ResetColor();
+            Console.WriteLine("");
+            Console.ForegroundColor = ConsoleColor.Cyan;
             Console.WriteLine("1. 장착관리");
+            Console.ResetColor();
             Console.WriteLine("0. 나가기");
             Console.WriteLine("");
             Console.WriteLine("원하시는 행동을 입력해주세요.");
@@ -86,8 +96,13 @@ namespace TextRPGTeam33
             else if (input == "1")
             {
                 Console.Clear();
-                Console.WriteLine("인벤토리-장착 관리");
-                Console.WriteLine("보유 중인 아이템을 관리할 수 있습니다.");
+                Console.ForegroundColor = ConsoleColor.Cyan;
+                Console.WriteLine("보유 중인 장비를 장착 및 해제할 수 있습니다.");
+                Console.ForegroundColor = ConsoleColor.Yellow;
+                Console.WriteLine("\n================================================<<장착관리>>================================================");
+                Console.ResetColor();
+                Console.WriteLine("");
+                Console.WriteLine("");
 
                 List<Item> PotionExcepted = Items.Where(item => item.Type != ItemType.Potion && item.Type != ItemType.MPPotion).ToList();
 
@@ -96,9 +111,15 @@ namespace TextRPGTeam33
                     string itemInfo = InventoryDisplay(PotionExcepted[i]);
                     Console.WriteLine($"-[{i+1}]{itemInfo}");
                 }
-
                 Console.WriteLine("");
+                Console.WriteLine("");
+                Console.ForegroundColor = ConsoleColor.Yellow;
+                Console.WriteLine("____________________________________________________________________________________________________________");
+                Console.ResetColor();
+
+                Console.WriteLine("");  
                 Console.WriteLine("0. 나가기");
+                Console.WriteLine("");
                 Console.WriteLine("원하시는 행동을 입력해주세요.");
                 Console.Write(">> ");
 
@@ -119,9 +140,11 @@ namespace TextRPGTeam33
                     {
                         player.UnEquipItem(selectedItem);
                         selectedItem.IsEquip = false;
-                        Console.WriteLine("선택한 아이템을 장착 해제했습니다.");
-                        Thread.Sleep(1000);
 
+                        Console.ForegroundColor = ConsoleColor.DarkYellow;
+                        Console.WriteLine("선택한 아이템을 장착 해제했습니다.");
+                        Console.ResetColor();
+                        Thread.Sleep(1000);
                     }
                     else
                     {
@@ -131,7 +154,9 @@ namespace TextRPGTeam33
                         {
                             player.UnEquipItem(equippedItem);
                             equippedItem.IsEquip = false;
+                            Console.ForegroundColor = ConsoleColor.DarkYellow;
                             Console.WriteLine($"장착 중인 {equippedItem.Name}을 장착 해제했습니다.");
+                            Console.ResetColor();
                             Thread.Sleep(1000);
                         }
 
@@ -139,37 +164,52 @@ namespace TextRPGTeam33
 
                         player.EquipItem(selectedItem);
                         selectedItem.IsEquip = true;
+                        Console.ForegroundColor = ConsoleColor.DarkYellow;
                         Console.WriteLine("선택한 아이템을 장착했습니다.");
+                        Console.ResetColor();
                         Thread.Sleep(1000);
                     }
                 }
-
-                else { Console.WriteLine("잘못된 입력"); }
-
+                else {
+                    Console.Clear();
+                    Console.WriteLine("잘못된 입력입니다.");
+                    Thread.Sleep(1000);
+                }
             }
         }
         
         
         public string InventoryDisplay(Item item)
         {
-            
             string str = item.IsEquip ? "[E]" : "";
             if (item.Type == ItemType.Weapon)
             {
+                Console.ForegroundColor = ConsoleColor.DarkMagenta;
+                Console.Write("●");
+                Console.ResetColor();
                 str += $"{item.Name} | 공격력 +{item.Value} | {item.Descrip}";
                 
             }
             else if (item.Type == ItemType.Amor)
             {
+                Console.ForegroundColor = ConsoleColor.Green;
+                Console.Write("●");
+                Console.ResetColor();
                 str += $"{item.Name} | 방어력 +{item.Value} | {item.Descrip}";
                
             }
             else if(item.Type == ItemType.Potion) 
-                {
+            {
+                Console.ForegroundColor = ConsoleColor.Red;  
+                Console.Write("●");
+                Console.ResetColor();
                 str += $"{item.Name} | 체력 +{item.Value} | {item.Descrip} | 보유 {item.Count}개";
             }
             else
             {
+                Console.ForegroundColor= ConsoleColor.Blue;
+                Console.Write("●");
+                Console.ResetColor();
                 str += $"{item.Name} | 마나 +{item.Value} | {item.Descrip} | 보유 {item.Count}개";
             }
 

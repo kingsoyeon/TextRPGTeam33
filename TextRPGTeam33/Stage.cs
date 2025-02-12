@@ -42,7 +42,7 @@ namespace TextRPGTeam33
                 new Item("군용 방탄복", ItemType.Amor, 15, 2, "군대에서 사용하던 고급 방탄복입니다. 매우 튼튼합니다.", 3500, 1),
                 new Item("후드 점퍼", ItemType.Amor, 17, 1, "파란색 후드티입니다. 입으면 슬리퍼가 신고 싶어집니다.", 4000, 1),
                 new Item("묠니르", ItemType.Weapon, 17, 1, "망치에 새겨진 작은 글씨를 보니 누군가 '누군가 이걸 들 자격이 있다'라고 적어놨습니다.", 3000, 1),
-                new Item("파피루스의 뼈조각", ItemType.Weapon, 0, 50, "???", 0, 1),
+                new Item("파피루스의 뼈조각", ItemType.Weapon, 0, 80, "???", 0, 1),
                 new Item("맛있는 샤와르마", ItemType.Potion, 40, 5, "뉴욕의 작은 가게에서 파는 중동식 샤워르마입니다. 힘든 전투 후에 먹으면 최고!", 1000, 1),
                 new Item("특제 스테이크", ItemType.MPPotion, 45, 5, "음식에 고양이 털이 들어갔네요. 하지만 맛은 여전히 최고!", 1200, 1)
             };
@@ -57,20 +57,32 @@ namespace TextRPGTeam33
             int monsterCnt = 3; //기본 몬스터 수
             int monsterId = 0;
             int minMonsterLv = 0;
+            int maxMonsterLv = 0;
+            int bossLv = 0;
+            int bossHp = 0;
+            int bossAtk = 0;
             bool isHidden = false;
+            int itemCnt = 0;
 
-            //스테이지 레벨에 따라 몬스터 수 랜덤 증가
-            monsterCnt += rand.Next(0, stageLevel);
-            if (monsterCnt > 5) monsterCnt = 5; //최대 5마리
+            //스테이지 레벨에 따라 몬스터 수 증가 확률 조정 - 최대 4마리(30층 이후 100%)
+            double increaseRate = Math.Min(1.0, (double)stageLevel / 30.0);
+            if (rand.NextDouble() < increaseRate) monsterCnt++;
 
             //전투 횟수 10회마다 보스 몬스터 추가
-            if ((player.DungeonClearCount + 1) % 10 == 0)
+            if ((stageLevel) % 10 == 0)
             {
-                if (player.DungeonClearCount >= 50)
+                if (stageLevel >= 30)
                 {
                     //파피루스의 뼈조각 수량에 따라 히든 보스 조우 확률 증가
                     List<Item> item = player.Inventory.GetItems();
-                    int itemCnt = item.Count(x => x.Name == "파피루스의 뼈조각");
+                    foreach (Item x in item)
+                    {
+                        if (x.Name == "파피루스의 뼈조각")
+                        {
+                            itemCnt = x.Count;
+                            break;
+                        }
+                    }
                     double hiddenRate = itemCnt * 0.2;
 
                     hiddenRate = Math.Min(1.0, hiddenRate);
@@ -79,8 +91,52 @@ namespace TextRPGTeam33
                     {
                         monsterCnt = 0;
                         isHidden = true;
+                        bossLv = stageLevel / 10 * 5;
+                        bossHp = stageLevel / 10 * 21;
+                        bossAtk = 7 + (stageLevel / 10 * 4);
 
-                        new Monster("샌즈", 20, 80, 20, true);
+                        createMonster.Add(new Monster("샌즈", bossLv, bossHp, bossAtk, true));
+
+                        string sansUI = @"
+         .::::::::::.         
+       ,-~**********:--       
+      .!$*          !$*,      
+      #~              ,@      
+      #~              ,@      
+     $-                ,$     
+     @. -!!!.     !!!~  @     
+     @. :@@@,     @@@!  @     
+     @. :@@@, ..  @@@!  @     
+     #, ~@@@, :$  @@@; .#     
+      #~     !@@$     ,@      
+     @@~:$          *!,@@     
+     @. :@@@@@@@@@@@@!  @     
+     @.  -@,$::$,@.#:   @     
+     -**: -*#$$#=@*~.-**~     
+     :#@=::!!!!!!!!::*@@:     
+    ,#@@@@@-,,,,,,,@@@@@#,    
+    @.#@@@@@@@@@@@@@@@@@.#.   
+   @@.$;-:@.  :$   @;-:@.#@,  
+  .@, ,**-~$##!-###~-;=, ,#-  
+ ,*~.==;;$$@:-:*--@$$!:==.-*~ 
+ -#  ::!;:;@, ,~  @;:;!::. $: 
+ -#.   :!~ @;.   :@.-;;    =: 
+ ,=-   ,;* @$-  .$@.!!,   -*~ 
+   #,,.**  @-.....@. ;= ,,$,  
+    @@,**  @@@@@@@@. ;=.@@.   
+    .@#@*  @@@@@@@@. ;@#@,    
+     -#@#==@@@@@@@@==#@@-     
+     ;@@@@@@@@@@@@@@@@@@;     
+     @@@@@@@@@@@@@@@@@@@@     
+     @@@@@@@@@@@@@@@@@@@@     
+      #@@@@@@@!-@@@@@@@@      
+    @@@~    $:  .@    -@@@.   
+    @      #@~  .@@     .@.   
+    @######,.    ..$#####@.   
+    ~~~~~~~        ~~~~~~~    
+";
+                        Console.WriteLine(sansUI);
+                        Thread.Sleep(2000);
 
                         var removeItem = bossItemList.Find(n => n.Name == "파피루스의 뼈조각"); //보상 목록에서 파피루스의 뼈조각 제외
                         if (removeItem != null)
@@ -92,28 +148,30 @@ namespace TextRPGTeam33
 
                 if (!isHidden)
                 {
-                    monsterCnt -= 1;
-                    new Monster("네크로맨서 좀비", 10, 55, 15, true);
+                    bossLv = stageLevel / 10 * 4;
+                    bossHp = stageLevel / 10 * 20;
+                    bossAtk = 6 + (stageLevel / 10 * 4);
+                    createMonster.Add(new Monster("네크로맨서 좀비", bossLv, bossHp, bossAtk, true));
                 }
             }
 
             //스테이지 레벨에 따라 몬스터 등장확률 변경
-            double monsterSpawnRate = 0;
-
-            if (stageLevel >= 20) monsterSpawnRate = Math.Min(1.0, stageLevel / 30.0);
-            else if (stageLevel >= 10) monsterSpawnRate = Math.Min(1.0, stageLevel / 50.0);
+            double monsterSpawnRate = Math.Min(1.0, (double)stageLevel / 50.0);
 
             for (int i = 0; i < monsterCnt; i++)
             {
                 if (rand.NextDouble() < monsterSpawnRate)
                 {
-                    minMonsterLv = Math.Min(stageLevel / 3, 6); //강한 몬스터는 6층부터 등장
-                    monsterId = rand.Next(minMonsterLv, 10);
+                    minMonsterLv = Math.Max(0, stageLevel / 20);  // 최소 레벨
+                    maxMonsterLv = Math.Min(9, stageLevel / 6 + 1); // 최대 레벨
+
+                    monsterId = rand.Next(minMonsterLv, maxMonsterLv + 1);
                 }
                 else
                 {
-                    // 약한 몬스터 등장 (레벨 0~4)
-                    monsterId = rand.Next(0, Math.Min(stageLevel / 3 + 1, 5));
+                    // 약한 몬스터 등장 (레벨 1~4)
+                    maxMonsterLv = Math.Min(4, stageLevel / 12 + 1);
+                    monsterId = rand.Next(0, maxMonsterLv + 1);
                 }
 
                 createMonster.Add(new Monster(monsterList[monsterId].name, monsterList[monsterId].level, monsterList[monsterId].hp, monsterList[monsterId].atk, monsterList[monsterId].isBoss));
@@ -122,7 +180,7 @@ namespace TextRPGTeam33
         }
 
         //전투 종료 후 보상 지급
-        public void StageClear(List<Monster> monsterList, int startHp, int skillCnt)
+        public void StageClear(List<Monster> monsterList, int startHp, int startMp, int skillCnt)
         {
             Random rand = new Random();
             int itemIdx;
@@ -133,6 +191,9 @@ namespace TextRPGTeam33
             int rewardRate = 0;
             int skillrewardRate = skillCnt * 10;
             bool isLevelUp = false;
+            int barLength = 20;
+            int curLength = 0;
+
             List<Item> itemList;
             List<Item> rewardItems = new List<Item>();
 
@@ -167,39 +228,77 @@ namespace TextRPGTeam33
                         }
                     }
                 }
+
+                //히든보스 샌즈 처치 시 히든직업 등장
+                if (monster.name == "샌즈")
+                    player.KillSans = true;
             }
 
             //보상 지급
             player.Gold += rewardGold;
-            player.Exp += rewardExp;
-
-            do
-            {
-                if (player.Exp >= player.LevelUpExp)
-                {
-                    rewardExp = player.Exp - player.LevelUpExp;
-                    player.LevelUpExp *= 2;
-                    player.Exp = rewardExp;
-                    player.Level++;
-                    player.Attack += 1;
-                    player.Defense += 1;
-                    isLevelUp = true;
-                }
-                else break;
-            }
-            while (true);
+            isLevelUp = player.LevelUp(rewardExp);
 
             //보상 정보 출력
-            Console.WriteLine("[캐릭터 정보]");
+            Console.WriteLine("-----Player-------------------------------------\n");
 
-            if (isLevelUp) Console.WriteLine($"Lv.{curLevel} {player.Name} -> Lv.{player.Level} {player.Name}");
-            else Console.WriteLine($"Lv.{player.Level} {player.Name}");
+            if (isLevelUp) Console.WriteLine($"Lv.{curLevel} {player.Name} -> Lv.{player.Level} {player.Name}\n");
+            else Console.WriteLine($"Lv.{player.Level} {player.Name}\n");
 
-            Console.WriteLine($"HP.{startHp} -> {player.Hp}");
+            curLength = (int)((double)player.Hp / player.MaxHP * barLength);
 
-            Console.WriteLine($"exp {curExp} -> {player.Exp}\n");
+            Console.Write("HP ");
+            Console.ForegroundColor = ConsoleColor.Red;
+            Console.Write(startHp);
+            Console.ResetColor();
+            Console.Write(" -> ");
+            Console.ForegroundColor = ConsoleColor.Red;
+            Console.Write(player.Hp);
 
-            Console.WriteLine("[획득 아이템]");
+            Console.ResetColor();
+            Console.Write("\t|");
+            Console.BackgroundColor = player.Hp > player.MaxHP / 2 ? ConsoleColor.DarkGreen : ConsoleColor.DarkRed;
+            Console.Write(new string(' ', curLength));
+            Console.ResetColor();
+            Console.Write(new string(' ', barLength - curLength));
+            Console.WriteLine("|");
+
+            curLength = (int)((double)player.Mp / player.MaxMp * barLength);
+
+            Console.Write("MP ");
+            Console.ForegroundColor = ConsoleColor.Blue;
+            Console.Write(startMp);
+            Console.ResetColor();
+            Console.Write(" -> ");
+            Console.ForegroundColor = ConsoleColor.Blue;
+            Console.Write(player.Mp);
+
+            Console.ResetColor();
+            Console.Write("\t|");
+            Console.BackgroundColor = ConsoleColor.Blue;
+            Console.Write(new string(' ', curLength));
+            Console.ResetColor();
+            Console.Write(new string(' ', barLength - curLength));
+            Console.WriteLine("|");
+
+            curLength = (int)((double)player.Exp / player.LevelUpExp * barLength);
+
+            Console.Write("EXP ");
+            Console.ForegroundColor = ConsoleColor.Yellow;
+            Console.Write(curExp);
+            Console.ResetColor();
+            Console.Write(" -> ");
+            Console.ForegroundColor = ConsoleColor.Yellow;
+            Console.Write(player.Exp);
+
+            Console.ResetColor();
+            Console.Write("\t|");
+            Console.BackgroundColor = ConsoleColor.Yellow;
+            Console.Write(new string(' ', curLength));
+            Console.ResetColor();
+            Console.Write(new string(' ', barLength - curLength));
+            Console.WriteLine("|\n");
+
+            Console.WriteLine("-----Item---------------------------------------\n");
 
             Console.WriteLine($"{rewardGold} G");
 
@@ -207,6 +306,8 @@ namespace TextRPGTeam33
             {
                 Console.WriteLine($"{item.Name} - {item.Count}");
             }
+            
+            Console.WriteLine("\n------------------------------------------------\n");
 
             player.Inventory.AddItem(rewardItems);
 

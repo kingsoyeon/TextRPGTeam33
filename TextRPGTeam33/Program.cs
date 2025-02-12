@@ -46,9 +46,9 @@ partial class Program
                 Console.WriteLine(" ㅁ-ㅁ-ㅁ-ㅁ-ㅁ-ㅁ-ㅁ-ㅁ-ㅁ-ㅁ-ㅁ-ㅁ-ㅁ-ㅁ");
 
 
-                Console.WriteLine();
                 Console.ResetColor();
-                Console.Write("원하시는 행동을 입력해주세요:");
+
+                Console.Write("원하시는 행동을 입력해주세요:\n>>");
                 string startChoice = Console.ReadLine() ?? "0";
 
                 if (startChoice == "1")
@@ -108,7 +108,7 @@ partial class Program
             Console.WriteLine("\t\t\t\t|");
             Console.WriteLine("|\t\t\t\t\t\t|");
             Console.Write("|\t");
-            Console.ForegroundColor = ConsoleColor.DarkRed;
+            Console.ForegroundColor = ConsoleColor.Cyan;
             Console.Write("▶ 3. 휴식");
             Console.ForegroundColor = ConsoleColor.Yellow;
             Console.WriteLine("\t\t\t\t|");
@@ -140,7 +140,7 @@ partial class Program
             Console.WriteLine("_________________________________________________");
             Console.ResetColor();
 
-            Console.Write("원하시는 행동을 입력해주세요: ");
+            Console.Write("원하시는 행동을 입력해주세요:\n>>");
             string choice = Console.ReadLine() ?? "0";
 
             if (choice == "1")
@@ -167,12 +167,17 @@ partial class Program
             {
                 Quest.Instance.DisplayQuestList(player);
             }
+            else if (choice == "7")
+            {
+                aaaaaaaaaaaaa(player);
+            }
             else if (choice == "0")
             {
                 inDungeon = false;
             }
             else
             {
+                Console.Clear();
                 Console.WriteLine("잘못된 입력입니다.");
                 Thread.Sleep(1000);
             }
@@ -191,11 +196,34 @@ partial class Program
             }
         }
     }
-
-    static void Explore(Character player)
+    static void aaaaaaaaaaaaa(Character player)
+    {
+        string choice = Console.ReadLine() ?? "0";
+        bool eeeDungeon = true;
+        while (eeeDungeon)
+        {
+            if (choice == "1")
+            {
+                StartBattle(player);
+            }
+            else if (choice == "2")
+            {
+                insideShop(player);  // 탐험을 시작합니다
+            }
+            else if (choice == "3")
+            {
+                Event(player);
+            }
+            else if (choice == "0")
+            {
+                eeeDungeon = false;
+            } 
+        }
+    }
+static void Explore(Character player)
     {
         Random random = new Random();
-        int randomChoice = random.Next(0, 1);
+        int randomChoice = random.Next(0, 5);
         // 탐험이 시작되면 탐험 횟수 증가
         Console.Clear();
         Console.WriteLine($"탐험 {adventureCount + 1}회 진행 중...");
@@ -240,6 +268,19 @@ partial class Program
         string currentSaveFile = gameSave.GetCurrentSaveFile();
         gameSave.Save(player, currentSaveFile);
         Console.Clear();
+        string[] message =
+        {
+          "오", "늘", "도", " ", "하", "루", "가", " ", "마", "무", "리", " ", "되", "어", "간", "다",
+            ".", "\n", "조", "금", "만", " ", "더", " ", "힘", "내", "자", "."
+        };
+
+        // 배열의 각 요소를 하나씩 출력하고, 100ms 대기
+        foreach (string word in message)
+        {
+            Console.Write(word);    // 한 글자씩 출력
+            Thread.Sleep(150);      // 100ms 대기
+        }
+        Console.WriteLine();
         Console.WriteLine("당신은 일기를 작성하셨습니다.");
         Thread.Sleep(500);
         Console.Write(".");
@@ -248,39 +289,114 @@ partial class Program
         Thread.Sleep(500);
         Console.WriteLine(".");
         Thread.Sleep(500);
+
+        
+        string diary = @"
+
+
+
+    . .,,,,,,,,,,, .,, ,      
+    @ #@@@@@@@@@@@@@@@@@@     
+    @ #@$$$$$$$$@@@@@@@@@     
+    @ #@,.......#@@@@@@@@     
+    @ #@@@@@@@@@#@@@@@@@@     
+    @ #@!;;;;;;;#@@@@@@@@     
+    @ #@@@@@@@@@#@@@@@@@@     
+    @ #@*!!!!!!!#@@@@@@@@     
+    @ #@@@@@@@@@@@@@@@@@@     
+    @ #@@@@@@@@@@@@@@@@@@     
+    @ #@@@@@@@@@@@#@@@#@@     
+    @ #@@@@@@@@@@@#======     
+    @ #@@@@@@@@@@@-, ----,    
+    @ #@@@@@@@@@@@-*.@@@*@    
+    @ #@@@@@@@@@@@-*.@@@!@    
+    @ #@@@@@@@@@@@-, -~~~-    
+    @ #@@@@@@@@@@@#======    
+    @ #@@@@@@@@@@@@@@@@@=     
+    . ,,,,,,,,,,,,,,,,,,      ";
+        Console.ForegroundColor = ConsoleColor.Yellow;
+        Console.WriteLine(diary);
+        Thread.Sleep(2000);
     }
 
     
     static void rest(Character player)
     {
         Console.Clear();
-        Console.WriteLine("휴식을 취하시면 탐험 횟수가 늘어납니다.");
-        Console.WriteLine("휴식을 취하시겠습니까?");
-        Console.WriteLine("1. 휴식을 취한다.");
-        Console.WriteLine("0. 나간다.");
+        Console.WriteLine("#---------------------------------------------------------------------------------------#");
+        Console.WriteLine("|여관주인\t\t\t\t\t\t\t\t\t\t|");
+        Console.WriteLine("|지친 몸을 회복할 방을 알아 보고 계시는가요?\t\t\t\t\t\t|");
+        Console.WriteLine("|가격은 1000 Gold입니다.\t\t\t\t\t\t\t\t|");
+        Console.WriteLine("|\t\t\t\t\t\t\t\t\t\t\t|");
+        Console.WriteLine("|\t\t\t\t\t\t\t\t\t\t\t|");
+        Console.WriteLine("|\t\t\t\t\t\t\t\t\t\t\t|");
+        Console.WriteLine("#---------------------------------------------------------------------------------------#");
+        Thread.Sleep(2000);
+        Console.Clear();
+        Console.WriteLine("#---------------------------------------------------------------------------------------#");
+        Console.WriteLine($"|※ TIP. 휴식을 취하시면 날짜가 늘어납니다.\t\t\t당신의 Gold : {player.Gold}\t|");
+        Console.WriteLine("|\t\t\t\t\t\t\t\t\t\t\t|");
+        Console.WriteLine("|\t\t\t\t\t\t\t\t\t\t\t|");
+        Console.WriteLine("|\t\t\t\t\t\t\t\t\t\t\t|");
+        Console.WriteLine("|휴식을 취하시겠습니까?\t\t\t\t\t\t\t\t\t|");
+        Console.WriteLine("|1. 휴식을 취한다.\t\t\t\t\t\t\t\t\t|");
+        Console.WriteLine("|0. 나간다.\t\t\t\t\t\t\t\t\t\t|");
+        Console.WriteLine("#---------------------------------------------------------------------------------------#");
+        Console.WriteLine(">>");
         string restChioce = Console.ReadLine() ?? "0";
         if (restChioce == "1")
         {
-            Console.Clear();
-            player.Hp = player.MaxHP;
-            player.Mp = player.MaxMp;
-            Console.WriteLine("휴식을 취합니다.");
-            Console.WriteLine("체력과 마나가 모두 회복됩니다.");
-            Thread.Sleep(1000);
-            adventureCount++;
+            if (player.Gold >= 1000)
+            {
+                player.Gold -= 1000;
+                Console.Clear();
+                player.Hp = player.MaxHP;
+                player.Mp = player.MaxMp;
+                Console.WriteLine("#---------------------------------------------------------------------------------------#");
+                Console.WriteLine(" 여관주인");
+                Console.WriteLine(" 감사합니다 손님.");
+                Console.WriteLine("");
+                Console.WriteLine("");
+                Console.WriteLine(" 휴식을 취합니다.");
+                Console.WriteLine(" 체력과 마나가 모두 회복됩니다.");
+                Console.WriteLine(" 하루가 지났습니다.(당신은 잠을 청하기 전 일기를 쓰셨습니다.)");
+                Console.WriteLine($" 현재날짜  :{days}");
+                Console.WriteLine("#---------------------------------------------------------------------------------------#");
+                Thread.Sleep(2000);
+                adventureCount *= 0;
+                days += 1;
+                string currentSaveFile = gameSave.GetCurrentSaveFile();
+                gameSave.Save(player, currentSaveFile);
+            }
+            else
+            {
+                Console.Clear();
+                Console.WriteLine("#---------------------------------------------------------------------------------------#");
+                Console.WriteLine(" 여관주인");
+                Console.WriteLine(" 손님, 돈이 부족하신거 같습니다만...");
+                Thread.Sleep(1000);
+                Console.WriteLine(" 썩 나가주십쇼.");
+                Console.WriteLine("#---------------------------------------------------------------------------------------#");
+                Thread.Sleep(1000);
+                return;
+            }
+           
+
         }
         else if (restChioce == "0")
         {
+            Console.Clear();
             Console.WriteLine("휴식을 취하지 않고 돌아갑니다.");
             Thread.Sleep(1000);
             return;
         }
         else
         {
+            Console.Clear();
             Console.WriteLine("잘못된 입력입니다.");
             Thread.Sleep(1000);
         }
-        adventureCount++;
+
     }
 
     static void OpenStatus()

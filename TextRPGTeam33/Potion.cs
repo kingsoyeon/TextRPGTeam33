@@ -155,7 +155,7 @@ namespace TextRPGTeam33
                     Console.WriteLine("\n[MP 포션]");
                     for (int i = 0; i < mpPotions.Count; i++)
                     {
-                        Console.ForegroundColor = ConsoleColor.Green;
+                        Console.ForegroundColor = ConsoleColor.Yellow;
                         Console.Write("●");
                         Console.ResetColor();
                         Console.WriteLine($"{hpPotions.Count + i + 1}. {mpPotions[i].Name} | MP 회복량: +{mpPotions[i].Value} | 남은 수량: {mpPotions[i].Count}개");
@@ -189,8 +189,13 @@ namespace TextRPGTeam33
                     }
                     else
                     {
+                        Console.Clear();
+                        Console.ForegroundColor = ConsoleColor.Gray;
                         Console.WriteLine("잘못된 입력입니다.");
+                        Console.ResetColor();
                         Thread.Sleep(1000);
+                        Console.Clear();
+
                     }
                 }
                 else
@@ -222,6 +227,8 @@ namespace TextRPGTeam33
 
                         potion.Count--; // 포션 개수 1개 감소
 
+                        if (potion.Count == 0) { inventory.RemoveItem(potion); }// 포션 개수가 0이 되면 인벤토리에서 제거
+
                         Console.WriteLine($"{potion.Name}을(를) 사용했습니다.");
                         Console.WriteLine($"HP가 {potion.Value} 회복 되었습니다.");
                         Thread.Sleep(1000);
@@ -249,7 +256,10 @@ namespace TextRPGTeam33
                         {
                             character.Mp = character.MaxMp;
                         }
+
                         potion.Count--;
+                        if (potion.Count == 0) { inventory.RemoveItem(potion); }// 포션 개수가 0이 되면 인벤토리에서 제거
+
                         Console.WriteLine($"{potion.Name}을(를) 사용했습니다.");
                         Console.WriteLine($"MP가 {potion.Value} 회복되었습니다.");
                         Thread.Sleep(1000);
