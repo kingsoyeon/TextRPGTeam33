@@ -634,8 +634,10 @@ partial class Program
         Tema myClass = new Tema();
 
         myClass.temas();
-        Thread.Sleep(1500);
-
+        Thread.Sleep(750);
+        Console.Write("");
+        Console.Write("\t\t\t\t\t\t\t거기 졸지 말죠.Zzz...");
+        Thread.Sleep(750);
 
         Console.Clear();
         gameSave = new GameSave();
