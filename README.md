@@ -49,7 +49,7 @@
 
 ```
 TextRPGTeam33/
-├── Program.cs           - 메인 게임 루프
+├── Program.cs          - 메인 게임 루프
 ├── GameSave.cs         - 세이브 시스템
 ├── Character.cs        - 캐릭터 클래스
 ├── CharacterCreator.cs - 캐릭터 생성
@@ -62,8 +62,7 @@ TextRPGTeam33/
 ├── Potion.cs           - 포션 시스템
 ├── Skill.cs            - 스킬 정의
 ├── SkillManager.cs     - 스킬 관리
-├── Stage.cs            - 스테이지 관리
-└── Achievement.cs      - 업적 시스템
+└── Stage.cs            - 스테이지 관리
 ```
 
 ## 시작하기
