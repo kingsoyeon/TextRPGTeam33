@@ -124,8 +124,8 @@ namespace TextRPGTeam33
 
                 Console.WriteLine("1. 수락");
                 Console.WriteLine("0. 거절");
-
-                Console.Write("\n원하시는 행동을 입력해주세요.\n>>");
+                Console.WriteLine("");
+                Console.Write("원하시는 행동을 입력해주세요.\n>>");
                 string input = Console.ReadLine();
 
                 if (input == "1")

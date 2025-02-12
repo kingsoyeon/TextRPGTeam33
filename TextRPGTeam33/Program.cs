@@ -46,9 +46,9 @@ partial class Program
                 Console.WriteLine(" ㅁ-ㅁ-ㅁ-ㅁ-ㅁ-ㅁ-ㅁ-ㅁ-ㅁ-ㅁ-ㅁ-ㅁ-ㅁ-ㅁ");
 
 
-                Console.WriteLine();
                 Console.ResetColor();
-                Console.Write("원하시는 행동을 입력해주세요:");
+
+                Console.Write("원하시는 행동을 입력해주세요:\n>>");
                 string startChoice = Console.ReadLine() ?? "0";
 
                 if (startChoice == "1")
@@ -140,7 +140,7 @@ partial class Program
             Console.WriteLine("_________________________________________________");
             Console.ResetColor();
 
-            Console.Write("원하시는 행동을 입력해주세요: ");
+            Console.Write("원하시는 행동을 입력해주세요:\n>>");
             string choice = Console.ReadLine() ?? "0";
 
             if (choice == "1")
@@ -177,6 +177,7 @@ partial class Program
             }
             else
             {
+                Console.Clear();
                 Console.WriteLine("잘못된 입력입니다.");
                 Thread.Sleep(1000);
             }
@@ -269,8 +270,8 @@ static void Explore(Character player)
         Console.Clear();
         string[] message =
         {
-          "오", "늘", "도", "", "하", "루", "가", "", "마", "무", "리", "", "되", "어", "간", "다",
-            ".", "\n", "조", "금", "만", "", "더", "", "힘", "내", "자", "."
+          "오", "늘", "도", " ", "하", "루", "가", " ", "마", "무", "리", " ", "되", "어", "간", "다",
+            ".", "\n", "조", "금", "만", " ", "더", " ", "힘", "내", "자", "."
         };
 
         // 배열의 각 요소를 하나씩 출력하고, 100ms 대기
@@ -330,16 +331,16 @@ static void Explore(Character player)
         Console.WriteLine("|\t\t\t\t\t\t\t\t\t\t\t|");
         Console.WriteLine("|\t\t\t\t\t\t\t\t\t\t\t|");
         Console.WriteLine("#---------------------------------------------------------------------------------------#");
-        Thread.Sleep(3000);
+        Thread.Sleep(2000);
         Console.Clear();
         Console.WriteLine("#---------------------------------------------------------------------------------------#");
         Console.WriteLine($"|※ TIP. 휴식을 취하시면 날짜가 늘어납니다.\t\t\t당신의 Gold : {player.Gold}\t|");
         Console.WriteLine("|\t\t\t\t\t\t\t\t\t\t\t|");
         Console.WriteLine("|\t\t\t\t\t\t\t\t\t\t\t|");
+        Console.WriteLine("|\t\t\t\t\t\t\t\t\t\t\t|");
         Console.WriteLine("|휴식을 취하시겠습니까?\t\t\t\t\t\t\t\t\t|");
         Console.WriteLine("|1. 휴식을 취한다.\t\t\t\t\t\t\t\t\t|");
         Console.WriteLine("|0. 나간다.\t\t\t\t\t\t\t\t\t\t|");
-        Console.WriteLine("|\t\t\t\t\t\t\t\t\t\t\t|");
         Console.WriteLine("#---------------------------------------------------------------------------------------#");
         Console.WriteLine(">>");
         string restChioce = Console.ReadLine() ?? "0";
@@ -351,17 +352,31 @@ static void Explore(Character player)
                 Console.Clear();
                 player.Hp = player.MaxHP;
                 player.Mp = player.MaxMp;
-                Console.WriteLine("휴식을 취합니다.");
-                Console.WriteLine("체력과 마나가 모두 회복됩니다.");
-                Thread.Sleep(1000);
+                Console.WriteLine("#---------------------------------------------------------------------------------------#");
+                Console.WriteLine(" 여관주인");
+                Console.WriteLine(" 감사합니다 손님.");
+                Console.WriteLine("");
+                Console.WriteLine("");
+                Console.WriteLine(" 휴식을 취합니다.");
+                Console.WriteLine(" 체력과 마나가 모두 회복됩니다.");
+                Console.WriteLine(" 하루가 지났습니다.(당신은 잠을 청하기 전 일기를 쓰셨습니다.)");
+                Console.WriteLine($" 현재날짜  :{days}");
+                Console.WriteLine("#---------------------------------------------------------------------------------------#");
+                Thread.Sleep(2000);
                 adventureCount *= 0;
                 days += 1;
-                Thread.Sleep(1000);
+                string currentSaveFile = gameSave.GetCurrentSaveFile();
+                gameSave.Save(player, currentSaveFile);
             }
             else
             {
-                Console.WriteLine("여관주인");
-                Console.WriteLine("손님, 돈이 부족하신거 같습니다만...");
+                Console.Clear();
+                Console.WriteLine("#---------------------------------------------------------------------------------------#");
+                Console.WriteLine(" 여관주인");
+                Console.WriteLine(" 손님, 돈이 부족하신거 같습니다만...");
+                Thread.Sleep(1000);
+                Console.WriteLine(" 썩 나가주십쇼.");
+                Console.WriteLine("#---------------------------------------------------------------------------------------#");
                 Thread.Sleep(1000);
                 return;
             }

@@ -120,8 +120,7 @@ namespace TextRPGTeam33
             Console.ResetColor();
             Console.WriteLine("0. 나가기");
             Console.WriteLine("");
-            Console.WriteLine("원하시는 행동을 입력해주세요.");
-            Console.Write(">> ");
+            Console.Write("원하시는 행동을 입력해주세요:\n>>");
 
             string input = Console.ReadLine();
 
@@ -139,8 +138,9 @@ namespace TextRPGTeam33
             }
             else
             {
-                Console.WriteLine("잘못된 입력입니다. 다시 입력해주세요.");
-                Console.ReadKey();
+                Console.Clear();
+                Console.WriteLine("잘못된 입력입니다.");
+                Thread.Sleep(1000);
             }
         }
 

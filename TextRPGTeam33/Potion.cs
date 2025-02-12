@@ -190,11 +190,9 @@ namespace TextRPGTeam33
                     else
                     {
                         Console.Clear();
-                        Console.ForegroundColor = ConsoleColor.Gray;
                         Console.WriteLine("잘못된 입력입니다.");
-                        Console.ResetColor();
                         Thread.Sleep(1000);
-                        Console.Clear();
+
                     }
                 }
                 else
