@@ -36,8 +36,6 @@ namespace TextRPGTeam33
         public Inventory Inventory { get; set; }
         public int DungeonClearCount { get; set; }
 
-        public bool isLevelUp { get; set; }
-
         public int speed {  get; set; }
 
         public bool KillSans { get; set; }
@@ -171,6 +169,8 @@ namespace TextRPGTeam33
 
         public bool LevelUp(int rewardExp)
         {
+            bool isLevelUp = false;
+
             this.Exp += rewardExp;
             
             do
