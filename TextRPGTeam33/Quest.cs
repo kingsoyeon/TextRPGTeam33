@@ -73,6 +73,14 @@ namespace TextRPGTeam33
                     new Item("파피루스의 뼈조각", ItemType.Weapon, 0, 50, "???", 0, 1),
                     800) // 800 경험치
         };
+            // 명시적으로 모든 퀘스트의 진행도 초기화
+            foreach (var quest in quests)
+            {
+                quest.CurrentCount = 0;
+                quest.IsAccepted = false;
+                quest.RewardClaimed = false;
+            }
+
             acceptedQuests = new List<QuestData>(); // 수락한 퀘스트 목록 초기화
         }
         
@@ -229,6 +237,15 @@ namespace TextRPGTeam33
                 }
                 else if (action == "2" && !quest.IsCompleted)
                 {
+                    // 원본 퀘스트도 초기화
+                    var originalQuest = quests.Find(q => q.Id == quest.Id);
+                    if (originalQuest != null)
+                    {
+                        originalQuest.CurrentCount = 0;
+                        originalQuest.IsAccepted = false;
+                        originalQuest.RewardClaimed = false;
+                    }
+
                     // 진행도 초기화
                     quest.CurrentCount = 0;
                     quest.IsAccepted = false;
@@ -268,9 +285,20 @@ namespace TextRPGTeam33
                     player.Inventory.AddItem(newEquipment);
                 }
 
+
+                // 원본 퀘스트 초기화
+                var originalQuest = quests.Find(q => q.Id == currentQuest.Id);
+                if (originalQuest != null)
+                {
+                    originalQuest.CurrentCount = 0; // 진행도 초기화
+                    originalQuest.IsAccepted = false; // 수락 상태 초기화
+                    originalQuest.RewardClaimed = false; // 보상 수령 초기화
+                }
+
+                //진행중인 퀘스트 초기화
                 currentQuest.CurrentCount = 0;  // 진행도 초기화 추가
                 currentQuest.IsAccepted = false;  // 수락 상태 초기화
-                currentQuest.RewardClaimed = false;
+                currentQuest.RewardClaimed = false; // 보상 수령 초기화
 
                 acceptedQuests.Remove(currentQuest);
 
