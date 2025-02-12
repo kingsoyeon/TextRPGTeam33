@@ -11,8 +11,357 @@ partial class Program
     public static int adventureCount = 0;  // 탐험 횟수를 추적하는 변수
      public static int days = 0;  // 날짜를 추적하는 변수
 
+    public class Tema
+    {
+        public void temas()
+        {
+            Console.ResetColor();
+            Console.WriteLine("");
+            Console.BackgroundColor = ConsoleColor.Black;
+            Console.Write("    ");
+            Console.BackgroundColor = ConsoleColor.White;
+            Console.Write("    ");
+            Console.BackgroundColor = ConsoleColor.Black;
+            Console.Write("            ");
+            Console.BackgroundColor = ConsoleColor.White;
+            Console.Write("    ");
+            Console.BackgroundColor = ConsoleColor.Black;
+            Console.Write("\t          ");
+            Console.BackgroundColor = ConsoleColor.White;
+            Console.Write("        ");
+            Console.BackgroundColor = ConsoleColor.Black;
+            Console.Write("\t      ");
+            Console.BackgroundColor = ConsoleColor.White;
+            Console.Write("    ");
+            //(2)
+            Console.WriteLine("");
+            Console.BackgroundColor = ConsoleColor.Black;
+            Console.Write("    ");
+            Console.BackgroundColor = ConsoleColor.White;
+            Console.Write("    ");
+            Console.BackgroundColor = ConsoleColor.DarkGray;
+            Console.Write("  ");
+            Console.BackgroundColor = ConsoleColor.Black;
+            Console.Write("          ");
+            Console.BackgroundColor = ConsoleColor.White;
+            Console.Write("    ");
+            Console.BackgroundColor = ConsoleColor.DarkGray;
+            Console.Write("  ");
+            Console.BackgroundColor = ConsoleColor.Black;
+            Console.Write("\t         ");
+            Console.BackgroundColor = ConsoleColor.White;
+            Console.Write("          ");
+            Console.BackgroundColor = ConsoleColor.Black;
+            Console.Write("\t      ");
+            Console.BackgroundColor = ConsoleColor.White;
+            Console.Write("    ");
+
+            //(3)
+            Console.WriteLine("");
+            Console.BackgroundColor = ConsoleColor.Black;
+            Console.Write("    ");
+            Console.BackgroundColor = ConsoleColor.White;
+            Console.Write("                ");
+            Console.BackgroundColor = ConsoleColor.White;
+            Console.Write("    ");
+            Console.BackgroundColor = ConsoleColor.DarkGray;
+            Console.Write("  ");
+            Console.BackgroundColor = ConsoleColor.Black;
+            Console.Write("\t        ");
+            Console.BackgroundColor = ConsoleColor.White;
+            Console.Write("     ");
+            Console.BackgroundColor = ConsoleColor.Black;
+            Console.Write("  ");
+            Console.BackgroundColor = ConsoleColor.White;
+            Console.Write("     ");
+            Console.BackgroundColor = ConsoleColor.Black;
+            Console.Write("\t      ");
+            Console.BackgroundColor = ConsoleColor.White;
+            Console.Write("    ");
+            //(4)
+            Console.WriteLine("");
+            Console.BackgroundColor = ConsoleColor.Black;
+            Console.Write("    ");
+            Console.BackgroundColor = ConsoleColor.White;
+            Console.Write("                ");
+            Console.BackgroundColor = ConsoleColor.White;
+            Console.Write("    ");
+            Console.BackgroundColor = ConsoleColor.DarkGray;
+            Console.Write("  ");
+            Console.BackgroundColor = ConsoleColor.Black;
+            Console.Write("\t       ");
+            Console.BackgroundColor = ConsoleColor.White;
+            Console.Write("     ");
+            Console.BackgroundColor = ConsoleColor.Black;
+            Console.Write("    ");
+            Console.BackgroundColor = ConsoleColor.White;
+            Console.Write("     ");
+            Console.BackgroundColor = ConsoleColor.Black;
+            Console.Write("\t      ");
+            Console.BackgroundColor = ConsoleColor.White;
+            Console.Write("    ");
+            //(5)
+            Console.WriteLine("");
+            Console.BackgroundColor = ConsoleColor.Black;
+            Console.Write("    ");
+            Console.BackgroundColor = ConsoleColor.White;
+            Console.Write("    ");
+            Console.BackgroundColor = ConsoleColor.DarkGray;
+            Console.Write("            ");
+            Console.BackgroundColor = ConsoleColor.White;
+            Console.Write("    ");
+            Console.BackgroundColor = ConsoleColor.DarkGray;
+            Console.Write("  ");
+            Console.BackgroundColor = ConsoleColor.Black;
+            Console.Write("\t      ");
+            Console.BackgroundColor = ConsoleColor.White;
+            Console.Write("     ");
+            Console.BackgroundColor = ConsoleColor.Black;
+            Console.Write("      ");
+            Console.BackgroundColor = ConsoleColor.White;
+            Console.Write("     ");
+            Console.BackgroundColor = ConsoleColor.Black;
+            Console.Write("\t      ");
+            Console.BackgroundColor = ConsoleColor.White;
+            Console.Write("        ");
+            //(6)
+            Console.WriteLine("");
+            Console.BackgroundColor = ConsoleColor.Black;
+            Console.Write("    ");
+            Console.BackgroundColor = ConsoleColor.White;
+            Console.Write("    ");
+            Console.BackgroundColor = ConsoleColor.DarkGray;
+            Console.Write("  ");
+            Console.BackgroundColor = ConsoleColor.Black;
+            Console.Write("          ");
+            Console.BackgroundColor = ConsoleColor.White;
+            Console.Write("    ");
+            Console.BackgroundColor = ConsoleColor.DarkGray;
+            Console.Write("  ");
+            Console.BackgroundColor = ConsoleColor.Black;
+            Console.Write("\t     ");
+            Console.BackgroundColor = ConsoleColor.White;
+            Console.Write("     ");
+            Console.BackgroundColor = ConsoleColor.Black;
+            Console.Write("        ");
+            Console.BackgroundColor = ConsoleColor.White;
+            Console.Write("     ");
+            Console.BackgroundColor = ConsoleColor.Black;
+            Console.Write("\t      ");
+            Console.BackgroundColor = ConsoleColor.White;
+            Console.Write("        ");
+
+            //(7)
+            Console.WriteLine("");
+            Console.BackgroundColor = ConsoleColor.Black;
+            Console.Write("    ");
+            Console.BackgroundColor = ConsoleColor.White;
+            Console.Write("    ");
+            Console.BackgroundColor = ConsoleColor.DarkGray;
+            Console.Write("  ");
+            Console.BackgroundColor = ConsoleColor.Black;
+            Console.Write("          ");
+            Console.BackgroundColor = ConsoleColor.White;
+            Console.Write("    ");
+            Console.BackgroundColor = ConsoleColor.DarkGray;
+            Console.Write("  ");
+            Console.BackgroundColor = ConsoleColor.Black;
+            Console.Write("\t    ");
+            Console.BackgroundColor = ConsoleColor.White;
+            Console.Write("     ");
+            Console.BackgroundColor = ConsoleColor.Black;
+            Console.Write("          ");
+            Console.BackgroundColor = ConsoleColor.White;
+            Console.Write("     ");
+            Console.BackgroundColor = ConsoleColor.Black;
+            Console.Write("      ");
+            Console.BackgroundColor = ConsoleColor.White;
+            Console.Write("    ");
+            //(8)
+            Console.WriteLine("");
+            Console.BackgroundColor = ConsoleColor.Black;
+            Console.Write("    ");
+            Console.BackgroundColor = ConsoleColor.White;
+            Console.Write("    ");
+            Console.BackgroundColor = ConsoleColor.DarkGray;
+            Console.Write("  ");
+            Console.BackgroundColor = ConsoleColor.Black;
+            Console.Write("          ");
+            Console.BackgroundColor = ConsoleColor.White;
+            Console.Write("    ");
+            Console.BackgroundColor = ConsoleColor.DarkGray;
+            Console.Write("  ");
+            Console.BackgroundColor = ConsoleColor.Black;
+            Console.Write("\t   ");
+            Console.BackgroundColor = ConsoleColor.White;
+            Console.Write("     ");
+            Console.BackgroundColor = ConsoleColor.Black;
+            Console.Write("            ");
+            Console.BackgroundColor = ConsoleColor.White;
+            Console.Write("     ");
+            Console.BackgroundColor = ConsoleColor.Black;
+            Console.Write("     ");
+            Console.BackgroundColor = ConsoleColor.White;
+            Console.Write("    ");
+
+            //(9)
+            Console.WriteLine("");
+            Console.BackgroundColor = ConsoleColor.Black;
+            Console.Write("    ");
+            Console.BackgroundColor = ConsoleColor.White;
+            Console.Write("                ");
+            Console.BackgroundColor = ConsoleColor.White;
+            Console.Write("    ");
+            Console.BackgroundColor = ConsoleColor.DarkGray;
+            Console.Write("  ");
+            Console.BackgroundColor = ConsoleColor.Black;
+            Console.Write("\t  ");
+            Console.BackgroundColor = ConsoleColor.White;
+            Console.Write("     ");
+            Console.BackgroundColor = ConsoleColor.Black;
+            Console.Write("              ");
+            Console.BackgroundColor = ConsoleColor.White;
+            Console.Write("     ");
+            Console.BackgroundColor = ConsoleColor.Black;
+            Console.Write("    ");
+            Console.BackgroundColor = ConsoleColor.White;
+            Console.Write("    ");
+            //(10)
+            Console.WriteLine("");
+            Console.BackgroundColor = ConsoleColor.Black;
+            Console.Write("    ");
+            Console.BackgroundColor = ConsoleColor.White;
+            Console.Write("                ");
+            Console.BackgroundColor = ConsoleColor.White;
+            Console.Write("    ");
+            Console.BackgroundColor = ConsoleColor.DarkGray;
+            Console.Write("  ");
+            Console.BackgroundColor = ConsoleColor.Black;
+            Console.Write("\t ");
+            Console.BackgroundColor = ConsoleColor.White;
+            Console.Write("     ");
+            Console.BackgroundColor = ConsoleColor.Black;
+            Console.Write("                ");
+            Console.BackgroundColor = ConsoleColor.White;
+            Console.Write("     ");
+            Console.BackgroundColor = ConsoleColor.Black;
+            Console.Write("   ");
+            Console.BackgroundColor = ConsoleColor.White;
+            Console.Write("    ");
+            //(11)
+            Console.WriteLine("");
+            Console.BackgroundColor = ConsoleColor.Black;
+            Console.Write("      ");
+            Console.BackgroundColor = ConsoleColor.DarkGray;
+            Console.Write("                    ");
+            Console.BackgroundColor = ConsoleColor.Black;
+            Console.Write("\t");
+            //ㅜ(12)
+            Console.WriteLine("                    ");
+            Console.BackgroundColor = ConsoleColor.Black;
+            Console.Write("    ");
+            Console.BackgroundColor = ConsoleColor.White;
+            Console.Write("                    ");
+            Console.BackgroundColor = ConsoleColor.Black;
+            Console.Write("\t\t");
+            Console.BackgroundColor = ConsoleColor.White;
+            Console.Write("    ");
+            //(13)
+            Console.WriteLine("");
+            Console.BackgroundColor = ConsoleColor.Black;
+            Console.Write("    ");
+            Console.BackgroundColor = ConsoleColor.White;
+            Console.Write("    ");
+            Console.Write("                ");
+            Console.BackgroundColor = ConsoleColor.DarkGray;
+            Console.Write("  ");
+            Console.BackgroundColor = ConsoleColor.Black;
+            Console.Write("\t\t");
+            Console.BackgroundColor = ConsoleColor.White;
+            Console.Write("    ");
+            //(14)
+            Console.WriteLine("");
+            Console.BackgroundColor = ConsoleColor.Black;
+            Console.Write("      ");
+            Console.BackgroundColor = ConsoleColor.DarkGray;
+            Console.Write("  ");
+            Console.Write("    ");
+            Console.BackgroundColor = ConsoleColor.White;
+            Console.Write("    ");
+            Console.BackgroundColor = ConsoleColor.DarkGray;
+            Console.Write("          ");
+            Console.BackgroundColor = ConsoleColor.Black;
+            Console.Write("\t\t");
+            Console.BackgroundColor = ConsoleColor.White;
+            Console.Write("    ");
+            //(15)
+            Console.WriteLine("");
+            Console.BackgroundColor = ConsoleColor.Black;
+            Console.Write("            ");
+            Console.BackgroundColor = ConsoleColor.White;
+            Console.Write("    ");
+            Console.BackgroundColor = ConsoleColor.DarkGray;
+            Console.Write("  ");
+            Console.BackgroundColor = ConsoleColor.Black;
+            Console.Write("      ");
+            Console.BackgroundColor = ConsoleColor.Black;
+            Console.Write("\t\t");
+            Console.BackgroundColor = ConsoleColor.White;
+            Console.Write("    ");
+            //(16)
+            Console.WriteLine("");
+            Console.BackgroundColor = ConsoleColor.Black;
+            Console.Write("            ");
+            Console.BackgroundColor = ConsoleColor.White;
+            Console.Write("    ");
+            Console.BackgroundColor = ConsoleColor.DarkGray;
+            Console.Write("  ");
+            Console.BackgroundColor = ConsoleColor.Black;
+            Console.Write("      ");
+            Console.BackgroundColor = ConsoleColor.Black;
+            Console.Write("\t\t");
+            Console.BackgroundColor = ConsoleColor.White;
+            Console.Write("                        ");
+            //(17)
+            Console.WriteLine("");
+            Console.BackgroundColor = ConsoleColor.Black;
+            Console.Write("            ");
+            Console.BackgroundColor = ConsoleColor.White;
+            Console.Write("    ");
+            Console.BackgroundColor = ConsoleColor.DarkGray;
+            Console.Write("  ");
+            Console.BackgroundColor = ConsoleColor.Black;
+            Console.Write("        ");
+            Console.BackgroundColor = ConsoleColor.Black;
+            Console.Write("\t\t");
+            Console.BackgroundColor = ConsoleColor.White;
+            Console.Write("                        ");
+            //(18)
+            Console.BackgroundColor = ConsoleColor.Black;
+            Console.WriteLine("  ");
+            Console.Write("              ");
+            Console.BackgroundColor = ConsoleColor.DarkGray;
+            Console.Write("    ");
+            //(19)
+
+
+            Console.WriteLine("");
+            Console.WriteLine("");
+            Console.WriteLine("");
+            Console.WriteLine("");
+            Console.WriteLine("");
+            Console.WriteLine("");
+            Console.ResetColor();
+        }
+    }
     static void Main()
     {
+        Tema myClass = new Tema();
+        myClass.temas();
+        Thread.Sleep(3000);
+
+
+        Console.Clear();
         gameSave = new GameSave();
         Character player = gameSave.DisplaySave();
 

@@ -917,6 +917,7 @@ namespace TextRPGTeam33
                         break;
 
                     case "파피루스":
+                        Console.ResetColor();
                         Console.Write("                    .777777777.                             ");
                         Console.ForegroundColor = ConsoleColor.Red;
                         Console.Write("파");
