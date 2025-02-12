@@ -187,6 +187,9 @@ namespace TextRPGTeam33
             List<Monster> target;
             target = new List<Monster>();
 
+            int barLength = 20;
+            int curLength = 0;
+
             switch (skills[i].type) // 스킬 종류에 따라 효과 적용 (제작 중)
             {
                 case SkillType.GUN_SHOT:
@@ -291,7 +294,10 @@ namespace TextRPGTeam33
             {
                 Console.Clear();
 
-                Console.WriteLine("Battle!!\n");
+                Console.WriteLine("================================================");
+                Console.WriteLine("                    Battle!!                    ");
+                Console.WriteLine("================================================\n");
+                Console.WriteLine("------------------------------------------------");
                 Console.WriteLine($"{player.Name} 의 {skills[i].name}!\n");
                 switch (skills[i].type)
                 {
@@ -300,80 +306,174 @@ namespace TextRPGTeam33
                         {
                             Console.WriteLine($"Lv.{monsters[index].level} {monsters[index].name} 을(를) 맞췄습니다. [데미지 : {skills[i].atk / 2}]");
                         }
-                        Console.WriteLine();
+                        
+                        Console.WriteLine("------------------------------------------------\n");
+
                         Console.WriteLine($"Lv.{monsters[index].level} {monsters[index].name}");
                         if (monsters[index].hp > 0)
-                            Console.WriteLine($"HP {monster1Hp} -> {monsters[index].hp}\n");
+                        {
+                            Console.Write($"HP {monster1Hp} -> {monsters[index].hp}\n|");
+                            curLength = (int)((double)monsters[index].hp / monsters[index].maxHp * barLength);
+                            Console.BackgroundColor = monsters[index].hp > monsters[index].maxHp / 2 ? ConsoleColor.DarkGreen : ConsoleColor.DarkRed;
+                            Console.Write(new string(' ', curLength));
+                            Console.ResetColor();
+                            Console.Write(new string(' ', barLength - curLength));
+                            Console.WriteLine("|\n");
+                        }
                         else
+                        {
                             Console.WriteLine($"HP {monster1Hp} -> Dead\n");
+                            Console.WriteLine("|                    |\n");
+                        }
                         break;
+
                     case SkillType.GUN_SHOT:
                     case SkillType.FIRE_RAY:
                     case SkillType.BOLT_TACKLE:
                         Console.WriteLine($"Lv.{monsters[index].level} {monsters[index].name} 을(를) 맞췄습니다. [데미지 : {skills[i].atk}]\n");
+                        Console.WriteLine("------------------------------------------------\n");
 
                         Console.WriteLine($"Lv.{monsters[index].level} {monsters[index].name}");
                         if (monsters[index].hp > 0)
-                            Console.WriteLine($"HP {monster1Hp} -> {monsters[index].hp}\n");
+
+                        {
+                            Console.Write($"HP {monster1Hp} -> {monsters[index].hp}\n|");
+                            curLength = (int)((double)monsters[index].hp / monsters[index].maxHp * barLength);
+                            Console.BackgroundColor = monsters[index].hp > monsters[index].maxHp / 2 ? ConsoleColor.DarkGreen : ConsoleColor.DarkRed;
+                            Console.Write(new string(' ', curLength));
+                            Console.ResetColor();
+                            Console.Write(new string(' ', barLength - curLength));
+                            Console.WriteLine("|\n");
+                        }
                         else
+                        {   
                             Console.WriteLine($"HP {monster1Hp} -> Dead\n");
+                            Console.WriteLine("|                    |\n");
+                        }
                         break;
+                           
+
+
                     case SkillType.BRING_ITEM:
                         Console.WriteLine("아이템을 물어왔습니다\n");
 
                         Console.WriteLine("골드 획득량이 10% 증가합니다");
                         Console.WriteLine("아이템 획득 확률이 10% 증가합니다\n");
                         break;
+
                     case SkillType.GRENADE:
                     case SkillType.RANGE_ATTACK:
                     case SkillType.BACKDRAFT:
                         Console.WriteLine($"Lv.{player.Level} {player.Name} 을(를) 맞췄습니다. [데미지 : {skills[i].atk}]\n");
+                        Console.WriteLine("------------------------------------------------\n");
 
                         Console.WriteLine($"Lv.{player.Level} {player.Name}");
                         if (player.Hp > 0)
-                            Console.WriteLine($"HP {playerHp} -> {player.Hp}\n");
+                        {
+                            curLength = (int)((double)player.Hp / player.MaxHP * barLength);
+
+                            Console.Write("HP ");
+                            Console.ForegroundColor = ConsoleColor.Red;
+                            Console.Write(playerHp);
+                            Console.ResetColor();
+                            Console.Write(" -> ");
+                            Console.ForegroundColor = ConsoleColor.Red;
+                            Console.Write(player.Hp);
+
+                            Console.ResetColor();
+                            Console.Write("\t|");
+                            Console.BackgroundColor = player.Hp > player.MaxHP / 2 ? ConsoleColor.DarkGreen : ConsoleColor.DarkRed;
+                            Console.Write(new string(' ', curLength));
+                            Console.ResetColor();
+                            Console.Write(new string(' ', barLength - curLength));
+                            Console.WriteLine("|\n");
+                        }
                         else
+                        {
+                            
+                            Console.ForegroundColor = ConsoleColor.Red;
                             Console.WriteLine($"HP {playerHp} -> Dead\n");
+                            Console.WriteLine("|                    |\n");
+                        }
+
 
                         int j = 0;
                         foreach (Monster m in target)
                         {
                             Console.WriteLine($"Lv.{m.level} {m.name} 을(를) 맞췄습니다. [데미지 : {skills[i].atk}]\n");
+                            Console.WriteLine("------------------------------------------------\n");
 
                             Console.WriteLine($"Lv.{m.level} {m.name}");
                             if (m.hp > 0)
-                                Console.WriteLine($"HP {monsterHp[j++]} -> {m.hp}\n");
+                            { 
+                                Console.Write($"HP {monsterHp[j++]} -> {m.hp}|");
+                                curLength = (int)((double)m.hp / m.maxHp * barLength);
+                                Console.BackgroundColor = m.hp > m.maxHp / 2 ? ConsoleColor.DarkGreen : ConsoleColor.DarkRed;
+                                Console.Write(new string(' ', curLength));
+                                Console.ResetColor();
+                                Console.Write(new string(' ', barLength - curLength));
+                                Console.WriteLine("|\n");
+                            }
                             else
+                            { 
                                 Console.WriteLine($"HP {monsterHp[j++]} -> Dead\n");
+                            }
                         }
                         break;
+
                     case SkillType.BOMB_UPGRADE:
                         Console.WriteLine("폭탄을 강화합니다\n");
 
                         Console.WriteLine("폭탄의 공격력이 3 증가합니다\n");
                         break;
+
                     case SkillType.HYDRO_PUMP:
                         Console.WriteLine($"Lv.{monsters[index].level} {monsters[index].name} 을(를) 맞췄습니다. [데미지 : {skills[i].atk}]\n");
+                        Console.WriteLine("------------------------------------------------\n");
 
                         Console.WriteLine($"Lv.{monsters[index].level} {monsters[index].name}");
                         if (monsters[index].hp > 0)
-                            Console.WriteLine($"HP {monster1Hp} -> {monsters[index].hp}\n");
+                        {
+                            Console.Write($"HP {monster1Hp} -> {monsters[index].hp}\n|");
+                            curLength = (int)((double)monsters[index].hp / monsters[index].maxHp * barLength);
+                            Console.BackgroundColor = monsters[index].hp > monsters[index].maxHp / 2 ? ConsoleColor.DarkGreen : ConsoleColor.DarkRed;
+                            Console.Write(new string(' ', curLength));
+                            Console.ResetColor();
+                            Console.Write(new string(' ', barLength - curLength));
+                            Console.WriteLine("|\n");
+                        }
                         else
+                        {
                             Console.WriteLine($"HP {monster1Hp} -> Dead\n");
+                            Console.WriteLine("|                    |\n");
+                        }
 
                         if (cnt > 1)
                         {
                             Console.WriteLine($"Lv.{monsters[index2].level} {monsters[index2].name} 을(를) 맞췄습니다. [데미지 : {skills[i].atk}]\n");
+                            Console.WriteLine("------------------------------------------------\n");
 
                             Console.WriteLine($"Lv.{monsters[index2].level} {monsters[index2].name}");
                             if (monsters[index].hp > 0)
-                                Console.WriteLine($"HP {monster2Hp} -> {monsters[index2].hp}\n");
+                            {
+                                Console.Write($"HP {monster2Hp} -> {monsters[index2].hp}\n|");
+                                curLength = (int)((double)monsters[index2].hp / monsters[index2].maxHp * barLength);
+                                Console.BackgroundColor = monsters[index2].hp > monsters[index2].maxHp / 2 ? ConsoleColor.DarkGreen : ConsoleColor.DarkRed;
+                                Console.Write(new string(' ', curLength));
+                                Console.ResetColor();
+                                Console.Write(new string(' ', barLength - curLength));
+                                Console.WriteLine("|\n");
+                            }
                             else
+                            {
                                 Console.WriteLine($"HP {monster2Hp} -> Dead\n");
+                                Console.WriteLine("|                    |\n");
+                            }
                         }
                         break;
                 }
 
+                Console.WriteLine("------------------------------------------------\n");
                 Console.WriteLine("0. 다음\n");
 
                 Console.Write(">> ");
@@ -423,7 +523,7 @@ namespace TextRPGTeam33
                     if (m.hp <= 0)
                     {
                         Console.ForegroundColor = ConsoleColor.DarkGray;
-                        Console.WriteLine($"Lv.{m.level} {m.name} Dead");
+                        Console.WriteLine($"{i++} Lv.{m.level} {m.name} Dead");
                         Console.Write($" HP {m.hp}/{m.maxHp}\t");
                         Console.WriteLine("|                    |\n");
                         Console.ResetColor();
@@ -431,7 +531,7 @@ namespace TextRPGTeam33
                     else
                     {
                         curLength = (int)((double)m.hp / m.maxHp * barLength);
-                        Console.WriteLine($"Lv.{m.level} {m.name}");
+                        Console.WriteLine($"{i++} Lv.{m.level} {m.name}");
                         Console.Write($" HP {m.hp}/{m.maxHp}\t|");
                         Console.BackgroundColor = m.hp > m.maxHp / 2 ? ConsoleColor.DarkGreen : ConsoleColor.DarkRed;
                         Console.Write(new string(' ', curLength));
@@ -443,11 +543,36 @@ namespace TextRPGTeam33
                     Console.ResetColor();
                 }
                 Console.WriteLine();
+                Console.WriteLine("-----Player-------------------------------------\n");
+                
+                Console.WriteLine($"Lv.{player.Level} {player.Name} ({player.Job})\n");
+                curLength = (int)((double)player.Hp / player.MaxHP * barLength);
+                Console.Write(" HP ");
+                Console.ForegroundColor = ConsoleColor.Red;
+                Console.Write($"{player.Hp}/{player.MaxHP}");
+                Console.ResetColor();
+                Console.Write("\t|");
+                Console.BackgroundColor = player.Hp > player.MaxHP / 2 ? ConsoleColor.DarkGreen : ConsoleColor.DarkRed;
+                Console.Write(new string(' ', curLength));
+                Console.ResetColor();
+                Console.Write(new string(' ', barLength - curLength));
+                Console.WriteLine("|");
 
-                Console.WriteLine("[내정보]");
-                Console.WriteLine($"Lv.{player.Level} {player.Name} ({player.Job})");
-                Console.WriteLine($"HP {player.Hp}/{player.MaxHP}");
-                Console.WriteLine($"MP {player.Mp}/{player.MaxMp}\n");
+                curLength = (int)((double)player.Mp / player.MaxMp * barLength);
+                Console.Write(" MP ");
+                Console.ForegroundColor = ConsoleColor.Blue;
+                Console.Write($"{player.Mp}/{player.MaxMp}");
+                Console.ResetColor();
+                Console.Write("\t|");
+                Console.BackgroundColor = ConsoleColor.Blue;
+                Console.Write(new string(' ', curLength));
+                Console.ResetColor();
+                Console.Write(new string(' ', barLength - curLength));
+                Console.WriteLine("|\n");
+
+
+                //Console.WriteLine($"HP {player.Hp}/{player.MaxHP}");
+                //Console.WriteLine($"MP {player.Mp}/{player.MaxMp}\n");
 
                 if (skills[index].type == SkillType.GUN_SHOT)
                 {
@@ -460,7 +585,9 @@ namespace TextRPGTeam33
                     }
                     Console.WriteLine($"남은 총알 개수 : {bullet}");
                 }
-                Console.WriteLine("0. 취소\n");
+                Console.WriteLine("------------------------------------------------");
+                Console.WriteLine(" 0. 취소                                        ");
+                Console.WriteLine("------------------------------------------------\n");
 
                 Console.WriteLine("원하시는 행동을 입력해주세요:");
                 Console.Write(">> ");
