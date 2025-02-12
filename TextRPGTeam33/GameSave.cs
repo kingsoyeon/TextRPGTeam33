@@ -340,10 +340,10 @@ namespace TextRPGTeam33
                 File.WriteAllText(globalDataFile, jsonString);
 
                 // 디버그용
-                Console.WriteLine($"글로벌 데이터 저장됨: {globalDataFile}");
-                Console.WriteLine($"Sans Kill: {globalData.HasKilledSans}");
-                Console.WriteLine($"업적 수: {globalData.GlobalAchievements.Count}");
-                Thread.Sleep(2000);
+                //Console.WriteLine($"글로벌 데이터 저장됨: {globalDataFile}");
+                //Console.WriteLine($"Sans Kill: {globalData.HasKilledSans}");
+                //Console.WriteLine($"업적 수: {globalData.GlobalAchievements.Count}");
+                //Thread.Sleep(2000);
             }
             catch (Exception ex)
             {
@@ -381,9 +381,9 @@ namespace TextRPGTeam33
                 }
 
                 // 추가된 디버그 로그
-                Console.WriteLine($"로드된 데이터 - Sans Kill: {globalData.HasKilledSans}");
-                Console.WriteLine($"로드된 업적 수: {globalData.GlobalAchievements?.Count ?? 0}");
-                Thread.Sleep(2000);
+                //Console.WriteLine($"로드된 데이터 - Sans Kill: {globalData.HasKilledSans}");
+                //Console.WriteLine($"로드된 업적 수: {globalData.GlobalAchievements?.Count ?? 0}");
+                //Thread.Sleep(2000);
             }
             catch (Exception ex)
             {
