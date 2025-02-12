@@ -267,6 +267,19 @@ static void Explore(Character player)
         string currentSaveFile = gameSave.GetCurrentSaveFile();
         gameSave.Save(player, currentSaveFile);
         Console.Clear();
+        string[] message =
+        {
+          "오", "늘", "도", "", "하", "루", "가", "", "마", "무", "리", "", "되", "어", "간", "다",
+            ".", "\n", "조", "금", "만", "", "더", "", "힘", "내", "자", "."
+        };
+
+        // 배열의 각 요소를 하나씩 출력하고, 100ms 대기
+        foreach (string word in message)
+        {
+            Console.Write(word);    // 한 글자씩 출력
+            Thread.Sleep(150);      // 100ms 대기
+        }
+        Console.WriteLine();
         Console.WriteLine("당신은 일기를 작성하셨습니다.");
         Thread.Sleep(500);
         Console.Write(".");
@@ -275,6 +288,34 @@ static void Explore(Character player)
         Thread.Sleep(500);
         Console.WriteLine(".");
         Thread.Sleep(500);
+
+        
+        string diary = @"
+
+
+
+    . .,,,,,,,,,,, .,, ,      
+    @ #@@@@@@@@@@@@@@@@@@     
+    @ #@$$$$$$$$@@@@@@@@@     
+    @ #@,.......#@@@@@@@@     
+    @ #@@@@@@@@@#@@@@@@@@     
+    @ #@!;;;;;;;#@@@@@@@@     
+    @ #@@@@@@@@@#@@@@@@@@     
+    @ #@*!!!!!!!#@@@@@@@@     
+    @ #@@@@@@@@@@@@@@@@@@     
+    @ #@@@@@@@@@@@@@@@@@@     
+    @ #@@@@@@@@@@@#@@@#@@     
+    @ #@@@@@@@@@@@#======     
+    @ #@@@@@@@@@@@-, ----,    
+    @ #@@@@@@@@@@@-*.@@@*@    
+    @ #@@@@@@@@@@@-*.@@@!@    
+    @ #@@@@@@@@@@@-, -~~~-    
+    @ #@@@@@@@@@@@#======    
+    @ #@@@@@@@@@@@@@@@@@=     
+    . ,,,,,,,,,,,,,,,,,,      ";
+        Console.ForegroundColor = ConsoleColor.Yellow;
+        Console.WriteLine(diary);
+        Thread.Sleep(2000);
     }
 
     

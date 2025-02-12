@@ -42,6 +42,8 @@ namespace TextRPGTeam33
                 CurrentCount = 0;
                 RewardItem = rewardItem;
                 RewardExp = rewardExp;
+                IsAccepted = false;
+                RewardClaimed = false;  // 명시적으로 false로 설정
             }
         }
 
@@ -116,8 +118,16 @@ namespace TextRPGTeam33
 
                 if (input == "1")
                 {
-                    acceptedQuests.Add(currentQuest);
-                    currentQuest.IsAccepted = true;
+                    var questToAdd = new QuestData(
+                        currentQuest.Id,
+                        currentQuest.Name,
+                        currentQuest.Description,
+                        currentQuest.TargetCount,
+                        currentQuest.RewardItem,
+                        currentQuest.RewardExp
+                    );
+                    acceptedQuests.Add(questToAdd);
+                    questToAdd.IsAccepted = true;
                     Console.WriteLine("\n퀘스트를 수락했습니다!");
                     Thread.Sleep(1500);
                 }
@@ -178,6 +188,7 @@ namespace TextRPGTeam33
 
         private void DisplayQuestDetail(Character player, QuestData quest)
         {
+            currentQuest = quest; // 현재 선택된 퀘스트로 업데이트
             while (true)
             {
                 Console.Clear();
@@ -206,12 +217,18 @@ namespace TextRPGTeam33
                 if (action == "0") break;
                 else if (action == "1" && quest.IsCompleted && !quest.RewardClaimed)
                 {
-                    CompleteQuest(player);
-                    quest.RewardClaimed = true;
-                    break;
+                    bool completed = CompleteQuest(player);
+                    if (completed)
+                    {
+                        break;
+                    }
                 }
                 else if (action == "2" && !quest.IsCompleted)
                 {
+                    // 진행도 초기화
+                    quest.CurrentCount = 0;
+                    quest.IsAccepted = false;
+
                     acceptedQuests.Remove(quest);
                     break;
                 }
@@ -220,10 +237,10 @@ namespace TextRPGTeam33
 
         public void UpdateQuestProgress(int questId) // 퀘스트 진행도 업데이트
         {
-            var quest = quests.Find(q => q.Id == questId);
-            if (quest != null)
+            var acceptedQuest = acceptedQuests.Find(q => q.Id == questId && q.IsAccepted);
+            if (acceptedQuest != null)
             {
-                quest.CurrentCount++;
+                acceptedQuest.CurrentCount++;
             }
         }
 
@@ -249,7 +266,7 @@ namespace TextRPGTeam33
 
                 currentQuest.CurrentCount = 0;  // 진행도 초기화 추가
                 currentQuest.IsAccepted = false;  // 수락 상태 초기화
-                currentQuest.RewardClaimed = true;  // 보상 수령 상태를 true로 변경
+                currentQuest.RewardClaimed = false;
 
                 acceptedQuests.Remove(currentQuest);
 
@@ -270,6 +287,16 @@ namespace TextRPGTeam33
         public void LoadQuestList(List<QuestData> questList)
         {
             acceptedQuests = questList;  // 저장된 퀘스트 리스트 복원
+            foreach (var quest in questList)
+            {
+                var originalQuest = quests.Find(q => q.Id == quest.Id);
+                if (originalQuest != null)
+                {
+                    originalQuest.CurrentCount = quest.CurrentCount;
+                    originalQuest.IsAccepted = quest.IsAccepted;
+                    originalQuest.RewardClaimed = quest.RewardClaimed;
+                }
+            }
         }
     }
 }
