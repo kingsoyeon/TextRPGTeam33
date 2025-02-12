@@ -346,7 +346,7 @@ namespace TextRPGTeam33
                 Console.WriteLine($"Lv.{monsters[i].level} {monsters[i].name}");
                 if (monsters[i].hp > 0)
                 {
-                    Console.Write($" HP {monsterHp} -> {monsters[i].hp}\t|");
+                    Console.Write($"HP {monsterHp} -> {monsters[i].hp}\t|");
                     curLength = (int)((double)monsters[i].hp / monsters[i].maxHp * barLength);
                     Console.BackgroundColor = monsters[i].hp > monsters[i].maxHp / 2 ? ConsoleColor.DarkGreen : ConsoleColor.DarkRed;
                     Console.Write(new string(' ', curLength));
@@ -356,8 +356,7 @@ namespace TextRPGTeam33
                 }
                 else
                 {
-                    Console.WriteLine($" HP {monsterHp} -> Dead\n");
-                    Console.WriteLine("|                    |\n");
+                    Console.WriteLine($"HP {monsterHp} -> Dead\n");
                 }
                 Console.WriteLine("------------------------------------------------\n");
 
@@ -431,12 +430,16 @@ namespace TextRPGTeam33
                     Console.Write(player.Hp);
 
                     Console.ResetColor();
-                    Console.Write("\t|");
-                    Console.BackgroundColor = player.Hp > player.MaxHP / 2 ? ConsoleColor.DarkGreen : ConsoleColor.DarkRed;
-                    Console.Write(new string(' ', curLength));
-                    Console.ResetColor();
-                    Console.Write(new string(' ', barLength - curLength));
-                    Console.WriteLine("|\n");
+                    if (player.Hp > 0)
+                    {
+                        Console.Write("\t|");
+                        Console.BackgroundColor = player.Hp > player.MaxHP / 2 ? ConsoleColor.DarkGreen : ConsoleColor.DarkRed;
+                        Console.Write(new string(' ', curLength));
+                        Console.ResetColor();
+                        Console.Write(new string(' ', barLength - curLength));
+                        Console.WriteLine("|\n");
+                    }
+                    else Console.WriteLine("\n");
 
                     Console.WriteLine("------------------------------------------------\n");
 
@@ -519,10 +522,9 @@ namespace TextRPGTeam33
                     Console.ForegroundColor = ConsoleColor.Red;
                     Console.Write(startHp);
                     Console.ResetColor();
-                    Console.Write(" -> Dead\t");
-                    Console.WriteLine("|                    |\n");
+                    Console.Write(" -> Dead\n");
 
-                    Console.WriteLine("------------------------------------------------\n");
+                    Console.WriteLine("\n------------------------------------------------\n");
 
                     Console.WriteLine("0. 다음\n");
 

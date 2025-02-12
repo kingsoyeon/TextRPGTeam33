@@ -114,17 +114,24 @@ namespace TextRPGTeam33
                 currentQuest = availableQuests[rand.Next(availableQuests.Count)];
 
                 Console.Clear();
-                Console.WriteLine("Quest!!\n");
-                Console.WriteLine($"{currentQuest.Name}\n");
+                Console.WriteLine("==================================================================");
+                Console.WriteLine("|                             QUEST!!                            |");
+                Console.WriteLine("==================================================================\n");
+                Console.WriteLine($"<<{currentQuest.Name}>>\n");
                 Console.WriteLine($"{currentQuest.Description}\n");
-                Console.WriteLine($"- {currentQuest.Name} ({currentQuest.CurrentCount}/{currentQuest.TargetCount})");
-                Console.WriteLine("\n- 보상 -");
-                Console.WriteLine($"  {currentQuest.RewardItem.Name} x {currentQuest.RewardItem.Count}");
-                Console.WriteLine($"  경험치 {currentQuest.RewardExp}\n");
-
+                Console.WriteLine("------------------------------------------------------------------");
+                Console.WriteLine(" [ 목표 ]");
+                Console.WriteLine($"  > {currentQuest.Name} ({currentQuest.CurrentCount}/{currentQuest.TargetCount})\n");
+                Console.WriteLine(" [ 보상 ]");
+                Console.WriteLine($"  > {currentQuest.RewardItem.Name} x {currentQuest.RewardItem.Count}");
+                Console.Write($"  > 경험치 ");
+                Console.ForegroundColor = ConsoleColor.Yellow;
+                Console.WriteLine($"{currentQuest.RewardExp}\n");
+                Console.ResetColor();
+                Console.WriteLine("------------------------------------------------------------------");
                 Console.WriteLine("1. 수락");
                 Console.WriteLine("0. 거절");
-                Console.WriteLine("");
+                Console.WriteLine("------------------------------------------------------------------\n");
                 Console.Write("원하시는 행동을 입력해주세요.\n>>");
                 string input = Console.ReadLine();
 
@@ -140,7 +147,7 @@ namespace TextRPGTeam33
                     );
                     acceptedQuests.Add(questToAdd);
                     questToAdd.IsAccepted = true;
-                    Console.WriteLine("\n퀘스트를 수락했습니다!");
+                    Console.WriteLine($"\n<<{currentQuest.Name}>> 퀘스트를 수락했습니다!");
                     Thread.Sleep(1500);
                 }
                 else
@@ -151,7 +158,11 @@ namespace TextRPGTeam33
             }
             else
             {
-                Console.WriteLine("현재 수락 가능한 퀘스트가 없습니다.");
+                Console.WriteLine("==================================================================");
+                Console.WriteLine("|                             QUEST!!                            |");
+                Console.WriteLine("==================================================================\n");
+                Console.WriteLine("현재 수락 가능한 퀘스트가 없습니다.\n");
+                Console.WriteLine("------------------------------------------------------------------");
                 Thread.Sleep(1500);
             }
         }
@@ -161,26 +172,36 @@ namespace TextRPGTeam33
             while (true)
             {
                 Console.Clear();
-                Console.WriteLine("Quest!!\n");
+                Console.WriteLine("==================================================================");
+                Console.WriteLine("|                             QUEST!!                            |");
+                Console.WriteLine("==================================================================\n");
 
                 // 퀘스트 목록 표시
-                for (int i = 0; i < acceptedQuests.Count; i++)
+                if (acceptedQuests.Count > 0)
                 {
-                    if (acceptedQuests[i].IsCompleted && !acceptedQuests[i].RewardClaimed)
+                    for (int i = 0; i < acceptedQuests.Count; i++)
                     {
-                        Console.ForegroundColor = ConsoleColor.Yellow;
+                        if (acceptedQuests[i].IsCompleted && !acceptedQuests[i].RewardClaimed)
+                        {
+                            Console.ForegroundColor = ConsoleColor.Yellow;
+                        }
+                        else if (acceptedQuests[i].RewardClaimed)
+                        {
+                            Console.ForegroundColor = ConsoleColor.DarkGray;
+                        }
+                        Console.WriteLine($"{i + 1}. {acceptedQuests[i].Name}");
+                        Console.ResetColor();
                     }
-                    else if (acceptedQuests[i].RewardClaimed)
-                    {
-                        Console.ForegroundColor = ConsoleColor.DarkGray;
-                    }
-                    Console.WriteLine($"{i + 1}. {acceptedQuests[i].Name}");
-                    Console.ResetColor();
+                    Console.WriteLine();
                 }
-
-                Console.WriteLine("\n0. 나가기");
-                Console.WriteLine("\n원하시는 퀘스트를 선택해주세요.");
-                Console.Write(">>");
+                else
+                {
+                    Console.WriteLine("진행 중인 퀘스트가 없습니다.\n");
+                }
+                Console.WriteLine("------------------------------------------------------------------");
+                Console.WriteLine("0. 나가기");
+                Console.WriteLine("------------------------------------------------------------------\n");
+                Console.Write("원하시는 행동을 입력해주세요.\n>>");
 
                 string input = Console.ReadLine();
 
@@ -212,14 +233,21 @@ namespace TextRPGTeam33
             while (true)
             {
                 Console.Clear();
-                Console.WriteLine("Quest!!\n");
-                Console.WriteLine($"{quest.Name}\n");
+                Console.WriteLine("==================================================================");
+                Console.WriteLine("|                             QUEST!!                            |");
+                Console.WriteLine("==================================================================\n");
+                Console.WriteLine($"<<{quest.Name}>>\n");
                 Console.WriteLine($"{quest.Description}\n");
-                Console.WriteLine($"- {quest.Name} ({quest.CurrentCount}/{quest.TargetCount})");
-                Console.WriteLine("\n- 보상 -");
-                Console.WriteLine($"  {quest.RewardItem.Name} x {quest.RewardItem.Count}");
-                Console.WriteLine($"  경험치 {quest.RewardExp}\n");
-
+                Console.WriteLine("------------------------------------------------------------------");
+                Console.WriteLine(" [ 목표 ]");
+                Console.WriteLine($"  > {quest.Name} ({quest.CurrentCount}/{quest.TargetCount})\n");
+                Console.WriteLine(" [ 보상 ]");
+                Console.WriteLine($"  > {quest.RewardItem.Name} x {quest.RewardItem.Count}");
+                Console.Write($"  > 경험치 ");
+                Console.ForegroundColor = ConsoleColor.Yellow;
+                Console.WriteLine($"{quest.RewardExp}\n");
+                Console.ResetColor();
+                Console.WriteLine("------------------------------------------------------------------");
                 if (quest.IsCompleted && !quest.RewardClaimed)
                 {
                     Console.WriteLine("1. 보상 수령");
@@ -230,8 +258,8 @@ namespace TextRPGTeam33
                     Console.WriteLine("2. 퀘스트 포기");
                     Console.WriteLine("0. 돌아가기");
                 }
-
-                Console.Write("\n원하시는 행동을 입력해주세요.\n>>");
+                Console.WriteLine("------------------------------------------------------------------\n");
+                Console.Write("원하시는 행동을 입력해주세요.\n>>");
                 string action = Console.ReadLine();
 
                 if (action == "0") break;
@@ -318,9 +346,14 @@ namespace TextRPGTeam33
                 acceptedQuests.Remove(currentQuest);
 
                 Console.Clear();
-                Console.WriteLine("퀘스트 보상을 받았습니다!");
+                Console.WriteLine("==================================================================");
+                Console.WriteLine("|                             QUEST!!                            |");
+                Console.WriteLine("==================================================================\n");
+                Console.WriteLine("퀘스트 보상을 받았습니다!\n");
                 Console.WriteLine($"경험치 {currentQuest.RewardExp}를 획득했습니다.");
-                Console.WriteLine($"{currentQuest.RewardItem.Name}을(를) 획득했습니다.");
+                Console.WriteLine($"{currentQuest.RewardItem.Name}을(를) 획득했습니다.\n");
+                Console.WriteLine("------------------------------------------------------------------");
+                Thread.Sleep(1500);
 
                 return true;
             }

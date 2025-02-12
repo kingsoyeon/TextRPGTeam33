@@ -177,8 +177,7 @@ namespace TextRPGTeam33
 
         public int UseSkill(int i)
         {
-            if (player.Mp >= skills[i].mp) player.Mp -= skills[i].mp;
-            else
+            if (player.Mp < skills[i].mp) 
             {
                 Console.Clear();
                 Console.WriteLine("마나가 부족합니다");
@@ -297,6 +296,7 @@ namespace TextRPGTeam33
                     }
                     break;
             }
+            player.Mp -= skills[i].mp;
 
             while (true)
             {
@@ -307,6 +307,8 @@ namespace TextRPGTeam33
                 Console.WriteLine("================================================\n");
                 Console.WriteLine("------------------------------------------------");
                 Console.WriteLine($"{player.Name} 의 {skills[i].name}!\n");
+                
+
                 switch (skills[i].type)
                 {
                     case SkillType.ATTACK_TWICE:
@@ -314,13 +316,12 @@ namespace TextRPGTeam33
                         {
                             Console.WriteLine($"Lv.{monsters[index].level} {monsters[index].name} 을(를) 맞췄습니다. [데미지 : {skills[i].atk / 2}]");
                         }
-                        
                         Console.WriteLine("------------------------------------------------\n");
 
                         Console.WriteLine($"Lv.{monsters[index].level} {monsters[index].name}");
                         if (monsters[index].hp > 0)
                         {
-                            Console.Write($"HP {monster1Hp} -> {monsters[index].hp}\n|");
+                            Console.Write($"HP {monster1Hp} -> {monsters[index].hp}\t|");
                             curLength = (int)((double)monsters[index].hp / monsters[index].maxHp * barLength);
                             Console.BackgroundColor = monsters[index].hp > monsters[index].maxHp / 2 ? ConsoleColor.DarkGreen : ConsoleColor.DarkRed;
                             Console.Write(new string(' ', curLength));
@@ -331,21 +332,23 @@ namespace TextRPGTeam33
                         else
                         {
                             Console.WriteLine($"HP {monster1Hp} -> Dead\n");
-                            Console.WriteLine("|                    |\n");
+
                         }
                         break;
 
                     case SkillType.GUN_SHOT:
                     case SkillType.FIRE_RAY:
+
+
                     case SkillType.BOLT_TACKLE:
                         Console.WriteLine($"Lv.{monsters[index].level} {monsters[index].name} 을(를) 맞췄습니다. [데미지 : {skills[i].atk}]\n");
-                        Console.WriteLine("------------------------------------------------\n");
+
 
                         Console.WriteLine($"Lv.{monsters[index].level} {monsters[index].name}");
                         if (monsters[index].hp > 0)
 
                         {
-                            Console.Write($"HP {monster1Hp} -> {monsters[index].hp}\n|");
+                            Console.Write($"HP {monster1Hp} -> {monsters[index].hp}\t|");
                             curLength = (int)((double)monsters[index].hp / monsters[index].maxHp * barLength);
                             Console.BackgroundColor = monsters[index].hp > monsters[index].maxHp / 2 ? ConsoleColor.DarkGreen : ConsoleColor.DarkRed;
                             Console.Write(new string(' ', curLength));
@@ -354,12 +357,12 @@ namespace TextRPGTeam33
                             Console.WriteLine("|\n");
                         }
                         else
-                        {   
+                        {
                             Console.WriteLine($"HP {monster1Hp} -> Dead\n");
-                            Console.WriteLine("|                    |\n");
+
                         }
                         break;
-                           
+
 
 
                     case SkillType.BRING_ITEM:
@@ -373,7 +376,7 @@ namespace TextRPGTeam33
                     case SkillType.RANGE_ATTACK:
                     case SkillType.BACKDRAFT:
                         Console.WriteLine($"Lv.{player.Level} {player.Name} 을(를) 맞췄습니다. [데미지 : {skills[i].atk}]\n");
-                        Console.WriteLine("------------------------------------------------\n");
+
 
                         Console.WriteLine($"Lv.{player.Level} {player.Name}");
                         if (player.Hp > 0)
@@ -398,23 +401,28 @@ namespace TextRPGTeam33
                         }
                         else
                         {
-                            
+
                             Console.ForegroundColor = ConsoleColor.Red;
                             Console.WriteLine($"HP {playerHp} -> Dead\n");
-                            Console.WriteLine("|                    |\n");
+
                         }
 
 
                         int j = 0;
+                        Console.WriteLine("#================================================#\n");
                         foreach (Monster m in target)
                         {
+                            
                             Console.WriteLine($"Lv.{m.level} {m.name} 을(를) 맞췄습니다. [데미지 : {skills[i].atk}]\n");
-                            Console.WriteLine("------------------------------------------------\n");
-
+                            
+                        }
+                        Console.WriteLine("#================================================#\n");
+                        foreach (Monster m in target)
+                        {
                             Console.WriteLine($"Lv.{m.level} {m.name}");
                             if (m.hp > 0)
-                            { 
-                                Console.Write($"HP {monsterHp[j++]} -> {m.hp}|");
+                            {
+                                Console.Write($" HP {monsterHp[j++]} -> {m.hp}\t|");
                                 curLength = (int)((double)m.hp / m.maxHp * barLength);
                                 Console.BackgroundColor = m.hp > m.maxHp / 2 ? ConsoleColor.DarkGreen : ConsoleColor.DarkRed;
                                 Console.Write(new string(' ', curLength));
@@ -423,8 +431,8 @@ namespace TextRPGTeam33
                                 Console.WriteLine("|\n");
                             }
                             else
-                            { 
-                                Console.WriteLine($"HP {monsterHp[j++]} -> Dead\n");
+                            {
+                                Console.WriteLine($" HP {monsterHp[j++]} -> Dead\n");
                             }
                         }
                         break;
@@ -436,35 +444,30 @@ namespace TextRPGTeam33
                         break;
 
                     case SkillType.HYDRO_PUMP:
-                        Console.WriteLine($"Lv.{monsters[index].level} {monsters[index].name} 을(를) 맞췄습니다. [데미지 : {skills[i].atk}]\n");
-                        Console.WriteLine("------------------------------------------------\n");
-
-                        Console.WriteLine($"Lv.{monsters[index].level} {monsters[index].name}");
-                        if (monsters[index].hp > 0)
-                        {
-                            Console.Write($"HP {monster1Hp} -> {monsters[index].hp}\n|");
-                            curLength = (int)((double)monsters[index].hp / monsters[index].maxHp * barLength);
-                            Console.BackgroundColor = monsters[index].hp > monsters[index].maxHp / 2 ? ConsoleColor.DarkGreen : ConsoleColor.DarkRed;
-                            Console.Write(new string(' ', curLength));
-                            Console.ResetColor();
-                            Console.Write(new string(' ', barLength - curLength));
-                            Console.WriteLine("|\n");
-                        }
-                        else
-                        {
-                            Console.WriteLine($"HP {monster1Hp} -> Dead\n");
-                            Console.WriteLine("|                    |\n");
-                        }
-
+                        
+                        
                         if (cnt > 1)
                         {
+                            Console.WriteLine("#================================================#\n");
+                            Console.WriteLine($"Lv.{monsters[index].level} {monsters[index].name} 을(를) 맞췄습니다. [데미지 : {skills[i].atk}]\n");
                             Console.WriteLine($"Lv.{monsters[index2].level} {monsters[index2].name} 을(를) 맞췄습니다. [데미지 : {skills[i].atk}]\n");
-                            Console.WriteLine("------------------------------------------------\n");
+                            Console.WriteLine("#================================================#\n");
 
-                            Console.WriteLine($"Lv.{monsters[index2].level} {monsters[index2].name}");
+                            
+                          
                             if (monsters[index].hp > 0)
                             {
-                                Console.Write($"HP {monster2Hp} -> {monsters[index2].hp}\n|");
+                                Console.WriteLine($"Lv.{monsters[index].level} {monsters[index].name}");
+                                Console.Write($"HP {monster1Hp} -> {monsters[index].hp}\t|");
+                                curLength = (int)((double)monsters[index].hp / monsters[index].maxHp * barLength);
+                                Console.BackgroundColor = monsters[index].hp > monsters[index].maxHp / 2 ? ConsoleColor.DarkGreen : ConsoleColor.DarkRed;
+                                Console.Write(new string(' ', curLength));
+                                Console.ResetColor();
+                                Console.Write(new string(' ', barLength - curLength));
+                                Console.WriteLine("|\n");
+
+                                Console.WriteLine($"Lv.{monsters[index2].level} {monsters[index2].name}");
+                                Console.Write($"HP {monster2Hp} -> {monsters[index2].hp}\t|");
                                 curLength = (int)((double)monsters[index2].hp / monsters[index2].maxHp * barLength);
                                 Console.BackgroundColor = monsters[index2].hp > monsters[index2].maxHp / 2 ? ConsoleColor.DarkGreen : ConsoleColor.DarkRed;
                                 Console.Write(new string(' ', curLength));
@@ -474,9 +477,33 @@ namespace TextRPGTeam33
                             }
                             else
                             {
+                                Console.WriteLine($"HP {monster1Hp} -> Dead\n");
                                 Console.WriteLine($"HP {monster2Hp} -> Dead\n");
-                                Console.WriteLine("|                    |\n");
                             }
+                        }
+                        else
+                        {
+                            Console.WriteLine("#================================================#\n");
+                            Console.WriteLine($"Lv.{monsters[index].level} {monsters[index].name} 을(를) 맞췄습니다. [데미지 : {skills[i].atk}]\n");
+                            Console.WriteLine("#================================================#\n");
+
+                            Console.WriteLine($"Lv.{monsters[index].level} {monsters[index].name}");
+                            if (monsters[index].hp > 0)
+                            {
+                                Console.Write($"HP {monster1Hp} -> {monsters[index].hp}\t|");
+                                curLength = (int)((double)monsters[index].hp / monsters[index].maxHp * barLength);
+                                Console.BackgroundColor = monsters[index].hp > monsters[index].maxHp / 2 ? ConsoleColor.DarkGreen : ConsoleColor.DarkRed;
+                                Console.Write(new string(' ', curLength));
+                                Console.ResetColor();
+                                Console.Write(new string(' ', barLength - curLength));
+                                Console.WriteLine("|\n");
+                            }
+                            else
+                            {
+                                Console.WriteLine($"HP {monster1Hp} -> Dead\n");
+
+                            }
+
                         }
                         break;
                 }

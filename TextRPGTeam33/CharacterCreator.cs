@@ -237,8 +237,8 @@ namespace TextRPGTeam33
                         }
 
                         job = "파피루스";
-                        atk = 999;
-                        def = 999;
+                        atk = 1;
+                        def = 99;
                         maxHp = 999;
                         maxMp = 999;
 
@@ -917,6 +917,7 @@ namespace TextRPGTeam33
                         break;
 
                     case "파피루스":
+                        Console.ResetColor();
                         Console.Write("                    .777777777.                             ");
                         Console.ForegroundColor = ConsoleColor.Red;
                         Console.Write("파");
