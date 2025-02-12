@@ -37,36 +37,79 @@ namespace TextRPGTeam33
 
         public void BattleStart()
         {
+            int monsterHp = 0;
+            int barLength = 20;
+            int hpLength = 0;
+            string hpBar;
+
             while (true)
             {
                 Console.Clear();
 
-                Console.WriteLine("Battle!!\n");
+                Console.WriteLine("================================================");
+                Console.WriteLine("                    Battle!!                    ");
+                Console.WriteLine("================================================\n");
+                
+                Console.WriteLine("-----Monster------------------------------------\n");
                 foreach (Monster m in monsters)
                 {
+                    monsterHp = m.hp;
                     if (m.hp <= 0)
                     {
                         Console.ForegroundColor = ConsoleColor.DarkGray;
                         Console.WriteLine($"Lv.{m.level} {m.name} Dead");
+                        Console.Write($"HP {m.hp}/{monsterHp}\t[");
+                        Console.Write("--------------------");
+                        Console.ResetColor();
+                        Console.WriteLine("]\n");
                     }
                     else
                     {
-                        Console.WriteLine($"Lv.{m.level} {m.name} HP {m.hp}");
+                        hpLength = (int)((double)m.hp / monsterHp * barLength);
+                        hpBar = new string('#', hpLength) + new string('-', barLength - hpLength);
+                        Console.WriteLine($"Lv.{m.level} {m.name}");
+                        Console.Write($"HP {m.hp}/{monsterHp}\t[");
+                        Console.ForegroundColor = m.hp > monsterHp / 2 ? ConsoleColor.DarkGreen : ConsoleColor.DarkRed;
+                        Console.Write(hpBar);
+                        Console.ResetColor();
+                        Console.WriteLine("]\n");
                     }
-
-                    Console.ResetColor();
                 }
+                Console.WriteLine("------------------------------------------------");
                 Console.WriteLine();
 
-                Console.WriteLine("[내정보]");
-                Console.WriteLine($"Lv.{player.Level} {player.Name} ({player.Job})");
-                Console.WriteLine($"HP {player.Hp}/{player.MaxHP}");
-                Console.WriteLine($"MP {player.Mp}/{player.MaxMp}\n");
+                Console.WriteLine("-----Player-------------------------------------\n");
 
-                Console.WriteLine("1. 공격");
-                Console.WriteLine("2. 스킬");
-                Console.WriteLine("3. 포션 사용\n");
-                Console.WriteLine("0. 나가기");
+                Console.WriteLine($"Lv.{player.Level} {player.Name} ({player.Job})\n");
+
+                hpLength = (int)((double)player.Hp / player.MaxHP * barLength);
+                hpBar = new string('#', hpLength) + new string('-', barLength - hpLength);
+                Console.Write($"HP ");
+                Console.ForegroundColor = ConsoleColor.Red;
+                Console.Write($"{player.Hp}/{player.MaxHP}");
+                Console.ResetColor();
+                Console.Write("\t[");
+                Console.ForegroundColor = player.Hp > player.MaxHP / 2 ? ConsoleColor.DarkGreen : ConsoleColor.DarkRed;
+                Console.Write(hpBar);
+                Console.ResetColor();
+                Console.WriteLine("]");
+
+                hpLength = (int)((double)player.Mp / player.MaxMp * barLength);
+                hpBar = new string('#', hpLength) + new string('-', barLength - hpLength);
+                Console.Write("MP ");
+                Console.ForegroundColor = ConsoleColor.Blue;
+                Console.Write($"{player.Mp}/{ player.MaxMp}");
+                Console.ResetColor();
+                Console.Write("\t[");
+                Console.ForegroundColor = ConsoleColor.Blue;
+                Console.Write(hpBar);
+                Console.ResetColor();
+                Console.WriteLine("]\n");
+
+                Console.WriteLine("------------------------------------------------");
+                Console.WriteLine(" 1. 공격                 2.스킬                 ");
+                Console.WriteLine(" 3. 포션 사용            0.도망치기             ");
+                Console.WriteLine("------------------------------------------------\n");
 
                 Console.WriteLine("원하시는 행동을 입력해주세요");
                 Console.Write(">> ");
@@ -143,35 +186,83 @@ namespace TextRPGTeam33
             // 몬스터가 죽었다면 체력 대신 Dead 으로 표시됩니다.
             // 몬스터가 죽었다면 해당 몬스터에 텍스트는 전부 어두운 색으로 표시합니다.
 
+            int monsterHp = 0;
+            int barLength = 20;
+            int hpLength = 0;
+            string hpBar;
+
             while (true)
             {
                 int i = 1;
 
                 Console.Clear();
 
-                Console.WriteLine("Battle!!\n");
+                Console.WriteLine("================================================");
+                Console.WriteLine("                    Battle!!                    ");
+                Console.WriteLine("================================================\n");
+
+                Console.WriteLine("-----Monster------------------------------------\n");
                 foreach (Monster m in monsters)
                 {
+                    monsterHp = m.hp;
+
                     if (m.hp <= 0)
                     {
                         Console.ForegroundColor = ConsoleColor.DarkGray;
-                        Console.WriteLine($"{i++} Lv.{m.level} {m.name} Dead");
+                        Console.Write($"{i++} Lv.{m.level} {m.name} Dead");
+                        Console.Write("[");
+                        Console.Write("--------------------");
+                        Console.ResetColor();
+                        Console.WriteLine("]\n");
                     }
                     else
                     {
-                        Console.WriteLine($"{i++} Lv.{m.level} {m.name} HP {m.hp}");
-                    }
+                        //Console.WriteLine($"{i++} Lv.{m.level} {m.name} HP {m.hp}");
 
-                    Console.ResetColor();
+                        hpLength = (int)((double)m.hp / monsterHp * barLength);
+                        hpBar = new string('#', hpLength) + new string('-', barLength - hpLength);
+                        Console.WriteLine($"{i++} Lv.{m.level} {m.name}");
+                        Console.Write($"HP {m.hp}/{monsterHp}\t[");
+                        Console.ForegroundColor = m.hp > monsterHp / 2 ? ConsoleColor.DarkGreen : ConsoleColor.DarkRed;
+                        Console.Write(hpBar);
+                        Console.ResetColor();
+                        Console.WriteLine("]\n");
+                    }
                 }
+                Console.WriteLine("------------------------------------------------");
                 Console.WriteLine();
 
-                Console.WriteLine("[내정보]");
-                Console.WriteLine($"Lv.{player.Level} {player.Name} ({player.Job})");
-                Console.WriteLine($"HP {player.Hp}/{player.MaxHP}");
-                Console.WriteLine($"MP {player.Mp}/{player.MaxMp}\n");
+                Console.WriteLine("-----Player-------------------------------------\n");
 
-                Console.WriteLine("0. 취소\n");
+                Console.WriteLine($"Lv.{player.Level} {player.Name} ({player.Job})");
+
+                hpLength = (int)((double)player.Hp / player.MaxHP * barLength);
+                hpBar = new string('#', hpLength) + new string('-', barLength - hpLength);
+                Console.Write($"HP ");
+                Console.ForegroundColor = ConsoleColor.Red;
+                Console.Write($"{player.Hp}/{player.MaxHP}");
+                Console.ResetColor();
+                Console.Write("\t[");
+                Console.ForegroundColor = player.Hp > player.MaxHP / 2 ? ConsoleColor.DarkGreen : ConsoleColor.DarkRed;
+                Console.Write(hpBar);
+                Console.ResetColor();
+                Console.WriteLine("]");
+
+                hpLength = (int)((double)player.Mp / player.MaxMp * barLength);
+                hpBar = new string('#', hpLength) + new string('-', barLength - hpLength);
+                Console.Write("MP ");
+                Console.ForegroundColor = ConsoleColor.Blue;
+                Console.Write($"{player.Mp}/{player.MaxMp}");
+                Console.ResetColor();
+                Console.Write("\t[");
+                Console.ForegroundColor = ConsoleColor.Blue;
+                Console.Write(hpBar);
+                Console.ResetColor();
+                Console.WriteLine("]\n");
+
+                Console.WriteLine("------------------------------------------------");
+                Console.WriteLine(" 0. 취소                                        ");
+                Console.WriteLine("------------------------------------------------\n");
 
                 Console.WriteLine("원하시는 행동을 입력해주세요");
                 Console.Write(">> ");
