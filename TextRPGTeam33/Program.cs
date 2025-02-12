@@ -632,13 +632,17 @@ partial class Program
     static void Main()
     {
         Tema myClass = new Tema();
-        myClass.temas();
-        Thread.Sleep(3000);
 
+        myClass.temas();
+        Thread.Sleep(750);
+        Console.Write("");
+        Console.Write("\t\t\t\t\t\t\t거기 졸지 말죠.Zzz...");
+        Thread.Sleep(750);
 
         Console.Clear();
         gameSave = new GameSave();
         Character player = gameSave.DisplaySave();
+
 
         Console.Clear();
         bool isValidInput = false;
@@ -647,6 +651,9 @@ partial class Program
             Console.Clear();
             if (player != null)
             {
+
+                
+                Console.Clear();
 
                 Console.ForegroundColor = ConsoleColor.Cyan;
                 Console.WriteLine();
@@ -695,6 +702,10 @@ partial class Program
                     Console.WriteLine("잘못된 입력입니다.");
                     Thread.Sleep(1000);
                 }
+                Console.Clear();
+                Achievement.Instance.CheckAchievements(player); //=> 업적 달성 팝업
+                Achievement.Instance.DisplayAchievements();// 업적 리스트 출력
+                Thread.Sleep(1000);
             }
         }
     }
@@ -756,6 +767,11 @@ partial class Program
             Console.WriteLine("\t\t\t|");
             Console.WriteLine("|\t\t\t\t\t\t|");
             Console.Write("|\t");
+            Console.Write("▶ 7. 아이템 제작.");
+            Console.ForegroundColor = ConsoleColor.Yellow;
+            Console.WriteLine("\t\t\t|");
+            Console.WriteLine("|\t\t\t\t\t\t|");
+            Console.Write("|\t");
             Console.ForegroundColor = ConsoleColor.DarkGray;
             Console.Write("▶ 0. 나가기");
             Console.ForegroundColor = ConsoleColor.Yellow;
@@ -793,6 +809,13 @@ partial class Program
             }
             else if (choice == "7")
             {
+
+                CraftingSystem craftingSystem = new CraftingSystem(player);
+                craftingSystem.DisplayCraftingMenu();
+
+            }
+            else if (choice == "8")
+            {
                 aaaaaaaaaaaaa(player);
             }
             else if (choice == "0")
@@ -807,6 +830,8 @@ partial class Program
             }
             if (adventureCount >= 2)
             {
+                Thread.Sleep(1000);
+                Console.Clear();
                 adventureCount = 0;  // 탐험 횟수 초기화
                 days++;  // 날짜 증가
                 Console.Write($"하루가 지나갔습니다! 현재 날짜:");
@@ -817,6 +842,7 @@ partial class Program
                 string currentSaveFile = gameSave.GetCurrentSaveFile();
                 gameSave.Save(player, currentSaveFile);
                 Thread.Sleep(2000);
+
                 Achievement.Instance.CheckAchievements(player); //=> 업적 달성 팝업
                 Achievement.Instance.DisplayAchievements();// 업적 리스트 출력
             }
@@ -877,6 +903,8 @@ static void Explore(Character player)
             default:
                 Console.WriteLine("알 수 없는 이벤트가 발생했습니다.");
                 break;
+                string currentSaveFile = gameSave.GetCurrentSaveFile();
+                gameSave.Save(player, currentSaveFile);
         }
     }
 
@@ -887,6 +915,8 @@ static void Explore(Character player)
         Thread.Sleep(2000);
         OpenQuest(player);
         adventureCount++;
+        string currentSaveFile = gameSave.GetCurrentSaveFile();
+        gameSave.Save(player, currentSaveFile);
     }
 
     static void Save(Character player)
@@ -919,9 +949,6 @@ static void Explore(Character player)
 
         
         string diary = @"
-
-
-
     . .,,,,,,,,,,, .,, ,      
     @ #@@@@@@@@@@@@@@@@@@     
     @ #@$$$$$$$$@@@@@@@@@     
@@ -944,6 +971,8 @@ static void Explore(Character player)
         Console.ForegroundColor = ConsoleColor.Yellow;
         Console.WriteLine(diary);
         Thread.Sleep(2000);
+        Achievement.Instance.CheckAchievements(player); //=> 업적 달성 팝업
+        Achievement.Instance.DisplayAchievements();// 업적 리스트 출력
     }
 
     
@@ -969,7 +998,7 @@ static void Explore(Character player)
         Console.WriteLine("|1. 휴식을 취한다.\t\t\t\t\t\t\t\t\t|");
         Console.WriteLine("|0. 나간다.\t\t\t\t\t\t\t\t\t\t|");
         Console.WriteLine("#---------------------------------------------------------------------------------------#");
-        Console.WriteLine(">>");
+        Console.Write(">>");
         string restChioce = Console.ReadLine() ?? "0";
         if (restChioce == "1")
         {
@@ -1050,6 +1079,8 @@ static void Explore(Character player)
             Environment.Exit(0);
         }
         adventureCount++;
+        string currentSaveFile = gameSave.GetCurrentSaveFile();
+        gameSave.Save(player, currentSaveFile);
     }
 
     static void OpenQuest(Character player) {

@@ -71,6 +71,9 @@ namespace TextRPGTeam33
         // 상태 보기 화면
         public void StatusDisplay()
         {
+            int barLength = 20;
+            int curLength = 0;
+
             Console.Clear();
             Console.WriteLine("캐릭터의 정보가 표시됩니다.");
             Console.ForegroundColor = ConsoleColor.DarkCyan;
@@ -92,16 +95,43 @@ namespace TextRPGTeam33
             Console.WriteLine(plusStat);
 
             // 체력,마나,골드
-            Console.Write("체력 : ");
+            curLength = (int)((double)Hp / MaxHP * barLength);
+            Console.Write("체  력 : ");
             Console.ForegroundColor = ConsoleColor.Red;
-            Console.WriteLine($"{ Hp} / { MaxHP}");
+            Console.Write($"{Hp} / {MaxHP}");
             Console.ResetColor();
-            Console.Write("마나 : ");
-            Console.ForegroundColor = ConsoleColor.Blue;
-            Console.WriteLine($"{ Mp} / { MaxMp}");
+            Console.Write("\t|");
+            Console.BackgroundColor = Hp > MaxHP / 2 ? ConsoleColor.DarkGreen : ConsoleColor.DarkRed;
+            Console.Write(new string(' ', curLength));
             Console.ResetColor();
+            Console.Write(new string(' ', barLength - curLength));
+            Console.WriteLine("|");
 
-            Console.Write($"Gold : ");
+            curLength = (int)((double)Mp / MaxMp * barLength);
+            Console.Write("마  나 : ");
+            Console.ForegroundColor = ConsoleColor.Blue;
+            Console.Write($"{Mp} / {MaxMp}");
+            Console.ResetColor();
+            Console.Write("\t|");
+            Console.BackgroundColor = ConsoleColor.Blue;
+            Console.Write(new string(' ', curLength));
+            Console.ResetColor();
+            Console.Write(new string(' ', barLength - curLength));
+            Console.WriteLine("|");
+
+            curLength = (int)((double)Exp / LevelUpExp * barLength);
+            Console.Write("경험치 : ");
+            Console.ForegroundColor = ConsoleColor.Yellow;
+            Console.Write($"{Exp} / {LevelUpExp}");
+            Console.ResetColor();
+            Console.Write("\t|");
+            Console.BackgroundColor = ConsoleColor.Yellow;
+            Console.Write(new string(' ', curLength));
+            Console.ResetColor();
+            Console.Write(new string(' ', barLength - curLength));
+            Console.WriteLine("|");
+
+            Console.Write($" Gold  : ");
             Console.ForegroundColor = ConsoleColor.DarkYellow;
             Console.WriteLine($"{Gold} G");
             Console.WriteLine("");
