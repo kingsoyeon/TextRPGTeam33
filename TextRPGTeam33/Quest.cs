@@ -78,7 +78,11 @@ namespace TextRPGTeam33
         
         public void DisplayQuests(Character player)
         {
-            var availableQuests = quests.Where(q => !acceptedQuests.Contains(q) && !q.IsCompleted).ToList(); // 수락되지 않은 퀘스트 중에서 랜덤으로 1개 선택
+            // 이미 수락한 퀘스트의 ID들을 체크
+            var acceptedQuestIds = acceptedQuests.Select(q => q.Id).ToList();
+
+            // 수락되지 않은 퀘스트만 필터링 (ID로 체크)
+            var availableQuests = quests.Where(q => !acceptedQuestIds.Contains(q.Id)).ToList();
 
             if (availableQuests.Count == 0)
             {
