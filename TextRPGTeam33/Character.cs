@@ -36,8 +36,6 @@ namespace TextRPGTeam33
         public Inventory Inventory { get; set; }
         public int DungeonClearCount { get; set; }
 
-        public bool isLevelUp { get; set; }
-
         public int speed {  get; set; }
 
         public bool KillSans { get; set; }
@@ -74,12 +72,15 @@ namespace TextRPGTeam33
         public void StatusDisplay()
         {
             Console.Clear();
-            Console.WriteLine("상태보기");
             Console.WriteLine("캐릭터의 정보가 표시됩니다.");
+            Console.ForegroundColor = ConsoleColor.DarkCyan;
+            Console.WriteLine("\n====================================================<<상태보기>>====================================================");
+            Console.ResetColor();
             Console.WriteLine("");
 
-            // 캐릭터 스탯
-            Console.WriteLine($"Lv. {Level.ToString("00")}");       // 레벨 2자리수까지 표현
+            ///// 캐릭터 스탯 /////
+
+            Console.WriteLine($"Lv. {Level.ToString("00")}");     // 레벨 2자리수까지 표현
             Console.WriteLine($"{Name} ( {Job} )");
 
             // 아이템 착용 여부에 따라 스탯 상승/하락에 따른 스탯 반영
@@ -90,16 +91,34 @@ namespace TextRPGTeam33
             plusStat = PlusDefense == 0 ? $"방어력 : {Defense}" : $"방어력 : {Defense + PlusDefense} (+{PlusDefense})";
             Console.WriteLine(plusStat);
 
-            Console.WriteLine($"체력 : {Hp} / {MaxHP}");
-            Console.WriteLine($"마나 : {Mp} / {MaxMp}");
+            // 체력,마나,골드
+            Console.Write("체력 : ");
+            Console.ForegroundColor = ConsoleColor.Red;
+            Console.WriteLine($"{ Hp} / { MaxHP}");
+            Console.ResetColor();
+            Console.Write("마나 : ");
+            Console.ForegroundColor = ConsoleColor.Blue;
+            Console.WriteLine($"{ Mp} / { MaxMp}");
+            Console.ResetColor();
 
-            Console.WriteLine($"Gold : {Gold}");
+            Console.Write($"Gold : ");
+            Console.ForegroundColor = ConsoleColor.DarkYellow;
+            Console.WriteLine($"{Gold} G");
+            Console.WriteLine("");
+            Console.ForegroundColor = ConsoleColor.DarkCyan;
 
+
+            Console.WriteLine("_____________________________________________________________________________________________________________________");
+            Console.ResetColor();
+
+            Console.ForegroundColor = ConsoleColor.Cyan;
+            Console.WriteLine("");
+            Console.WriteLine("");
             Console.WriteLine("1. 인벤토리");
+            Console.ResetColor();
             Console.WriteLine("0. 나가기");
             Console.WriteLine("");
-            Console.WriteLine("원하시는 행동을 입력해주세요.");
-            Console.Write(">>");
+            Console.Write("원하시는 행동을 입력해주세요:\n>>");
 
             string input = Console.ReadLine();
 
@@ -114,13 +133,13 @@ namespace TextRPGTeam33
             else if (input == "0") 
             {
                 return;
-
             }
-            else {
-                Console.WriteLine("잘못된 입력입니다. 다시 입력해주세요.");
-                Console.ReadKey();
-                    }
-
+            else
+            {
+                Console.Clear();
+                Console.WriteLine("잘못된 입력입니다.");
+                Thread.Sleep(1000);
+            }
         }
 
         public void EquipItem(Item item)
@@ -137,7 +156,6 @@ namespace TextRPGTeam33
                 { PlusAttack += item.Value; }
                 else      // 갑옷일 경우
                 { PlusDefense += item.Value; }
-                
             }
         }
 
@@ -149,12 +167,12 @@ namespace TextRPGTeam33
             else if ( item.Type == ItemType.Amor)   { PlusDefense -= item.Value; }  // 갑옷일 경우 방어력 감소
         }
 
-        public void LevelUp(int rewardExp)
+        public bool LevelUp(int rewardExp)
         {
-            
+            bool isLevelUp = false;
+
             this.Exp += rewardExp;
             
-
             do
             {
                 if (this.Exp >= this.LevelUpExp)
@@ -166,12 +184,14 @@ namespace TextRPGTeam33
                     this.Attack += 1;
                     this.Defense += 1;
                     isLevelUp = true;
+                    
                 }
                 else break;
             }
             while (true);
+
+            return isLevelUp;
         }
 
-        
     }
 }

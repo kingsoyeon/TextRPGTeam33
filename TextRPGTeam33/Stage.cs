@@ -97,6 +97,47 @@ namespace TextRPGTeam33
 
                         createMonster.Add(new Monster("샌즈", bossLv, bossHp, bossAtk, true));
 
+                        string sansUI = @"
+         .::::::::::.         
+       ,-~**********:--       
+      .!$*          !$*,      
+      #~              ,@      
+      #~              ,@      
+     $-                ,$     
+     @. -!!!.     !!!~  @     
+     @. :@@@,     @@@!  @     
+     @. :@@@, ..  @@@!  @     
+     #, ~@@@, :$  @@@; .#     
+      #~     !@@$     ,@      
+     @@~:$          *!,@@     
+     @. :@@@@@@@@@@@@!  @     
+     @.  -@,$::$,@.#:   @     
+     -**: -*#$$#=@*~.-**~     
+     :#@=::!!!!!!!!::*@@:     
+    ,#@@@@@-,,,,,,,@@@@@#,    
+    @.#@@@@@@@@@@@@@@@@@.#.   
+   @@.$;-:@.  :$   @;-:@.#@,  
+  .@, ,**-~$##!-###~-;=, ,#-  
+ ,*~.==;;$$@:-:*--@$$!:==.-*~ 
+ -#  ::!;:;@, ,~  @;:;!::. $: 
+ -#.   :!~ @;.   :@.-;;    =: 
+ ,=-   ,;* @$-  .$@.!!,   -*~ 
+   #,,.**  @-.....@. ;= ,,$,  
+    @@,**  @@@@@@@@. ;=.@@.   
+    .@#@*  @@@@@@@@. ;@#@,    
+     -#@#==@@@@@@@@==#@@-     
+     ;@@@@@@@@@@@@@@@@@@;     
+     @@@@@@@@@@@@@@@@@@@@     
+     @@@@@@@@@@@@@@@@@@@@     
+      #@@@@@@@!-@@@@@@@@      
+    @@@~    $:  .@    -@@@.   
+    @      #@~  .@@     .@.   
+    @######,.    ..$#####@.   
+    ~~~~~~~        ~~~~~~~    
+";
+                        Console.WriteLine(sansUI);
+                        Thread.Sleep(2000);
+
                         var removeItem = bossItemList.Find(n => n.Name == "파피루스의 뼈조각"); //보상 목록에서 파피루스의 뼈조각 제외
                         if (removeItem != null)
                         {
@@ -139,7 +180,7 @@ namespace TextRPGTeam33
         }
 
         //전투 종료 후 보상 지급
-        public void StageClear(List<Monster> monsterList, int startHp, int skillCnt)
+        public void StageClear(List<Monster> monsterList, int startHp, int startMp, int skillCnt)
         {
             Random rand = new Random();
             int itemIdx;
@@ -150,6 +191,9 @@ namespace TextRPGTeam33
             int rewardRate = 0;
             int skillrewardRate = skillCnt * 10;
             bool isLevelUp = false;
+            int barLength = 20;
+            int curLength = 0;
+
             List<Item> itemList;
             List<Item> rewardItems = new List<Item>();
 
@@ -192,35 +236,69 @@ namespace TextRPGTeam33
 
             //보상 지급
             player.Gold += rewardGold;
-            player.Exp += rewardExp;
-
-            do
-            {
-                if (player.Exp >= player.LevelUpExp)
-                {
-                    rewardExp = player.Exp - player.LevelUpExp;
-                    player.LevelUpExp *= 2;
-                    player.Exp = rewardExp;
-                    player.Level++;
-                    player.Attack += 1;
-                    player.Defense += 1;
-                    isLevelUp = true;
-                }
-                else break;
-            }
-            while (true);
+            isLevelUp = player.LevelUp(rewardExp);
 
             //보상 정보 출력
-            Console.WriteLine("[캐릭터 정보]");
+            Console.WriteLine("-----Player-------------------------------------\n");
 
-            if (isLevelUp) Console.WriteLine($"Lv.{curLevel} {player.Name} -> Lv.{player.Level} {player.Name}");
-            else Console.WriteLine($"Lv.{player.Level} {player.Name}");
+            if (isLevelUp) Console.WriteLine($"Lv.{curLevel} {player.Name} -> Lv.{player.Level} {player.Name}\n");
+            else Console.WriteLine($"Lv.{player.Level} {player.Name}\n");
 
-            Console.WriteLine($"HP.{startHp} -> {player.Hp}");
+            curLength = (int)((double)player.Hp / player.MaxHP * barLength);
 
-            Console.WriteLine($"exp {curExp} -> {player.Exp}\n");
+            Console.Write("HP ");
+            Console.ForegroundColor = ConsoleColor.Red;
+            Console.Write(startHp);
+            Console.ResetColor();
+            Console.Write(" -> ");
+            Console.ForegroundColor = ConsoleColor.Red;
+            Console.Write(player.Hp);
 
-            Console.WriteLine("[획득 아이템]");
+            Console.ResetColor();
+            Console.Write("\t|");
+            Console.BackgroundColor = player.Hp > player.MaxHP / 2 ? ConsoleColor.DarkGreen : ConsoleColor.DarkRed;
+            Console.Write(new string(' ', curLength));
+            Console.ResetColor();
+            Console.Write(new string(' ', barLength - curLength));
+            Console.WriteLine("|");
+
+            curLength = (int)((double)player.Mp / player.MaxMp * barLength);
+
+            Console.Write("MP ");
+            Console.ForegroundColor = ConsoleColor.Blue;
+            Console.Write(startMp);
+            Console.ResetColor();
+            Console.Write(" -> ");
+            Console.ForegroundColor = ConsoleColor.Blue;
+            Console.Write(player.Mp);
+
+            Console.ResetColor();
+            Console.Write("\t|");
+            Console.BackgroundColor = ConsoleColor.Blue;
+            Console.Write(new string(' ', curLength));
+            Console.ResetColor();
+            Console.Write(new string(' ', barLength - curLength));
+            Console.WriteLine("|");
+
+            curLength = (int)((double)player.Exp / player.LevelUpExp * barLength);
+
+            Console.Write("EXP ");
+            Console.ForegroundColor = ConsoleColor.Yellow;
+            Console.Write(curExp);
+            Console.ResetColor();
+            Console.Write(" -> ");
+            Console.ForegroundColor = ConsoleColor.Yellow;
+            Console.Write(player.Exp);
+
+            Console.ResetColor();
+            Console.Write("\t|");
+            Console.BackgroundColor = ConsoleColor.Yellow;
+            Console.Write(new string(' ', curLength));
+            Console.ResetColor();
+            Console.Write(new string(' ', barLength - curLength));
+            Console.WriteLine("|\n");
+
+            Console.WriteLine("-----Item---------------------------------------\n");
 
             Console.WriteLine($"{rewardGold} G");
 
@@ -228,6 +306,8 @@ namespace TextRPGTeam33
             {
                 Console.WriteLine($"{item.Name} - {item.Count}");
             }
+            
+            Console.WriteLine("\n------------------------------------------------\n");
 
             player.Inventory.AddItem(rewardItems);
 
