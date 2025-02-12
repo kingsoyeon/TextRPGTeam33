@@ -1001,34 +1001,34 @@ namespace TextRPGTeam33
                         Console.ForegroundColor = ConsoleColor.Cyan;
                         Console.WriteLine(" ㅁ-ㅁ-ㅁ-ㅁ-ㅁ-ㅁ-ㅁ-ㅁ-ㅁ-ㅁ-ㅁ-ㅁ-ㅁ-ㅁ-ㅁ-ㅁ-ㅁ");
                         Console.ResetColor();
-<<<<<<< Updated upstream
-=======
+
+
                         Thread.Sleep(1000);
                         Console.WriteLine();
                         Console.WriteLine();
 
                         Console.WriteLine("모든 것은 정부의 실험에서 시작되었다.");
-                      
+
                         Console.WriteLine("국방부는 비밀리에 인간의 신체 재생 능력을 극대화하는 바이러스를 연구하고 있었다.");
                         Thread.Sleep(1000);
 
                         Console.WriteLine("이론적으로는 부상을 입어도 빠르게 회복할 수 있으며, 질병에 대한 면역력까지 높일 수 있는 혁신적인 기술이었다.");
-                      
+
                         Console.WriteLine("하지만 실험체들은 예상과 다르게 변화했다.");
                         Thread.Sleep(1000);
 
                         Console.WriteLine("바이러스는 신체를 회복시키는 대신, 뇌를 망가뜨렸다.");
-                      
+
                         Console.WriteLine("감염자들은 극심한 고통에 시달리다가 이성을 잃고 폭력적으로 변했다.");
                         Thread.Sleep(1000);
 
                         Console.WriteLine("연구소는 봉쇄되었지만, 결국 바이러스는 실험체들과 함께 바깥으로 퍼져나갔다.");
-                      
+
                         Console.WriteLine("정부는 사태를 감추려 했으나, 이미 감염자는 폭발적으로 증가했고, 도시는 순식간에 폐허로 변했다.");
                         Thread.Sleep(1000);
 
                         Console.WriteLine("부산역은 그나마 살아남은 사람들이 모여 있는 마지막 거점이었다.");
-                        
+
                         Console.WriteLine("하지만 이곳도 안전하지 않다. 물자는 한정되어 있고, 무기와 장비는 점점 닳아가고 있다.");
                         Thread.Sleep(1000);
 
@@ -1037,7 +1037,7 @@ namespace TextRPGTeam33
                         Thread.Sleep(1000);
 
                         Console.WriteLine("부산역을 떠나, 폐허가 된 도시에서 필요한 물자를 찾아야 한다.");
-                        
+
                         Console.WriteLine("길을 나서면 좀비가 도사리고 있겠지만, 손을 놓고 기다릴 수는 없다.");
                         Thread.Sleep(1000);
                         Console.WriteLine("이제 탐험을 시작할 때다.");
@@ -1045,7 +1045,7 @@ namespace TextRPGTeam33
                         Console.WriteLine("살아남기 위해");
                         Console.WriteLine();
                         Console.WriteLine();
->>>>>>> Stashed changes
+
                         Thread.Sleep(2000);
                         return new Character(level, name, job, atk, def, maxHp, maxMp, gold, killSans);
                     }
