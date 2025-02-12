@@ -177,8 +177,7 @@ namespace TextRPGTeam33
 
         public int UseSkill(int i)
         {
-            if (player.Mp >= skills[i].mp) player.Mp -= skills[i].mp;
-            else
+            if (player.Mp < skills[i].mp) 
             {
                 Console.Clear();
                 Console.WriteLine("마나가 부족합니다");
@@ -297,6 +296,7 @@ namespace TextRPGTeam33
                     }
                     break;
             }
+            player.Mp -= skills[i].mp;
 
             while (true)
             {
