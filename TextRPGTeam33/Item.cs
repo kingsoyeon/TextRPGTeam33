@@ -53,6 +53,37 @@ namespace TextRPGTeam33
             );
         }
 
+        public static Item GetItemByName(string name)
+        {
+            var allItems = itemList();
+            var item = allItems.Find(i => i.Name == name);
+
+            if (item == null)
+            {
+                // 특별 아이템을 여기서 직접 생성
+                switch (name)
+                {
+                    case "강화된 야구 방망이":
+                        return new Item(name, ItemType.Weapon, 12, 100, "야구 방망이에 추가적인 강화가 적용되었습니다.", 1200, 1);
+                    case "바이러스 도끼":
+                        return new Item(name, ItemType.Weapon, 20, 100, "좀비의 독이 스며든 강력한 도끼입니다.", 2500, 1);
+                    case "강화된 가죽 조끼":
+                        return new Item(name, ItemType.Amor, 14, 100, "가죽 자켓에 방탄 기능이 추가되었습니다.", 3000, 1);
+                    case "바이러스 갑옷":
+                        return new Item(name, ItemType.Amor, 22, 100, "좀비의 힘이 깃든 갑옷. 보호력과 저항력이 강화됩니다.", 5000, 1);
+                    case "고급 구급상자":
+                        return new Item(name, ItemType.Potion, 60, 100, "더 강력한 치료 효과를 제공하는 구급상자입니다.", 800, 1);
+                    case "특제 파이":
+                        return new Item(name, ItemType.MPPotion, 60, 100, "마법적인 효과가 강화된 파이입니다.", 1500, 1);
+                }
+
+                Console.WriteLine($"[오류] 아이템 '{name}'을 찾을 수 없습니다.");
+            }
+
+            return item;
+        }
+
+
         public static List<Item> itemList() //아이템 리스트
         {
             return new List<Item> // 이름, 타입, 값(공격력, 방어력, 회복력), 확률, 설명, 가격, 수(포션전용)
