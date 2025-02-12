@@ -413,7 +413,12 @@ namespace TextRPGTeam33
 
                 int playerHp = player.Hp;
                 int playerDef = (int)Math.Ceiling((float)player.Defense * 0.1f);
-                player.Hp -= m.atk - playerDef;
+
+                if(m.atk - playerDef > 0)
+                    player.Hp -= m.atk - playerDef;
+                else
+                    player.Hp--;
+
                 if (player.Hp < 0) player.Hp = 0;
 
                 while (true)
