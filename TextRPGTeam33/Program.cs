@@ -632,8 +632,9 @@ partial class Program
     static void Main()
     {
         Tema myClass = new Tema();
+
         myClass.temas();
-        Thread.Sleep(3000);
+        Thread.Sleep(1500);
 
 
         Console.Clear();
@@ -647,6 +648,9 @@ partial class Program
             Console.Clear();
             if (player != null)
             {
+
+                
+                Console.Clear();
 
                 Console.ForegroundColor = ConsoleColor.Cyan;
                 Console.WriteLine();
@@ -695,6 +699,10 @@ partial class Program
                     Console.WriteLine("잘못된 입력입니다.");
                     Thread.Sleep(1000);
                 }
+                Console.Clear();
+                Achievement.Instance.CheckAchievements(player); //=> 업적 달성 팝업
+                Achievement.Instance.DisplayAchievements();// 업적 리스트 출력
+                Thread.Sleep(1000);
             }
         }
     }
@@ -807,6 +815,8 @@ partial class Program
             }
             if (adventureCount >= 2)
             {
+                Thread.Sleep(1000);
+                Console.Clear();
                 adventureCount = 0;  // 탐험 횟수 초기화
                 days++;  // 날짜 증가
                 Console.Write($"하루가 지나갔습니다! 현재 날짜:");
@@ -817,6 +827,7 @@ partial class Program
                 string currentSaveFile = gameSave.GetCurrentSaveFile();
                 gameSave.Save(player, currentSaveFile);
                 Thread.Sleep(2000);
+
                 Achievement.Instance.CheckAchievements(player); //=> 업적 달성 팝업
                 Achievement.Instance.DisplayAchievements();// 업적 리스트 출력
             }
@@ -969,7 +980,7 @@ static void Explore(Character player)
         Console.WriteLine("|1. 휴식을 취한다.\t\t\t\t\t\t\t\t\t|");
         Console.WriteLine("|0. 나간다.\t\t\t\t\t\t\t\t\t\t|");
         Console.WriteLine("#---------------------------------------------------------------------------------------#");
-        Console.WriteLine(">>");
+        Console.Write(">>");
         string restChioce = Console.ReadLine() ?? "0";
         if (restChioce == "1")
         {
