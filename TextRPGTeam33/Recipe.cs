@@ -52,8 +52,8 @@ namespace TextRPGTeam33
                         Item.GetItemByName("군용 의료키트")
                     },
                     new List<int> { 1, 1 },
-                    Item.GetItemByName("강화된 가죽 조끼"),
-                    "가죽 자켓에 방탄 조끼를 결합합니다."
+                    Item.GetItemByName("바이러스 도끼"),  
+                    "도끼에 좀비의 독을 주입합니다."
                 ),
 
                 //방어구 업그레이 레시피
