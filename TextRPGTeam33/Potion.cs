@@ -222,6 +222,8 @@ namespace TextRPGTeam33
 
                         potion.Count--; // 포션 개수 1개 감소
 
+                        if (potion.Count == 0) { inventory.RemoveItem(potion); }// 포션 개수가 0이 되면 인벤토리에서 제거
+
                         Console.WriteLine($"{potion.Name}을(를) 사용했습니다.");
                         Console.WriteLine($"HP가 {potion.Value} 회복 되었습니다.");
                         Thread.Sleep(1000);
@@ -249,7 +251,10 @@ namespace TextRPGTeam33
                         {
                             character.Mp = character.MaxMp;
                         }
+
                         potion.Count--;
+                        if (potion.Count == 0) { inventory.RemoveItem(potion); }// 포션 개수가 0이 되면 인벤토리에서 제거
+
                         Console.WriteLine($"{potion.Name}을(를) 사용했습니다.");
                         Console.WriteLine($"MP가 {potion.Value} 회복되었습니다.");
                         Thread.Sleep(1000);

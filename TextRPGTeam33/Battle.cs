@@ -216,8 +216,35 @@ namespace TextRPGTeam33
                 playerAtk = 0;
 
             int monsterHp = monsters[i].hp;
-            monsters[i].hp -= playerAtk;
-            if (monsters[i].hp < 0) monsters[i].hp = 0;
+            if (monsters[i].hp != 0)
+                monsters[i].hp -= playerAtk;
+            if (monsters[i].hp <= 0)
+            {
+                var acceptedQuests = Quest.Instance.GetQuestList();
+                foreach (var quest in acceptedQuests)
+                {
+                    if (!quest.IsCompleted && !quest.RewardClaimed)
+                    {
+                        // 퀘스트 ID에 따라 적절한 조건 체크
+                        switch (quest.Id)
+                        {
+                            case 1: // 좀비 사냥꾼 - 레벨 1~4 몬스터
+                                if (monsters.Any(m => m.level <= 4 && !m.isBoss))
+                                    Quest.Instance.UpdateQuestProgress(quest.Id);
+                                break;
+                            case 2: // 위험한 돌연변이 - 레벨 5 이상 몬스터
+                                if (monsters.Any(m => m.level >= 5 && !m.isBoss))
+                                    Quest.Instance.UpdateQuestProgress(quest.Id);
+                                break;
+                            case 3: // 네크로맨서의 그림자 - 보스 몬스터
+                                if (monsters.Any(m => m.isBoss))
+                                    Quest.Instance.UpdateQuestProgress(quest.Id);
+                                break;
+                        }
+                    }
+                }
+                monsters[i].hp = 0;
+            }
 
             while (true)
             {

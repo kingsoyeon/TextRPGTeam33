@@ -42,6 +42,8 @@ namespace TextRPGTeam33
                 CurrentCount = 0;
                 RewardItem = rewardItem;
                 RewardExp = rewardExp;
+                IsAccepted = false;
+                RewardClaimed = false;  // 명시적으로 false로 설정
             }
         }
 
@@ -51,67 +53,93 @@ namespace TextRPGTeam33
 
         private Quest() // 생성자에서 퀘스트 목록 초기화
         {
-            quests = new List<QuestData> // 퀘스트 목록
+            quests = new List<QuestData> // Id, 이름, 설명, 아이템 보상, 경험치 보상
             {
-                new QuestData(1, "잃어버린 보급품을 찾아서",
-                    "이봐! 며칠 전에 보급팀이 물자를 운반하다가 연락이 끊겼다네.\n그 물자들이 우리에겐 매우 중요하다고! 자네가 찾아와 줄 수 있겠나?",
-                    1,
-                    new Item("군용 방어구", ItemType.Amor, 15, 100, "튼튼한 군용 방어구입니다.", 2000, 1),
-                    300),
+                new QuestData(1, "좀비 사냥꾼",
+                    "좀비들이 점점 더 늘어나고 있어... \n이대로 가다간 우리 거점이 위험해질 거야. 좀비 사냥을 도와주겠나?",
+                    5,  // 5마리 처치
+                    new Item("구급상자", ItemType.Potion, 30, 7, "기본적인 응급처치가 가능한 구급상자입니다.", 500, 2),
+                    300), // 300 경험치
 
-                new QuestData(2, "의문의 구조신호",
-                    "주둔지 근처에서 누군가가 보내는 구조 신호를 포착했네.\n위험할 수도 있지만, 우리 동료일 수도 있어. 확인해줄 수 있나?",
-                    1,
-                    new Item("군용 소총", ItemType.Weapon, 20, 100, "위력이 강한 군용 소총입니다.", 3000, 1),
-                    500),
+                new QuestData(2, "위험한 돌연변이",
+                    "최근 돌연변이 좀비들이 자주 목격된다는 보고가 있었네.\n좀 더 깊숙한 곳을 수색해볼 수 있겠나?",
+                    3,  // 3마리 처치 (높은 레벨 몬스터 타겟)
+                    new Item("방탄 조끼", ItemType.Amor, 9, 3, "경찰용 방탄 조끼입니다. 총알을 어느정도 막아줄 것 같습니다.", 2000, 1),
+                    500), // 500 경험치
 
-                new QuestData(3, "긴급 의료품 확보",
-                    "의료품이 거의 바닥났다네. 병원에 물자가 남아있을 거야.\n위험하지만 누군가는 가야해. 자네가 가주겠나?",
-                    1,
-                    new Item("고급 회복 포션", ItemType.Potion, 50, 100, "매우 강력한 회복 효과를 가진 포션입니다.", 1000, 3),
-                    400)
-            };
+                new QuestData(3, "네크로맨서의 그림자",
+                    "던전 깊은 곳에서 강력한 기운이 느껴진다...\n아마도 좀비들을 조종하는 존재가 있는 것 같아.",
+                    2,  // 보스 2회 처치
+                    new Item("파피루스의 뼈조각", ItemType.Weapon, 0, 50, "???", 0, 1),
+                    800) // 800 경험치
+        };
             acceptedQuests = new List<QuestData>(); // 수락한 퀘스트 목록 초기화
         }
         
         public void DisplayQuests(Character player)
         {
-            if (quests.All(q => acceptedQuests.Contains(q)))
+            var availableQuests = quests.Where(q => !acceptedQuests.Contains(q) && !q.IsCompleted).ToList(); // 수락되지 않은 퀘스트 중에서 랜덤으로 1개 선택
+
+            if (availableQuests.Count == 0)
             {
                 Console.WriteLine("현재 수락 가능한 퀘스트가 없습니다.");
                 Thread.Sleep(1500);
                 return;
             }
 
-            var availableQuests = quests.Where(q => !q.IsAccepted && !q.IsCompleted).ToList(); // 수락되지 않은 퀘스트 중에서 랜덤으로 1개 선택
-            Random rand = new Random();
-            currentQuest = availableQuests[rand.Next(availableQuests.Count)];
-
-            Console.Clear();
-            Console.WriteLine("Quest!!\n");
-            Console.WriteLine($"{currentQuest.Name}\n");
-            Console.WriteLine($"{currentQuest.Description}\n");
-            Console.WriteLine($"- {currentQuest.Name} ({currentQuest.CurrentCount}/{currentQuest.TargetCount})");
-            Console.WriteLine("\n- 보상 -");
-            Console.WriteLine($"  {currentQuest.RewardItem.Name} x {currentQuest.RewardItem.Count}");
-            Console.WriteLine($"  경험치 {currentQuest.RewardExp}\n");
-
-            Console.WriteLine("1. 수락");
-            Console.WriteLine("0. 거절");
-
-            Console.Write("\n원하시는 행동을 입력해주세요.\n>>");
-            string input = Console.ReadLine();
-
-            if (input == "1")
+            // 던전 클리어 횟수에 따라 적절한 퀘스트 표시
+            if (player.DungeonClearCount < 20)  // 초반에는 기본 좀비 퀘스트만
             {
-                acceptedQuests.Add(currentQuest);
-                currentQuest.IsAccepted = true;
-                Console.WriteLine("\n퀘스트를 수락했습니다!");
-                Thread.Sleep(1500);
+                availableQuests = availableQuests.Where(q => q.Id == 1).ToList();
+            }
+            else if (player.DungeonClearCount < 45)  // 20~44층에서는 좀비+돌연변이 퀘스트
+            {
+                availableQuests = availableQuests.Where(q => q.Id <= 2).ToList();
+            }
+            if (availableQuests.Count > 0)
+            {
+                Random rand = new Random();
+                currentQuest = availableQuests[rand.Next(availableQuests.Count)];
+
+                Console.Clear();
+                Console.WriteLine("Quest!!\n");
+                Console.WriteLine($"{currentQuest.Name}\n");
+                Console.WriteLine($"{currentQuest.Description}\n");
+                Console.WriteLine($"- {currentQuest.Name} ({currentQuest.CurrentCount}/{currentQuest.TargetCount})");
+                Console.WriteLine("\n- 보상 -");
+                Console.WriteLine($"  {currentQuest.RewardItem.Name} x {currentQuest.RewardItem.Count}");
+                Console.WriteLine($"  경험치 {currentQuest.RewardExp}\n");
+
+                Console.WriteLine("1. 수락");
+                Console.WriteLine("0. 거절");
+
+                Console.Write("\n원하시는 행동을 입력해주세요.\n>>");
+                string input = Console.ReadLine();
+
+                if (input == "1")
+                {
+                    var questToAdd = new QuestData(
+                        currentQuest.Id,
+                        currentQuest.Name,
+                        currentQuest.Description,
+                        currentQuest.TargetCount,
+                        currentQuest.RewardItem,
+                        currentQuest.RewardExp
+                    );
+                    acceptedQuests.Add(questToAdd);
+                    questToAdd.IsAccepted = true;
+                    Console.WriteLine("\n퀘스트를 수락했습니다!");
+                    Thread.Sleep(1500);
+                }
+                else
+                {
+                    Console.WriteLine("\n퀘스트를 거절했습니다.");
+                    Thread.Sleep(1500);
+                }
             }
             else
             {
-                Console.WriteLine("\n퀘스트를 거절했습니다.");
+                Console.WriteLine("현재 수락 가능한 퀘스트가 없습니다.");
                 Thread.Sleep(1500);
             }
         }
@@ -160,6 +188,7 @@ namespace TextRPGTeam33
 
         private void DisplayQuestDetail(Character player, QuestData quest)
         {
+            currentQuest = quest; // 현재 선택된 퀘스트로 업데이트
             while (true)
             {
                 Console.Clear();
@@ -188,12 +217,18 @@ namespace TextRPGTeam33
                 if (action == "0") break;
                 else if (action == "1" && quest.IsCompleted && !quest.RewardClaimed)
                 {
-                    CompleteQuest(player);
-                    quest.RewardClaimed = true;
-                    break;
+                    bool completed = CompleteQuest(player);
+                    if (completed)
+                    {
+                        break;
+                    }
                 }
                 else if (action == "2" && !quest.IsCompleted)
                 {
+                    // 진행도 초기화
+                    quest.CurrentCount = 0;
+                    quest.IsAccepted = false;
+
                     acceptedQuests.Remove(quest);
                     break;
                 }
@@ -202,10 +237,10 @@ namespace TextRPGTeam33
 
         public void UpdateQuestProgress(int questId) // 퀘스트 진행도 업데이트
         {
-            var quest = quests.Find(q => q.Id == questId);
-            if (quest != null)
+            var acceptedQuest = acceptedQuests.Find(q => q.Id == questId && q.IsAccepted);
+            if (acceptedQuest != null)
             {
-                quest.CurrentCount++;
+                acceptedQuest.CurrentCount++;
             }
         }
 
@@ -213,7 +248,7 @@ namespace TextRPGTeam33
         {
             if (currentQuest != null && currentQuest.IsCompleted)
             {
-                player.Exp += currentQuest.RewardExp; // 경험치 보상
+                bool isLevelUp = player.LevelUp(currentQuest.RewardExp);
 
                 if (currentQuest.RewardItem.Type == ItemType.Potion) // 아이템 보상
                 {
@@ -231,6 +266,9 @@ namespace TextRPGTeam33
 
                 currentQuest.CurrentCount = 0;  // 진행도 초기화 추가
                 currentQuest.IsAccepted = false;  // 수락 상태 초기화
+                currentQuest.RewardClaimed = false;
+
+                acceptedQuests.Remove(currentQuest);
 
                 Console.Clear();
                 Console.WriteLine("퀘스트 보상을 받았습니다!");
@@ -249,6 +287,16 @@ namespace TextRPGTeam33
         public void LoadQuestList(List<QuestData> questList)
         {
             acceptedQuests = questList;  // 저장된 퀘스트 리스트 복원
+            foreach (var quest in questList)
+            {
+                var originalQuest = quests.Find(q => q.Id == quest.Id);
+                if (originalQuest != null)
+                {
+                    originalQuest.CurrentCount = quest.CurrentCount;
+                    originalQuest.IsAccepted = quest.IsAccepted;
+                    originalQuest.RewardClaimed = quest.RewardClaimed;
+                }
+            }
         }
     }
 }
