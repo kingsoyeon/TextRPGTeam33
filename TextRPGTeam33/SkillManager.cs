@@ -177,6 +177,15 @@ namespace TextRPGTeam33
 
         public int UseSkill(int i)
         {
+            if (player.Mp >= skills[i].mp) player.Mp -= skills[i].mp;
+            else
+            {
+                Console.Clear();
+                Console.WriteLine("마나가 부족합니다");
+                Thread.Sleep(1000);
+                return -1;
+            }
+
             int index = 0;
             int index2 = 0;
             int monster1Hp = 0;
@@ -210,9 +219,6 @@ namespace TextRPGTeam33
                         QuestUpdate();
                         monsters[index].hp = 0;
                     }
-                    break;
-                case SkillType.GUN_RELOAD:
-                    bullet = maxBullet;
                     break;
                 case SkillType.GUN_RELOAD:
                     bullet = maxBullet;
@@ -290,14 +296,6 @@ namespace TextRPGTeam33
                         }
                     }
                     break;
-            }
-            if (player.Mp >= skills[i].mp) player.Mp -= skills[i].mp;
-            else
-            {
-                Console.Clear();
-                Console.WriteLine("마나가 부족합니다");
-                Thread.Sleep(1000);
-                return -1;
             }
 
             while (true)
