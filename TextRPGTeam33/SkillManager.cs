@@ -67,40 +67,90 @@ namespace TextRPGTeam33
 
         public int ChooseSkill()
         {
+            int barLength = 20;
+            int curLength = 0;
+
             while (true)
             {
-                Console.Clear();
+                int i = 1;
 
-                Console.WriteLine("Battle!!\n");
+                Console.Clear();
+                Console.WriteLine("================================================");
+                Console.WriteLine("                    Battle!!                    ");
+                Console.WriteLine("================================================\n");
+
+                Console.WriteLine("-----Monster------------------------------------\n");
+                
                 foreach (Monster m in monsters)
                 {
                     if (m.hp <= 0)
                     {
                         Console.ForegroundColor = ConsoleColor.DarkGray;
-                        Console.WriteLine($"Lv.{m.level} {m.name} Dead");
+                        Console.WriteLine($"{i++} Lv.{m.level} {m.name} Dead");
+                        Console.Write($" HP {m.hp}/{m.maxHp}\t");
+                        Console.WriteLine("|                    |\n");
+                        Console.ResetColor();
                     }
                     else
                     {
-                        Console.WriteLine($"Lv.{m.level} {m.name} HP {m.hp}");
+                        curLength = (int)((double)m.hp / m.maxHp * barLength);
+                        Console.WriteLine($"{i++} Lv.{m.level} {m.name}");
+                        Console.Write($" HP {m.hp}/{m.maxHp}\t|");
+                        Console.BackgroundColor = m.hp > m.maxHp / 2 ? ConsoleColor.DarkGreen : ConsoleColor.DarkRed;
+                        Console.Write(new string(' ', curLength));
+                        Console.ResetColor();
+                        Console.Write(new string(' ', barLength - curLength));
+                        Console.WriteLine("|\n");
                     }
 
                     Console.ResetColor();
                 }
                 Console.WriteLine();
+                
+                // 플레이어 정보 UI
 
-                Console.WriteLine("[내정보]");
-                Console.WriteLine($"Lv.{player.Level} {player.Name} ({player.Job})");
-                Console.WriteLine($"HP {player.Hp}/{player.MaxHP}");
-                Console.WriteLine($"MP {player.Mp}/{player.MaxMp}\n");
+                Console.WriteLine("-----Player-------------------------------------\n");
+               
+                Console.WriteLine($"Lv.{player.Level} {player.Name} ({player.Job})\n");
 
-                int i = 1;
+                curLength = (int)((double)player.Hp / player.MaxHP * barLength);
+                Console.Write(" HP ");
+                Console.ForegroundColor = ConsoleColor.Red;
+                Console.Write($"{player.Hp}/{player.MaxHP}");
+                Console.ResetColor();
+                Console.Write("\t|");
+                Console.BackgroundColor = player.Hp > player.MaxHP / 2 ? ConsoleColor.DarkGreen : ConsoleColor.DarkRed;
+                Console.Write(new string(' ', curLength));
+                Console.ResetColor();
+                Console.Write(new string(' ', barLength - curLength));
+                Console.WriteLine("|");
+
+                curLength = (int)((double)player.Mp / player.MaxMp * barLength);
+                Console.Write(" MP ");
+                Console.ForegroundColor = ConsoleColor.Blue;
+                Console.Write($"{player.Mp}/{player.MaxMp}");
+                Console.ResetColor();
+                Console.Write("\t|");
+                Console.BackgroundColor = ConsoleColor.Blue;
+                Console.Write(new string(' ', curLength));
+                Console.ResetColor();
+                Console.Write(new string(' ', barLength - curLength));
+                Console.WriteLine("|\n");
+
+                Console.WriteLine("------------------------------------------------");
+
+                //Console.WriteLine($"HP {player.Hp}/{player.MaxHP}");
+                //Console.WriteLine($"MP {player.Mp}/{player.MaxMp}\n");
+
+                int j = 1;
                 foreach (Skill s in skills)
                 {
-                    Console.WriteLine($"{i++}. {s.name} - MP {s.mp} | ATK {s.atk}");
+                    Console.WriteLine($"{j++}. {s.name} - MP {s.mp} | ATK {s.atk}");
                     Console.WriteLine($"   {s.desc}");
                 }
-                Console.WriteLine("0. 취소\n");
-
+                Console.WriteLine("------------------------------------------------");
+                Console.WriteLine("0. 취소");
+                Console.WriteLine("------------------------------------------------");
                 Console.WriteLine("원하시는 행동을 입력해주세요:");
                 Console.Write(">> ");
 
@@ -354,6 +404,8 @@ namespace TextRPGTeam33
         {
             // 몬스터가 죽었다면 체력 대신 Dead 으로 표시됩니다.
             // 몬스터가 죽었다면 해당 몬스터에 텍스트는 전부 어두운 색으로 표시합니다.
+            int barLength = 20;
+            int curLength = 0;
 
             while (true)
             {
@@ -361,17 +413,31 @@ namespace TextRPGTeam33
 
                 Console.Clear();
 
-                Console.WriteLine("Battle!!\n");
+                Console.WriteLine("================================================");
+                Console.WriteLine("                    Battle!!                    ");
+                Console.WriteLine("================================================\n");
+
+                Console.WriteLine("-----Monster------------------------------------\n");
                 foreach (Monster m in monsters)
                 {
                     if (m.hp <= 0)
                     {
                         Console.ForegroundColor = ConsoleColor.DarkGray;
-                        Console.WriteLine($"{i++} Lv.{m.level} {m.name} Dead");
+                        Console.WriteLine($"Lv.{m.level} {m.name} Dead");
+                        Console.Write($" HP {m.hp}/{m.maxHp}\t");
+                        Console.WriteLine("|                    |\n");
+                        Console.ResetColor();
                     }
                     else
                     {
-                        Console.WriteLine($"{i++} Lv.{m.level} {m.name} HP {m.hp}");
+                        curLength = (int)((double)m.hp / m.maxHp * barLength);
+                        Console.WriteLine($"Lv.{m.level} {m.name}");
+                        Console.Write($" HP {m.hp}/{m.maxHp}\t|");
+                        Console.BackgroundColor = m.hp > m.maxHp / 2 ? ConsoleColor.DarkGreen : ConsoleColor.DarkRed;
+                        Console.Write(new string(' ', curLength));
+                        Console.ResetColor();
+                        Console.Write(new string(' ', barLength - curLength));
+                        Console.WriteLine("|\n");
                     }
 
                     Console.ResetColor();
