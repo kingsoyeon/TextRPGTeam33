@@ -1004,6 +1004,8 @@ namespace TextRPGTeam33
                         Console.ForegroundColor = ConsoleColor.Cyan;
                         Console.WriteLine(" ㅁ-ㅁ-ㅁ-ㅁ-ㅁ-ㅁ-ㅁ-ㅁ-ㅁ-ㅁ-ㅁ-ㅁ-ㅁ-ㅁ-ㅁ-ㅁ-ㅁ");
                         Console.ResetColor();
+
+
                         Thread.Sleep(1000);
                         Console.WriteLine();
                         Console.WriteLine();
