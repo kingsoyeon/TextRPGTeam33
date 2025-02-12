@@ -81,23 +81,42 @@ namespace TextRPGTeam33
             while (true)
             {
                 Console.Clear();
-                Console.WriteLine("저장된 캐릭터 목록");
-                Console.WriteLine("==================");
+                Console.ForegroundColor = ConsoleColor.Cyan;
+                Console.WriteLine();
+                Console.WriteLine("ㅁ-ㅁ-ㅁ-ㅁ-ㅁ-ㅁ-ㅁ-ㅁ-ㅁ-ㅁ-ㅁ-ㅁ-ㅁ-ㅁ-ㅁ-ㅁ-ㅁ");
+                
+                Console.WriteLine();
+                Console.Write("ㅁ\t\t");
+                Console.ResetColor();
+                Console.Write("저장된 캐릭터 목록");
+                Console.ForegroundColor = ConsoleColor.Cyan;
+                Console.WriteLine("\t\tㅁ");
+                Console.WriteLine();
+                Console.WriteLine("ㅁ==============================================ㅁ");
 
                 // 세이브 1 정보
-                DisplaySlotInfo("1. 세이브 1", saveFile1);
-                Console.WriteLine();
+                Console.ForegroundColor = ConsoleColor.Yellow;
+                DisplaySlotInfo("  1. 세이브 1\t\t\t\t\t", saveFile1);
+                Console.ForegroundColor = ConsoleColor.Cyan;
+                Console.WriteLine("ㅁ==============================================ㅁ");
+
 
                 // 세이브 2 정보
-                DisplaySlotInfo("2. 세이브 2", saveFile2);
-                Console.WriteLine();
+                Console.ForegroundColor = ConsoleColor.Yellow;
+                DisplaySlotInfo("  2. 세이브 2\t\t\t\t\t", saveFile2);
+                Console.ForegroundColor = ConsoleColor.Cyan;
+                Console.WriteLine("ㅁ==============================================ㅁ");
 
                 // 세이브 3 정보
-                DisplaySlotInfo("3. 세이브 3", saveFile3);
+                Console.ForegroundColor = ConsoleColor.Yellow;
+                DisplaySlotInfo("  3. 세이브 3\t\t\t\t\t", saveFile3);
                 Console.WriteLine();
-
-                Console.WriteLine("\n원하시는 행동을 입력해주세요.");
-                Console.Write(">>");
+                Console.ForegroundColor = ConsoleColor.Cyan;
+                Console.WriteLine("ㅁ-ㅁ-ㅁ-ㅁ-ㅁ-ㅁ-ㅁ-ㅁ-ㅁ-ㅁ-ㅁ-ㅁ-ㅁ-ㅁ-ㅁ-ㅁ-ㅁ");
+                Console.WriteLine();
+                Console.ResetColor();
+                
+                Console.Write("원하시는 행동을 입력해주세요:\n>>");
 
                 string input = Console.ReadLine();
 
@@ -139,17 +158,33 @@ namespace TextRPGTeam33
                 {
                     string jsonString = File.ReadAllText(filePath); //세이브 데이터(json)의 텍스트를 읽어 문자열로 변환 => 세이브 내용을 jsonString에 저장
                     var saveData = JsonSerializer.Deserialize<GameData>(jsonString); //json 문자열 타입<GameData)를 객체로 변환 => saveData에 변수로 저장
-                    Console.WriteLine($"│ Lv.{saveData.Character.Level.ToString("00")} {saveData.Character.Name}[{saveData.Character.Job}]");
-                    Console.WriteLine($"│ 생존 {saveData.CurrentDays}일차 탐험횟수:0{saveData.AdventureCount}/02");
+
+
+                    Console.ResetColor();
+                    Console.Write($"  │ Lv.{saveData.Character.Level.ToString("00")}"); 
+                    Console.ForegroundColor= ConsoleColor.Green;
+                    Console.Write($" {saveData.Character.Name}");
+                    Console.ResetColor();                   
+                    Console.WriteLine($" [{saveData.Character.Job}]");
+
+                    Console.Write($"  │ 생존 ");
+                    Console.ForegroundColor = ConsoleColor.DarkCyan;
+                    Console.Write($"{saveData.CurrentDays}");
+                    Console.ResetColor();
+                    Console.Write("일차"); 
+                    Console.WriteLine($" 탐험횟수:0{saveData.AdventureCount}/02");
                 }
                 catch
                 {
-                    Console.WriteLine("- 빈 슬롯 -");
+                    Console.ForegroundColor = ConsoleColor.DarkGray;
+                    Console.WriteLine("  - 빈 슬롯 -\t\t\t\t\t");
                 }
             }
             else
             {
-                Console.WriteLine("- 빈 슬롯 -");
+                Console.ForegroundColor = ConsoleColor.DarkGray;
+                Console.WriteLine("  - 빈 슬롯 -\t\t\t\t\t");
+
             }
         }
         private Character HandleSlotSelection(string slotNumber, string filePath) //캐릭터 선택 함수
@@ -157,13 +192,40 @@ namespace TextRPGTeam33
             while (true)
             {
                 Console.Clear();
-                Console.WriteLine($"세이브 {slotNumber} 선택");
-                Console.WriteLine("==================");
-                Console.WriteLine("1. 시작하기");
-                Console.WriteLine("2. 삭제하기");
-                Console.WriteLine("0. 돌아가기");
-                Console.WriteLine("\n원하시는 행동을 입력해주세요.");
-                Console.Write(">>");
+                Console.ForegroundColor = ConsoleColor.Cyan;
+                Console.WriteLine();
+                Console.WriteLine("ㅁ-ㅁ-ㅁ-ㅁ-ㅁ-ㅁ-ㅁ-ㅁ-ㅁ-ㅁ-ㅁ-ㅁ-ㅁ-ㅁ-ㅁ-ㅁ-ㅁ");
+                Console.Write("ㅁ");
+                Console.ForegroundColor = ConsoleColor.DarkCyan;
+                Console.Write($"\t\t세이브 {slotNumber}");
+                Console.ResetColor();
+                Console.Write(" 선택\t\t\t");
+                Console.ForegroundColor = ConsoleColor.Cyan;
+                Console.WriteLine("ㅁ");
+                Console.WriteLine("ㅁ==============================================ㅁ");
+
+                Console.Write("ㅁ");
+                Console.ForegroundColor = ConsoleColor.Yellow;
+                Console.Write("\t\t1. 시작하기\t\t\t");
+                Console.ForegroundColor = ConsoleColor.Cyan;
+                Console.WriteLine("ㅁ");
+
+                Console.Write("ㅁ");
+                Console.ForegroundColor = ConsoleColor.DarkRed;
+                Console.Write("\t\t2. 삭제하기\t\t\t");
+                Console.ForegroundColor = ConsoleColor.Cyan;
+                Console.WriteLine("ㅁ");
+
+                Console.Write("ㅁ");
+                Console.ResetColor();
+                Console.Write("\t\t0. 돌아가기\t\t\t");
+                Console.ForegroundColor = ConsoleColor.Cyan;
+                Console.WriteLine("ㅁ");
+                Console.WriteLine("ㅁ-ㅁ-ㅁ-ㅁ-ㅁ-ㅁ-ㅁ-ㅁ-ㅁ-ㅁ-ㅁ-ㅁ-ㅁ-ㅁ-ㅁ-ㅁ-ㅁ");
+                Console.WriteLine();
+
+                Console.ResetColor();
+                Console.Write("원하시는 행동을 입력해주세요:\n>>");
 
                 string action = Console.ReadLine();
 
