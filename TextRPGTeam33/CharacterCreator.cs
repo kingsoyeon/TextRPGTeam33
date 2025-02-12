@@ -1023,7 +1023,7 @@ namespace TextRPGTeam33
                             }
                         }
                         Thread.Sleep(2000);
-                        Console.WriteLine("아무 키나 입력하세요.");
+                        Console.WriteLine("\n\n아무 키나 입력하세요.");
                         Console.ReadKey();
 
                         return new Character(level, name, job, atk, def, maxHp, maxMp, gold, killSans);
