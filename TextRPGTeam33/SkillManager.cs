@@ -30,37 +30,37 @@ namespace TextRPGTeam33
             switch (player.Job)
             {
                 case "탈영병":
-                    skills.Add(new Skill(SkillType.GUN_SHOT, "총 사격", "사격을 통해 공격합니다", 4, 10));
+                    skills.Add(new Skill(SkillType.GUN_SHOT, "총 사격", "사격을 통해 공격합니다", 4, 15));
                     skills.Add(new Skill(SkillType.GUN_RELOAD, "재장전", "재장전합니다", 3, 0));
-                    skills.Add(new Skill(SkillType.GRENADE, "수류탄 투척", "수류탄을 던져 폭파합니다", 20, 5));
+                    skills.Add(new Skill(SkillType.GRENADE, "수류탄 투척", "수류탄을 던져 폭파합니다", 20, 10));
                     break;
                 case "개 조련사":
-                    skills.Add(new Skill(SkillType.ATTACK_TWICE, "두번 공격", "개와 함께 공격합니다", 6, 8));
+                    skills.Add(new Skill(SkillType.ATTACK_TWICE, "두번 공격", "개와 함께 공격합니다", 6, 13));
                     skills.Add(new Skill(SkillType.BRING_ITEM, "아이템 물어오기", "아이템을 물어오게 시킵니다", 3, 0));
                     break;
                 case "폭발물 산업기사":
-                    skills.Add(new Skill(SkillType.RANGE_ATTACK, "범위 공격", "본인을 포함한 모두에게 데미지를 입힙니다", 25, 5));
+                    skills.Add(new Skill(SkillType.RANGE_ATTACK, "범위 공격", "본인을 포함한 모두에게 데미지를 입힙니다", 25, 10));
                     skills.Add(new Skill(SkillType.BOMB_UPGRADE, "폭탄 강화", "폭탄을 강화합니다", 3, 0));
                     break;
                 case "소방관":
-                    skills.Add(new Skill(SkillType.HYDRO_PUMP, "하이드로펌프", "랜덤한 대상 2명을 공격합니다", 15, 8));
-                    skills.Add(new Skill(SkillType.BACKDRAFT, "백드래프트", "폭발적인 산소 공급으로 순간적인 충격파 생성", 20, 5));
+                    skills.Add(new Skill(SkillType.HYDRO_PUMP, "하이드로펌프", "랜덤한 대상 2명을 공격합니다", 15, 13));
+                    skills.Add(new Skill(SkillType.BACKDRAFT, "백드래프트", "폭발적인 산소 공급으로 순간적인 충격파 생성", 20, 10));
                     break;
                 case "이성언 튜터":
-                    skills.Add(new Skill(SkillType.FIRE_RAY, "파괴광선", "파괴광선을 발사합니다", 7, 10));
-                    skills.Add(new Skill(SkillType.BOLT_TACKLE, "볼트태클", "볼트태클을 구사합니다", 6, 7));
+                    skills.Add(new Skill(SkillType.FIRE_RAY, "파괴광선", "파괴광선을 발사합니다", 7, 15));
+                    skills.Add(new Skill(SkillType.BOLT_TACKLE, "볼트태클", "볼트태클을 구사합니다", 6, 12));
                     break;
                 case "파피루스":
                     break;
                 case "대머리백수":
                     break;
                 case "닌자":
-                    skills.Add(new Skill(SkillType.ATTACK_TWICE, "수리검", "수리검을 던집니다", 5, 10));
-                    skills.Add(new Skill(SkillType.ATTACK_TWICE, "나선환", "나선환을 이용해 공격합니다", 10, 15));
+                    //skills.Add(new Skill(SkillType.ATTACK_TWICE, "수리검", "수리검을 던집니다", 5, 10));
+                    //skills.Add(new Skill(SkillType.ATTACK_TWICE, "나선환", "나선환을 이용해 공격합니다", 10, 15));
                     break;
                 case "의사":
-                    skills.Add(new Skill(SkillType.ATTACK_TWICE, "즉시회복", "즉시 회복합니다", 10, 10));
-                    skills.Add(new Skill(SkillType.ATTACK_TWICE, "광전사모드", "광전사가 되어 공격합니다", 10, 10));
+                    //skills.Add(new Skill(SkillType.ATTACK_TWICE, "즉시회복", "즉시 회복합니다", 10, 10));
+                    //skills.Add(new Skill(SkillType.ATTACK_TWICE, "광전사모드", "광전사가 되어 공격합니다", 10, 10));
                     break;
             }
         }
