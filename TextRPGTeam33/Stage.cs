@@ -312,6 +312,8 @@ namespace TextRPGTeam33
             player.Inventory.AddItem(rewardItems);
 
             player.DungeonClearCount += 1;
+            // 100회 승리 업적 확인
+            Achievement.Instance.CheckAchievements(player);
         }
     }
 }

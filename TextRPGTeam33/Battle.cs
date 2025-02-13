@@ -491,12 +491,6 @@ namespace TextRPGTeam33
                 if (player.Mp > player.MaxMp)
                     player.Mp = player.MaxMp;
 
-                // 전투 승리 업적 업데이트
-                Achievement.Instance.IncrementCombatStat("TotalWins");
-
-                // 업적 해금 확인
-                Achievement.Instance.CheckAchievements(player);
-
                 while (true)
                 {
                     Console.Clear();
