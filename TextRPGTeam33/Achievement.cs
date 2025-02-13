@@ -46,7 +46,6 @@ namespace TextRPGTeam33
         {
             { "TotalKills", 0 },
             { "BossKills", 0 },
-            { "TotalWins", 0 }
         };
 
         // 전투 통계 업데이트 메서드
@@ -173,8 +172,10 @@ namespace TextRPGTeam33
             if (combatStats["TotalKills"] >= 200 && !achievements["I_AM_LEGEND"].IsUnlocked && achievements.ContainsKey("TotalKills"))
             {
                 achievements["I_AM_LEGEND"].Progress = combatStats["TotalKills"];
-                achievements["I_AM_LEGEND"].TargetValue = 200;
-                UnlockAchievement("I_AM_LEGEND");
+                if (achievements["I_AM_LEGEND"].Progress >= 200 && !achievements["I_AM_LEGEND"].IsUnlocked)
+                {
+                    UnlockAchievement("I_AM_LEGEND");
+                }
             }
 
             if (Program.days >= 28 && achievements.ContainsKey("SURVIVOR") && !achievements["SURVIVOR"].IsUnlocked)
@@ -185,15 +186,19 @@ namespace TextRPGTeam33
             if (combatStats["BossKills"] >= 5 && !achievements["BOSS_HUNTER"].IsUnlocked && achievements.ContainsKey("BOSS_HUNTER"))
             {
                 achievements["BOSS_HUNTER"].Progress = combatStats["BossKills"];
-                achievements["BOSS_HUNTER"].TargetValue = 5;
-                UnlockAchievement("BOSS_HUNTER");
+                if (achievements["BOSS_HUNTER"].Progress >= 5 && !achievements["BOSS_HUNTER"].IsUnlocked)
+                {
+                    UnlockAchievement("BOSS_HUNTER");
+                }
             }
 
             if (combatStats["TotalWins"] >= 100 && !achievements["BATTLE_EXPERT"].IsUnlocked && achievements.ContainsKey("BATTLE_EXPERT"))
             {
-                achievements["BATTLE_EXPERT"].Progress = combatStats["TotalWins"];
-                achievements["BATTLE_EXPERT"].TargetValue = 100;
-                UnlockAchievement("BATTLE_EXPERT");
+                achievements["BATTLE_EXPERT"].Progress = player.DungeonClearCount;
+                if (achievements["BATTLE_EXPERT"].Progress >= 100 && !achievements["BATTLE_EXPERT"].IsUnlocked)
+                {
+                    UnlockAchievement("BATTLE_EXPERT");
+                }
             }
         }
 
