@@ -62,6 +62,7 @@ namespace TextRPGTeam33
             if (combatStats.ContainsKey(statName))
             {
                 combatStats[statName]++;
+                Console.WriteLine($"Combat Stat Updated: {statName} = {combatStats[statName]}"); // 디버그용 로그 추가
             }
         }
 
@@ -169,7 +170,7 @@ namespace TextRPGTeam33
                 UnlockAchievement("SANS_KILLER");
             }
 
-            if (combatStats["TotalKills"] >= 200 && !achievements["I_AM_LEGEND"].IsUnlocked && achievements.ContainsKey("TotalKills"))
+            if (!achievements["I_AM_LEGEND"].IsUnlocked && achievements.ContainsKey("TotalKills"))
             {
                 achievements["I_AM_LEGEND"].Progress = combatStats["TotalKills"];
                 if (achievements["I_AM_LEGEND"].Progress >= 200 && !achievements["I_AM_LEGEND"].IsUnlocked)
@@ -183,7 +184,7 @@ namespace TextRPGTeam33
                 UnlockAchievement("SURVIVOR");
             }
 
-            if (combatStats["BossKills"] >= 5 && !achievements["BOSS_HUNTER"].IsUnlocked && achievements.ContainsKey("BOSS_HUNTER"))
+            if (!achievements["BOSS_HUNTER"].IsUnlocked && achievements.ContainsKey("BOSS_HUNTER"))
             {
                 achievements["BOSS_HUNTER"].Progress = combatStats["BossKills"];
                 if (achievements["BOSS_HUNTER"].Progress >= 5 && !achievements["BOSS_HUNTER"].IsUnlocked)
