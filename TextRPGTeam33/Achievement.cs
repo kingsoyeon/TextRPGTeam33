@@ -155,22 +155,22 @@ namespace TextRPGTeam33
             if (player == null) return;
 
             // 각 업적 조건을 개별적으로 체크
-            if (!achievements["FIRST_STEPS"].IsUnlocked)
+            if (!achievements["FIRST_STEPS"].IsUnlocked && achievements.ContainsKey("FIRST_STEPS"))
             {
                 UnlockAchievement("FIRST_STEPS");
             }
 
-            if (player.Level >= 10 && !achievements["LEVEL_10"].IsUnlocked)
+            if (player.Level >= 10 && !achievements["LEVEL_10"].IsUnlocked && achievements.ContainsKey("LEVEL_10"))
             {
                 UnlockAchievement("LEVEL_10");
             }
 
-            if (player.KillSans && !achievements["SANS_KILLER"].IsUnlocked)
+            if (player.KillSans && !achievements["SANS_KILLER"].IsUnlocked && achievements.ContainsKey("SANS_KILLER"))
             {
                 UnlockAchievement("SANS_KILLER");
             }
 
-            if (combatStats["TotalKills"] >= 200 && !achievements["I_AM_LEGEND"].IsUnlocked)
+            if (combatStats["TotalKills"] >= 200 && !achievements["I_AM_LEGEND"].IsUnlocked && achievements.ContainsKey("TotalKills"))
             {
                 achievements["I_AM_LEGEND"].Progress = combatStats["TotalKills"];
                 achievements["I_AM_LEGEND"].TargetValue = 200;
@@ -182,14 +182,14 @@ namespace TextRPGTeam33
                 UnlockAchievement("SURVIVOR");
             }
 
-            if (combatStats["BossKills"] >= 5 && !achievements["BOSS_HUNTER"].IsUnlocked)
+            if (combatStats["BossKills"] >= 5 && !achievements["BOSS_HUNTER"].IsUnlocked && achievements.ContainsKey("BOSS_HUNTER"))
             {
                 achievements["BOSS_HUNTER"].Progress = combatStats["BossKills"];
                 achievements["BOSS_HUNTER"].TargetValue = 5;
                 UnlockAchievement("BOSS_HUNTER");
             }
 
-            if (combatStats["TotalWins"] >= 100 && !achievements["BATTLE_EXPERT"].IsUnlocked)
+            if (combatStats["TotalWins"] >= 100 && !achievements["BATTLE_EXPERT"].IsUnlocked && achievements.ContainsKey("BATTLE_EXPERT"))
             {
                 achievements["BATTLE_EXPERT"].Progress = combatStats["TotalWins"];
                 achievements["BATTLE_EXPERT"].TargetValue = 100;
