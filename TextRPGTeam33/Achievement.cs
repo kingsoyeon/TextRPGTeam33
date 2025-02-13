@@ -170,7 +170,7 @@ namespace TextRPGTeam33
                 UnlockAchievement("SURVIVOR");
             }
 
-            if (!achievements["I_AM_LEGEND"].IsUnlocked && achievements.ContainsKey("TotalKills"))
+            if (!achievements["I_AM_LEGEND"].IsUnlocked && achievements.ContainsKey("I_AM_LEGEND"))
             {
                 achievements["I_AM_LEGEND"].Progress = combatStats["TotalKills"];
                 if (achievements["I_AM_LEGEND"].Progress >= 200 && !achievements["I_AM_LEGEND"].IsUnlocked)
