@@ -317,34 +317,34 @@ namespace TextRPGTeam33
 
                 string stat;
 
-                if (itemList[i].Type == ItemType.Amor)
+                if (inventoryItems[i].Type == ItemType.Amor)
                 {
                     Console.ForegroundColor = ConsoleColor.Green;
                     Console.Write("●");
                     Console.ResetColor();
-                    stat = $"방어력+{itemList[i].Value}";
+                    stat = $"방어력+{inventoryItems[i].Value}";
                 } // ItemType이 Amor일 경우 "방어력"
 
-                else if (itemList[i].Type == ItemType.Weapon)
+                else if (inventoryItems[i].Type == ItemType.Weapon)
                 {
                     Console.ForegroundColor = ConsoleColor.DarkMagenta;
                     Console.Write("●");
                     Console.ResetColor();
-                    stat = $"공격력 +{itemList[i].Value}";
+                    stat = $"공격력 +{inventoryItems[i].Value}";
                 }// ItemType이 Weapon일 경우 "공격력"
-                else if (itemList[i].Type == ItemType.Potion)
+                else if (inventoryItems[i].Type == ItemType.Potion)
                 {
                     Console.ForegroundColor = ConsoleColor.Red;
                     Console.Write("●");
                     Console.ResetColor();
-                    stat = $"HP회복량 +{itemList[i].Value}";
+                    stat = $"HP회복량 +{inventoryItems[i].Value}";
                 } // ItemType이 Potion일 경우 "HP회복력"
                 else
                 {
                     Console.ForegroundColor = ConsoleColor.Blue;
                     Console.Write("●");
                     Console.ResetColor();
-                    stat = $"MP회복량 +{itemList[i].Value}";
+                    stat = $"MP회복량 +{inventoryItems[i].Value}";
                 }// 그외(ItemType이 Potion) 일 경우 "MP회복력"
 
                 Console.ForegroundColor = ConsoleColor.Cyan;
