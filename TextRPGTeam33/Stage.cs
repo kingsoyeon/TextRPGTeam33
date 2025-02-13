@@ -163,15 +163,15 @@ namespace TextRPGTeam33
                 if (rand.NextDouble() < monsterSpawnRate)
                 {
                     minMonsterLv = Math.Max(0, stageLevel / 20);  // 최소 레벨
-                    maxMonsterLv = Math.Min(9, stageLevel / 6 + 1); // 최대 레벨
+                    maxMonsterLv = Math.Min(9, stageLevel / 6); // 최대 레벨
 
-                    monsterId = rand.Next(minMonsterLv, maxMonsterLv + 1);
+                    monsterId = rand.Next(minMonsterLv, maxMonsterLv);
                 }
                 else
                 {
                     // 약한 몬스터 등장 (레벨 1~4)
                     maxMonsterLv = Math.Min(4, stageLevel / 12 + 1);
-                    monsterId = rand.Next(0, maxMonsterLv + 1);
+                    monsterId = rand.Next(0, maxMonsterLv);
                 }
 
                 createMonster.Add(new Monster(monsterList[monsterId].name, monsterList[monsterId].level, monsterList[monsterId].hp, monsterList[monsterId].atk, monsterList[monsterId].isBoss));
