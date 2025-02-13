@@ -192,10 +192,10 @@ namespace TextRPGTeam33
                 }
             }
 
-            if (combatStats["TotalWins"] >= 100 && !achievements["BATTLE_EXPERT"].IsUnlocked && achievements.ContainsKey("BATTLE_EXPERT"))
+            if (achievements.ContainsKey("BATTLE_EXPERT") && !achievements["BATTLE_EXPERT"].IsUnlocked)
             {
                 achievements["BATTLE_EXPERT"].Progress = player.DungeonClearCount;
-                if (achievements["BATTLE_EXPERT"].Progress >= 100 && !achievements["BATTLE_EXPERT"].IsUnlocked)
+                if (achievements["BATTLE_EXPERT"].Progress >= 100)
                 {
                     UnlockAchievement("BATTLE_EXPERT");
                 }
