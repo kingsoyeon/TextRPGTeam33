@@ -684,6 +684,7 @@ partial class Program
 
                 if (startChoice == "1")
                 {
+                    Achievement.Instance.CheckAchievements(player); //=> 업적 달성 팝업
                     StartGame(player);
                     isValidInput = true;
                 }
@@ -703,7 +704,6 @@ partial class Program
                     Thread.Sleep(1000);
                 }
                 Console.Clear();
-                Achievement.Instance.CheckAchievements(player); //=> 업적 달성 팝업
                 Achievement.Instance.DisplayAchievements();// 업적 리스트 출력
                 Thread.Sleep(1000);
             }
@@ -1021,6 +1021,8 @@ static void Explore(Character player)
                 Thread.Sleep(2000);
                 adventureCount *= 0;
                 days += 1;
+                Achievement.Instance.CheckAchievements(player); //=> 업적 달성 팝업
+                Achievement.Instance.DisplayAchievements();// 업적 리스트 출력
                 string currentSaveFile = gameSave.GetCurrentSaveFile();
                 gameSave.Save(player, currentSaveFile);
             }
