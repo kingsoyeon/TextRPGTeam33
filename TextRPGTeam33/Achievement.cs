@@ -256,7 +256,14 @@ namespace TextRPGTeam33
         {
             if (loadedAchievements != null)
             {
-                achievements = new Dictionary<string, AchievementData>(loadedAchievements);
+                // 기존 업적은 유지하면서 로드된 상태만 업데이트
+                foreach (var kvp in loadedAchievements)
+                {
+                    if (achievements.ContainsKey(kvp.Key))
+                    {
+                        achievements[kvp.Key] = kvp.Value;
+                    }
+                }
             }
         }
 

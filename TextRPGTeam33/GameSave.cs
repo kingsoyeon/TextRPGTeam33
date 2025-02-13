@@ -365,6 +365,13 @@ namespace TextRPGTeam33
                 }
                 if (saveData.Achievements != null)
                 {
+                    // 기존 업적 딕셔너리 초기화 보장
+                    if (Achievement.Instance.GetAchievements() == null)
+                    {
+                        // Achievement 인스턴스 생성 및 초기화 트리거
+                        _ = Achievement.Instance;
+                    }
+                    // 그 다음 저장된 업적 상태 로드
                     Achievement.Instance.LoadAchievements(saveData.Achievements);
                 }
 
