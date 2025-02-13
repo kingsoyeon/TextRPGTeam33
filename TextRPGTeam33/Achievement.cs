@@ -93,12 +93,12 @@ namespace TextRPGTeam33
                             UnlockDate = DateTime.MinValue
                         }
                     },
-                        {
-                        "SANS_KILLER",
+                    {
+                        "SURVIVOR",
                         new AchievementData
                         {
-                            Name = "샌즈를 처치한 자",
-                            Description = "샌즈를 처치했습니다.",
+                            Name = "28일후",
+                            Description = "28일 동안 생존했습니다. 런던은 아직 괜찮을까요?",
                             IsUnlocked = false,
                             UnlockDate = DateTime.MinValue
                         }
@@ -112,16 +112,6 @@ namespace TextRPGTeam33
                             IsUnlocked = false,
                             UnlockDate = DateTime.MinValue,
                             TargetValue = 200
-                        }
-                    },
-                    {
-                        "SURVIVOR",
-                        new AchievementData
-                        {
-                            Name = "28일후",
-                            Description = "28일 동안 생존했습니다. 런던은 아직 괜찮을까요?",
-                            IsUnlocked = false,
-                            UnlockDate = DateTime.MinValue
                         }
                     },
                     {
@@ -144,6 +134,16 @@ namespace TextRPGTeam33
                             IsUnlocked = false,
                             UnlockDate = DateTime.MinValue,
                             TargetValue = 100
+                        }
+                    },
+                    {
+                        "SANS_KILLER",
+                        new AchievementData
+                        {
+                            Name = "샌즈를 처치한 자",
+                            Description = "샌즈를 처치했습니다.",
+                            IsUnlocked = false,
+                            UnlockDate = DateTime.MinValue
                         }
                     }
                 };
