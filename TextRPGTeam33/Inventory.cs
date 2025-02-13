@@ -210,7 +210,7 @@ namespace TextRPGTeam33
                 Console.ForegroundColor = ConsoleColor.DarkMagenta;
                 Console.Write("●");
                 Console.ResetColor();
-                str += $"{item.Name} | 체력 +{item.Value} | {item.Descrip} | 보유 {item.Count}개";
+                str += $"{item.Name} | 공격력 +{item.Value} | {item.Descrip} | 보유 {item.Count}개";
             }
             else
             {
