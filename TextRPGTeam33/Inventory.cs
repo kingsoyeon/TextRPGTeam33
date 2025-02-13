@@ -201,6 +201,13 @@ namespace TextRPGTeam33
                 Console.ResetColor();
                 str += $"{item.Name} | 체력 +{item.Value} | {item.Descrip} | 보유 {item.Count}개";
             }
+            else if(item.Name == "파피루스의 뼈조각")
+            {
+                Console.ForegroundColor = ConsoleColor.DarkMagenta;
+                Console.Write("●");
+                Console.ResetColor();
+                str += $"{item.Name} | 체력 +{item.Value} | {item.Descrip} | 보유 {item.Count}개";
+            }
             else
             {
                 Console.ForegroundColor= ConsoleColor.Blue;
