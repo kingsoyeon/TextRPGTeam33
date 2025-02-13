@@ -216,6 +216,19 @@ namespace TextRPGTeam33
                     if (monsters[index].hp <= 0)
                     {
                         QuestUpdate();
+
+                        // 몬스터 처치 업적 업데이트
+                        Achievement.Instance.IncrementCombatStat("TotalKills");
+
+                        // 보스 처치 업적 업데이트 (보스인지 확인)
+                        if (monsters[i].isBoss)
+                        {
+                            Achievement.Instance.IncrementCombatStat("BossKills");
+                        }
+
+                        // 업적 해금 확인
+                        Achievement.Instance.CheckAchievements(player);
+
                         monsters[index].hp = 0;
                     }
                     break;
@@ -243,6 +256,19 @@ namespace TextRPGTeam33
                         if (m.hp <= 0)
                         {
                             QuestUpdate();
+
+                            // 몬스터 처치 업적 업데이트
+                            Achievement.Instance.IncrementCombatStat("TotalKills");
+
+                            // 보스 처치 업적 업데이트 (보스인지 확인)
+                            if (monsters[i].isBoss)
+                            {
+                                Achievement.Instance.IncrementCombatStat("BossKills");
+                            }
+
+                            // 업적 해금 확인
+                            Achievement.Instance.CheckAchievements(player);
+
                             m.hp = 0;
                         }
                     }
@@ -272,6 +298,19 @@ namespace TextRPGTeam33
                     if (monsters[index].hp <= 0)
                     {
                         QuestUpdate();
+
+                        // 몬스터 처치 업적 업데이트
+                        Achievement.Instance.IncrementCombatStat("TotalKills");
+
+                        // 보스 처치 업적 업데이트 (보스인지 확인)
+                        if (monsters[i].isBoss)
+                        {
+                            Achievement.Instance.IncrementCombatStat("BossKills");
+                        }
+
+                        // 업적 해금 확인
+                        Achievement.Instance.CheckAchievements(player);
+
                         monsters[index].hp = 0;
                     }
 
@@ -291,6 +330,19 @@ namespace TextRPGTeam33
                         if (monsters[index2].hp <= 0)
                         {
                             QuestUpdate();
+
+                            // 몬스터 처치 업적 업데이트
+                            Achievement.Instance.IncrementCombatStat("TotalKills");
+
+                            // 보스 처치 업적 업데이트 (보스인지 확인)
+                            if (monsters[i].isBoss)
+                            {
+                                Achievement.Instance.IncrementCombatStat("BossKills");
+                            }
+
+                            // 업적 해금 확인
+                            Achievement.Instance.CheckAchievements(player);
+
                             monsters[index2].hp = 0;
                         }
                     }
