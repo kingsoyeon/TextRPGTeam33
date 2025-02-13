@@ -165,9 +165,9 @@ namespace TextRPGTeam33
                 UnlockAchievement("LEVEL_10");
             }
 
-            if (player.KillSans && !achievements["SANS_KILLER"].IsUnlocked && achievements.ContainsKey("SANS_KILLER"))
+            if (Program.days >= 28 && achievements.ContainsKey("SURVIVOR") && !achievements["SURVIVOR"].IsUnlocked)
             {
-                UnlockAchievement("SANS_KILLER");
+                UnlockAchievement("SURVIVOR");
             }
 
             if (!achievements["I_AM_LEGEND"].IsUnlocked && achievements.ContainsKey("TotalKills"))
@@ -177,11 +177,6 @@ namespace TextRPGTeam33
                 {
                     UnlockAchievement("I_AM_LEGEND");
                 }
-            }
-
-            if (Program.days >= 28 && achievements.ContainsKey("SURVIVOR") && !achievements["SURVIVOR"].IsUnlocked)
-            {
-                UnlockAchievement("SURVIVOR");
             }
 
             if (!achievements["BOSS_HUNTER"].IsUnlocked && achievements.ContainsKey("BOSS_HUNTER"))
@@ -200,6 +195,11 @@ namespace TextRPGTeam33
                 {
                     UnlockAchievement("BATTLE_EXPERT");
                 }
+            }
+
+            if (player.KillSans && !achievements["SANS_KILLER"].IsUnlocked && achievements.ContainsKey("SANS_KILLER"))
+            {
+                UnlockAchievement("SANS_KILLER");
             }
         }
 
